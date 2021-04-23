@@ -2,7 +2,7 @@
 
 #REM set the class path,
 #REM assumes the build was executed with maven copy-dependencies
-export BASE_CP=base.app.user.console/target/base.app.user.console-1.3.0-SNAPSHOT.jar:base.app.user.console/target/dependency/*;
+export ECAFETERIA_CP=ecafeteria.app.user.console/target/app.user.console-4.0.0.jar:ecafeteria.app.user.console/target/dependency/*;
 
 #REM call the java VM, e.g,
-java -cp $BASE_CP eapli.base.app.user.console.BaseUserApp
+java -cp $ECAFETERIA_CP eapli.ecafeteria.app.user.console.ECafeteriaUserApp

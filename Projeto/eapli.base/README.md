@@ -1,10 +1,11 @@
-# Base Management
-    ____                 
-    |  _ \                
-    | |_) | __ _ ___  ___ 
-    |  _ < / _` / __|/ _ \
-    | |_) | (_| \__ \  __/
-    |____/ \__,_|___/\___|
+# Cafeteria Management
+
+           _____       __     _            _
+          / ____|     / _|   | |          (_)
+      ___| |     __ _| |_ ___| |_ ___ _ __ _  __ _
+     / _ \ |    / _` |  _/ _ \ __/ _ \ '__| |/ _` |
+    |  __/ |___| (_| | ||  __/ ||  __/ |  | | (_| |
+     \___|\_____\__,_|_| \___|\__\___|_|  |_|\__,_|
 
 Engenharia de Aplicações (EAPLI)
 
@@ -19,7 +20,7 @@ code this would obvisously be a problem as we should strive for consistency. In
 this case, it is acceptable as the inconsistencies are meant to provide samples 
 of different valid approaches.
 
-_Base logo created with [kammerl ascii signature](https://www.kammerl.de/ascii/AsciiSignature.php) using font "big"_
+_eCafeteria logo created with [kammerl ascii signature](https://www.kammerl.de/ascii/AsciiSignature.php) using font "big"_
 
 ## Who do I talk to?
 
@@ -27,7 +28,7 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 ## License and copyright
 
-Copyright (c) 2013-2019 the original author or authors.
+Copyright (c) 2013-2021 the original author or authors.
 
 MIT License
 
@@ -51,7 +52,9 @@ SOFTWARE.
 
 ## Build
 
-make sure Maven is installed and on the PATH
+Make sure Maven is installed and on the PATH.
+
+The java source is Java 1.8+ so any JDK 1.8 or later will work. However, in order to generate the javadoc and UML diagrams the JDK version must be *strictly 1.8*.
 
 If using an Oracle database, you will need to change your maven settings for 
 downloading the Oracle drivers. see <https://blogs.oracle.com/dev2dev/entry/how_to_get_oracle_jdbc#settings> for more information.
@@ -74,16 +77,16 @@ or
 
 ## Project structure
 
-- eapli.base.consoleapp
+- eapli.ecafeteria.consoleapp
 
   - presentation using console
   - Main class 
   - application properties in resource folder
 
-- eapli.base.bootstrap 
+- eapli.ecafeteria.bootstrap 
   - bootstrap data. should be ignored on a "real" instalation
 
-- eapli.base.core 
+- eapli.ecafeteria.core 
   - use case controllers, model, and persistence
 
 ## Architecture
