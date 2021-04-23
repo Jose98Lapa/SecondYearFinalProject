@@ -1,0 +1,15 @@
+@startuml
+'scale 350 width
+skinparam monochrome true
+
+[*] --> Booked : booking
+
+Booked --> Delivered : deliver
+Booked --> Cancelled : cancel
+Booked --> Undelivered : mark as\n not delivered
+
+Cancelled --> [*]
+Delivered--> [*]
+Undelivered--> [*]
+
+@enduml

@@ -1,0 +1,55 @@
+[{
+        "Name": "sardinhas assadas",
+        "Type": "fish",
+        "Active": "true",
+        "NutricionalInfo": {
+            "Salt": "2",
+            "Calories": "250"
+        }
+    },
+    {
+        "Name": "rodovalho grelhado",
+        "Type": "fish",
+        "Active": "true",
+        "NutricionalInfo": {
+            "Salt": "2",
+            "Calories": "230"
+        }
+    },
+    {
+        "Name": "lombo de boi",
+        "Type": "meat",
+        "Active": "true",
+        "NutricionalInfo": {
+            "Salt": "2",
+            "Calories": "375"
+        }
+    },
+    {
+        "Name": "secretos de porco",
+        "Type": "meat",
+        "Active": "true",
+        "NutricionalInfo": {
+            "Salt": "2",
+            "Calories": "475"
+        }
+    },
+    {
+        "Name": "soilent beef",
+        "Type": "vegie",
+        "Active": "false",
+        "NutricionalInfo": {
+            "Salt": "1",
+            "Calories": "140"
+        }
+    },
+    {
+        "Name": "caril de feijão vermelho",
+        "Type": "vegie",
+        "Active": "true",
+        "NutricionalInfo": {
+            "Salt": "2",
+            "Calories": "10"
+        }
+    }
+]

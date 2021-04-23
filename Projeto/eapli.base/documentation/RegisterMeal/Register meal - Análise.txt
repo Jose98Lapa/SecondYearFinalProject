@@ -1,0 +1,18 @@
+Análise do UC #2 Registar Meal
+
+	Este UC é simplificado não se considerando a ligação da refeição à Ementa
+	O perfil do utilizador é o Gestor de Ementas(GE), que já está registado.
+	Uma Meal é uma instância de um prato num dia e hora, com um tipo de refeição (almoço e lanche) ( futuramente associada a uma Ementa)
+	Ao GE são apresentados os pratos existentes para seleccionar um.
+	Ao GE são apresentado os tipos de refeição possíveis( almoço e jantar) para selccionar um.
+	O GE deve introduzir uma data.
+
+Regras de negócio
+
+	A data tem de ser superior ao dia actual
+	
+	
+Testes unitários
+
+	A data tem de ser superior ao dia actual
+	

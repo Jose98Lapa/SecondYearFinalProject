@@ -1,0 +1,33 @@
+	___________
+
+	ANÁLISE 
+	____________
+
+
+	Reunião com o cliente  em 2017.04.28
+
+        * Foi definido máquina de estados associados à reserva (ver diagrama BookingStateMachine.png)
+	* Data actual é fornecida automaticamente pela plataforma
+
+       	______________________
+
+	REGRAS DE NEGÓCIO
+	_____________________
+
+	* O saldo da conta-cartão tem que ser suficiente para adquirir a refeição
+	* A lista de refeições para selecção/reserva não pode ser vazia
+	* Nao pode ser reservar uma refeição para dia / tipo de refeição já reservada
+	* A data da refeição a reservar tem de ser igual ou posterior à data actual
+
+
+
+
+        ______________________
+		
+	TESTES UNITÁRIOS
+	_____________________
+
+	* EnsureMealListNotNull
+        * EnsureBookingDateIsValid
+	* EnsureBalanceIsEnough
+	* 
