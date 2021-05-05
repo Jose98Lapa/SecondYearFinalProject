@@ -1,8 +1,6 @@
-package eapli.base.Servico.Domain;
+package eapli.base.servico.Domain;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 

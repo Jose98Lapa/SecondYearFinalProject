@@ -4,9 +4,11 @@ import eapli.base.catalog.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
+import eapli.base.persistence.impl.jpa.JpaFormularioRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -88,6 +90,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return new InMemorySignupRequestRepository();
 	}
 
+
+	@Override
+	public FormularioRepository form(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public FormularioRepository form() {
+		return form(null);
+	}
 
 	@Override
 	public TransactionalContext newTransactionalContext() {

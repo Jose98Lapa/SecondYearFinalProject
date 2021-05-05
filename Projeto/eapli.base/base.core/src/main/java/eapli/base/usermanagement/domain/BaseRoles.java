@@ -34,6 +34,8 @@ public final class BaseRoles {
      * poweruser
      */
     public static final Role POWER_USER = Role.valueOf("POWER_USER");
+
+    public static final Role COLABORATOR = Role.valueOf("COLABORATOR");
     /**
      * Utente
      */
