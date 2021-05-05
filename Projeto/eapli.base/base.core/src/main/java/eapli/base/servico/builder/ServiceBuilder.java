@@ -17,33 +17,33 @@ public class ServiceBuilder {
         return  new Servico(title,id,icon,keywords,status,tipo);
     }
 
-    public ServiceBuilder Title(TituloServico title) {
-        this.title = title;
+    public ServiceBuilder Title(String title) {
+        this.title = TituloServico.valueOf(title);
         return this;
     }
 
-    public ServiceBuilder Id(ServicoID id) {
-        this.id = id;
+    public ServiceBuilder Id(String id) {
+        this.id = ServicoID.valueOf(id);
         return this;
     }
 
-    public ServiceBuilder Icon(IconServico icon) {
-        this.icon = icon;
+    public ServiceBuilder Icon(String icon) {
+        this.icon = IconServico.valueof(icon);
         return this;
     }
 
-    public ServiceBuilder Keywords(KeyWords keywords) {
-        this.keywords = keywords;
+    public ServiceBuilder Keywords(String keywords) {
+        this.keywords = KeyWords.valueOf(keywords);
         return this;
     }
 
-    public ServiceBuilder Status(StatusServico status) {
-        this.status = status;
+    public ServiceBuilder Status(String status) {
+        this.status = StatusServico.valueOf(status);
         return this;
     }
 
-    public ServiceBuilder Tipo(TipoServico tipo) {
-        this.tipo = tipo;
+    public ServiceBuilder Tipo(String tipo) {
+        this.tipo = TipoServico.valueOf(tipo);
         return this;
     }
 }

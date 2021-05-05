@@ -18,23 +18,23 @@ public class AtributoBuilder {
         return this;
     }
 
-    public AtributoBuilder withLabel(AtributoLabel label) {
-        this.label = label;
+    public AtributoBuilder withLabel(String label) {
+        this.label = AtributoLabel.valueOf(label);
         return this;
     }
 
-    public AtributoBuilder withDesc(AtributoDescricao desc) {
-        this.desc = desc;
+    public AtributoBuilder withDesc(String desc) {
+        this.desc = AtributoDescricao.valueOf(desc);
         return this;
     }
 
-    public AtributoBuilder withRegex(AtributoRegex regex) {
-        this.regex = regex;
+    public AtributoBuilder withRegex(String regex) {
+        this.regex = AtributoRegex.valueOf(regex);
         return this;
     }
 
-    public AtributoBuilder withTipo(AtributoTipo tipo) {
-        this.tipo = tipo;
+    public AtributoBuilder withTipo(String tipo) {
+        this.tipo = AtributoTipo.valueOf(tipo);
         return this;
     }
 }

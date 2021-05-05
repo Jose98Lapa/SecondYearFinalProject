@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FormularioID {
+public class FormularioID implements Comparable<FormularioID> {
     private String ID;
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
@@ -49,5 +49,10 @@ public class FormularioID {
     @Override
     public int hashCode() {
         return Objects.hash(ID, regex);
+    }
+
+    @Override
+    public int compareTo(FormularioID o) {
+        return ID.compareTo(o.ID);
     }
 }

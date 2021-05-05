@@ -6,4 +6,8 @@ public class IconServico {
     public IconServico(int temp) {
         this.temp = temp;
     }
+
+    public static IconServico valueof(String icon) {
+        return null;
+    }
 }

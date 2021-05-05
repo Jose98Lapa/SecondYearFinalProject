@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -46,6 +47,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 		return new JpaSignupRequestRepository(Application.settings().getPersistenceUnitName());
 	}
 
+	@Override
+	public FormularioRepository form(final TransactionalContext autoTx) {
+		return new JpaFormularioRepository(autoTx);
+	}
+
+	@Override
+	public FormularioRepository form() {
+		return new JpaFormularioRepository(Application.settings().getPersistenceUnitName());
+	}
 
 	@Override
 	public TransactionalContext newTransactionalContext() {
