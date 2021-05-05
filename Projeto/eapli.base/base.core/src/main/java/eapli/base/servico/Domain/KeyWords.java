@@ -1,5 +1,6 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -24,6 +25,9 @@ public class KeyWords implements ValueObject {
         } else {
             throw new IllegalArgumentException("Keyword "+keyword+" does not fit the criteria");
         }
+    }
+    public static KeyWords valueOf(String string) {
+        return new KeyWords(string);
     }
 
     @Override

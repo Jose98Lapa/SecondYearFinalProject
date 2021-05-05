@@ -14,11 +14,6 @@ public class ServiceBuilder {
     Servico servico = new Servico(title,id);
 
     private Servico build(){
-        Preconditions.nonNull(title);
-        Preconditions.nonNull(id);
-        Preconditions.nonNull(keywords);
-        Preconditions.nonNull(status);
-        Preconditions.nonNull(tipo);
         return  new Servico(title,id,icon,keywords,status,tipo);
     }
 

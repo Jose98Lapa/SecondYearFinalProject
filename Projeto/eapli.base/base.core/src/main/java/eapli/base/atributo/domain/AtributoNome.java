@@ -1,4 +1,4 @@
-package eapli.base.atributo;
+package eapli.base.atributo.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -26,6 +26,10 @@ public class AtributoNome implements ValueObject {
         }
     }
 
+    public static AtributoNome valueOf(String string) {
+        return new AtributoNome(string);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,6 +37,7 @@ public class AtributoNome implements ValueObject {
         AtributoNome that = (AtributoNome) o;
         return Objects.equals(nome, that.nome) && Objects.equals(regex, that.regex);
     }
+
 
     @Override
     public int hashCode() {

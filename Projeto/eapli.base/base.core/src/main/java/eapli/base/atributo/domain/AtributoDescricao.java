@@ -1,4 +1,4 @@
-package eapli.base.atributo;
+package eapli.base.atributo.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -24,6 +24,9 @@ public class AtributoDescricao implements ValueObject {
         } else {
             throw new IllegalArgumentException("Service Title does not fit the criteria");
         }
+    }
+    public static AtributoDescricao valueOf(String string) {
+        return new AtributoDescricao(string);
     }
 
     @Override

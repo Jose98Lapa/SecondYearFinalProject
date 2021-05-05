@@ -1,6 +1,7 @@
 package eapli.base.servico.Domain;
 
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.validations.Preconditions;
 
 public class Servico implements AggregateRoot<ServicoID> {
     private TituloServico title;
@@ -17,11 +18,13 @@ public class Servico implements AggregateRoot<ServicoID> {
         this.keywords = keywords;
         this.status = status;
         this.tipo = tipo;
+        Preconditions.noneNull();
     }
 
     public Servico(TituloServico title, ServicoID id) {
         this.title=title;
         this.id=id;
+        Preconditions.noneNull();
     }
 
     @Override

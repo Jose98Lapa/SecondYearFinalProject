@@ -1,5 +1,6 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -26,6 +27,10 @@ public class ServicoID implements ValueObject, Comparable<ServicoID> {
         }
 
         //check if already exists
+    }
+
+    public static ServicoID valueOf(String string) {
+        return new ServicoID(string);
     }
 
     @Override

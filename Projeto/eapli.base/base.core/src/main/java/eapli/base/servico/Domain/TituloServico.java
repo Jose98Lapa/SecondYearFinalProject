@@ -1,5 +1,6 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -32,6 +33,10 @@ public class TituloServico implements ValueObject {
         if (o == null || getClass() != o.getClass()) return false;
         TituloServico that = (TituloServico) o;
         return Objects.equals(serviceTitle, that.serviceTitle) && Objects.equals(regex, that.regex);
+    }
+
+    public static TituloServico valueOf(String string) {
+        return new TituloServico(string);
     }
 
     @Override

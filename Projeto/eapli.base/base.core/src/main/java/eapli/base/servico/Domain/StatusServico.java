@@ -1,5 +1,6 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
 import java.util.Objects;
@@ -31,6 +32,10 @@ public class StatusServico {
                 "status='" + status + '\'' +
                 ", regex='" + regex + '\'' +
                 '}';
+    }
+
+    public static StatusServico valueOf(String string) {
+        return new StatusServico(string);
     }
 
     @Override

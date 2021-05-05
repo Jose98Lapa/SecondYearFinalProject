@@ -1,4 +1,4 @@
-package eapli.base.atributo;
+package eapli.base.atributo.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -22,6 +22,9 @@ public class AtributoRegex implements ValueObject {
         if (o == null || getClass() != o.getClass()) return false;
         AtributoRegex that = (AtributoRegex) o;
         return Objects.equals(RegString, that.RegString);
+    }
+    public static AtributoRegex valueOf(String string) {
+        return new AtributoRegex(string);
     }
 
     @Override

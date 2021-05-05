@@ -1,5 +1,6 @@
 package eapli.base.formulario.domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
 import java.util.Objects;
@@ -31,6 +32,10 @@ public class FormularioNome {
                 "nome='" + nome + '\'' +
                 ", regex='" + regex + '\'' +
                 '}';
+    }
+
+    public static FormularioNome valueOf(String string) {
+        return new FormularioNome(string);
     }
 
     @Override

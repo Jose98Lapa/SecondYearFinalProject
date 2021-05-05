@@ -1,4 +1,4 @@
-package eapli.base.atributo;
+package eapli.base.atributo.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -24,6 +24,10 @@ public class AtributoLabel implements ValueObject {
         } else {
             throw new IllegalArgumentException("Label Title does not fit the criteria");
         }
+    }
+
+    public static AtributoLabel valueOf(String string) {
+        return new AtributoLabel(string);
     }
 
     @Override

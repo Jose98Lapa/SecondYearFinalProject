@@ -1,5 +1,6 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
 import java.util.Objects;
@@ -23,6 +24,10 @@ public class TipoServico {
         } else {
             throw new IllegalArgumentException("Type does not fit the criteria");
         }
+    }
+
+    public static TipoServico valueOf(String string) {
+        return new TipoServico(string);
     }
 
     @Override
