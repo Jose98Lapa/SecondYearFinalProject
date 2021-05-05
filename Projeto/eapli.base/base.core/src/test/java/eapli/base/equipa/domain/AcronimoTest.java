@@ -1,6 +1,5 @@
 package eapli.base.equipa.domain;
 
-import eapli.base.Servico.Domain.TituloServico;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
