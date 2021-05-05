@@ -1,5 +1,6 @@
 package eapli.base.catalog.domain;
 
+import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class Catalog implements AggregateRoot<CatalogID> {
 
     public Catalog(CatalogID identity, Title title, Icon icon, BriefDescription briefDesc,
                    CompleteDescription completeDesc, List<AccessCriteria> accessCriteria,
-                   String responsableCollab) {
+                   MecanographicNumber responsableCollab) {
 
     }
 

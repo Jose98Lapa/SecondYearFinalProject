@@ -6,5 +6,5 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface CollaboratorRepository extends DomainRepository<MecanographicNumber, Collaborator> {
 
-
+    Iterable<Collaborator> findAll();
 }

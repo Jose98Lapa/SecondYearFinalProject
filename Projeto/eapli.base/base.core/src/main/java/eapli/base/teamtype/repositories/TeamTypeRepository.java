@@ -18,4 +18,7 @@ public interface TeamTypeRepository extends DomainRepository<TeamTypeID, TeamTyp
         return ofIdentity(number);
     }
 
+
+    Iterable<TeamType> findAll();
+
 }
