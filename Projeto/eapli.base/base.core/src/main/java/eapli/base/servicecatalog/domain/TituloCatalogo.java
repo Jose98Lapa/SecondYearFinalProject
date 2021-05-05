@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class TituloCatalogo implements ValueObject {
     private String catalogTitle;
-    private String regex = "^[a-zA-Z]{1,50}$";
+    private String regex = "^[ a-zA-Z]{1,50}$";
 
     public TituloCatalogo(String catalogTitle) {
         if (StringPredicates.isNullOrEmpty(catalogTitle)) {
