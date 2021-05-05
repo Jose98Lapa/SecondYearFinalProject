@@ -1,4 +1,4 @@
-package eapli.base.servicecatalog.domain;
+package eapli.base.catalog.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -7,11 +7,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TituloCatalogo implements ValueObject {
+public class Title implements ValueObject {
     private String catalogTitle;
     private String regex = "^[ a-zA-Z]{1,50}$";
 
-    public TituloCatalogo(String catalogTitle) {
+    public Title(String catalogTitle) {
         if (StringPredicates.isNullOrEmpty(catalogTitle)) {
             throw new IllegalArgumentException("Catalog title should neither be null nor empty");
         }
@@ -30,7 +30,7 @@ public class TituloCatalogo implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TituloCatalogo that = (TituloCatalogo) o;
+        Title that = (Title) o;
         return Objects.equals(catalogTitle, that.catalogTitle) && Objects.equals(regex, that.regex);
     }
 

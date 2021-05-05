@@ -1,4 +1,4 @@
-package eapli.base.servicecatalog.domain;
+package eapli.base.catalog.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -7,11 +7,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CatalogoID implements ValueObject {
+public class CatalogID implements ValueObject, Comparable<CatalogID> {
     private String catalogID;
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
-    public CatalogoID(final String ID) {
+    public CatalogID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {
             throw new IllegalArgumentException("catalog ID should neither be null nor empty");
         }
@@ -33,7 +33,7 @@ public class CatalogoID implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CatalogoID catalogoID = (CatalogoID) o;
+        CatalogID catalogoID = (CatalogID) o;
         return catalogID == catalogoID.catalogID;
     }
 
@@ -47,5 +47,10 @@ public class CatalogoID implements ValueObject {
         return "catalogoID{" +
                 "seviceID=" + catalogID +
                 '}';
+    }
+
+    @Override
+    public int compareTo(CatalogID o) {
+        return 0;
     }
 }
