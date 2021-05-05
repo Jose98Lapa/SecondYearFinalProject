@@ -1,9 +1,12 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.catalog.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.teamtype.repositories.TeamTypeRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -40,6 +43,40 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public ClientUserRepository clientUsers() {
 		return clientUsers(null);
 	}
+
+	@Override
+	public TeamTypeRepository teamTypes(final TransactionalContext tx) {
+
+		return new InMemoryTeamTypeRepository();
+	}
+
+	@Override
+	public TeamTypeRepository teamTypes() {
+		return teamTypes(null);
+	}
+
+	@Override
+	public CollaboratorRepository collaborators (final TransactionalContext tx) {
+
+		return new InMemoryCollaboratorRepository();
+	}
+
+	@Override
+	public CollaboratorRepository collaborators() {
+		return collaborators(null);
+	}
+
+	@Override
+	public CatalogRepository catalogs (final TransactionalContext tx) {
+
+		return new InMemoryCatalogRepository();
+	}
+
+	@Override
+	public CatalogRepository catalogs() {
+		return catalogs(null);
+	}
+
 
 	@Override
 	public SignupRequestRepository signupRequests() {

@@ -1,7 +1,9 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.catalog.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -34,6 +36,36 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public JpaClientUserRepository clientUsers() {
 		return new JpaClientUserRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public JpaTeamTypeRepository teamTypes() {
+		return new JpaTeamTypeRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public JpaTeamTypeRepository teamTypes(final TransactionalContext autoTx) {
+		return new JpaTeamTypeRepository(autoTx);
+	}
+
+	@Override
+	public CollaboratorRepository collaborators() {
+		return null;
+	}
+
+	@Override
+	public CollaboratorRepository collaborators(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public CatalogRepository catalogs() {
+		return null;
+	}
+
+	@Override
+	public CatalogRepository catalogs(TransactionalContext autoTx) {
+		return null;
 	}
 
 	@Override
