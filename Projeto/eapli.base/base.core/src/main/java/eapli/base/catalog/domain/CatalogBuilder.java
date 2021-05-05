@@ -1,5 +1,6 @@
 package eapli.base.catalog.domain;
 
+import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CatalogBuilder implements DomainFactory<Catalog> {
     private BriefDescription briefDesc;
     private CompleteDescription completeDesc;
     private List<AccessCriteria> accessCriteria = new ArrayList<>();
-    private String responsableCollab;
+    private MecanographicNumber responsableCollab;
 
     public CatalogBuilder withIdentity(final CatalogID identity) {
         this.identity = identity;
@@ -60,7 +61,7 @@ public class CatalogBuilder implements DomainFactory<Catalog> {
         return this;
     }
 
-    public CatalogBuilder withCompleteDesc(final BriefDescription briefDesc) {
+    public CatalogBuilder withBriefDesc(final BriefDescription briefDesc) {
         this.briefDesc = briefDesc;
         return this;
     }
@@ -72,6 +73,10 @@ public class CatalogBuilder implements DomainFactory<Catalog> {
             //final DomainFactory<> exporter = factory.build(format);
         });
         return this;
+    }
+
+    public void withResponsibleCollaborator(MecanographicNumber mecanographicNumber) {
+        this.responsableCollab = mecanographicNumber;
     }
 
     @Override
