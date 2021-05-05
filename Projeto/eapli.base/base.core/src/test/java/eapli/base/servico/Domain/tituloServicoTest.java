@@ -1,4 +1,4 @@
-package eapli.base.Servico.Domain;
+package eapli.base.servico.Domain;
 
 import org.junit.Test;
 

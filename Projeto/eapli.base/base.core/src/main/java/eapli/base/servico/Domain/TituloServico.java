@@ -1,4 +1,4 @@
-package eapli.base.Servico.Domain;
+package eapli.base.servico.Domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;

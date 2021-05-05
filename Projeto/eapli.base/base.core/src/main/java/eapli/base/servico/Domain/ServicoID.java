@@ -1,4 +1,4 @@
-package eapli.base.Servico.Domain;
+package eapli.base.servico.Domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ServicoID implements ValueObject {
+public class ServicoID implements ValueObject, Comparable<ServicoID> {
     private String serviceID;
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
@@ -28,7 +28,6 @@ public class ServicoID implements ValueObject {
         //check if already exists
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,5 +46,10 @@ public class ServicoID implements ValueObject {
         return "ServicoID{" +
                 "seviceID=" + serviceID +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ServicoID o) {
+        return serviceID.compareTo(o.serviceID);
     }
 }
