@@ -40,6 +40,6 @@ public class Acronimo  {
 
     @Override
     public String toString() {
-        return acronimo+ "\n";
+        return acronimo;
     }
 }
