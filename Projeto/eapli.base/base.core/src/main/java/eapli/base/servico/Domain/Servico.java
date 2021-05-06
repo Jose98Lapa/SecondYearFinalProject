@@ -3,7 +3,6 @@ package eapli.base.servico.Domain;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.RepresentationBuilder;
-import eapli.framework.representations.Representationable;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
@@ -11,7 +10,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 @Entity
-public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>, Representationable {
+public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TituloServico title;
     @EmbeddedId
     private ServicoID id;
@@ -66,10 +65,5 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>, R
 
     public ServicoDTO toDTOIncomplete() {
         return new ServicoDTO(this.title,this.id);
-    }
-
-    @Override
-    public <R> R buildRepresentation(RepresentationBuilder<R> builder) {
-        return null;
     }
 }

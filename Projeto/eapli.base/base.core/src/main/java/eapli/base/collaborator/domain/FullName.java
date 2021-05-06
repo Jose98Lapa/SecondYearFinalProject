@@ -1,5 +1,7 @@
 package eapli.base.collaborator.domain;
 
+import eapli.framework.domain.model.ValueObject;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,6 +1,7 @@
 package eapli.base.collaborator.domain;
 
-import com.sun.beans.decoder.ValueObject;
+
+import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 

@@ -1,6 +1,7 @@
 package eapli.base.collaborator.domain;
 
-import com.sun.beans.decoder.ValueObject;
+
+import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
@@ -31,4 +32,5 @@ public class Nickname implements ValueObject {
     public String toString() {
         return this.nickname;
     }
+
 }

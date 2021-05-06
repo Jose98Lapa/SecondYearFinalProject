@@ -1,6 +1,7 @@
 package eapli.base.atributo.domain;
 
 import eapli.base.atributo.DTO.AtributoDTO;
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
@@ -9,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
 @Entity
-public class Atributo implements ValueObject, DTOable<AtributoDTO> {
+public class Atributo implements ValueObject, DTOable<AtributoDTO>, AggregateRoot<AtributoNome> {
     private AtributoNome nome;
     private AtributoLabel label;
     private AtributoDescricao desc;
@@ -44,6 +45,11 @@ public class Atributo implements ValueObject, DTOable<AtributoDTO> {
     }
 
     @Override
+    public boolean sameAs(Object other) {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Atributo{" +
                 "nome=" + nome +
@@ -66,5 +72,10 @@ public class Atributo implements ValueObject, DTOable<AtributoDTO> {
     @Id
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public AtributoNome identity() {
+        return null;
     }
 }
