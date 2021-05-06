@@ -9,6 +9,8 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -20,15 +22,23 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
     private static final long serialVersionUID = 1L;
 
     private String number;
+    private final String regex = "^[0-9]{1,6}$";
 
     public MecanographicNumber(final String mecanographicNumber) {
         if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
             throw new IllegalArgumentException(
                     "Mecanographic Number should neither be null nor empty");
         }
-        // TODO validate invariants, i.e., mecanographic number regular
-        // expression
-        this.number = mecanographicNumber;
+
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(mecanographicNumber);
+
+        if (m.matches())
+            this.number=mecanographicNumber;
+        else
+            throw new IllegalArgumentException("Mecanographic Number does not fit the criteria");
+
+        //check if it already exists
     }
 
     protected MecanographicNumber() {
