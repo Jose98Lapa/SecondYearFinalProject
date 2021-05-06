@@ -1,5 +1,6 @@
 package eapli.base.equipa.application;
 
+import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.builder.EquipaBuilder;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.repositories.EquipaRepository;
@@ -12,9 +13,9 @@ public class CriarEquipaController {
     private final EquipaRepository equipaRepository= PersistenceContext.repositories().teams();
     private final EquipaBuilder equipaBuilder = new EquipaBuilder();
 
-    public void registo(String descricao, String acronimo, String equipaID){
+    public void registo(EquipaDTO equipaDTO){
         authz.ensureAuthenticatedUserHasAnyOf();
-        Equipa equipa = equipaBuilder.designacao(descricao).acronimo(acronimo).equipaID(equipaID).build();
+        Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).build();
         equipaRepository.save(equipa);
     }
 }

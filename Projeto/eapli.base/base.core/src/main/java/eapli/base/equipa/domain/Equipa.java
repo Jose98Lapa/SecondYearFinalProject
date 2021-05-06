@@ -66,6 +66,6 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo,equipaID);
+        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString());
     }
 }
