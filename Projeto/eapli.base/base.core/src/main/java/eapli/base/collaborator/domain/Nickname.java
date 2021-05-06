@@ -10,7 +10,7 @@ public class Nickname implements ValueObject {
     String nickname;
 
     public Nickname(final String nickname){
-        if (nickname==null ||nickname.isEmpty()||!nickname.matches(""))
+        if (nickname==null ||nickname.isEmpty()||!nickname.matches("^\\w{1,15}$"))
             throw new IllegalArgumentException("Nickname does not fit the criteria");
         this.nickname = nickname;
     }

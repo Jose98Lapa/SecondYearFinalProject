@@ -2,14 +2,16 @@ package eapli.base.equipa.domain;
 
 import javax.persistence.*;
 
+import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.representations.dto.DTOable;
 
 import java.util.Objects;
 
 @Entity
-public class Equipa implements AggregateRoot<EquipaID> {
+public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     private Long id;
 
@@ -61,5 +63,10 @@ public class Equipa implements AggregateRoot<EquipaID> {
     @Override
     public int hashCode() {
         return Objects.hash(id, designacao, acronimo,equipaID);
+    }
+
+    @Override
+    public EquipaDTO toDTO() {
+        return new EquipaDTO(designacao,acronimo,equipaID);
     }
 }

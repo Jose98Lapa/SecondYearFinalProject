@@ -25,5 +25,4 @@ public class Collaborator implements AggregateRoot<MecanographicNumber> {
         return AggregateRoot.super.hasIdentity(otherId);
     }
 
-
 }
