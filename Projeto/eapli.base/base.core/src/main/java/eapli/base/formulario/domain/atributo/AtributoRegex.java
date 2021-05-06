@@ -1,4 +1,4 @@
-package eapli.base.atributo.domain;
+package eapli.base.formulario.domain.atributo;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;

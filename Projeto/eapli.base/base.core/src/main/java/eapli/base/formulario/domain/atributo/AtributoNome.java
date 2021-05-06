@@ -1,6 +1,5 @@
-package eapli.base.servico.Domain;
+package eapli.base.formulario.domain.atributo;
 
-import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -9,49 +8,57 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
-public class TituloServico implements ValueObject {
-    private String serviceTitle;
+public class AtributoNome implements ValueObject, Comparable<AtributoNome> {
+    private String nome;
     private String regex = "^[a-zA-Z]{1,50}$";
 
-    public TituloServico(String serviceTitle) {
-        if (StringPredicates.isNullOrEmpty(serviceTitle)) {
+    public AtributoNome(String nome) {
+        if (StringPredicates.isNullOrEmpty(nome)) {
             throw new IllegalArgumentException("Service title should neither be null nor empty");
         }
 
         Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(serviceTitle);
+        Matcher m = p.matcher(nome);
 
         if (m.matches()) {
-            this.serviceTitle = serviceTitle;
+            this.nome = nome;
         } else {
             throw new IllegalArgumentException("Service Title does not fit the criteria");
         }
     }
 
-    protected TituloServico() {
+    protected AtributoNome() {
 
+    }
+
+    public static AtributoNome valueOf(String string) {
+        return new AtributoNome(string);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TituloServico that = (TituloServico) o;
-        return Objects.equals(serviceTitle, that.serviceTitle) && Objects.equals(regex, that.regex);
+        AtributoNome that = (AtributoNome) o;
+        return Objects.equals(nome, that.nome) && Objects.equals(regex, that.regex);
     }
 
-    public static TituloServico valueOf(String string) {
-        return new TituloServico(string);
-    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(serviceTitle, regex);
+        return Objects.hash(nome, regex);
     }
 
     @Override
     public String toString() {
-        return serviceTitle;
+        return "AtributoNome{" +
+                "nome='" + nome + '\'' +
+                ", regex='" + regex + '\'' +
+                '}';
     }
 
+    @Override
+    public int compareTo(AtributoNome o) {
+        return 0;
+    }
 }

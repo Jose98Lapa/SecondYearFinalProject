@@ -1,8 +1,7 @@
-package eapli.base.servico.Domain;
+package eapli.base.servico.domain;
 
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 

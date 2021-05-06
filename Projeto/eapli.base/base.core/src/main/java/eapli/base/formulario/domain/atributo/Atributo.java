@@ -1,8 +1,7 @@
-package eapli.base.atributo.domain;
+package eapli.base.formulario.domain.atributo;
 
-import eapli.base.atributo.DTO.AtributoDTO;
-import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.ValueObject;
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
+import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
@@ -10,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
 @Entity
-public class Atributo implements ValueObject, DTOable<AtributoDTO>, AggregateRoot<AtributoNome> {
+public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
     private AtributoNome nome;
     private AtributoLabel label;
     private AtributoDescricao desc;
@@ -75,7 +74,12 @@ public class Atributo implements ValueObject, DTOable<AtributoDTO>, AggregateRoo
     }
 
     @Override
-    public AtributoNome identity() {
+    public Object identity() {
         return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

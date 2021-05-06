@@ -1,6 +1,5 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;

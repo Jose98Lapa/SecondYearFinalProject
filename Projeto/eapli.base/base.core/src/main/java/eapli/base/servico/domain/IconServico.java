@@ -1,4 +1,4 @@
-package eapli.base.servico.Domain;
+package eapli.base.servico.domain;
 
 import javax.persistence.Embeddable;
 

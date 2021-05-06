@@ -1,6 +1,6 @@
-package eapli.base.atributo.builder;
+package eapli.base.formulario.Builder.builder;
 
-import eapli.base.atributo.domain.*;
+import eapli.base.formulario.domain.atributo.*;
 
 public class AtributoBuilder {
     private AtributoNome nome;

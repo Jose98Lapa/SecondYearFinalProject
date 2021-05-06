@@ -1,6 +1,6 @@
 package eapli.base.servico.DTO;
 
-import eapli.base.servico.Domain.Servico;
+import eapli.base.servico.domain.Servico;
 import eapli.base.servico.builder.ServiceBuilder;
 import eapli.framework.representations.dto.DTOParser;
 

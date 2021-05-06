@@ -1,6 +1,6 @@
 package eapli.base.servico.builder;
 
-import eapli.base.servico.Domain.*;
+import eapli.base.servico.domain.*;
 
 public class ServiceBuilder {
     private TituloServico title;

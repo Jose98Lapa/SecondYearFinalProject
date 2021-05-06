@@ -1,7 +1,7 @@
-package eapli.base.atributo.DTO;
+package eapli.base.formulario.DTO.atributo;
 
-import eapli.base.atributo.builder.AtributoBuilder;
-import eapli.base.atributo.domain.Atributo;
+import eapli.base.formulario.Builder.builder.AtributoBuilder;
+import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.framework.representations.dto.DTOParser;
 
 public class AtributoDTOParser implements DTOParser<AtributoDTO, Atributo> {

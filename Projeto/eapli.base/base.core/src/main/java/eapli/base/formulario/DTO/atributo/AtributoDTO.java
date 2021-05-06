@@ -1,6 +1,6 @@
-package eapli.base.atributo.DTO;
+package eapli.base.formulario.DTO.atributo;
 
-import eapli.base.atributo.domain.*;
+import eapli.base.formulario.domain.atributo.*;
 
 public class AtributoDTO {
     public String nome;
