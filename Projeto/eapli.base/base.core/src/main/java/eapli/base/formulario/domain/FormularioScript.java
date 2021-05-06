@@ -42,8 +42,6 @@ public class FormularioScript implements ValueObject {
 
     @Override
     public String toString() {
-        return "FormularioScript{" +
-                "script='" + script + '\'' +
-                '}';
+        return  script ;
     }
 }

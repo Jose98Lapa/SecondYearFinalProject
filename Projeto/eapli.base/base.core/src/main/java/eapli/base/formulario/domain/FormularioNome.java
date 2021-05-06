@@ -33,10 +33,7 @@ public class FormularioNome {
 
     @Override
     public String toString() {
-        return "FormularioNome{" +
-                "nome='" + nome + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return nome;
     }
 
     public static FormularioNome valueOf(String string) {

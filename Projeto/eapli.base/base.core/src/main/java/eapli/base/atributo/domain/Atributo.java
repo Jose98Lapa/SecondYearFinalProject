@@ -1,16 +1,22 @@
 package eapli.base.atributo.domain;
 
+import eapli.base.atributo.DTO.AtributoDTO;
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
-
-public class Atributo implements ValueObject {
+@Entity
+public class Atributo implements ValueObject, DTOable<AtributoDTO> {
     private AtributoNome nome;
     private AtributoLabel label;
     private AtributoDescricao desc;
     private AtributoRegex regex;
     private AtributoTipo tipo;
+    @Id
+    private Long id;
 
     public Atributo(AtributoNome nome, AtributoLabel label, AtributoDescricao desc, AtributoRegex regex, AtributoTipo tipo) {
         this.nome = nome;
@@ -48,4 +54,17 @@ public class Atributo implements ValueObject {
                 '}';
     }
 
+    @Override
+    public AtributoDTO toDTO() {
+        return new AtributoDTO(nome, label,desc,regex,tipo);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    public Long getId() {
+        return id;
+    }
 }

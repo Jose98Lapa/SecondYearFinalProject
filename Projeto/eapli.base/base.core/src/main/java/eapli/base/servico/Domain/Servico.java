@@ -1,6 +1,6 @@
 package eapli.base.servico.Domain;
 
-import eapli.base.servico.DTO.ServiceDTO;
+import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.Representationable;
@@ -11,7 +11,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 @Entity
-public class Servico implements AggregateRoot<ServicoID>, DTOable, Representationable {
+public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>, Representationable {
     private TituloServico title;
     @EmbeddedId
     private ServicoID id;
@@ -60,8 +60,12 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable, Representatio
     }
 
     @Override
-    public Object toDTO() {
-        return new ServiceDTO(this.title,this.id, this.icon, this.keywords, this.status, this.tipo);
+    public ServicoDTO toDTO() {
+        return new ServicoDTO(this.title,this.id, this.icon, this.keywords, this.status, this.tipo);
+    }
+
+    public ServicoDTO toDTOIncomplete() {
+        return new ServicoDTO(this.title,this.id);
     }
 
     @Override
