@@ -38,10 +38,7 @@ public class KeyWords implements ValueObject {
 
     @Override
     public String toString() {
-        return "KeyWords{" +
-                "keyword='" + keyword + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return keyword ;
     }
 
     @Override

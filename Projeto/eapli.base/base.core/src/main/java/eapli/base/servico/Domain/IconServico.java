@@ -17,4 +17,9 @@ public class IconServico {
     public static IconServico valueof(String icon) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return  String.valueOf(temp);
+    }
 }
