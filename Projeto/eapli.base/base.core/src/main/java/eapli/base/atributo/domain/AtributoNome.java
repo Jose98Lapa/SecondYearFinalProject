@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
-public class AtributoNome implements ValueObject {
+public class AtributoNome implements ValueObject, Comparable<AtributoNome> {
     private String nome;
     private String regex = "^[a-zA-Z]{1,50}$";
 
@@ -55,5 +55,10 @@ public class AtributoNome implements ValueObject {
                 "nome='" + nome + '\'' +
                 ", regex='" + regex + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(AtributoNome o) {
+        return 0;
     }
 }

@@ -1,7 +1,6 @@
 package eapli.base.servico.builder;
 
 import eapli.base.servico.Domain.*;
-import eapli.framework.validations.Preconditions;
 
 public class ServiceBuilder {
     private TituloServico title;
@@ -13,7 +12,7 @@ public class ServiceBuilder {
 
     Servico servico = new Servico(title,id);
 
-    private Servico build(){
+    public Servico build(){
         return  new Servico(title,id,icon,keywords,status,tipo);
     }
 

@@ -26,6 +26,10 @@ public class AtributoDescricao implements ValueObject {
             throw new IllegalArgumentException("Service Title does not fit the criteria");
         }
     }
+
+    protected AtributoDescricao() {
+    }
+
     public static AtributoDescricao valueOf(String string) {
         return new AtributoDescricao(string);
     }

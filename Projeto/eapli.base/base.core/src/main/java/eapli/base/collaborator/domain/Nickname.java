@@ -32,4 +32,5 @@ public class Nickname implements ValueObject {
     public String toString() {
         return this.nickname;
     }
+
 }

@@ -1,7 +1,7 @@
 package eapli.base.collaborator.domain;
 
+
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.util.StringPredicates;
 
 import java.util.Objects;
 
