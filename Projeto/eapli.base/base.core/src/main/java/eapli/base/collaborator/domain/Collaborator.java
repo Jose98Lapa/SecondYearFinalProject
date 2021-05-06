@@ -3,7 +3,7 @@ package eapli.base.collaborator.domain;
 import eapli.framework.domain.model.AggregateRoot;
 
 
-public class Collaborator implements AggregateRoot<MecanographicNumber> {
+public class Collaborator implements AggregateRoot<MecanographicNumber>{
 
     @Override
     public boolean sameAs(Object other) {
