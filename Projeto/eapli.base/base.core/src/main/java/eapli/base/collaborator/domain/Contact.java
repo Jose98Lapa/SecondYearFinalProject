@@ -8,12 +8,12 @@ import java.util.regex.Pattern;
 
 public class Contact implements ValueObject {
 
-    private String collabcContact;
+    private String contact;
 
     public Contact(final String contact){
         if (contact==null ||contact.isEmpty()||!contact.matches("^[0-9]{9}$"))
             throw new IllegalArgumentException("Contact does not fit the criteria");
-        this.collabcContact = contact;
+        this.contact = contact;
         //check if it already exists
 }
 
@@ -27,17 +27,17 @@ public class Contact implements ValueObject {
         }
 
         final Contact that = (Contact) o;
-        return this.collabcContact.equals(that.collabcContact);
+        return this.contact.equals(that.contact);
     }
 
     @Override
     public int hashCode() {
-        return this.collabcContact.hashCode();
+        return this.contact.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.collabcContact;
+        return this.contact;
     }
 
 }
