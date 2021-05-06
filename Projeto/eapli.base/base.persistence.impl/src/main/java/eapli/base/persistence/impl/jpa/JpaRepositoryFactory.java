@@ -6,6 +6,7 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.servico.Repository.ServicoRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -45,6 +46,17 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public JpaEquipaRepository teams(final TransactionalContext autoTx) {
+		return new JpaEquipaRepository(autoTx);
+	}
+
+
+	@Override
+	public JpaEquipaRepository teams() {
+		return new JpaEquipaRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
 	public JpaTeamTypeRepository teamTypes(final TransactionalContext autoTx) {
 		return new JpaTeamTypeRepository(autoTx);
 	}
@@ -78,6 +90,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	public SignupRequestRepository signupRequests() {
 		return new JpaSignupRequestRepository(Application.settings().getPersistenceUnitName());
 	}
+
+	@Override
+	public ServicoRepository servico(TransactionalContext autoTx) {
+		return new JpaServicoRepository(autoTx);
+	}
+
+	@Override
+	public ServicoRepository servico() {
+		return new JpaServicoRepository(Application.settings().getPersistenceUnitName());	}
 
 	@Override
 	public FormularioRepository form(final TransactionalContext autoTx) {

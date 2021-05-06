@@ -3,13 +3,14 @@ package eapli.base.servico.Domain;
 import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class StatusServico {
     private String status;
-    private String regex = "ACTIVE|INACTIVE";
+    private String regex = "ACTIVE|INACTIVE|UNFINISHED";
 
     public StatusServico(String status) {
         if (StringPredicates.isNullOrEmpty(status)) {
@@ -26,12 +27,13 @@ public class StatusServico {
         }
     }
 
+    protected StatusServico() {
+
+    }
+
     @Override
     public String toString() {
-        return "StatusServico{" +
-                "status='" + status + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return status;
     }
 
     public static StatusServico valueOf(String string) {

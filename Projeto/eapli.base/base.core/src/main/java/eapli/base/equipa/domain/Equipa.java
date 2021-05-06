@@ -9,18 +9,21 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import java.util.Objects;
 
 @Entity
-public class Equipa implements AggregateRoot<Acronimo> {
+public class Equipa implements AggregateRoot<EquipaID> {
 
     private Long id;
 
     private String designacao;
 
     @EmbeddedId
+    private EquipaID equipaID;
+
     private Acronimo acronimo;
 
-    public Equipa(String designacao, Acronimo acronimo) {
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID) {
         this.designacao = designacao;
         this.acronimo = acronimo;
+        this.equipaID = equipaID;
     }
 
     protected Equipa(){
@@ -33,8 +36,8 @@ public class Equipa implements AggregateRoot<Acronimo> {
     }
 
     @Override
-    public Acronimo identity() {
-        return this.acronimo;
+    public EquipaID identity() {
+        return this.equipaID;
     }
 
     public void setId(Long id) {
@@ -52,11 +55,11 @@ public class Equipa implements AggregateRoot<Acronimo> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipa equipa = (Equipa) o;
-        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo);
+        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, designacao, acronimo);
+        return Objects.hash(id, designacao, acronimo,equipaID);
     }
 }

@@ -2,23 +2,35 @@ package eapli.base.formulario.domain;
 
 import eapli.base.atributo.domain.Atributo;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.validations.Preconditions;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.Set;
-
+@Entity
 public class Formulario implements AggregateRoot<FormularioID> {
     private FormularioScript script;
+    @EmbeddedId
     private FormularioID id;
-    private FormularioNome nome ;
+    private FormularioNome nome;
+
+    @ElementCollection
     private Set<Atributo> atr;
 
     public Formulario(FormularioScript script, FormularioID id, FormularioNome nome) {
         this.script = script;
         this.id = id;
         this.nome = nome;
+        Preconditions.noneNull();
     }
 
-    public void add(Atributo a){
+    protected Formulario() {
+
+    }
+
+    public void add(Atributo a) {
         atr.add(a);
     }
 
@@ -63,4 +75,5 @@ public class Formulario implements AggregateRoot<FormularioID> {
     public boolean hasIdentity(FormularioID otherId) {
         return AggregateRoot.super.hasIdentity(otherId);
     }
+
 }

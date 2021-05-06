@@ -4,11 +4,12 @@ import eapli.base.catalog.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
-import eapli.base.persistence.impl.jpa.JpaFormularioRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -52,6 +53,19 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return new InMemoryTeamTypeRepository();
 	}
 
+
+	@Override
+	public EquipaRepository teams() {
+
+		return teams(null);
+	}
+
+	@Override
+	public EquipaRepository teams(final TransactionalContext tx) {
+
+		return new InMemoryEquipaRepository();
+	}
+
 	@Override
 	public TeamTypeRepository teamTypes() {
 		return teamTypes(null);
@@ -90,7 +104,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return new InMemorySignupRequestRepository();
 	}
 
-
 	@Override
 	public FormularioRepository form(TransactionalContext autoTx) {
 		return null;
@@ -102,9 +115,20 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public ServicoRepository servico(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public ServicoRepository servico() {
+		return servico(null);
+	}
+
+	@Override
 	public TransactionalContext newTransactionalContext() {
 		// in memory does not support transactions...
 		return null;
 	}
+
 
 }

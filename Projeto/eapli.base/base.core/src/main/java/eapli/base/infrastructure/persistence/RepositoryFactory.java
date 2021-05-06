@@ -8,8 +8,9 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.equipa.repositories.EquipaRepository;
+import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
-import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -19,6 +20,20 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
  *
  */
 public interface RepositoryFactory {
+
+	/**
+	 *
+	 * @param autoTx the transactional context to enrol
+	 * @return
+	 */
+	ServicoRepository servico(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	ServicoRepository servico();
 
 	/**
 	 *
@@ -88,6 +103,25 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
+
+
+	EquipaRepository teams();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	EquipaRepository teams(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+
+
 	CollaboratorRepository collaborators();
 
 	/**

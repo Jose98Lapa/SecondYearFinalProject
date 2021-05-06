@@ -3,10 +3,11 @@ package eapli.base.formulario.domain;
 import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class FormularioNome {
     private String nome;
     private String regex = "^[a-zA-Z]{1,50}$";
@@ -24,6 +25,10 @@ public class FormularioNome {
         } else {
             throw new IllegalArgumentException("Nome Title does not fit the criteria");
         }
+    }
+
+    protected FormularioNome() {
+
     }
 
     @Override

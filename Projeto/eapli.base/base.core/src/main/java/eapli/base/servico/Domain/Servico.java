@@ -1,10 +1,19 @@
 package eapli.base.servico.Domain;
 
+import eapli.base.servico.DTO.ServiceDTO;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.representations.RepresentationBuilder;
+import eapli.framework.representations.Representationable;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
-public class Servico implements AggregateRoot<ServicoID> {
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
+@Entity
+public class Servico implements AggregateRoot<ServicoID>, DTOable, Representationable {
     private TituloServico title;
+    @EmbeddedId
     private ServicoID id;
     private IconServico icon;
     private KeyWords keywords;
@@ -27,6 +36,9 @@ public class Servico implements AggregateRoot<ServicoID> {
         Preconditions.noneNull();
     }
 
+    protected Servico() {
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -45,5 +57,15 @@ public class Servico implements AggregateRoot<ServicoID> {
     @Override
     public boolean hasIdentity(ServicoID otherId) {
         return AggregateRoot.super.hasIdentity(otherId);
+    }
+
+    @Override
+    public Object toDTO() {
+        return new ServiceDTO(this.title,this.id, this.icon, this.keywords, this.status, this.tipo);
+    }
+
+    @Override
+    public <R> R buildRepresentation(RepresentationBuilder<R> builder) {
+        return null;
     }
 }
