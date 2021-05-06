@@ -3,13 +3,15 @@ package eapli.base.atributo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+@Embeddable
 
 public class AtributoTipo implements ValueObject {
     private String tipo;
-    private String regex = "String|int|boolean|char";
+    private String regex = "String|int|boolean|char|float|double";
     
     public AtributoTipo(String tipo) {
         if (StringPredicates.isNullOrEmpty(tipo)) {
@@ -25,6 +27,11 @@ public class AtributoTipo implements ValueObject {
             throw new IllegalArgumentException("Type does not fit the criteria");
         }
     }
+
+    protected AtributoTipo() {
+
+    }
+
     public static AtributoTipo valueOf(String string) {
         return new AtributoTipo(string);
     }

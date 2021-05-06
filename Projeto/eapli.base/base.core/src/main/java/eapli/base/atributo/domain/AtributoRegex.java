@@ -3,7 +3,9 @@ package eapli.base.atributo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
+@Embeddable
 
 public class AtributoRegex implements ValueObject {
     private String RegString;
@@ -13,6 +15,10 @@ public class AtributoRegex implements ValueObject {
             throw new IllegalArgumentException("RegString should neither be null nor empty");
         }
             this.RegString = RegString;
+
+    }
+
+    protected AtributoRegex() {
 
     }
 
