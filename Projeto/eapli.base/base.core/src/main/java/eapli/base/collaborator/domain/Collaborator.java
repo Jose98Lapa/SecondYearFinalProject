@@ -2,8 +2,14 @@ package eapli.base.collaborator.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Collaborator implements AggregateRoot<MecanographicNumber> {
+
+
+    public Collaborator() {
+    }
 
     @Override
     public boolean sameAs(Object other) {

@@ -5,7 +5,6 @@ import javax.persistence.*;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.representations.dto.DTOable;
 
 import java.util.Objects;

@@ -7,11 +7,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Title implements ValueObject {
+public class Titulo implements ValueObject {
     private String catalogTitle;
     private String regex = "^[ a-zA-Z]{1,50}$";
 
-    public Title(String catalogTitle) {
+    public Titulo(String catalogTitle) {
         if (StringPredicates.isNullOrEmpty(catalogTitle)) {
             throw new IllegalArgumentException("Catalog title should neither be null nor empty");
         }
@@ -30,7 +30,7 @@ public class Title implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Title that = (Title) o;
+        Titulo that = (Titulo) o;
         return Objects.equals(catalogTitle, that.catalogTitle) && Objects.equals(regex, that.regex);
     }
 

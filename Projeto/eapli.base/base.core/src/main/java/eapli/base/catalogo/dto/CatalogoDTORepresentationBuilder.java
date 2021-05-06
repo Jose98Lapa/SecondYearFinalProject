@@ -23,14 +23,18 @@
  */
 package eapli.base.catalogo.dto;
 
+import eapli.base.catalogo.domain.Status;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.representations.RepresentationBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Set;
+
 /**
- * The builder for a DishDTO using the RepresentationBuilder interface. This builder is forgiving in the sense that it
- * ignores properties that it doesn't understand in case the Dish has evolved to support new properties.
+ * The builder for a CATALOGDTO using the RepresentationBuilder interface. This builder is forgiving in the sense that it
+ * ignores properties that it doesn't understand in case the CATALOG has evolved to support new properties.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -39,7 +43,7 @@ public class CatalogoDTORepresentationBuilder implements RepresentationBuilder<C
 
     private static final Logger LOGGER = LogManager.getLogger(CatalogoDTORepresentationBuilder.class);
 
-    private static final String PROPERTY_NOT_KNOW_IN_DISH_DTO = "Property '{}' not know in dishDTO";
+    private static final String PROPERTY_NOT_KNOW_IN_CATALOG_DTO = "Property '{}' not know in CATALOG DTO";
 
     private final CatalogoDTO dto = new CatalogoDTO();
 
@@ -64,54 +68,25 @@ public class CatalogoDTORepresentationBuilder implements RepresentationBuilder<C
 
     @Override
     public RepresentationBuilder<CatalogoDTO> withProperty(final String name, final String value) {
-        if ("name".equals(name)) {
-            dto.name = value;
-        } else if ("acronym".equals(name) && "dishType".equals(childObject)) {
-            dto.dishTypeAcronym = value;
-        } else if ("description".equals(name) && "dishType".equals(childObject)) {
-            dto.dishTypeDescription = value;
+        if ("identity".equals(name)) {
+            dto.catalogID = value;
+        } else if ("title".equals(name) && "catalogo".equals(childObject)) {
+            dto.catalogTitle = value;
+        } else if ("icon".equals(name) && "catalogo".equals(childObject)) {
+            dto.icon = value;
+        } else if ("briefDesc".equals(name) && "catalogo".equals(childObject)) {
+            dto.briefDesc = value;
+        } else if ("completeDesc".equals(name) && "catalogo".equals(childObject)) {
+            dto.completeDesc = value;
         } else {
-            LOGGER.warn(PROPERTY_NOT_KNOW_IN_DISH_DTO, name);
-        }
-        return this;
-    }
-
-    @Override
-    public RepresentationBuilder<CatalogoDTO> withProperty(final String name, final Integer value) {
-        if ("salt".equals(name) && "nutricionalInfo".equals(childObject)) {
-            dto.salt = value.intValue();
-        } else if ("calories".equals(name) && "nutricionalInfo".equals(childObject)) {
-            dto.calories = value.intValue();
-        } else {
-            LOGGER.warn(PROPERTY_NOT_KNOW_IN_DISH_DTO, name);
-        }
-        return this;
-    }
-
-    @Override
-    public RepresentationBuilder<CatalogoDTO> withProperty(final String name, final Money value) {
-        if ("currentPrice".equals(name)) {
-            dto.price = value.amountAsDouble();
-            dto.currency = value.currency().toString();
-        } else {
-            LOGGER.warn(PROPERTY_NOT_KNOW_IN_DISH_DTO, name);
-        }
-        return this;
-    }
-
-    @Override
-    public RepresentationBuilder<CatalogoDTO> withProperty(final String name, final Boolean value) {
-        if ("active".equals(name)) {
-            dto.active = value;
-        } else {
-            LOGGER.warn(PROPERTY_NOT_KNOW_IN_DISH_DTO, name);
+            LOGGER.warn(PROPERTY_NOT_KNOW_IN_CATALOG_DTO, name);
         }
         return this;
     }
 
     @Override
     public RepresentationBuilder<CatalogoDTO> withElement(final String value) {
-        LOGGER.warn("DishDTO has no collections; tried to create element {}", value);
+        LOGGER.warn("CATALOG DTO has no collections; tried to create element {}", value);
         return this;
     }
 }

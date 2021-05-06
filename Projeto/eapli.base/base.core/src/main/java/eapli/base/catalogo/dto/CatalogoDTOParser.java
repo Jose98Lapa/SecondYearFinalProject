@@ -23,15 +23,16 @@
  */
 package eapli.base.catalogo.dto;
 
+import eapli.base.catalogo.domain.CatalogBuilder;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.repositories.CatalogRepository;
-import eapli.ecafeteria.dishmanagement.domain.Dish;
-import eapli.ecafeteria.dishmanagement.domain.DishType;
-import eapli.ecafeteria.dishmanagement.domain.NutricionalInfo;
-import eapli.ecafeteria.dishmanagement.repositories.DishTypeRepository;
-import eapli.framework.general.domain.model.Designation;
-import eapli.framework.general.domain.model.Money;
+import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.equipa.DTO.EquipaDTOParser;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTOParser;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -47,14 +48,18 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
     }
 
     @Override
-    public Catalogo valueOf(final CatalogoDTO dto) {
-        /*
-        final DishType type = dishTypeRepository.ofIdentity(dto.dishTypeAcronym)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Unknown dish type: " + dto.dishTypeAcronym));
-        */
+    public Catalogo valueOf(CatalogoDTO dto) {
+        CatalogBuilder builder = new CatalogBuilder();
+        final Set<Equipa> accessCriteria = new HashSet<>();
+        dto.accessCriteria.forEach( a -> accessCriteria.add(new EquipaDTOParser().valueOf(a)));
 
-        //return new Catalogo(type, Designation.valueOf(dto.name),new NutricionalInfo(dto.calories, dto.salt), Money.euros(dto.price));
-        return null;
+
+        final Set<Collaborator> responsableCollabs = new HashSet<>();
+        //dto.responsableCollabs.forEach( a ->(accessCriteria.add(new ColaboradorDTOParser().valueOf(a))));
+
+        return builder.withIdentity(dto.catalogID).withTitle(dto.catalogTitle).withIcon(dto.icon)
+                .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
+                .withResponsableCollabs(responsableCollabs).withAccessCriteria(accessCriteria).build();
     }
+
 }

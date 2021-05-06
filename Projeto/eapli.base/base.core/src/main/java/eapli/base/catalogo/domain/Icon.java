@@ -1,7 +1,11 @@
 package eapli.base.catalogo.domain;
 
-public class Icon {
+import eapli.framework.domain.model.ValueObject;
+
+public class Icon implements ValueObject {
+    String iconPath;
 
     public Icon(String icon) {
+        this.iconPath = icon;
     }
 }
