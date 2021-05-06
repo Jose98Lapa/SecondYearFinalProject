@@ -1,12 +1,12 @@
-package eapli.base.catalog.application;
+package eapli.base.catalogo.application;
 
-import eapli.base.catalog.domain.AccessCriteriaFormat;
-import eapli.base.catalog.domain.Catalog;
-import eapli.base.catalog.domain.CatalogBuilder;
+import eapli.base.catalogo.domain.AccessCriteriaFormat;
+import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.domain.CatalogBuilder;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
-import eapli.base.catalog.repositories.CatalogRepository;
+import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.teamtype.domain.TeamType;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
@@ -44,13 +44,12 @@ public class CreateCatalogController {
         catalogBuilder.withResponsibleCollaborator(mecanographicNumber);
     }
 
-    public Catalog registerCatalog(){
+    public Catalogo registerCatalog(){
         return catalogBuilder.build();
     }
 
-    public void saveCatalog(Catalog catalog){
-        catalogRepo.save(catalog);
+    public void saveCatalog(Catalogo catalogo){
+        catalogRepo.save(catalogo);
     }
-
 
 }

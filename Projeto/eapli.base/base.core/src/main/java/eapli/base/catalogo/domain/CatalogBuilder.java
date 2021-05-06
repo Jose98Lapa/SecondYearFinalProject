@@ -1,4 +1,4 @@
-package eapli.base.catalog.domain;
+package eapli.base.catalogo.domain;
 
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.framework.domain.model.DomainFactory;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CatalogBuilder implements DomainFactory<Catalog> {
+public class CatalogBuilder implements DomainFactory<Catalogo> {
     private CatalogID identity;
     private Title title;
     private Icon icon;
@@ -80,7 +80,7 @@ public class CatalogBuilder implements DomainFactory<Catalog> {
     }
 
     @Override
-    public Catalog build() {
-        return new Catalog(identity,title,icon,briefDesc,completeDesc,accessCriteria,responsableCollab);
+    public Catalogo build() {
+        return new Catalogo(identity,title,icon,briefDesc,completeDesc,accessCriteria,responsableCollab);
     }
 }

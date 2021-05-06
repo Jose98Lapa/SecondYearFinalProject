@@ -1,4 +1,4 @@
-package eapli.base.catalog.domain;
+package eapli.base.catalogo.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
