@@ -8,9 +8,9 @@ public class EquipaDTO {
     public String acronimo;
     public String equipaID;
 
-    public EquipaDTO(String descricao, Acronimo acronimo, EquipaID equipaID) {
+    public EquipaDTO(String descricao, String acronimo, String equipaID) {
         this.descricao = descricao;
-        this.acronimo = acronimo.toString();
-        this.equipaID = equipaID.toString();
+        this.acronimo = acronimo;
+        this.equipaID = equipaID;
     }
 }
