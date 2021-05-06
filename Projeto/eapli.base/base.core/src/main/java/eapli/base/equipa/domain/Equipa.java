@@ -9,13 +9,15 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import java.util.Objects;
 
 @Entity
-public class Equipa implements AggregateRoot<Acronimo> {
+public class Equipa implements AggregateRoot<EquipaID> {
 
     private Long id;
 
     private String designacao;
 
     @EmbeddedId
+    private EquipaID equipaID;
+
     private Acronimo acronimo;
 
     public Equipa(String designacao, Acronimo acronimo) {
@@ -33,8 +35,8 @@ public class Equipa implements AggregateRoot<Acronimo> {
     }
 
     @Override
-    public Acronimo identity() {
-        return this.acronimo;
+    public EquipaID identity() {
+        return this.equipaID;
     }
 
     public void setId(Long id) {
