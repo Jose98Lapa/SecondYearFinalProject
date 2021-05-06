@@ -3,10 +3,11 @@ package eapli.base.atributo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class AtributoLabel implements ValueObject {
     private String label;
     private String regex = "^[a-zA-Z]{1,50}$";
@@ -22,8 +23,11 @@ public class AtributoLabel implements ValueObject {
         if (m.matches()) {
             this.label = label;
         } else {
-            throw new IllegalArgumentException("Label Title does not fit the criteria");
+            throw new IllegalArgumentException("Label does not fit the criteria");
         }
+    }
+
+    protected AtributoLabel() {
     }
 
     public static AtributoLabel valueOf(String string) {

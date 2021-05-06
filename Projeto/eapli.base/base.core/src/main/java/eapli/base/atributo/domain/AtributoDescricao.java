@@ -3,10 +3,11 @@ package eapli.base.atributo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class AtributoDescricao implements ValueObject {
     private String descricao;
     private String regex = "^[a-zA-Z0-9,!? \n\t]{1,50}$";

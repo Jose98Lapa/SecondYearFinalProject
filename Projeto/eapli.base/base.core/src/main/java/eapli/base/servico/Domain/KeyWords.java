@@ -4,10 +4,11 @@ import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class KeyWords implements ValueObject {
     private String keyword;
     private String regex = "^[a-zA-Z]{1,10}$";
@@ -26,6 +27,11 @@ public class KeyWords implements ValueObject {
             throw new IllegalArgumentException("Keyword "+keyword+" does not fit the criteria");
         }
     }
+
+    protected KeyWords() {
+
+    }
+
     public static KeyWords valueOf(String string) {
         return new KeyWords(string);
     }

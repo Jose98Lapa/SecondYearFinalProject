@@ -4,10 +4,11 @@ import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class TituloServico implements ValueObject {
     private String serviceTitle;
     private String regex = "^[a-zA-Z]{1,50}$";
@@ -25,6 +26,10 @@ public class TituloServico implements ValueObject {
         } else {
             throw new IllegalArgumentException("Service Title does not fit the criteria");
         }
+    }
+
+    protected TituloServico() {
+
     }
 
     @Override

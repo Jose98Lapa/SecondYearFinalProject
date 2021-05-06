@@ -3,13 +3,14 @@ package eapli.base.servico.Domain;
 import eapli.base.atributo.domain.AtributoNome;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class StatusServico {
     private String status;
-    private String regex = "ACTIVE|INACTIVE";
+    private String regex = "ACTIVE|INACTIVE|UNFINISHED";
 
     public StatusServico(String status) {
         if (StringPredicates.isNullOrEmpty(status)) {
@@ -24,6 +25,10 @@ public class StatusServico {
         } else {
             throw new IllegalArgumentException("Service ID does not fit the criteria");
         }
+    }
+
+    protected StatusServico() {
+
     }
 
     @Override

@@ -21,6 +21,9 @@ public class Atributo implements ValueObject {
         Preconditions.noneNull();
     }
 
+    protected Atributo() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,4 +47,5 @@ public class Atributo implements ValueObject {
                 ", tipo=" + tipo +
                 '}';
     }
+
 }

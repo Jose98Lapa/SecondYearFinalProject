@@ -3,8 +3,13 @@ package eapli.base.servico.Domain;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
+@Entity
 public class Servico implements AggregateRoot<ServicoID> {
     private TituloServico title;
+    @EmbeddedId
     private ServicoID id;
     private IconServico icon;
     private KeyWords keywords;
@@ -25,6 +30,10 @@ public class Servico implements AggregateRoot<ServicoID> {
         this.title=title;
         this.id=id;
         Preconditions.noneNull();
+    }
+
+    protected Servico() {
+
     }
 
     @Override
