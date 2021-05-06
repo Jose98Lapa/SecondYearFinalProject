@@ -2,6 +2,7 @@ package eapli.base.formulario.application;
 
 import eapli.base.atributo.builder.AtributoBuilder;
 import eapli.base.atributo.domain.Atributo;
+import eapli.base.formulario.Builder.FormularioBuilder;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.domain.FormularioNome;
@@ -22,12 +23,14 @@ public class FormularioController {
     private final AuthorizationService authz =AuthzRegistry.authorizationService();
     private final FormularioRepository repo = PersistenceContext.repositories().form();
     AtributoBuilder atributoBuilder = new AtributoBuilder();
+    FormularioBuilder fmb = new FormularioBuilder();
 
     Formulario form;
     public void registo(FormularioNome nome, FormularioID id, FormularioScript script){
-        form = new Formulario(script,id,nome);
+        fmb.setNome(nome.toString()).setId(id.toString()).setScript(script.toString());
     }
     public Formulario save(){
+        form=fmb.setAtr(atributos).build();
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.COLABORATOR);
         return repo.save(form);
     }

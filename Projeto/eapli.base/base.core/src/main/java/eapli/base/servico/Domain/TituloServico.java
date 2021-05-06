@@ -51,9 +51,7 @@ public class TituloServico implements ValueObject {
 
     @Override
     public String toString() {
-        return "tituloServico{" +
-                "serviceTitle='" + serviceTitle + '\'' +
-                '}';
+        return serviceTitle;
     }
 
 }

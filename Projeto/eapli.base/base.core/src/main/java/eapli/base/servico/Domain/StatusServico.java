@@ -33,10 +33,7 @@ public class StatusServico {
 
     @Override
     public String toString() {
-        return "StatusServico{" +
-                "status='" + status + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return status;
     }
 
     public static StatusServico valueOf(String string) {

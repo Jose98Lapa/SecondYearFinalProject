@@ -50,9 +50,6 @@ public class TipoServico {
 
     @Override
     public String toString() {
-        return "TipoServico{" +
-                "tipo='" + tipo + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return  tipo;
     }
 }

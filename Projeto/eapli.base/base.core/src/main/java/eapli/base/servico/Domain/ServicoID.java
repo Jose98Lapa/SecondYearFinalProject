@@ -53,9 +53,7 @@ public class ServicoID implements ValueObject, Comparable<ServicoID> {
 
     @Override
     public String toString() {
-        return "ServicoID{" +
-                "seviceID=" + serviceID +
-                '}';
+        return serviceID;
     }
 
     @Override

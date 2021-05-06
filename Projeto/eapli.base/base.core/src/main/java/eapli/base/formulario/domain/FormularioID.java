@@ -34,10 +34,7 @@ public class FormularioID implements Comparable<FormularioID>, Serializable {
 
     @Override
     public String toString() {
-        return "FormularioID{" +
-                "ID='" + ID + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return ID;
     }
 
     public static FormularioID valueOf(String string) {
