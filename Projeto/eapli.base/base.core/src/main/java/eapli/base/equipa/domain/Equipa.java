@@ -20,9 +20,10 @@ public class Equipa implements AggregateRoot<EquipaID> {
 
     private Acronimo acronimo;
 
-    public Equipa(String designacao, Acronimo acronimo) {
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID) {
         this.designacao = designacao;
         this.acronimo = acronimo;
+        this.equipaID = equipaID;
     }
 
     protected Equipa(){
@@ -54,11 +55,11 @@ public class Equipa implements AggregateRoot<EquipaID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipa equipa = (Equipa) o;
-        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo);
+        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, designacao, acronimo);
+        return Objects.hash(id, designacao, acronimo,equipaID);
     }
 }

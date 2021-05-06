@@ -28,4 +28,8 @@ public class EquipaBuilder {
         this.acronimo = Acronimo.valueOf(acronimo);
         return this;
     }
+
+    public Equipa build(){
+        return new Equipa(designacao,acronimo,equipaID);
+    }
 }
