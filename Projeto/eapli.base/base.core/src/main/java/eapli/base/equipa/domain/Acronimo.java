@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class Acronimo implements ValueObject, Comparable<Acronimo> {
+public class Acronimo  {
     private String acronimo;
 
     public Acronimo(String acronimo) {
@@ -24,10 +24,6 @@ public class Acronimo implements ValueObject, Comparable<Acronimo> {
         return new Acronimo(acronimo);
     }
 
-    @Override
-    public int compareTo(Acronimo o) {
-        return 0;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,6 +40,6 @@ public class Acronimo implements ValueObject, Comparable<Acronimo> {
 
     @Override
     public String toString() {
-        return acronimo+ "\n";
+        return acronimo;
     }
 }

@@ -1,24 +1,39 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.atributo.domain.Atributo;
+import eapli.base.formulario.domain.atributo.Atributo;
+import eapli.base.formulario.DTO.FormularioDTO;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.representations.dto.DTOable;
+import eapli.framework.validations.Preconditions;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Objects;
 import java.util.Set;
 
-public class Formulario implements AggregateRoot<FormularioID> {
+@Entity
+public class Formulario implements AggregateRoot<FormularioID>, DTOable<FormularioDTO> {
     private FormularioScript script;
+    @EmbeddedId
     private FormularioID id;
-    private FormularioNome nome ;
+    private FormularioNome nome;
+
+    @OneToMany
     private Set<Atributo> atr;
 
-    public Formulario(FormularioScript script, FormularioID id, FormularioNome nome) {
+    public Formulario(FormularioScript script, FormularioID id, FormularioNome nome,Set<Atributo> atr) {
         this.script = script;
         this.id = id;
         this.nome = nome;
+        this.atr = atr;
+        Preconditions.noneNull();
     }
 
-    public void add(Atributo a){
+    protected Formulario() {
+    }
+
+    public void add(Atributo a) {
         atr.add(a);
     }
 
@@ -62,5 +77,10 @@ public class Formulario implements AggregateRoot<FormularioID> {
     @Override
     public boolean hasIdentity(FormularioID otherId) {
         return AggregateRoot.super.hasIdentity(otherId);
+    }
+
+    @Override
+    public FormularioDTO toDTO() {
+        return new FormularioDTO(script,id,nome,atr);
     }
 }

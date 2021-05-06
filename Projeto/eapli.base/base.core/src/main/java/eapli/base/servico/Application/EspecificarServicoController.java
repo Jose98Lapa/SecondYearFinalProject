@@ -1,6 +1,6 @@
 package eapli.base.servico.Application;
 
-import eapli.base.servico.Domain.*;
+import eapli.base.servico.domain.*;
 
 public class EspecificarServicoController {
 

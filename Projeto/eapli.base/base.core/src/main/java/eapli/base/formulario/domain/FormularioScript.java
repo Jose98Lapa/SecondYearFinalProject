@@ -1,20 +1,24 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.atributo.domain.AtributoNome;
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class FormularioScript {
+@Embeddable
+public class FormularioScript implements ValueObject {
     private String script;
 
     public FormularioScript(String script) {
         if (StringPredicates.isNullOrEmpty(script)) {
-            throw new IllegalArgumentException("Nome should neither be null nor empty");
+            throw new IllegalArgumentException("Script should neither be null nor empty");
         }
         this.script = script;
+    }
+
+    protected FormularioScript() {
+
     }
 
     @Override
@@ -36,8 +40,6 @@ public class FormularioScript {
 
     @Override
     public String toString() {
-        return "FormularioScript{" +
-                "script='" + script + '\'' +
-                '}';
+        return  script ;
     }
 }

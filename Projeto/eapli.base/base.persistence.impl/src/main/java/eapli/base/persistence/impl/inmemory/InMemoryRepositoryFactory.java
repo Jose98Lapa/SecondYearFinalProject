@@ -4,9 +4,11 @@ import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -33,7 +35,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return users(null);
 	}
 
-
 	@Override
 	public ClientUserRepository clientUsers(final TransactionalContext tx) {
 
@@ -49,6 +50,19 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public TeamTypeRepository teamTypes(final TransactionalContext tx) {
 
 		return new InMemoryTeamTypeRepository();
+	}
+
+
+	@Override
+	public EquipaRepository teams() {
+
+		return teams(null);
+	}
+
+	@Override
+	public EquipaRepository teams(final TransactionalContext tx) {
+
+		return new InMemoryEquipaRepository();
 	}
 
 	@Override
@@ -89,7 +103,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return new InMemorySignupRequestRepository();
 	}
 
-
 	@Override
 	public FormularioRepository form(TransactionalContext autoTx) {
 		return null;
@@ -101,9 +114,20 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public ServicoRepository servico(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public ServicoRepository servico() {
+		return servico(null);
+	}
+
+	@Override
 	public TransactionalContext newTransactionalContext() {
 		// in memory does not support transactions...
 		return null;
 	}
+
 
 }
