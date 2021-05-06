@@ -49,6 +49,6 @@ public class EquipaID implements ValueObject, Comparable<EquipaID> {
 
     @Override
     public String toString() {
-        return "ID da equipa = " + this.ID + "\n";
+        return this.ID;
     }
 }

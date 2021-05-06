@@ -1,9 +1,9 @@
 package eapli.base.formulario.DTO;
 
-import eapli.base.atributo.DTO.AtributoDTO;
-import eapli.base.atributo.domain.*;
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
 import eapli.base.formulario.Builder.FormularioBuilder;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.atributo.*;
 import eapli.framework.representations.dto.DTOParser;
 
 import java.util.HashSet;

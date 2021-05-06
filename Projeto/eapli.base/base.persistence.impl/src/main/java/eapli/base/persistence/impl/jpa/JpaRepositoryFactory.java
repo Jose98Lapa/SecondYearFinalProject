@@ -1,8 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
-import eapli.base.atributo.repository.AtributoRepository;
-import eapli.base.catalog.repositories.CatalogRepository;
+import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.formulario.repository.FormularioRepository;
@@ -109,16 +108,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormularioRepository form() {
 		return new JpaFormularioRepository(Application.settings().getPersistenceUnitName());
-	}
-
-	@Override
-	public AtributoRepository atributo(final TransactionalContext autoTx) {
-		return new JpaAtributoRepository(autoTx);
-	}
-
-	@Override
-	public AtributoRepository atributo() {
-		return new JpaAtributoRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

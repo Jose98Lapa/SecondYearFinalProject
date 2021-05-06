@@ -1,6 +1,6 @@
 package eapli.base.servico.DTO;
 
-import eapli.base.servico.Domain.*;
+import eapli.base.servico.domain.*;
 public class ServicoDTO {
     public String title;
     public String id;

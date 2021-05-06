@@ -1,7 +1,7 @@
 package eapli.base.formulario.DTO;
 
-import eapli.base.atributo.DTO.AtributoDTO;
-import eapli.base.atributo.domain.Atributo;
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
+import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.domain.FormularioNome;
 import eapli.base.formulario.domain.FormularioScript;

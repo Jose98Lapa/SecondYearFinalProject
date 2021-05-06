@@ -1,7 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.atributo.repository.AtributoRepository;
-import eapli.base.catalog.repositories.CatalogRepository;
+import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
@@ -35,17 +34,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public UserRepository users() {
 		return users(null);
 	}
-
-	@Override
-	public AtributoRepository atributo(final TransactionalContext tx) {
-		return new InMemoryAtributoRepository();
-	}
-
-	@Override
-	public AtributoRepository atributo() {
-		return atributo(null);
-	}
-
 
 	@Override
 	public ClientUserRepository clientUsers(final TransactionalContext tx) {

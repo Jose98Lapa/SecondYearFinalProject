@@ -1,6 +1,6 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.atributo.domain.Atributo;
+import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.base.formulario.DTO.FormularioDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;

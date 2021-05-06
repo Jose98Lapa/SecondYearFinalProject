@@ -1,7 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.servico.Domain.Servico;
-import eapli.base.servico.Domain.ServicoID;
+import eapli.base.servico.domain.Servico;
+import eapli.base.servico.domain.ServicoID;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
