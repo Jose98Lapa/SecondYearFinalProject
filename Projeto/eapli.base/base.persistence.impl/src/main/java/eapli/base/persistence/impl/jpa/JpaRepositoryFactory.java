@@ -4,6 +4,7 @@ import eapli.base.Application;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
+import eapli.base.criticidade.repository.CriticidadeRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -49,6 +50,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public JpaEquipaRepository teams(final TransactionalContext autoTx) {
 		return new JpaEquipaRepository(autoTx);
+	}
+
+	@Override
+	public CriticidadeRepository criticidades() {
+		return null;
+	}
+
+	@Override
+	public CriticidadeRepository criticidades(TransactionalContext autoTx) {
+		return null;
 	}
 
 

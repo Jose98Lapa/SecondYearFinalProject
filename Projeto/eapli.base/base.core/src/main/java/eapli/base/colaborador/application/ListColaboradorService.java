@@ -1,20 +1,18 @@
 package eapli.base.colaborador.application;
 
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.equipa.DTO.EquipaDTO;
-import eapli.base.equipa.repositories.EquipaRepository;
+import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ListColaboradorService {
-    private final EquipaRepository teamRepo = PersistenceContext.repositories().teams();
+    private final CollaboratorRepository colaboratorRepo = PersistenceContext.repositories().collaborators();
 
-    public Iterable<Colaborador> teams(){
-        //Set<EquipaDTO> equipas = new HashSet<>();
-        //teamRepo.findAll().forEach(equipa -> equipas.add(equipa.toDTO()));
-        //return equipas;
-        return null;
+    public Iterable<ColaboradorDTO> colaboradores(){
+        Set<ColaboradorDTO>  colaboradores = new HashSet<>();
+        colaboratorRepo.findAll().forEach(colaborador -> colaboradores.add(colaborador.toDTO()));
+        return colaboradores;
     }
 }
