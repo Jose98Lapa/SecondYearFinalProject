@@ -27,6 +27,7 @@ import eapli.base.catalogo.domain.CatalogBuilder;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.dto.ColaboradorDTOParser;
 import eapli.base.equipa.DTO.EquipaDTOParser;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTOParser;
@@ -41,25 +42,23 @@ import java.util.Set;
  */
 public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
-    private final CatalogRepository catalogRepository;
-
-    public CatalogoDTOParser(final CatalogRepository catalogRepository) {
-        this.catalogRepository = catalogRepository;
+    public CatalogoDTOParser() {
+        //empty
     }
 
     @Override
     public Catalogo valueOf(CatalogoDTO dto) {
         CatalogBuilder builder = new CatalogBuilder();
+
         final Set<Equipa> accessCriteria = new HashSet<>();
         dto.accessCriteria.forEach( a -> accessCriteria.add(new EquipaDTOParser().valueOf(a)));
 
-
-        final Set<Colaborador> responsableCollabs = new HashSet<>();
-        //dto.responsableCollabs.forEach( a ->(accessCriteria.add(new ColaboradorDTOParser().valueOf(a))));
+        final Set<Colaborador> lstResponsable = new HashSet<>();
+        dto.responsableCollabs.forEach( a -> lstResponsable.add(new ColaboradorDTOParser().valueOf(a)));
 
         return builder.withIdentity(dto.catalogID).withTitle(dto.catalogTitle).withIcon(dto.icon)
                 .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
-                .withResponsableCollabs(responsableCollabs).withAccessCriteria(accessCriteria).build();
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).build();
     }
 
 }
