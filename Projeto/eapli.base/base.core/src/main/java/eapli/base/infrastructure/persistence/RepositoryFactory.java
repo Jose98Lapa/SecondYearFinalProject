@@ -3,11 +3,13 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
+import eapli.base.cor.reposotories.CorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.servico.Repository.ServicoRepository;
@@ -115,6 +117,39 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	EquipaRepository teams(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+
+
+	CorRepository cores();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	CorRepository cores(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+
+	TipoEquipaRepository tiposDeEquipa();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	TipoEquipaRepository tiposDeEquipa(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode

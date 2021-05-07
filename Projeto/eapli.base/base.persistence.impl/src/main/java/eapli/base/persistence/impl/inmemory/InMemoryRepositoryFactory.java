@@ -1,9 +1,12 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.TipoEquipa.Builder.TipoEquipaBuilder;
+import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
+import eapli.base.cor.reposotories.CorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.funcao.repositories.FuncaoRepository;
@@ -65,6 +68,33 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 		return new InMemoryEquipaRepository();
 	}
+
+
+	@Override
+	public CorRepository cores() {
+
+		return cores(null);
+	}
+
+	@Override
+	public CorRepository cores(final TransactionalContext tx) {
+
+		return new InMemoryCorRepository();
+	}
+
+
+	@Override
+	public TipoEquipaRepository tiposDeEquipa() {
+
+		return tiposDeEquipa(null);
+	}
+
+	@Override
+	public TipoEquipaRepository tiposDeEquipa(final TransactionalContext tx) {
+
+		return new InMemoryTipoEquipaRepository();
+	}
+
 
 	@Override
 	public TeamTypeRepository teamTypes() {

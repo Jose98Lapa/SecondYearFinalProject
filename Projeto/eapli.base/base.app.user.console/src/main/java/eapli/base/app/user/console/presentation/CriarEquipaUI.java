@@ -1,5 +1,6 @@
 package eapli.base.app.user.console.presentation;
 
+import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -10,6 +11,9 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.LoggerFactory;
 
 import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CriarEquipaUI extends AbstractUI {
     private final Logger LOGGER =  LoggerFactory.getLogger(CriarEquipaUI.class);
@@ -23,7 +27,28 @@ public class CriarEquipaUI extends AbstractUI {
         String acronimo = Console.readLine("Insira o Acrónimo da Equipa");
         String descricao = Console.readLine("Insira a descricao");
         String numeroMecanografico = Console.readLine("Insira o número mecanográfico de um colaborador");
-        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,numeroMecanografico);
+        List<TipoEquipaDTO> equipaDTOList = new ArrayList<>(20);
+        for (TipoEquipaDTO tipoEquipaDTO: criarEquipaController.getTipoEquipaDTO()){
+            equipaDTOList.add(tipoEquipaDTO);
+        }
+        TipoEquipaDTO tipoEquipaDTO = null;
+        boolean continueLoop = true;
+        while (continueLoop){
+            for (int i=0;i<equipaDTOList.size();i++){
+                System.out.printf("%d %s \n",i+1,equipaDTOList.get(i));
+            }
+            int posicao = Console.readInteger("Insira uma posição válida");
+            if (posicao<0||posicao>equipaDTOList.size()){
+                System.out.println("A posição está errada por isso será necessário reintroduzir o valor da posição dentro dos limites");
+
+            }else{
+                continueLoop = false;
+                tipoEquipaDTO = equipaDTOList.get(posicao-1);
+            }
+        }
+
+
+        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,numeroMecanografico,tipoEquipaDTO);
 
         try {
             this.criarEquipaController.registo(equipaDTO);

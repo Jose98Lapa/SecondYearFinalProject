@@ -1,5 +1,6 @@
 package eapli.base.equipa.builder;
 
+import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
@@ -12,6 +13,8 @@ public class EquipaBuilder {
     private Acronimo acronimo;
 
     private Colaborador colaborador;
+
+    private TipoEquipa tipoEquipa;
 
 
     public EquipaBuilder() {
@@ -36,8 +39,13 @@ public class EquipaBuilder {
         return this;
     }
 
+    public EquipaBuilder tipoDeEquipa(TipoEquipa tipoEquipa){
+        this.tipoEquipa = tipoEquipa;
+        return this;
+    }
+
 
     public Equipa build(){
-        return new Equipa(designacao,acronimo,equipaID,colaborador);
+        return new Equipa(designacao,acronimo,equipaID,colaborador,tipoEquipa);
     }
 }
