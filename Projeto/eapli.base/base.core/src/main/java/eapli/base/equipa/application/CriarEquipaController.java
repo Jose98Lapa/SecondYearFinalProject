@@ -1,14 +1,17 @@
 package eapli.base.equipa.application;
 
-import eapli.base.colaborador.domain.NumeroMecanografico;
+import eapli.base.colaborador.domain.*;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.builder.EquipaBuilder;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.repositories.EquipaRepository;
+import eapli.base.funcao.domain.Funcao;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
+import java.util.Optional;
 
 public class CriarEquipaController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -17,9 +20,15 @@ public class CriarEquipaController {
     private final EquipaBuilder equipaBuilder = new EquipaBuilder();
 
     public void registo(EquipaDTO equipaDTO){
-        authz.ensureAuthenticatedUserHasAnyOf();
-        collaboratorRepository.ofIdentity(NumeroMecanografico.valueOf(equipaDTO.numeroMecanografico));
-        Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).build();
-        equipaRepository.save(equipa);
+        //authz.ensureAuthenticatedUserHasAnyOf();
+        Optional<Colaborador> colaborador = collaboratorRepository.ofIdentity(NumeroMecanografico.valueOf(equipaDTO.numeroMecanografico));
+        if (colaborador.isPresent()){
+            Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).colaborador(colaborador.get()).build();
+            equipaRepository.save(equipa);
+        }else{
+            throw new IllegalArgumentException("Numero Mecanografico nao presente em sistema");
+        }
+
+
     }
 }
