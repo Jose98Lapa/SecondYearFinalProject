@@ -1,8 +1,28 @@
 package eapli.base.colaborador.application;
 
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.ColaboradorBuilder;
+import eapli.base.funcao.domain.Funcao;
+import eapli.base.funcao.repositories.FuncaoRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
 
 public class EspecificarColaboradorController {
 
-    public Iterable<Colaborador> getFunctionList(){return null;}
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    // private final FuncaoRepository funcRepo = PersistenceContext.repositories().funcoes();
+    private final ColaboradorBuilder colabBuilder = new ColaboradorBuilder();
+
+    public void method(String estrada,String numPorta,String andar,String localizacao,String codPostal,String contacto,
+                       String nomeCompleto,String email,String mNumero,String alcunha,String dataDeNascimento){
+        authz.ensureAuthenticatedUserHasAnyOf();
+        colabBuilder.withAddress(estrada,numPorta,andar,localizacao,codPostal).withContact(contacto).withFullName(nomeCompleto)
+                .withInstitutionalEmail(email).withNickname(alcunha).withDateOfBirth(dataDeNascimento);
+    }
+
+    //public Iterable<Funcao> getFunctionList(){return funcRepo.findAll();}
+
+    public Colaborador registerCollaborator(Colaborador colaborador){return colabBuilder.build();}
 }

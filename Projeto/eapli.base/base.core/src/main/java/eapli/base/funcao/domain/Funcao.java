@@ -7,9 +7,9 @@ public class Funcao implements AggregateRoot<IdFuncao> {
     private IdFuncao idFuncao;
     private Designacao designacao;
 
-    public Funcao(IdFuncao idFuncao, Designacao designacao){
-        this.idFuncao = idFuncao;
-        this.designacao = designacao;
+    public Funcao(String idFuncao, String designacao){
+        this.idFuncao = new IdFuncao(idFuncao);
+        this.designacao = new Designacao(designacao);
     }
 
     protected Funcao(){}

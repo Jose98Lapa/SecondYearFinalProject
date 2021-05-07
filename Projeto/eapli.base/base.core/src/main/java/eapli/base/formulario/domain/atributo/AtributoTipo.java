@@ -4,6 +4,7 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class AtributoTipo implements ValueObject {
     private String tipo;
+    @Transient
     private String regex = "String|int|boolean|char|float|double";
     
     public AtributoTipo(String tipo) {

@@ -12,16 +12,19 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>{
     private EmailInstitucional email;
     private NumeroMecanografico mNumber;
     private Alcunha alcunha;
+    private DataDeNascimento dataDeNascimento;
+
     private Funcao funcao;
     //private MecanographicNumber supervisorNumber;
 
-    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, Funcao funcao) {
+    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, Funcao funcao, DataDeNascimento dataDeNascimento) {
         this.morada = morada;
         this.contacto = contacto;
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.mNumber = mNumber;
         this.alcunha = alcunha;
+        this.dataDeNascimento = dataDeNascimento;
         this.funcao = funcao;
         //this.supervisorNumber = supervisorNumber;
     }

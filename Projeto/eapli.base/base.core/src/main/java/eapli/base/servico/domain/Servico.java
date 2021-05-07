@@ -1,24 +1,38 @@
 package eapli.base.servico.domain;
 
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
-    private TituloServico title;
     @EmbeddedId
     private ServicoID id;
     private IconServico icon;
-    private KeyWords keywords;
+    private TituloServico title;
     private StatusServico status;
     private TipoServico tipo;
+    private ServicoScript script;
+    private CompleteDescription compDesc;
+    private BriefDescription briedDesc;
+    @OneToOne
+    private Formulario form ;
 
-    public Servico(TituloServico title, ServicoID id, IconServico icon, KeyWords keywords, StatusServico status, TipoServico tipo) {
+    @ElementCollection
+    private Set<KeyWords> keywords;
+
+
+    public Servico(TituloServico title, ServicoID id, IconServico icon, Set<KeyWords> keywords, StatusServico status, TipoServico tipo,CompleteDescription compDesc,BriefDescription briedDesc, ServicoScript script, Formulario form) {
+
         this.title = title;
         this.id = id;
         this.icon = icon;
@@ -26,6 +40,18 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         this.status = status;
         this.tipo = tipo;
         Preconditions.noneNull();
+        this.form = form;
+        this.script=script;
+        this.compDesc = compDesc;
+        this.briedDesc = briedDesc;
+    }
+
+    public void setScript(ServicoScript script) {
+        this.script = script;
+    }
+
+    public void setForm(Formulario form) {
+        this.form = form;
     }
 
     public Servico(TituloServico title, ServicoID id) {
@@ -59,7 +85,11 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
 
     @Override
     public ServicoDTO toDTO() {
-        return new ServicoDTO(this.title,this.id, this.icon, this.keywords, this.status, this.tipo);
+        Set<String> key2 = new HashSet<>();
+        for (KeyWords key:keywords) {
+            key2.add(key.toString());
+        }
+        return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString());
     }
 
     public ServicoDTO toDTOIncomplete() {

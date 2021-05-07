@@ -3,12 +3,14 @@ package eapli.base.formulario.domain;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
 public class FormularioNome {
     private String nome;
+    @Transient
     private String regex = "^[a-zA-Z]{1,50}$";
 
     public FormularioNome(String nome) {
