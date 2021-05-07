@@ -4,12 +4,14 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
 public class ServicoID implements ValueObject, Comparable<ServicoID> {
     private String serviceID;
+    @Transient
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
     public ServicoID(final String ID) {

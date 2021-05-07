@@ -4,12 +4,16 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
 public class KeyWords implements ValueObject {
     private String keyword;
+    @Transient
     private String regex = "^[a-zA-Z]{1,10}$";
 
     public KeyWords(String keyword) {
@@ -31,8 +35,12 @@ public class KeyWords implements ValueObject {
 
     }
 
-    public static KeyWords valueOf(String string) {
-        return new KeyWords(string);
+    public static Set<KeyWords> valueOf(Set<String> string) {
+        Set<KeyWords> key = new HashSet<>();
+        for (String str:string) {
+            key.add(new KeyWords(str));
+        }
+        return key;
     }
 
     @Override

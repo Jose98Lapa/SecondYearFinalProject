@@ -1,4 +1,4 @@
-package eapli.base.formulario.Builder.builder;
+package eapli.base.formulario.Builder;
 
 import eapli.base.formulario.domain.atributo.*;
 

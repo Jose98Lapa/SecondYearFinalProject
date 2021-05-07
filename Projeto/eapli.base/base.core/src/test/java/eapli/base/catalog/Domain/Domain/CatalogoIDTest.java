@@ -1,26 +1,26 @@
 package eapli.base.catalog.Domain.Domain;
 
-import eapli.base.catalog.domain.CatalogID;
+import eapli.base.catalogo.domain.CatalogoID;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CatalogoIDTest {
-    CatalogID id = new CatalogID("Aa-32");
+    CatalogoID id = new CatalogoID("Aa-32");
 
     @Test
     public void ensure() {
-        assertEquals(id, new CatalogID("Aa-32"));
+        assertEquals(id, new CatalogoID("Aa-32"));
     }
 
     @Test
     public void test2() {
-        assertNotEquals(id, new CatalogID("Aa-2"));
+        assertNotEquals(id, new CatalogoID("Aa-2"));
     }
 
     @Test
     public void test3() {
-        assertThrows(IllegalArgumentException.class,() -> new CatalogID("Aa-32!"));
+        assertThrows(IllegalArgumentException.class,() -> new CatalogoID("Aa-32!"));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class CatalogoIDTest {
 
     @Test
     public void tes5() {
-        assertThrows(IllegalArgumentException.class,() -> new CatalogID(null));
+        assertThrows(IllegalArgumentException.class,() -> new CatalogoID(null));
     }
 
 }

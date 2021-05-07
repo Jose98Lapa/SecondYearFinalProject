@@ -3,12 +3,14 @@ package eapli.base.servico.domain;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
 public class TipoServico {
     private String tipo;
+    @Transient
     private String regex = "MANUAL|AUTOMATICO";
 
     public TipoServico(String tipo) {

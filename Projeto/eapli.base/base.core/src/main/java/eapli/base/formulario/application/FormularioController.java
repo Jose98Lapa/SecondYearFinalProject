@@ -1,6 +1,6 @@
 package eapli.base.formulario.application;
 
-import eapli.base.formulario.Builder.builder.AtributoBuilder;
+import eapli.base.formulario.Builder.AtributoBuilder;
 import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.base.formulario.Builder.FormularioBuilder;
 import eapli.base.formulario.domain.Formulario;
