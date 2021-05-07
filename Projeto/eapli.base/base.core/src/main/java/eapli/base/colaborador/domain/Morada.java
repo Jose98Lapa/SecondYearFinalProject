@@ -6,28 +6,28 @@ import java.util.Objects;
 
 public class Morada implements ValueObject {
 
-    String street;
-    String doorNumber;
-    String floor;
-    String location;
+    String estrada;
+    String numPorta;
+    String andar;
+    String localizacao;
     CodPostal codPostal;
 
-    public Morada(final String street, final String doorNumber, final String floor, final String location, final String postalCode){
-        if (street==null ||street.isEmpty()||!street.matches("^[\\w\\.]+(\\s\\w+){2,}$"))
+    public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String postalCode){
+        if (estrada==null ||estrada.isEmpty()||!estrada.matches("^[\\w\\.]+(\\s\\w+){2,}$"))
             throw new IllegalArgumentException("Street does not fit the criteria");
-        this.street = street;
+        this.estrada = estrada;
 
-        if (doorNumber==null ||doorNumber.isEmpty()||!doorNumber.matches("^\\d{0,4}$"))
+        if (numPorta==null ||numPorta.isEmpty()||!numPorta.matches("^\\d{0,4}$"))
             throw new IllegalArgumentException("Door Number does not fit the criteria");
-        this.doorNumber = doorNumber;
+        this.numPorta = numPorta;
 
-        if (floor==null ||floor.isEmpty()||!floor.matches("^\\d{0,3}$"))
+        if (andar==null ||andar.isEmpty()||!andar.matches("^\\d{0,3}$"))
             throw new IllegalArgumentException("Floor does not fit the criteria");
-        this.floor = floor;
+        this.andar = andar;
 
-        if (location==null ||location.isEmpty()||!location.matches("^[a-zA-Z]+(?:[\\s-][A-zÀ-ú]+)*$"))
+        if (localizacao==null ||localizacao.isEmpty()||!localizacao.matches("^[a-zA-Z]+(?:[\\s-][A-zÀ-ú]+)*$"))
             throw new IllegalArgumentException("Location does not fit the criteria");
-        this.location = location;
+        this.localizacao = localizacao;
 
         this.codPostal = new CodPostal(postalCode);
     }
@@ -37,21 +37,21 @@ public class Morada implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Morada morada = (Morada) o;
-        return street.equals(morada.street) && doorNumber.equals(morada.doorNumber) && floor.equals(morada.floor) && location.equals(morada.location) && codPostal.equals(morada.codPostal);
+        return estrada.equals(morada.estrada) && numPorta.equals(morada.numPorta) && andar.equals(morada.andar) && localizacao.equals(morada.localizacao) && codPostal.equals(morada.codPostal);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, doorNumber, floor, location, codPostal);
+        return Objects.hash(estrada, numPorta, andar, localizacao, codPostal);
     }
 
     @Override
     public String toString() {
         return "Address:\n" +
-                "Street -> " + street + "\n" +
-                "DoorNumber -> " + doorNumber + "\n" +
-                "Floor -> " + floor + "\n" +
-                "Location -> " + location + "\n" +
+                "Street -> " + estrada + "\n" +
+                "DoorNumber -> " + numPorta + "\n" +
+                "Floor -> " + andar + "\n" +
+                "Localization -> " + localizacao + "\n" +
                 "PostalCode -> " + codPostal;
     }
 }

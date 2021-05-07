@@ -10,6 +10,8 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
     private EmailInstitucional email;
     private NumeroMecanografico mNumber;
     private Alcunha alcunha;
+    private DataDeNascimento dataDeNascimento;
+
     private Funcao funcao;
     //private MecanographicNumber supervisorNumber;
 
@@ -68,15 +70,34 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         return this;
     }
 
-    public ColaboradorBuilder withNickname(final String nickname){
-        this.alcunha =new Alcunha(nickname);
+    public ColaboradorBuilder withNickname(final String alcunha){
+        this.alcunha =new Alcunha(alcunha);
         return this;
     }
 
+    public ColaboradorBuilder withDateOfBirth(final DataDeNascimento dataDeNascimento){
+        this.dataDeNascimento = dataDeNascimento;
+        return this;
+    }
+
+    public ColaboradorBuilder withDateOfBirth(final String dataDeNascimento){
+        this.dataDeNascimento = new DataDeNascimento(dataDeNascimento);
+        return this;
+    }
+
+    public ColaboradorBuilder withFunction(final Funcao funcao){
+        this.funcao = funcao;
+        return this;
+    }
+
+    public ColaboradorBuilder withFunction( final String idFuncao, final String designacao){
+        this.funcao = new Funcao(idFuncao,designacao);
+        return this;
+    }
 
     @Override
     public Colaborador build() {
-        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha, funcao);
+        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha, funcao,dataDeNascimento);
     }
 
 }
