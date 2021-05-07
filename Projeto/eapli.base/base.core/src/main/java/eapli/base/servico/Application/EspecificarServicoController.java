@@ -1,6 +1,8 @@
 package eapli.base.servico.Application;
 
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.FormularioID;
+import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.base.servico.Repository.ServicoRepository;
@@ -19,8 +21,13 @@ public class EspecificarServicoController {
         servico = builder.Script(script).buildAutomatic();
     }
 
-    public void manual(Formulario form) {
-        servico = builder.Form(form).buildManual();
+    public void manual(String id) {
+            FormularioRepository repo = PersistenceContext.repositories().form();
+            final Formulario form2 = repo.ofIdentity(FormularioID.valueOf(id))
+                    .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
+
+
+        servico = builder.Form(form2).buildManual();
     }
 
     public void confirms(){

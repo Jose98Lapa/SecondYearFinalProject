@@ -42,7 +42,7 @@ public class EspecificarServicoUI extends AbstractUI {
         }else {
             FormularioUI servicoUi = new FormularioUI();
             servicoUi.show();
-            theController.manual(null);
+            theController.manual(servicoUi.formId);
         }
         theController.confirms();
 
