@@ -9,7 +9,7 @@ public class EquipaDTO {
     public String equipaID;
     public String numeroMecanografico;
 
-    public EquipaDTO(String descricao, String acronimo, String equipaID,String numeroMecanografico) {
+    public EquipaDTO( String equipaID,String acronimo , String descricao,String numeroMecanografico) {
         this.descricao = descricao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;

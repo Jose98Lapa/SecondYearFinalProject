@@ -6,6 +6,7 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
+import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.Repository.ServicoRepository;
@@ -72,7 +73,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public CollaboratorRepository collaborators (final TransactionalContext tx) {
-
 		return new InMemoryCollaboratorRepository();
 	}
 
@@ -80,6 +80,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public CollaboratorRepository collaborators() {
 		return collaborators(null);
 	}
+
+	@Override
+	public FuncaoRepository funcao(TransactionalContext autoTx) {
+		return new InMemoryFunctionRepository();
+	}
+
+	@Override
+	public FuncaoRepository funcao() {return funcao(null);}
 
 	@Override
 	public CatalogRepository catalogs (final TransactionalContext tx) {

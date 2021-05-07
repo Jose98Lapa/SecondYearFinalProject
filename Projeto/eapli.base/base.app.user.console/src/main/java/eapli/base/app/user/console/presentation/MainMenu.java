@@ -51,8 +51,9 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int REGISTER_SERVICE_OPTION = 2;
-    private static final int ACCOUNT_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
+    private static final int CRIAR_EQUIPA_OPTION = 3;
+    private static final int ACCOUNT_OPTION = 4;
+    private static final int SETTINGS_OPTION = 5;
 
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
@@ -88,8 +89,10 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         final Menu serviceMenu = buildServicoMenu();
+        final Menu equipaMenu = buildEquipaMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
+        mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
@@ -102,5 +105,12 @@ class MainMenu extends ClientUserBaseUI {
         servicoMenu.addItem(REGISTER_SERVICE_OPTION,"Especificar Servico",() -> new EspecificarServicoUI().show());
         servicoMenu.addItem(EXIT_OPTION,RETURN, Actions.SUCCESS);
         return servicoMenu;
+    }
+
+    private Menu buildEquipaMenu(){
+        final Menu equipaMenu = new Menu("Equipa");
+        equipaMenu.addItem(1,"Criar Equipa",() -> new CriarEquipaUI().show());
+        equipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return equipaMenu;
     }
 }

@@ -15,14 +15,11 @@ import java.util.Set;
 @Entity
 public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
-    @GeneratedValue
-    private Long id;
 
-    private String designacao;
 
     @EmbeddedId
     private EquipaID equipaID;
-
+    private String designacao;
     private Acronimo acronimo;
 
     @OneToMany
@@ -53,14 +50,8 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         return this.equipaID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
+    public Acronimo acronimo() {
+        return this.acronimo;
     }
 
     @Override
@@ -68,12 +59,12 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipa equipa = (Equipa) o;
-        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
+        return Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, designacao, acronimo,equipaID);
+        return Objects.hash(designacao, acronimo,equipaID);
     }
 
     @Override

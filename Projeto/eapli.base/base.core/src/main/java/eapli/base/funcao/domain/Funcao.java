@@ -1,15 +1,17 @@
 package eapli.base.funcao.domain;
 
+import eapli.base.funcao.DTO.FuncaoDTO;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.representations.dto.DTOable;
 
-public class Funcao implements AggregateRoot<IdFuncao> {
+public class Funcao implements AggregateRoot<IdFuncao>, DTOable<FuncaoDTO> {
 
     private IdFuncao idFuncao;
     private Designacao designacao;
 
-    public Funcao(String idFuncao, String designacao){
-        this.idFuncao = new IdFuncao(idFuncao);
-        this.designacao = new Designacao(designacao);
+    public Funcao(IdFuncao idFuncao, Designacao designacao){
+        this.idFuncao = idFuncao;
+        this.designacao = designacao;
     }
 
     protected Funcao(){}
@@ -32,5 +34,10 @@ public class Funcao implements AggregateRoot<IdFuncao> {
     @Override
     public boolean hasIdentity(IdFuncao otherId) {
         return AggregateRoot.super.hasIdentity(otherId);
+    }
+
+    @Override
+    public FuncaoDTO toDTO() {
+        return new FuncaoDTO(idFuncao,designacao);
     }
 }

@@ -1,9 +1,11 @@
 package eapli.base.colaborador.domain;
 
+import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.funcao.domain.Funcao;
+import eapli.base.funcao.domain.FuncaoBuilder;
 import eapli.framework.domain.model.DomainFactory;
 
-public class ColaboradorBuilder implements DomainFactory<Colaborador> {
+public class ColaboradorBuilder {
     private Morada morada;
     private Contacto contacto;
     private NomeCompleto nomeCompleto;
@@ -13,7 +15,7 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
     private DataDeNascimento dataDeNascimento;
 
     private Funcao funcao;
-    //private MecanographicNumber supervisorNumber;
+    private NumeroMecanografico mSupervisor;
 
     public ColaboradorBuilder withAddress(final Morada morada){
         this.morada = morada;
@@ -91,13 +93,22 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
     }
 
     public ColaboradorBuilder withFunction( final String idFuncao, final String designacao){
-        this.funcao = new Funcao(idFuncao,designacao);
+        this.funcao = new FuncaoBuilder().withIdFuncao(idFuncao).withDesignacao(designacao).build();
         return this;
     }
 
-    @Override
+    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final NumeroMecanografico mSupervisor){
+        this.mSupervisor = mSupervisor;
+        return this;
+    }
+
+    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final String mSupervisor){
+        this.mSupervisor = new NumeroMecanografico(mSupervisor);
+        return this;
+    }
+
     public Colaborador build() {
-        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha, funcao,dataDeNascimento);
+        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,mSupervisor);
     }
 
 }

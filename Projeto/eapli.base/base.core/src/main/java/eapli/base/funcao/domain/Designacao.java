@@ -10,7 +10,7 @@ public class Designacao implements ValueObject {
 
     public Designacao(final String designation){
         if (designation==null ||designation.isEmpty()||!designation.matches("^\\w{1,30}$"))
-            throw new IllegalArgumentException("The function ID does not fit the criteria");
+            throw new IllegalArgumentException("The designation does not fit the criteria");
         this.designation = designation;
     }
 
