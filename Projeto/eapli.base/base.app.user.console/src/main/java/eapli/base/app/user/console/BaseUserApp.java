@@ -1,5 +1,6 @@
 package eapli.base.app.user.console;
 
+import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
 import eapli.base.app.user.console.presentation.FrontMenu;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
@@ -28,6 +29,7 @@ public final class BaseUserApp {
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
         new FrontMenu().show();
+       // new EspecificarServicoUI().show();
 
         // exiting the application, closing all threads
         System.exit(0);

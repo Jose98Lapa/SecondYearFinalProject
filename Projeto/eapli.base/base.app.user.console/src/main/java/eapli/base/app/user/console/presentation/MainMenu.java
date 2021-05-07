@@ -24,6 +24,8 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -48,7 +50,7 @@ class MainMenu extends ClientUserBaseUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int BOOKINGS_OPTION = 2;
+    private static final int REGISTER_SERVICE_OPTION = 2;
     private static final int ACCOUNT_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
 
@@ -77,8 +79,7 @@ class MainMenu extends ClientUserBaseUI {
     @Override
     public boolean doShow() {
         final Menu menu = buildMainMenu();
-        final MenuRenderer renderer =
-                new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+        final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
 
@@ -86,12 +87,20 @@ class MainMenu extends ClientUserBaseUI {
         final Menu mainMenu = new Menu();
 
         final Menu myUserMenu = new MyUserMenu();
+        final Menu serviceMenu = buildServicoMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
+        mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
+    }
+    private Menu buildServicoMenu() {
+        final Menu servicoMenu = new Menu("Servico");
+        servicoMenu.addItem(REGISTER_SERVICE_OPTION,"Especificar Servico",() -> new EspecificarServicoUI().show());
+        servicoMenu.addItem(EXIT_OPTION,RETURN, Actions.SUCCESS);
+        return servicoMenu;
     }
 }
