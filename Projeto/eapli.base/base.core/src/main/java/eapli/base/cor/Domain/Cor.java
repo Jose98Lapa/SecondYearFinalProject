@@ -37,7 +37,7 @@ public class Cor implements AggregateRoot<Hexadecimal>, DTOable<CorDTO> {
 
     @Override
     public CorDTO toDTO() {
-        return null;
+        return new CorDTO(hexadecimalValue.toString(),nome);
     }
 
     @Override
