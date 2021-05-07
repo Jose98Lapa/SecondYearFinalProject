@@ -4,9 +4,9 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class IconServico {
-    private int  temp;
+    private String  temp;
 
-    public IconServico(int temp) {
+    public IconServico(String temp) {
         this.temp = temp;
     }
 
@@ -20,6 +20,6 @@ public class IconServico {
 
     @Override
     public String toString() {
-        return  String.valueOf(temp);
+        return temp;
     }
 }

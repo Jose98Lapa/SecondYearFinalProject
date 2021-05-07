@@ -1,24 +1,35 @@
 package eapli.base.servico.domain;
 
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import java.util.Set;
 
 @Entity
 public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
-    private TituloServico title;
     @EmbeddedId
     private ServicoID id;
     private IconServico icon;
-    private KeyWords keywords;
+    private TituloServico title;
     private StatusServico status;
     private TipoServico tipo;
+    private ServicoScript script;
+    @OneToOne
+    private Formulario form ;
 
-    public Servico(TituloServico title, ServicoID id, IconServico icon, KeyWords keywords, StatusServico status, TipoServico tipo) {
+    @ElementCollection
+    private Set<KeyWords> keywords;
+
+
+    public Servico(TituloServico title, ServicoID id, IconServico icon, Set<KeyWords> keywords, StatusServico status, TipoServico tipo) {
+
         this.title = title;
         this.id = id;
         this.icon = icon;
@@ -26,6 +37,14 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         this.status = status;
         this.tipo = tipo;
         Preconditions.noneNull();
+    }
+
+    public void setScript(ServicoScript script) {
+        this.script = script;
+    }
+
+    public void setForm(Formulario form) {
+        this.form = form;
     }
 
     public Servico(TituloServico title, ServicoID id) {
