@@ -23,21 +23,28 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
     private Acronimo acronimo;
 
     @OneToMany
-    private final Set<Colaborador> colaboradorSet = new HashSet<>();
+    private final Set<Colaborador> colaboradorResponsaveisSet = new HashSet<>();
+
+    @OneToMany
+    private final Set<Colaborador> teamMembers = new HashSet<>();
 
     public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador) {
         this.designacao = designacao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;
-        this.colaboradorSet.add(colaborador);
+        this.colaboradorResponsaveisSet.add(colaborador);
     }
 
     protected Equipa(){
 
     }
 
-    public void addColaborador(Colaborador colaborador){
-        colaboradorSet.add(colaborador);
+    public void addColaboradorResponsible(Colaborador colaborador){
+        colaboradorResponsaveisSet.add(colaborador);
+    }
+
+    public void addTeamMembers(Colaborador colaborador){
+        teamMembers.add(colaborador);
     }
 
     @Override
@@ -67,6 +74,6 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(),colaboradorSet.stream().findFirst().get().identity().toString());
+        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(), colaboradorResponsaveisSet.stream().findFirst().get().identity().toString());
     }
 }
