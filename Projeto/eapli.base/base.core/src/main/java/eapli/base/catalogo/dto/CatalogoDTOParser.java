@@ -26,7 +26,7 @@ package eapli.base.catalogo.dto;
 import eapli.base.catalogo.domain.CatalogBuilder;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.repositories.CatalogRepository;
-import eapli.base.colaborator.domain.Collaborator;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.DTO.EquipaDTOParser;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTOParser;
@@ -54,7 +54,7 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
         dto.accessCriteria.forEach( a -> accessCriteria.add(new EquipaDTOParser().valueOf(a)));
 
 
-        final Set<Collaborator> responsableCollabs = new HashSet<>();
+        final Set<Colaborador> responsableCollabs = new HashSet<>();
         //dto.responsableCollabs.forEach( a ->(accessCriteria.add(new ColaboradorDTOParser().valueOf(a))));
 
         return builder.withIdentity(dto.catalogID).withTitle(dto.catalogTitle).withIcon(dto.icon)

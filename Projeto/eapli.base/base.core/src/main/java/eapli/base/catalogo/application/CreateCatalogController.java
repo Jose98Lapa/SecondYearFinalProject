@@ -2,8 +2,8 @@ package eapli.base.catalogo.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.domain.CatalogBuilder;
-import eapli.base.colaborator.domain.Colaborator;
-import eapli.base.colaborator.repositories.CollaboratorRepository;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -37,11 +37,11 @@ public class CreateCatalogController {
         catalogBuilder.withAccessCriteria(accessCriteria);
     }
 
-    public Iterable<Collaborator> getCollabs(){
+    public Iterable<Colaborador> getCollabs(){
         return collabRepo.findAll();
     }
 
-    public void defineResponsibleCollaborator(Set<Collaborator> responsableCollabs){
+    public void defineResponsibleCollaborator(Set<Colaborador> responsableCollabs){
         catalogBuilder.withResponsableCollabs(responsableCollabs);
     }
 

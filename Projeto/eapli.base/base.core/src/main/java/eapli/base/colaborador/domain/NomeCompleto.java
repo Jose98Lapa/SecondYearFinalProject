@@ -4,11 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class FullName implements ValueObject {
+public class NomeCompleto implements ValueObject {
 
     private String name;
 
-    public FullName(final String name) {
+    public NomeCompleto(final String name) {
         if (name == null || name.isEmpty() || !name.matches("^([A-Z]{1}[A-zÀ-ú\\- ]{1,15}){3,5}$"))
             throw new IllegalArgumentException("Full Name does not fit the criteria");
         this.name = name;
@@ -18,8 +18,8 @@ public class FullName implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FullName fullName1 = (FullName) o;
-        return name.equals(fullName1.name);
+        NomeCompleto nomeCompleto1 = (NomeCompleto) o;
+        return name.equals(nomeCompleto1.name);
     }
 
     @Override

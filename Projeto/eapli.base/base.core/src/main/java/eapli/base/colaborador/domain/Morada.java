@@ -4,15 +4,15 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class Address implements ValueObject {
+public class Morada implements ValueObject {
 
     String street;
     String doorNumber;
     String floor;
     String location;
-    PostalCode postalCode;
+    CodPostal codPostal;
 
-    public Address(final String street, final String doorNumber, final String floor, final String location, final String postalCode){
+    public Morada(final String street, final String doorNumber, final String floor, final String location, final String postalCode){
         if (street==null ||street.isEmpty()||!street.matches("^[\\w\\.]+(\\s\\w+){2,}$"))
             throw new IllegalArgumentException("Street does not fit the criteria");
         this.street = street;
@@ -29,20 +29,20 @@ public class Address implements ValueObject {
             throw new IllegalArgumentException("Location does not fit the criteria");
         this.location = location;
 
-        this.postalCode= new PostalCode(postalCode);
+        this.codPostal = new CodPostal(postalCode);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return street.equals(address.street) && doorNumber.equals(address.doorNumber) && floor.equals(address.floor) && location.equals(address.location) && postalCode.equals(address.postalCode);
+        Morada morada = (Morada) o;
+        return street.equals(morada.street) && doorNumber.equals(morada.doorNumber) && floor.equals(morada.floor) && location.equals(morada.location) && codPostal.equals(morada.codPostal);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, doorNumber, floor, location, postalCode);
+        return Objects.hash(street, doorNumber, floor, location, codPostal);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class Address implements ValueObject {
                 "DoorNumber -> " + doorNumber + "\n" +
                 "Floor -> " + floor + "\n" +
                 "Location -> " + location + "\n" +
-                "PostalCode -> " + postalCode;
+                "PostalCode -> " + codPostal;
     }
 }

@@ -1,11 +1,10 @@
 package eapli.base.catalogo.domain;
 
-import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 public class CatalogBuilder implements DomainFactory<Catalogo> {
@@ -14,7 +13,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
-    private final Set<Collaborator> responsableCollabs = new HashSet<>();
+    private final Set<Colaborador> responsableCollabs = new HashSet<>();
     private final Set<Equipa> accessCriteria = new HashSet<>();
     private Criticidade nivelCriticidade;
 
@@ -73,7 +72,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
         return this;
     }
 
-    public CatalogBuilder withResponsableCollabs(Set<Collaborator> responsableCollabs) {
+    public CatalogBuilder withResponsableCollabs(Set<Colaborador> responsableCollabs) {
         this.responsableCollabs.addAll(responsableCollabs);
         return this;
     }

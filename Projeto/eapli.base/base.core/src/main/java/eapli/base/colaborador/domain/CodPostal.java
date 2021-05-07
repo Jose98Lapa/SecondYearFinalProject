@@ -4,11 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class PostalCode implements ValueObject {
+public class CodPostal implements ValueObject {
 
     String codPostal;
 
-    public PostalCode(final String codPostal){
+    public CodPostal(final String codPostal){
         if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
             throw new IllegalArgumentException("Postal Code does not fit the criteria");
         this.codPostal = codPostal;
@@ -18,7 +18,7 @@ public class PostalCode implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PostalCode codPostal1 = (PostalCode) o;
+        CodPostal codPostal1 = (CodPostal) o;
         return codPostal.equals(codPostal1.codPostal);
     }
 

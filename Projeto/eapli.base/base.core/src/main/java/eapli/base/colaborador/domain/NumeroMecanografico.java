@@ -17,14 +17,14 @@ import java.util.regex.Pattern;
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @Embeddable
-public class MecanographicNumber implements ValueObject, Comparable<MecanographicNumber> {
+public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecanografico> {
 
     private static final long serialVersionUID = 1L;
 
     private String number;
     private final String regex = "^[0-9]{1,6}$";
 
-    public MecanographicNumber(final String mecanographicNumber) {
+    public NumeroMecanografico(final String mecanographicNumber) {
         if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
             throw new IllegalArgumentException(
                     "Mecanographic Number should neither be null nor empty");
@@ -41,12 +41,12 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         //check if it already exists
     }
 
-    protected MecanographicNumber() {
+    protected NumeroMecanografico() {
         // for ORM
     }
 
-    public static MecanographicNumber valueOf(final String mecanographicNumber) {
-        return new MecanographicNumber(mecanographicNumber);
+    public static NumeroMecanografico valueOf(final String mecanographicNumber) {
+        return new NumeroMecanografico(mecanographicNumber);
     }
 
     @Override
@@ -54,11 +54,11 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         if (this == o) {
             return true;
         }
-        if (!(o instanceof MecanographicNumber)) {
+        if (!(o instanceof NumeroMecanografico)) {
             return false;
         }
 
-        final MecanographicNumber that = (MecanographicNumber) o;
+        final NumeroMecanografico that = (NumeroMecanografico) o;
         return this.number.equals(that.number);
     }
 
@@ -73,7 +73,7 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
     }
 
     @Override
-    public int compareTo(final MecanographicNumber arg0) {
+    public int compareTo(final NumeroMecanografico arg0) {
         return number.compareTo(arg0.number);
     }
 }

@@ -1,28 +1,28 @@
 package eapli.base.colaborador.domain;
 
-import eapli.base.funcao.domain.Function;
+import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
 
 
-public class Colaborador implements AggregateRoot<MecanographicNumber>{
+public class Colaborador implements AggregateRoot<NumeroMecanografico>{
 
-    private Address address;
-    private Contact contact;
-    private FullName fullName;
-    private InstitutionalEmail email;
-    private MecanographicNumber mNumber;
-    private Nickname nickname;
-    private Function function;
+    private Morada morada;
+    private Contacto contacto;
+    private NomeCompleto nomeCompleto;
+    private EmailInstitucional email;
+    private NumeroMecanografico mNumber;
+    private Alcunha alcunha;
+    private Funcao funcao;
     //private MecanographicNumber supervisorNumber;
 
-    public Colaborador(Address address, Contact contact, FullName fullName, InstitutionalEmail email, MecanographicNumber mNumber, Nickname nickname, Function function) {
-        this.address = address;
-        this.contact = contact;
-        this.fullName = fullName;
+    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, Funcao funcao) {
+        this.morada = morada;
+        this.contacto = contacto;
+        this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.mNumber = mNumber;
-        this.nickname = nickname;
-        this.function = function;
+        this.alcunha = alcunha;
+        this.funcao = funcao;
         //this.supervisorNumber = supervisorNumber;
     }
 
@@ -34,17 +34,17 @@ public class Colaborador implements AggregateRoot<MecanographicNumber>{
     }
 
     @Override
-    public int compareTo(MecanographicNumber other) {
+    public int compareTo(NumeroMecanografico other) {
         return AggregateRoot.super.compareTo(other);
     }
 
     @Override
-    public MecanographicNumber identity() {
+    public NumeroMecanografico identity() {
         return mNumber;
     }
 
     @Override
-    public boolean hasIdentity(MecanographicNumber otherId) {
+    public boolean hasIdentity(NumeroMecanografico otherId) {
         return AggregateRoot.super.hasIdentity(otherId);
     }
 

@@ -1,82 +1,82 @@
 package eapli.base.colaborador.domain;
 
-import eapli.base.funcao.domain.Function;
+import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.DomainFactory;
 
 public class ColaboradorBuilder implements DomainFactory<Colaborador> {
-    private Address address;
-    private Contact contact;
-    private FullName fullName;
-    private InstitutionalEmail email;
-    private MecanographicNumber mNumber;
-    private Nickname nickname;
-    private Function function;
+    private Morada morada;
+    private Contacto contacto;
+    private NomeCompleto nomeCompleto;
+    private EmailInstitucional email;
+    private NumeroMecanografico mNumber;
+    private Alcunha alcunha;
+    private Funcao funcao;
     //private MecanographicNumber supervisorNumber;
 
-    public ColaboradorBuilder withAddress(final Address address){
-        this.address=address;
+    public ColaboradorBuilder withAddress(final Morada morada){
+        this.morada = morada;
         return this;
     }
 
     public ColaboradorBuilder withAddress(final String street, final String doorNumber, final String floor, final String location, final String postalCode){
-        this.address=new Address(street, doorNumber, floor, location, postalCode);
+        this.morada =new Morada(street, doorNumber, floor, location, postalCode);
         return this;
     }
 
-    public ColaboradorBuilder withContact(final Contact contact){
-        this.contact=contact;
+    public ColaboradorBuilder withContact(final Contacto contacto){
+        this.contacto = contacto;
         return this;
     }
 
     public ColaboradorBuilder withContact(final String contact){
-        this.contact= new Contact(contact);
+        this.contacto = new Contacto(contact);
         return this;
     }
 
-    public ColaboradorBuilder withFullName(final FullName fullName){
-        this.fullName=fullName;
+    public ColaboradorBuilder withFullName(final NomeCompleto nomeCompleto){
+        this.nomeCompleto = nomeCompleto;
         return this;
     }
 
     public ColaboradorBuilder withFullName(final String fullName){
-        this.fullName= new FullName(fullName);
+        this.nomeCompleto = new NomeCompleto(fullName);
         return this;
     }
 
-    public ColaboradorBuilder withInstitutionalEmail(final InstitutionalEmail email){
+    public ColaboradorBuilder withInstitutionalEmail(final EmailInstitucional email){
         this.email=email;
         return this;
     }
 
     public ColaboradorBuilder withInstitutionalEmail(final String email){
-        this.email=new InstitutionalEmail(email);
+        this.email=new EmailInstitucional(email);
         return this;
     }
 
-    public ColaboradorBuilder withMecanoGraphicNumber(final MecanographicNumber mNumber){
+    public ColaboradorBuilder withMecanoGraphicNumber(final NumeroMecanografico mNumber){
         this.mNumber=mNumber;
         return this;
     }
 
     public ColaboradorBuilder withMecanoGraphicNumber(final String mNumber){
-        this.mNumber=new MecanographicNumber(mNumber);
+        this.mNumber=new NumeroMecanografico(mNumber);
         return this;
     }
 
-    public ColaboradorBuilder withNickname(final Nickname nickname){
-        this.nickname=nickname;
+    public ColaboradorBuilder withNickname(final Alcunha alcunha){
+        this.alcunha = alcunha;
         return this;
     }
 
     public ColaboradorBuilder withNickname(final String nickname){
-        this.nickname=new Nickname(nickname);
+        this.alcunha =new Alcunha(nickname);
         return this;
     }
 
 
     @Override
     public Colaborador build() {
-        return new Colaborador(address,contact,fullName,email,mNumber,nickname,function);
+        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha, funcao);
     }
 
 }

@@ -4,11 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class Designation implements ValueObject {
+public class Designacao implements ValueObject {
 
     private String designation;
 
-    public Designation(final String designation){
+    public Designacao(final String designation){
         if (designation==null ||designation.isEmpty()||!designation.matches("^\\w{1,30}$"))
             throw new IllegalArgumentException("The function ID does not fit the criteria");
         this.designation = designation;
@@ -18,7 +18,7 @@ public class Designation implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Designation that = (Designation) o;
+        Designacao that = (Designacao) o;
         return designation.equals(that.designation);
     }
 

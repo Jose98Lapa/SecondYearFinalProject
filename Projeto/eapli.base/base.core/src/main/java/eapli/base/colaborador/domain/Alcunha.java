@@ -5,11 +5,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class Nickname implements ValueObject {
+public class Alcunha implements ValueObject {
 
     String nickname;
 
-    public Nickname(final String nickname){
+    public Alcunha(final String nickname){
         if (nickname==null ||nickname.isEmpty()||!nickname.matches("^\\w{1,15}$"))
             throw new IllegalArgumentException("Nickname does not fit the criteria");
         this.nickname = nickname;
@@ -19,8 +19,8 @@ public class Nickname implements ValueObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Nickname nickname1 = (Nickname) o;
-        return nickname.equals(nickname1.nickname);
+        Alcunha alcunha1 = (Alcunha) o;
+        return nickname.equals(alcunha1.nickname);
     }
 
     @Override

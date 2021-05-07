@@ -1,12 +1,12 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 public class InMemoryCollaboratorRepository
-        extends InMemoryDomainRepository<Colaborador, MecanographicNumber>
+        extends InMemoryDomainRepository<Colaborador, NumeroMecanografico>
         implements CollaboratorRepository {
 
     static {

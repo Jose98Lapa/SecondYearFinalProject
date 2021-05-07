@@ -23,8 +23,7 @@
  */
 package eapli.base.catalogo.dto;
 
-import eapli.base.catalogo.domain.AccessCriteria;
-import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTO;
@@ -40,11 +39,11 @@ public class CatalogoDTO {
     public String briefDesc;
     public String completeDesc;
     public Set<EquipaDTO> accessCriteria;
-    public Set<Collaborator> responsableCollabs;
+    public Set<Colaborador> responsableCollabs;
 
 
     public CatalogoDTO(String catalogID, String catalogTitle, String icon,
-                       String briefDesc, String completeDesc, Set<Collaborator> responsableCollabs, Set<Equipa> accessCriteria) {
+                       String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria) {
 
         this.catalogID = catalogID;
         this.catalogTitle = catalogTitle;

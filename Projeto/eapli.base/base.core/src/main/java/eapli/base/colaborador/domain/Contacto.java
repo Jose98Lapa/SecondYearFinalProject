@@ -2,11 +2,11 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-public class Contact implements ValueObject {
+public class Contacto implements ValueObject {
 
     private String contact;
 
-    public Contact(final String contact){
+    public Contacto(final String contact){
         if (contact==null ||contact.isEmpty()||!contact.matches("^[0-9]{9}$"))
             throw new IllegalArgumentException("Contact does not fit the criteria");
         this.contact = contact;
@@ -18,11 +18,11 @@ public class Contact implements ValueObject {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Contact)) {
+        if (!(o instanceof Contacto)) {
             return false;
         }
 
-        final Contact that = (Contact) o;
+        final Contacto that = (Contacto) o;
         return this.contact.equals(that.contact);
     }
 

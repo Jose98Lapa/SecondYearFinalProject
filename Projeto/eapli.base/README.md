@@ -169,7 +169,7 @@ the UI might not be smart enough to compute the total sum with enough precision,
 would carry a burden for the computer running the interface
 
 the Controller might indeed perform such calculation as it has all the data is needs 
-for a short period of time, but it is not the controller function to perform mathematical 
+for a short period of time, but it is not the controller funcao to perform mathematical 
 operations
 
 the domain object might indeed be the very best resource to calculate the sum for each 
