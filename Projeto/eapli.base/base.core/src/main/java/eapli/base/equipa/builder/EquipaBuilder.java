@@ -1,5 +1,6 @@
 package eapli.base.equipa.builder;
 
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.domain.EquipaID;
@@ -9,6 +10,8 @@ public class EquipaBuilder {
     private EquipaID equipaID;
 
     private Acronimo acronimo;
+
+    private Colaborador colaborador;
 
 
     public EquipaBuilder() {
@@ -28,8 +31,13 @@ public class EquipaBuilder {
         this.acronimo = Acronimo.valueOf(acronimo);
         return this;
     }
+    public EquipaBuilder colaborador(Colaborador colaborador){
+        this.colaborador = colaborador;
+        return this;
+    }
+
 
     public Equipa build(){
-        return new Equipa(designacao,acronimo,equipaID);
+        return new Equipa(designacao,acronimo,equipaID,colaborador);
     }
 }

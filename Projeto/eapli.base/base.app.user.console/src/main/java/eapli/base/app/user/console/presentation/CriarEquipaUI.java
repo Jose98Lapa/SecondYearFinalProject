@@ -22,7 +22,8 @@ public class CriarEquipaUI extends AbstractUI {
         String equipaID = Console.readLine("Insira o ID da equipa");
         String acronimo = Console.readLine("Insira o Acrónimo da Equipa");
         String descricao = Console.readLine("Insira a descricao");
-        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao);
+        String numeroMecanografico = Console.readLine("Insira o número mecanográfico de um colaborador");
+        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,numeroMecanografico);
 
         try {
             this.criarEquipaController.registo(equipaDTO);
