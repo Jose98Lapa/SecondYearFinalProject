@@ -41,6 +41,10 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         return this.equipaID;
     }
 
+    public Acronimo acronimo() {
+        return this.acronimo;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

@@ -48,4 +48,15 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>{
         return AggregateRoot.super.hasIdentity(otherId);
     }
 
+    public NomeCompleto nomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public NumeroMecanografico mNumber() {
+        return mNumber;
+    }
+
+    public Alcunha alcunha() {
+        return alcunha;
+    }
 }
