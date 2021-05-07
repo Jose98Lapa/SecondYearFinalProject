@@ -2,6 +2,8 @@ package eapli.base.app.user.console.presentation.EspecificarServico;
 
 import eapli.base.app.user.console.presentation.myuser.SignupRequestUI;
 import eapli.base.servico.Application.EspecificarServicoController;
+import eapli.base.servico.DTO.ServicoDTO;
+import eapli.base.servico.domain.*;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
@@ -30,10 +32,9 @@ public class EspecificarServicoUI extends AbstractUI {
         if (ifo.id().equalsIgnoreCase("none") || ifo.title().equalsIgnoreCase("none")) {
             System.out.println("O id e o titulo sao obrigatórios");
             return true;
-        } else if (!(ifo.id().equalsIgnoreCase("none") || ifo.title().equalsIgnoreCase("none") || ifo.icon().equalsIgnoreCase("none") || ifo.briefDesc().equalsIgnoreCase("none") || ifo.compDesc().equalsIgnoreCase("none"))) {
-            theController.registoComplete(ifo.title(), ifo.id(), ifo.icon(), keys, ifo.briefDesc(), ifo.compDesc());
-        }else {
-            theController.registoIncomplete(ifo.title(),ifo.id());
+        } else {
+            ServicoDTO dto = new ServicoDTO(ifo.title(), ifo.id(),ifo.icon(), keys,"INACTIVE" , ifo.type(),ifo.briefDesc(),ifo.compDesc());
+            theController.registo(dto);
         }
         return true;
     }
