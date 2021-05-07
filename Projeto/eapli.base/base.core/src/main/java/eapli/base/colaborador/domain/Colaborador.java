@@ -1,13 +1,15 @@
 package eapli.base.colaborador.domain;
 
+import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Colaborador implements AggregateRoot<NumeroMecanografico>{
+public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<ColaboradorDTO> {
 
     private Morada morada;
     private Contacto contacto;
@@ -19,9 +21,9 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>{
     private DataDeNascimento dataDeNascimento;
 
     private Funcao funcao;
-    //private MecanographicNumber supervisorNumber;
+    private NumeroMecanografico mSupervisor;
 
-    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, Funcao funcao, DataDeNascimento dataDeNascimento) {
+    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, NumeroMecanografico mSupervisor) {
         this.morada = morada;
         this.contacto = contacto;
         this.nomeCompleto = nomeCompleto;
@@ -30,7 +32,7 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>{
         this.alcunha = alcunha;
         this.dataDeNascimento = dataDeNascimento;
         this.funcao = funcao;
-        //this.supervisorNumber = supervisorNumber;
+        this.mSupervisor = mSupervisor;
     }
 
     protected Colaborador(){}
@@ -55,15 +57,8 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>{
         return AggregateRoot.super.hasIdentity(otherId);
     }
 
-    public NomeCompleto nomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public NumeroMecanografico mNumber() {
-        return mNumber;
-    }
-
-    public Alcunha alcunha() {
-        return alcunha;
+    @Override
+    public ColaboradorDTO toDTO() {
+        return new ColaboradorDTO(morada,contacto,nomeCompleto,email,mNumber,alcunha,dataDeNascimento,funcao,mSupervisor);
     }
 }

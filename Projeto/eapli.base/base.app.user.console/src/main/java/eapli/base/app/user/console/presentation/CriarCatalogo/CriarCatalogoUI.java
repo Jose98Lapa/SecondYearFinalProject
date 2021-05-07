@@ -14,7 +14,6 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.catalog.Catalog;
 import java.util.*;
 
 @SuppressWarnings("squid:S106")
@@ -50,7 +49,7 @@ public class CriarCatalogoUI extends AbstractUI {
 
             index=1;
             for(Colaborador collab : lstColaboradores)
-                System.out.printf("#%d - %s - %s - %s\n",index++,collab.mNumber(),collab.alcunha(),collab.nomeCompleto());
+                //System.out.printf("#%d - %s - %s - %s\n",index++,collab.mNumber(),collab.alcunha(),collab.nomeCompleto());
 
             index = Console.readInteger("Escolha um colaborador responsavel pelo catalogo: ");
             responsaveis.add(lstColaboradores.get(index));
