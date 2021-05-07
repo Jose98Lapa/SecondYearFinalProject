@@ -2,16 +2,20 @@ package eapli.base.equipa.domain;
 
 import javax.persistence.*;
 
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
+    @GeneratedValue
     private Long id;
 
     private String designacao;
@@ -21,14 +25,22 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     private Acronimo acronimo;
 
-    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID) {
+    @OneToMany
+    private final Set<Colaborador> colaboradorSet = new HashSet<>();
+
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador) {
         this.designacao = designacao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;
+        this.colaboradorSet.add(colaborador);
     }
 
     protected Equipa(){
 
+    }
+
+    public void addColaborador(Colaborador colaborador){
+        colaboradorSet.add(colaborador);
     }
 
     @Override
@@ -66,6 +78,6 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString());
+        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(),colaboradorSet.stream().findFirst().get().identity().toString());
     }
 }
