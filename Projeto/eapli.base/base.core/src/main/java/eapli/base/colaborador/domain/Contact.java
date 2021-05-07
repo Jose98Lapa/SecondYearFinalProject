@@ -1,10 +1,6 @@
-package eapli.base.collaborator.domain;
+package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.util.StringPredicates;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Contact implements ValueObject {
 

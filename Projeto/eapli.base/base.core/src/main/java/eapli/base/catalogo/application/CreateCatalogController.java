@@ -3,9 +3,9 @@ package eapli.base.catalogo.application;
 import eapli.base.catalogo.domain.AccessCriteriaFormat;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.domain.CatalogBuilder;
-import eapli.base.collaborator.domain.Collaborator;
-import eapli.base.collaborator.domain.MecanographicNumber;
-import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.teamtype.domain.TeamType;
@@ -36,7 +36,7 @@ public class CreateCatalogController {
         catalogBuilder.withAccessCriteria(lstAccessCriteria);
     }
 
-    public Iterable<Collaborator> getCollabs(){
+    public Iterable<Colaborador> getCollabs(){
         return collabRepo.findAll();
     }
 

@@ -3,7 +3,7 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;

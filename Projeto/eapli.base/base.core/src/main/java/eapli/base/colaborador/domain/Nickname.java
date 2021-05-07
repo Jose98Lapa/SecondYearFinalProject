@@ -1,4 +1,4 @@
-package eapli.base.collaborator.domain;
+package eapli.base.colaborador.domain;
 
 
 import eapli.framework.domain.model.ValueObject;

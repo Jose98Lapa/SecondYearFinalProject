@@ -1,16 +1,12 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.clientusermanagement.domain.ClientUser;
-import eapli.base.collaborator.domain.Collaborator;
-import eapli.base.collaborator.domain.MecanographicNumber;
-import eapli.base.collaborator.repositories.CollaboratorRepository;
-import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
-import java.util.Optional;
-
 public class InMemoryCollaboratorRepository
-        extends InMemoryDomainRepository<Collaborator, MecanographicNumber>
+        extends InMemoryDomainRepository<Colaborador, MecanographicNumber>
         implements CollaboratorRepository {
 
     static {

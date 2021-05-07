@@ -3,7 +3,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.Application;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.Repository.ServicoRepository;

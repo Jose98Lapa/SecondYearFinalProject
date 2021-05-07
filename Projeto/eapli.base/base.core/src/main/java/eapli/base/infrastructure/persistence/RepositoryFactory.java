@@ -7,7 +7,7 @@ import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.teamtype.repositories.TeamTypeRepository;

@@ -1,6 +1,6 @@
 package eapli.base.catalogo.domain;
 
-import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.MecanographicNumber;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.ArrayList;

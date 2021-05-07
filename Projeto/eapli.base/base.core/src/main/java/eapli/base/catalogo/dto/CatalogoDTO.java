@@ -24,7 +24,7 @@
 package eapli.base.catalogo.dto;
 
 import eapli.base.catalogo.domain.AccessCriteria;
-import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.MecanographicNumber;
 import eapli.framework.representations.dto.DTO;
 
 import java.util.List;

@@ -1,10 +1,8 @@
-package eapli.base.collaborator.domain;
+package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class FullName implements ValueObject {
 
