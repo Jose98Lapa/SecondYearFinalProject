@@ -2,6 +2,7 @@ package eapli.base.catalogo.domain;
 
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
@@ -22,6 +23,7 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
+    private Criticidade nivelCriticidade;
 
     @OneToMany
     private final Set<Collaborator> responsableCollabs = new HashSet<>();
@@ -34,7 +36,7 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
 
     public Catalogo(CatalogoID identity, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Collaborator> responsableCollabs,
-                    final Set<Equipa> accessCriteria) {
+                    final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
         this.identity = identity;
         this.titulo = titulo;
         this.icon = icon;
@@ -42,6 +44,7 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
+        this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -91,6 +94,10 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
 
     public DescricaoCompleta completeDesc() {
         return completeDesc;
+    }
+
+    public Criticidade nivelCriticidade() {
+        return nivelCriticidade;
     }
 
     public Set<Collaborator> responsableCollabs() {

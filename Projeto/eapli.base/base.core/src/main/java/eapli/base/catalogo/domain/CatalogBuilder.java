@@ -1,9 +1,11 @@
 package eapli.base.catalogo.domain;
 
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 public class CatalogBuilder implements DomainFactory<Catalogo> {
@@ -14,6 +16,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     private DescricaoCompleta completeDesc;
     private final Set<Collaborator> responsableCollabs = new HashSet<>();
     private final Set<Equipa> accessCriteria = new HashSet<>();
+    private Criticidade nivelCriticidade;
 
     public CatalogBuilder withIdentity(final CatalogoID identity) {
         this.identity = identity;
@@ -75,8 +78,13 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
         return this;
     }
 
+    public CatalogBuilder withNivelCriticidade(final Criticidade nivelCriticidade) {
+        this.nivelCriticidade = nivelCriticidade;
+        return this;
+    }
+
     @Override
     public Catalogo build() {
-        return new Catalogo(identity, titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria);
+        return new Catalogo(identity, titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
     }
 }
