@@ -9,6 +9,7 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
+import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
 import eapli.base.formulario.repository.FormularioRepository;
@@ -130,8 +131,21 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
-	CollaboratorRepository collaborators(TransactionalContext autoTx);
+	FuncaoRepository funcao(TransactionalContext autoTx);
 
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	FuncaoRepository funcao();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	CollaboratorRepository collaborators(TransactionalContext autoTx);
 	/**
 	 * repository will be created in auto transaction mode
 	 *
