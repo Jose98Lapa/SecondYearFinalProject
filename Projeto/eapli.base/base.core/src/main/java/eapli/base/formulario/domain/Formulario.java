@@ -8,26 +8,28 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Formulario implements AggregateRoot<FormularioID>, DTOable<FormularioDTO> {
+
+    @Version
+    Long version ;
+
     private FormularioScript script;
     @EmbeddedId
-    private FormularioID id;
+    private FormularioID FormularioID;
     private FormularioNome nome;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Atributo> atr;
 
     public Formulario(FormularioScript script, FormularioID id, FormularioNome nome,Set<Atributo> atr) {
         this.script = script;
-        this.id = id;
+        this.FormularioID = id;
         this.nome = nome;
         this.atr = atr;
         Preconditions.noneNull();
@@ -45,12 +47,12 @@ public class Formulario implements AggregateRoot<FormularioID>, DTOable<Formular
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Formulario that = (Formulario) o;
-        return Objects.equals(script, that.script) && Objects.equals(id, that.id) && Objects.equals(nome, that.nome);
+        return Objects.equals(script, that.script) && Objects.equals(FormularioID, that.FormularioID) && Objects.equals(nome, that.nome);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(script, id, nome);
+        return Objects.hash(script, FormularioID, nome);
     }
 
     @Override
@@ -67,14 +69,14 @@ public class Formulario implements AggregateRoot<FormularioID>, DTOable<Formular
     public String toString() {
         return "Formulario{" +
                 "script=" + script +
-                ", id=" + id +
+                ", id=" + FormularioID +
                 ", nome=" + nome +
                 '}';
     }
 
     @Override
     public FormularioID identity() {
-        return id;
+        return FormularioID;
     }
 
     @Override
@@ -88,6 +90,6 @@ public class Formulario implements AggregateRoot<FormularioID>, DTOable<Formular
         for (Atributo key:atr) {
             key2.add(key.toDTO());
         }
-        return new FormularioDTO(script.toString(),id.toString(),nome.toString(),key2);
+        return new FormularioDTO(script.toString(),FormularioID.toString(),nome.toString(),key2);
     }
 }

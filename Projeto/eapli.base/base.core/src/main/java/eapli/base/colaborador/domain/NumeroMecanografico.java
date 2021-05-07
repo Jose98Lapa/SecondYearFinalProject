@@ -8,7 +8,9 @@ package eapli.base.colaborador.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,20 +23,21 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
 
     private static final long serialVersionUID = 1L;
 
-    private String number;
+    private String mecNumber;
+    @Transient
     private final String regex = "^[0-9]{1,6}$";
 
-    public NumeroMecanografico(final String mecanographicNumber) {
-        if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
+    public NumeroMecanografico(final String mecanographicmecNumber) {
+        if (StringPredicates.isNullOrEmpty(mecanographicmecNumber)) {
             throw new IllegalArgumentException(
                     "Mecanographic Number should neither be null nor empty");
         }
 
         Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(mecanographicNumber);
+        Matcher m = p.matcher(mecanographicmecNumber);
 
         if (m.matches())
-            this.number=mecanographicNumber;
+            this.mecNumber=mecanographicmecNumber;
         else
             throw new IllegalArgumentException("Mecanographic Number does not fit the criteria");
 
@@ -45,8 +48,8 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
         // for ORM
     }
 
-    public static NumeroMecanografico valueOf(final String mecanographicNumber) {
-        return new NumeroMecanografico(mecanographicNumber);
+    public static NumeroMecanografico valueOf(final String mecanographicmecNumber) {
+        return new NumeroMecanografico(mecanographicmecNumber);
     }
 
     @Override
@@ -59,21 +62,21 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
         }
 
         final NumeroMecanografico that = (NumeroMecanografico) o;
-        return this.number.equals(that.number);
+        return this.mecNumber.equals(that.mecNumber);
     }
 
     @Override
     public int hashCode() {
-        return this.number.hashCode();
+        return this.mecNumber.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.number;
+        return this.mecNumber;
     }
 
     @Override
     public int compareTo(final NumeroMecanografico arg0) {
-        return number.compareTo(arg0.number);
+        return mecNumber.compareTo(arg0.mecNumber);
     }
 }

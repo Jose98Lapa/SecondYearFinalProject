@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -51,10 +52,13 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int REGISTER_SERVICE_OPTION = 2;
+    private static final int CRIAR_EQUIPA_OPTION = 3;
+    private static final int CRIAR_CATALOGO_OPTION = 4;
+    private static final int SETTINGS_OPTION = 5;
     private static final int CRIAR_TIPO_EQUIPA_OPTION = 3;
-    private static final int CRIAR_EQUIPA_OPTION = 4;
+
     private static final int ACCOUNT_OPTION = 5;
-    private static final int SETTINGS_OPTION = 6;
+
 
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
@@ -91,8 +95,11 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         final Menu serviceMenu = buildServicoMenu();
         final Menu equipaMenu = buildEquipaMenu();
+        final Menu catalogoMenu = buildCatalogoMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
+        mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION, equipaMenu);
+        mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
         mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
         mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
 
@@ -102,17 +109,25 @@ class MainMenu extends ClientUserBaseUI {
 
         return mainMenu;
     }
+
     private Menu buildServicoMenu() {
         final Menu servicoMenu = new Menu("Servico");
-        servicoMenu.addItem(REGISTER_SERVICE_OPTION,"Especificar Servico",() -> new EspecificarServicoUI().show());
-        servicoMenu.addItem(EXIT_OPTION,RETURN, Actions.SUCCESS);
+        servicoMenu.addItem(REGISTER_SERVICE_OPTION, "Especificar Servico", () -> new EspecificarServicoUI().show());
+        servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
     }
 
-    private Menu buildEquipaMenu(){
+    private Menu buildEquipaMenu() {
         final Menu equipaMenu = new Menu("Equipa");
-        equipaMenu.addItem(1,"Criar Equipa",() -> new CriarEquipaUI().show());
-        equipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        equipaMenu.addItem(1, "Criar Equipa", () -> new CriarEquipaUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return equipaMenu;
+    }
+
+    private Menu buildCatalogoMenu() {
+        final Menu equipaMenu = new Menu("Catalogo");
+        equipaMenu.addItem(CRIAR_CATALOGO_OPTION, "Criar Catalogo", () -> new CriarCatalogoUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }
 

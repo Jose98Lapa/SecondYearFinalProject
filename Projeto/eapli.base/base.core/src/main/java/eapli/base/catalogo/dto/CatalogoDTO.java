@@ -24,6 +24,7 @@
 package eapli.base.catalogo.dto;
 
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTO;
@@ -39,7 +40,7 @@ public class CatalogoDTO {
     public String briefDesc;
     public String completeDesc;
     public Set<EquipaDTO> accessCriteria;
-    public Set<Colaborador> responsableCollabs;
+    public Set<ColaboradorDTO> responsableCollabs;
 
 
     public CatalogoDTO(String catalogID, String catalogTitle, String icon,
@@ -50,8 +51,7 @@ public class CatalogoDTO {
         this.icon = icon;
         this.briefDesc = briefDesc;
         this.completeDesc = completeDesc;
-        this.responsableCollabs = responsableCollabs;
-        //responsableCollabs.forEach(a -> this.responsableCollabs.add(a.toDTO()));
+        responsableCollabs.forEach(a -> this.responsableCollabs.add(a.toDTO()));
         accessCriteria.forEach(a -> this.accessCriteria.add(a.toDTO()));
     }
 

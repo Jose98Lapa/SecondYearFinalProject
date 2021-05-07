@@ -7,6 +7,7 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.cor.reposotories.CorRepository;
+import eapli.base.criticidade.repository.CriticidadeRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.funcao.repositories.FuncaoRepository;
@@ -95,6 +96,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return new InMemoryTipoEquipaRepository();
 	}
 
+
+	@Override
+	public CriticidadeRepository criticidades() {
+		return null;
+	}
+
+	@Override
+	public CriticidadeRepository criticidades(TransactionalContext autoTx) {
+		return null;
+	}
 
 	@Override
 	public TeamTypeRepository teamTypes() {

@@ -34,16 +34,10 @@ import eapli.framework.representations.dto.DTOParser;
  */
 public class CriticidadeDTOParser implements DTOParser<CriticidadeDTO, Criticidade> {
 
-    private final CriticidadeRepository criticidadeRepository;
 
-    /**
-     * Configure the parser by injecting the necessary dependency.
-     *
-     * @param criticidadeRepository
-     *            the dish type repository
-     */
-    public CriticidadeDTOParser(final CriticidadeRepository criticidadeRepository) {
-        this.criticidadeRepository = criticidadeRepository;
+
+    public CriticidadeDTOParser() {
+
     }
 
     @Override

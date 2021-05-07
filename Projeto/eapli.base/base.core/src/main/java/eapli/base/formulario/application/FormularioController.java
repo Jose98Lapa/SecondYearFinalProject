@@ -37,13 +37,13 @@ public class FormularioController {
         fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
     }
     public Formulario save(){
-        form=fmb.setAtr(atributos).build();
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.COLABORATOR);
+        form=fmb.build();
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CLIENT_USER);
         return repo.save(form);
     }
-    public void atributo(String nome, String desc, String label, String tipo, String regex){
+   /* public void atributo(String nome, String desc, String label, String tipo, String regex){
         Atributo atr = atributoBuilder.withNome(nome).withDesc(desc).withLabel(label).withTipo(tipo).withRegex(regex).build();
         atributos.add(atr);
-    }
+    }*/
 
 }
