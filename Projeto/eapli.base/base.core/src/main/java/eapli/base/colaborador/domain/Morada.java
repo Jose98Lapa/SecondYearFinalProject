@@ -32,6 +32,26 @@ public class Morada implements ValueObject {
         this.codPostal = new CodPostal(postalCode);
     }
 
+    public String getEstrada() {
+        return estrada;
+    }
+
+    public String getNumPorta() {
+        return numPorta;
+    }
+
+    public String getAndar() {
+        return andar;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public CodPostal getCodPostal() {
+        return codPostal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -57,7 +57,9 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         return this.equipaID;
     }
 
-
+    public Acronimo acronimo() {
+        return this.acronimo;
+    }
 
     @Override
     public boolean equals(Object o) {
