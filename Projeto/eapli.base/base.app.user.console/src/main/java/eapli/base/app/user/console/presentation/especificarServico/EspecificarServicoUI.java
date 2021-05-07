@@ -1,10 +1,8 @@
-package eapli.base.app.user.console.presentation.EspecificarServico;
+package eapli.base.app.user.console.presentation.especificarServico;
 
-import eapli.base.app.user.console.presentation.myuser.SignupRequestUI;
+import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.servico.Application.EspecificarServicoController;
 import eapli.base.servico.DTO.ServicoDTO;
-import eapli.base.servico.domain.*;
-import eapli.framework.actions.menu.Menu;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
@@ -34,7 +32,7 @@ public class EspecificarServicoUI extends AbstractUI {
             System.out.println("O id e o titulo sao obrigatórios");
             return false;
         } else {
-            ServicoDTO dto = new ServicoDTO(ifo.title(), ifo.id(),ifo.icon(), keys,"INACTIVE" , ifo.type(),ifo.briefDesc(),ifo.compDesc());
+            ServicoDTO dto = new ServicoDTO(ifo.title(), ifo.id(),ifo.icon(), keys,"INATIVO" , ifo.type(),ifo.briefDesc(),ifo.compDesc());
             theController.registo(dto);
         }
 
@@ -42,6 +40,8 @@ public class EspecificarServicoUI extends AbstractUI {
             String script = Console.readLine("Script:");
             theController.automatic(script);
         }else {
+            FormularioUI servicoUi = new FormularioUI();
+            servicoUi.show();
             theController.manual(null);
         }
         theController.confirms();

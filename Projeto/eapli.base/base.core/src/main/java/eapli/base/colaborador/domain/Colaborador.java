@@ -5,6 +5,8 @@ import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -21,6 +23,8 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
     private DataDeNascimento dataDeNascimento;
 
     private Funcao funcao;
+
+    @AttributeOverride(name = "mecNumber", column = @Column(name = "shortDescription"))
     private NumeroMecanografico mSupervisor;
 
     public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, NumeroMecanografico mSupervisor) {

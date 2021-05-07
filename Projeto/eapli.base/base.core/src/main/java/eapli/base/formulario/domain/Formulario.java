@@ -1,7 +1,9 @@
 package eapli.base.formulario.domain;
 
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
 import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.base.formulario.DTO.FormularioDTO;
+import eapli.base.servico.domain.KeyWords;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
@@ -9,6 +11,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -81,6 +84,10 @@ public class Formulario implements AggregateRoot<FormularioID>, DTOable<Formular
 
     @Override
     public FormularioDTO toDTO() {
-        return new FormularioDTO(script,id,nome,atr);
+        Set<AtributoDTO> key2 = new HashSet<>();
+        for (Atributo key:atr) {
+            key2.add(key.toDTO());
+        }
+        return new FormularioDTO(script.toString(),id.toString(),nome.toString(),key2);
     }
 }

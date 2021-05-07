@@ -9,11 +9,11 @@ public class AtributoDTO {
     public String regex;
     public String tipo;
 
-    public AtributoDTO(AtributoNome nome, AtributoLabel label, AtributoDescricao desc, AtributoRegex regex, AtributoTipo tipo) {
-        this.nome = nome.toString();
-        this.label = label.toString();
-        this.desc = desc.toString();
-        this.regex = regex.toString();
-        this.tipo = tipo.toString();
+    public AtributoDTO(String nome, String label, String desc, String regex, String tipo) {
+        this.nome = nome;
+        this.label = label;
+        this.desc = desc;
+        this.regex = regex;
+        this.tipo = tipo;
     }
 }

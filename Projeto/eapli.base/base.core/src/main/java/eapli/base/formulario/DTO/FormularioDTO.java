@@ -14,13 +14,11 @@ public class FormularioDTO {
     public String nome;
     public Set<AtributoDTO> atrDTO;
 
-    public FormularioDTO(FormularioScript script, FormularioID id, FormularioNome nome, Set<Atributo> atr) {
-        this.script= script.toString();
-        this.id= id.toString();
-        this.nome= nome.toString();
-        for (Atributo atributo:atr) {
-            this.atrDTO.add(atributo.toDTO());
-        }
+    public FormularioDTO(String script, String id, String nome, Set<AtributoDTO> atr) {
+        this.script= script;
+        this.id= id;
+        this.nome= nome;
+        this.atrDTO = atr;
     }
 
 }

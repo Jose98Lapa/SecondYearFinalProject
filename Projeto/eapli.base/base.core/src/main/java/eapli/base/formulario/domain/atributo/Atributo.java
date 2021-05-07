@@ -61,7 +61,7 @@ public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
 
     @Override
     public AtributoDTO toDTO() {
-        return new AtributoDTO(nome, label,desc,regex,tipo);
+        return new AtributoDTO(nome.toString(), label.toString(),desc.toString(),regex.toString(),tipo.toString());
     }
 
     public void setId(Long id) {
