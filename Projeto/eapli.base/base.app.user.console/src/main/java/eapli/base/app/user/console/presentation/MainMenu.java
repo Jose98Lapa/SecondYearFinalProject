@@ -24,7 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
-import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

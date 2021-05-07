@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class StatusServico {
     private String status;
     @Transient
-    private String regex = "ACTIVE|INACTIVE|COMPLETE|INCOMPLETE";
+    private String regex = "ACTIVO|INATIVO|INCOMPLETO";
 
     public StatusServico(String status) {
         if (StringPredicates.isNullOrEmpty(status)) {

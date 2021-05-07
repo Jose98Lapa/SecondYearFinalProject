@@ -1,7 +1,10 @@
 package eapli.base.formulario.application;
 
 import eapli.base.formulario.Builder.AtributoBuilder;
-import eapli.base.formulario.domain.atributo.Atributo;
+import eapli.base.formulario.DTO.FormularioDTO;
+import eapli.base.formulario.DTO.FormularioDTOParser;
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
+import eapli.base.formulario.domain.atributo.*;
 import eapli.base.formulario.Builder.FormularioBuilder;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.FormularioID;
@@ -26,8 +29,12 @@ public class FormularioController {
     FormularioBuilder fmb = new FormularioBuilder();
 
     Formulario form;
-    public void registo(FormularioNome nome, FormularioID id, FormularioScript script){
-        fmb.setNome(nome.toString()).setId(id.toString()).setScript(script.toString());
+    public void registo(FormularioDTO dto){
+        Set<Atributo> atr2 = new HashSet<>();
+        for (AtributoDTO atr:dto.atrDTO) {
+            atr2.add(new Atributo(AtributoNome.valueOf(atr.nome), AtributoLabel.valueOf(atr.label), AtributoDescricao.valueOf(atr.desc), AtributoRegex.valueOf(atr.regex),AtributoTipo.valueOf(atr.tipo)));
+        }
+        fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
     }
     public Formulario save(){
         form=fmb.setAtr(atributos).build();
