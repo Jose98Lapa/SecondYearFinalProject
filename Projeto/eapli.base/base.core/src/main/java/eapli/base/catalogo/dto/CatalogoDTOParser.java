@@ -25,7 +25,7 @@ package eapli.base.catalogo.dto;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.repositories.CatalogRepository;
-import eapli.ecafeteria.dishmanagement.domain.Dish;
+import eapli.ecafeteria.dishmanagement.domaintion.Dish;
 import eapli.ecafeteria.dishmanagement.domain.DishType;
 import eapli.ecafeteria.dishmanagement.domain.NutricionalInfo;
 import eapli.ecafeteria.dishmanagement.repositories.DishTypeRepository;
