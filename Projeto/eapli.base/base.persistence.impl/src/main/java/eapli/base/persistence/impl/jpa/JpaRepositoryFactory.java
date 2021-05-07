@@ -5,6 +5,7 @@ import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.formulario.repository.FormularioRepository;
+import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -64,6 +65,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public CollaboratorRepository collaborators() {
 		return new JpaCollaboratorRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FuncaoRepository funcao(TransactionalContext autoTx) {
+		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FuncaoRepository funcao() {
+		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

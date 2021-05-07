@@ -6,13 +6,13 @@ import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-public class JpaFuncaoReposioryBase extends JpaAutoTxRepository<Funcao, IdFuncao, IdFuncao> implements FuncaoRepository {
+public class JpaFuncaoReposiory extends JpaAutoTxRepository<Funcao, IdFuncao, IdFuncao> implements FuncaoRepository {
 
-    public JpaFuncaoReposioryBase(TransactionalContext tx) {
+    public JpaFuncaoReposiory(TransactionalContext tx) {
         super(tx,"IdFuncao");
     }
 
-    public JpaFuncaoReposioryBase(String persistenceUnitName) {
+    public JpaFuncaoReposiory(String persistenceUnitName) {
         super(persistenceUnitName, "IdFuncao");
     }
 }
