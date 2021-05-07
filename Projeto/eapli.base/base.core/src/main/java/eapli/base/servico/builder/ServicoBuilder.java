@@ -18,15 +18,12 @@ public class ServicoBuilder {
     private BriefDescription briefDesc ;
 
     public Servico buildManual() {
-        Servico srv = new Servico(title, id, icon, keywords, status, TipoServico.valueOf("MANUAL") );
-        srv.setForm(form);
-        return srv;
+        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("MANUAL"),compDesc,briefDesc,script,form);
     }
 
     public Servico buildAutomatic() {
-        Servico srv = new Servico(title, id, icon, keywords, status, TipoServico.valueOf("AUTOMATICO") );
-        srv.setScript(script);
-        return srv;
+        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("AUTOMATICO"),compDesc,briefDesc,script,form );
+
     }
 
     public ServicoBuilder Title(String title) {

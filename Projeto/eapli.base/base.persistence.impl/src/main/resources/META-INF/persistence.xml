@@ -15,6 +15,19 @@
     <class>eapli.base.formulario.domain.Formulario</class>
     <class>eapli.base.formulario.domain.atributo.Atributo</class>
     <class>eapli.base.servico.domain.Servico</class>
+    <class>eapli.base.equipa.domain.Equipa</class>
+    <class>eapli.base.equipa.domain.EquipaID</class>
+    <class>eapli.base.equipa.domain.Acronimo</class>
+    <class>eapli.base.colaborador.domain.Colaborador</class>
+    <class>eapli.base.colaborador.domain.Alcunha</class>
+    <class>eapli.base.colaborador.domain.CodPostal</class>
+    <class>eapli.base.colaborador.domain.Contacto</class>
+    <class>eapli.base.colaborador.domain.DataDeNascimento</class>
+    <class>eapli.base.colaborador.domain.EmailInstitucional</class>
+    <class>eapli.base.colaborador.domain.Morada</class>
+    <class>eapli.base.colaborador.domain.NomeCompleto</class>
+    <class>eapli.base.colaborador.domain.NumeroMecanografico</class>
+
 
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/dados"/>

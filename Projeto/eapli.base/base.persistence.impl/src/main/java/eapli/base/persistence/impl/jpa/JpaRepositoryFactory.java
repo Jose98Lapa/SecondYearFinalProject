@@ -63,7 +63,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public CollaboratorRepository collaborators() {
-		return null;
+		return new JpaCollaboratorRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

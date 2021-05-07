@@ -7,6 +7,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
+import java.util.Optional;
 
 public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, NumeroMecanografico, NumeroMecanografico> implements CollaboratorRepository {
 
@@ -28,5 +29,12 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, 
         final TypedQuery<Colaborador> q = createQuery("SELECT e FROM Collaborator e",
                 Colaborador.class);
         return q.getResultList();
+    }
+
+    @Override
+    public Optional<Colaborador> ofIdentity(NumeroMecanografico id){
+        final TypedQuery<Colaborador> q = createQuery("Select e From Collaborator e where e.NumeroMecanografico =:id ",Colaborador.class);
+        q.setParameter("id", id);
+        return q.getResultStream().findFirst();
     }
 }
