@@ -11,9 +11,10 @@ import java.util.regex.Pattern;
 
 @Embeddable
 public class CompleteDescription implements ValueObject {
+    @Transient
     private String desc;
     @Transient
-    private String regex = "^[a-zA-Z]{20,60}$";
+    private String regex = "^[a-zA-Z ]{1,60}$";
 
     public CompleteDescription(String desc) {
         if (StringPredicates.isNullOrEmpty(desc)) {

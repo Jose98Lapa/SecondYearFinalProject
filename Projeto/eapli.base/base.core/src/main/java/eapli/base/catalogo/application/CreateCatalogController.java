@@ -6,6 +6,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.teamtype.domain.TeamType;
 import eapli.base.teamtype.repositories.TeamTypeRepository;
@@ -18,19 +19,19 @@ import java.util.Set;
 public class CreateCatalogController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final TeamTypeRepository teamTypeRepo = PersistenceContext.repositories().teamTypes();
+    private final EquipaRepository teamRepo = PersistenceContext.repositories().teams();
     private final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
     private final CatalogRepository catalogRepo = PersistenceContext.repositories().catalogs();
     private final CatalogBuilder catalogBuilder = new CatalogBuilder();
 
-    public void method(String id, String title, String icone, String briefDesc, String completeDesc){
+    public void insertBasicData(String id, String title, String icone, String briefDesc, String completeDesc){
         authz.ensureAuthenticatedUserHasAnyOf();
         catalogBuilder.withIdentity(id).withTitle(title).withIcon(icone)
                 .withBriefDesc(briefDesc).withCompleteDesc(completeDesc);
     }
 
-    public Iterable<TeamType> getTeamType(){
-        return teamTypeRepo.findAll();
+    public Iterable<Equipa> getTeams(){
+        return teamRepo.findAll();
     }
 
     public void defineAccessCriteria(Set<Equipa> accessCriteria){

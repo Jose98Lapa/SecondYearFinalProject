@@ -5,13 +5,17 @@ import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<ColaboradorDTO> {
 
     private Morada morada;
     private Contacto contacto;
     private NomeCompleto nomeCompleto;
     private EmailInstitucional email;
+    @Id
     private NumeroMecanografico mNumber;
     private Alcunha alcunha;
     private DataDeNascimento dataDeNascimento;

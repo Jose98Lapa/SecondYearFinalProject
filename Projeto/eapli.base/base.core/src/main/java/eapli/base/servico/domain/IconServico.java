@@ -1,6 +1,7 @@
 package eapli.base.servico.domain;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 @Embeddable
 public class IconServico {

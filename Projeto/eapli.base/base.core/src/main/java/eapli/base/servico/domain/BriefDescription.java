@@ -11,9 +11,10 @@ import java.util.regex.Pattern;
 
 @Embeddable
 public class BriefDescription implements ValueObject {
+    @Transient
     private String desc;
     @Transient
-    private String regex = "^[a-zA-Z]{1,30}$";
+    private String regex = "^[a-zA-Z ]{1,30}$";
 
     public BriefDescription(String desc) {
         if (StringPredicates.isNullOrEmpty(desc)) {

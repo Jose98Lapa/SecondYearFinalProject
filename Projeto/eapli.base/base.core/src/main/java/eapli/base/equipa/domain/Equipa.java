@@ -2,33 +2,42 @@ package eapli.base.equipa.domain;
 
 import javax.persistence.*;
 
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
-    private Long id;
 
-    private String designacao;
 
     @EmbeddedId
     private EquipaID equipaID;
-
+    private String designacao;
     private Acronimo acronimo;
 
-    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID) {
+    @OneToMany
+    private final Set<Colaborador> colaboradorSet = new HashSet<>();
+
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador) {
         this.designacao = designacao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;
+        this.colaboradorSet.add(colaborador);
     }
 
     protected Equipa(){
 
+    }
+
+    public void addColaborador(Colaborador colaborador){
+        colaboradorSet.add(colaborador);
     }
 
     @Override
@@ -41,31 +50,30 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         return this.equipaID;
     }
 
+    public Acronimo acronimo() {
+        return this.acronimo;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Equipa equipa = (Equipa) o;
-        return Objects.equals(id, equipa.id) && Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
+        return Objects.equals(designacao, equipa.designacao) && Objects.equals(acronimo, equipa.acronimo) && Objects.equals(equipaID,equipa.equipaID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, designacao, acronimo,equipaID);
+        return Objects.hash(designacao, acronimo,equipaID);
     }
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString());
+        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(),colaboradorSet.stream().findFirst().get().identity().toString());
     }
 }

@@ -1,26 +1,39 @@
 package eapli.base.servico.Application;
 
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.servico.DTO.ServicoDTO;
+import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.servico.builder.ServicoBuilder;
 import eapli.base.servico.domain.*;
+import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 import java.util.Set;
 
 public class EspecificarServicoController {
     private Servico servico;
-     ServicoBuilder builder = new ServicoBuilder();
+    ServicoBuilder builder = new ServicoBuilder();
 
-    public void registoComplete(String title, String id, String icon, Set<String> keywords,String briefDesc,String compDesc){
-            builder.Title(title).Icon(icon).Keywords(keywords).Id(id).Status("COMPLETE").briefDesc(briefDesc).compDesc(compDesc);
+    public void registo(String title, String id, String icon, Set<String> keywords, String briefDesc, String compDesc) {
+        builder.Title(title).Icon(icon).Keywords(keywords).Id(id).Status("COMPLETE").briefDesc(briefDesc).compDesc(compDesc);
     }
-    public void registoIncomplete(String title, String id){
-            builder.Title(title).Id(id);
+
+    public void registo(ServicoDTO dto) {
+        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status("COMPLETE").briefDesc(dto.briefDescription).compDesc(dto.completeDescription);
     }
-    public void automatic(String script){
-       servico = builder.Script(script).buildAutomatic();
+
+    public void automatic(String script) {
+        servico = builder.Script(script).buildAutomatic();
     }
-    public void  manual(Formulario form){
+
+    public void manual(Formulario form) {
         servico = builder.Form(form).buildManual();
+    }
+
+    public void confirms(){
+        ServicoRepository repo = PersistenceContext.repositories().servico();
+        repo.save(servico);
     }
 
 }
