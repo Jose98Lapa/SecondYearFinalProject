@@ -9,6 +9,7 @@ public class ServiceBuilder {
     private KeyWords keywords;
     private StatusServico status;
     private TipoServico tipo;
+    private 
 
     Servico servico = new Servico(title,id);
 
