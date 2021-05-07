@@ -25,29 +25,35 @@ package eapli.base.catalogo.dto;
 
 import eapli.base.catalogo.domain.AccessCriteria;
 import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.equipa.DTO.EquipaDTO;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTO;
 
-import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class CatalogoDTO {
     public String catalogID;
     public String catalogTitle;
-
     public String icon;
     public String briefDesc;
     public String completeDesc;
+    public Set<EquipaDTO> accessCriteria;
+    public Set<Collaborator> responsableCollabs;
 
-    public List<AccessCriteria> accessCriteria;
-    public MecanographicNumber responsableCollab;
 
+    public CatalogoDTO(String catalogID, String catalogTitle, String icon,
+                       String briefDesc, String completeDesc, Set<Collaborator> responsableCollabs, Set<Equipa> accessCriteria) {
 
-    public CatalogoDTO(final String catalogID, final String catalogTitle,
-                       final String icon,
-                       final String briefDesc, final String completeDesc, List<AccessCriteria> accessCriteria,
-                       final MecanographicNumber responsableCollab) {
-
+        this.catalogID = catalogID;
+        this.catalogTitle = catalogTitle;
+        this.icon = icon;
+        this.briefDesc = briefDesc;
+        this.completeDesc = completeDesc;
+        this.responsableCollabs = responsableCollabs;
+        //responsableCollabs.forEach(a -> this.responsableCollabs.add(a.toDTO()));
+        accessCriteria.forEach(a -> this.accessCriteria.add(a.toDTO()));
     }
 
     public CatalogoDTO() {

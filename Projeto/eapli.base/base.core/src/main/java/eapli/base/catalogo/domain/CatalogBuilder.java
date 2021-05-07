@@ -1,38 +1,40 @@
 package eapli.base.catalogo.domain;
 
 import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.criticidade.domain.Criticidade;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 
 public class CatalogBuilder implements DomainFactory<Catalogo> {
-    private CatalogID identity;
-    private Title title;
+    private CatalogoID identity;
+    private Titulo titulo;
     private Icon icon;
-    private BriefDescription briefDesc;
-    private CompleteDescription completeDesc;
-    private List<AccessCriteria> accessCriteria = new ArrayList<>();
-    private MecanographicNumber responsableCollab;
+    private DescricaoBreve briefDesc;
+    private DescricaoCompleta completeDesc;
+    private final Set<Collaborator> responsableCollabs = new HashSet<>();
+    private final Set<Equipa> accessCriteria = new HashSet<>();
+    private Criticidade nivelCriticidade;
 
-    public CatalogBuilder withIdentity(final CatalogID identity) {
+    public CatalogBuilder withIdentity(final CatalogoID identity) {
         this.identity = identity;
         return this;
     }
 
     public CatalogBuilder withIdentity(final String identity) {
-        this.identity = new CatalogID(identity);
+        this.identity = new CatalogoID(identity);
         return this;
     }
 
-    public CatalogBuilder withTitle(final Title title) {
-        this.title = title;
+    public CatalogBuilder withTitle(final Titulo titulo) {
+        this.titulo = titulo;
         return this;
     }
 
     public CatalogBuilder withTitle(final String title) {
-        this.title = new Title(title);
+        this.titulo = new Titulo(title);
         return this;
     }
 
@@ -47,40 +49,42 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     }
 
     public CatalogBuilder withCompleteDesc(final String completeDesc) {
-        this.completeDesc = new CompleteDescription(completeDesc);
+        this.completeDesc = new DescricaoCompleta(completeDesc);
         return this;
     }
 
-    public CatalogBuilder withCompleteDesc(final CompleteDescription completeDesc) {
+    public CatalogBuilder withCompleteDesc(final DescricaoCompleta completeDesc) {
         this.completeDesc = completeDesc;
         return this;
     }
 
     public CatalogBuilder withBriefDesc(final String briefDesc) {
-        this.briefDesc = new BriefDescription(briefDesc);
+        this.briefDesc = new DescricaoBreve(briefDesc);
         return this;
     }
 
-    public CatalogBuilder withBriefDesc(final BriefDescription briefDesc) {
+    public CatalogBuilder withBriefDesc(final DescricaoBreve briefDesc) {
         this.briefDesc = briefDesc;
         return this;
     }
 
-    public CatalogBuilder withAccessCriteria(Map<Integer,AccessCriteriaFormat> accessCriteria) {
-
-        accessCriteria.forEach( (id,format) -> {
-            //final AccessCriteriaFactory accessCriteriaFactory = new AccessCriteriaFactory();
-            //final DomainFactory<> exporter = factory.build(format);
-        });
+    public CatalogBuilder withAccessCriteria(Set<Equipa> accessCriteria) {
+        this.accessCriteria.addAll(accessCriteria);
         return this;
     }
 
-    public void withResponsibleCollaborator(MecanographicNumber mecanographicNumber) {
-        this.responsableCollab = mecanographicNumber;
+    public CatalogBuilder withResponsableCollabs(Set<Collaborator> responsableCollabs) {
+        this.responsableCollabs.addAll(responsableCollabs);
+        return this;
+    }
+
+    public CatalogBuilder withNivelCriticidade(final Criticidade nivelCriticidade) {
+        this.nivelCriticidade = nivelCriticidade;
+        return this;
     }
 
     @Override
     public Catalogo build() {
-        return new Catalogo(identity,title,icon,briefDesc,completeDesc,accessCriteria,responsableCollab);
+        return new Catalogo(identity, titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
     }
 }

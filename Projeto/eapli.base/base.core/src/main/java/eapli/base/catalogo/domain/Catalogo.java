@@ -3,66 +3,127 @@ package eapli.base.catalogo.domain;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.domain.MecanographicNumber;
+import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Catalogo implements AggregateRoot<CatalogID>, DTOable<CatalogoDTO> {
+public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO> {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private CatalogID identity;
-    private Title title;
+    private CatalogoID identity;
+    private Titulo titulo;
     private Icon icon;
-    private BriefDescription briefDesc;
-    private CompleteDescription completeDesc;
+    private DescricaoBreve briefDesc;
+    private DescricaoCompleta completeDesc;
+    private Criticidade nivelCriticidade;
 
-    //@OneToMany
-    private final Set<Colaborador> responsableCollabs = new HashSet<>();
+    @OneToMany
+    private final Set<Collaborator> responsableCollabs = new HashSet<>();
 
+    @OneToMany
     private final Set<Equipa> accessCriteria = new HashSet<>();
 
-    //private Status currStatus;
+    private boolean status;
 
-    public Catalogo(CatalogID identity, Title title, Icon icon, BriefDescription briefDesc,
-                    CompleteDescription completeDesc, List<AccessCriteria> accessCriteria,
-                    MecanographicNumber responsableCollab) {
+
+    public Catalogo(CatalogoID identity, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+                    DescricaoCompleta completeDesc, final Set<Collaborator> responsableCollabs,
+                    final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
         this.identity = identity;
-        this.title = title;
+        this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
         this.completeDesc = completeDesc;
-        this.responsableCollabs = responsableCollab;
+        addResponsableCollabs(responsableCollabs);
+        addAccessCriteria(accessCriteria);
+        this.nivelCriticidade = nivelCriticidade;
+        this.status = true;
     }
+
+    protected Catalogo() {
+    }
+
 
     @Override
-    public boolean sameAs(Object other) {
-        return false;
+    public boolean sameAs(final Object other) {
+        if (!(other instanceof Catalogo)) {
+            return false;
+        }
+
+        final Catalogo that = (Catalogo) other;
+        if (this == that) {
+            return true;
+        }
+
+        return identity().equals(that.identity()) && titulo.equals(that.titulo)
+                && icon.equals(that.icon) && briefDesc.equals(that.briefDesc)
+                && completeDesc == that.completeDesc && status == that.status;
     }
 
-    @Override
-    public CatalogID identity() {
-        return null;
+    private void addAccessCriteria(final Set<Equipa> accessCriteria) {
+        this.accessCriteria.addAll(accessCriteria);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private void addResponsableCollabs(final Set<Collaborator> responsableCollabs) {
+        this.responsableCollabs.addAll(responsableCollabs);
     }
 
-    public Long getId() {
-        return id;
+    public CatalogoID identity() {
+        return identity;
+    }
+
+    public Titulo title() {
+        return titulo;
+    }
+
+    public Icon icon() {
+        return icon;
+    }
+
+    public DescricaoBreve briefDesc() {
+        return briefDesc;
+    }
+
+    public DescricaoCompleta completeDesc() {
+        return completeDesc;
+    }
+
+    public Criticidade nivelCriticidade() {
+        return nivelCriticidade;
+    }
+
+    public Set<Collaborator> responsableCollabs() {
+        return responsableCollabs;
+    }
+
+    public Set<Equipa> accessCriteria() {
+        return accessCriteria;
+    }
+
+    public boolean isActive() {
+        return status;
+    }
+
+    public boolean toogleState() {
+        this.status = !this.status;
+        return isActive();
     }
 
     @Override
     public CatalogoDTO toDTO() {
-        return null;
+        return new CatalogoDTO(identity.toString(),
+                titulo.toString(),
+                icon.toString(),
+                briefDesc.toString(),
+                completeDesc.toString(),responsableCollabs,accessCriteria);
     }
 }

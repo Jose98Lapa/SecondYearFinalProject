@@ -7,11 +7,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CatalogID implements ValueObject, Comparable<CatalogID> {
+public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
     private String catalogID;
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
-    public CatalogID(final String ID) {
+    public CatalogoID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {
             throw new IllegalArgumentException("catalog ID should neither be null nor empty");
         }
@@ -33,7 +33,7 @@ public class CatalogID implements ValueObject, Comparable<CatalogID> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CatalogID catalogoID = (CatalogID) o;
+        CatalogoID catalogoID = (CatalogoID) o;
         return catalogID == catalogoID.catalogID;
     }
 
@@ -44,13 +44,11 @@ public class CatalogID implements ValueObject, Comparable<CatalogID> {
 
     @Override
     public String toString() {
-        return "catalogoID{" +
-                "seviceID=" + catalogID +
-                '}';
+        return  catalogID;
     }
 
     @Override
-    public int compareTo(CatalogID o) {
+    public int compareTo(CatalogoID o) {
         return 0;
     }
 }
