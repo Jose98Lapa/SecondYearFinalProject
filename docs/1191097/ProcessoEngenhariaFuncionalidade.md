@@ -1,26 +1,22 @@
-# USDemo1
+# UC 2001 - Criar catálogo de serviços
 =======================================
 
 
 # 1. Requisitos
 
-*Nesta secção a equipa deve indicar a funcionalidade desenvolvida bem como descrever a sua interpretação sobre a mesma e sua correlação e/ou dependência de/com outros requisitos.*
+**UC 2001:**  Como Gestor de Serviços de Help desk (GSH), eu pretendo criar um novo catálogo de serviços.
 
-*Exemplo*
+Informação adicional que obtive do cliente:
 
-**UC 2001** Como Gestor de Serviços de Help desk (GSH), eu pretendo criar um novo catálogo de serviços.
+- [Identificador sequencial e gerado automaticamente.](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7400)
 
-- Demo1.1. Blá Blá Blá ...
+- [Definir um ou mais colaboradores responsaveis pelo serviço.](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7019)
+  - [Com atribuição através de uma pesquisa](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7623)
 
-- Demo1.2. Blá Blá Blá ...
-
-A interpretação feita deste requisito foi no sentido de ...
 
 # 2. Análise
 
-*Neste secção a equipa deve relatar o estudo/análise/comparação que fez com o intuito de tomar as melhores opções de design para a funcionalidade bem como aplicar diagramas/artefactos de análise adequados.*
-
-*Recomenda-se que organize este conteúdo por subsecções.*
+Para análise o modelo de domínio dá resposta ao requisito, não sendo assim necessário estender o mesmo. [Verificar modelo de domínio](mdURL)
 
 # 3. Design
 
@@ -33,15 +29,24 @@ A interpretação feita deste requisito foi no sentido de ...
 
 *Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
 
+Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes valores como o titulo, o icon, uma descrição breve e outra mais completa. O UI transmite esses dados ao Controller que por sua vez os manda para o Builer.
+
 ![UC_2001_SD](UC_2001_EspecificarCatálogoServiço_SD.svg)
+
+### ListEquipaService_SD
+![ListEquipaService_SD](ListEquipaService_SD.svg)
+
+### ListColaboradorService_SD
+![ListColaboradorService_SD](ListColaboradorService_SD.svg)
+
+### ListCriticidadeService_SD
+![ListCriticidadeService_SD](ListCriticidadeService_SD.svg)
 
 ## 3.2. Diagrama de Classes
 
 *Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
 ## 3.3. Padrões Aplicados
-
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
 
 * Para evitar diferentes construtores para diferentes situações e para possibilitar a criação do catalogo por etapas foi usado o padrão Builder.
 * De modo a simplificar a a manipulação de diferentes repositorios foi utilizado o padrão Factory.

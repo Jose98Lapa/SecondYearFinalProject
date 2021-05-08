@@ -39,7 +39,7 @@ public class CreateCatalogController {
     }
 
     public Iterable<EquipaDTO> getTeams(){
-        return listEquipasSvc.teams();
+        return listEquipasSvc.allTeams();
     }
 
     public void defineAccessCriteria(Set<EquipaDTO> dtos){
