@@ -14,7 +14,7 @@ public class FormularioID implements ValueObject,Comparable<FormularioID>, Seria
 
     private String FormularioID;
     @Transient
-    private String regex = "^[a-zA-Z0-9-]{1,10}$";
+    private String regex = "^[0-9]{1,10}$";
 
     public FormularioID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {

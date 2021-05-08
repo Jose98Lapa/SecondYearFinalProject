@@ -14,7 +14,7 @@ public class AtributoID implements ValueObject, Comparable<AtributoID>, Serializ
 
     private String id;
     @Transient
-    private String regex = "^[a-zA-Z0-9-]{1,10}$";
+    private String regex = "^[0-9]{1,10}$";
 
     public AtributoID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {

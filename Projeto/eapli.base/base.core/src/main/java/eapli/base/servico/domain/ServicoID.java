@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class ServicoID implements ValueObject, Comparable<ServicoID> {
     private String serviceID;
     @Transient
-    private String regex = "^[a-zA-Z0-9-]{1,10}$";
+    private String regex = "^[0-9]{1,10}$";
 
     public ServicoID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {
