@@ -11,6 +11,7 @@ import eapli.framework.strings.util.StringPredicates;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,21 +42,16 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof NumeroMecanografico)) {
-            return false;
-        }
-
-        final NumeroMecanografico that = (NumeroMecanografico) o;
-        return this.mecNumber.equals(that.mecNumber);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NumeroMecanografico that = (NumeroMecanografico) o;
+        return Objects.equals(mecNumber, that.mecNumber);
     }
 
     @Override
     public int hashCode() {
-        return this.mecNumber.hashCode();
+        return Objects.hash(mecNumber);
     }
 
     @Override

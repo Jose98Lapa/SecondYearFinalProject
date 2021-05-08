@@ -6,6 +6,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<ColaboradorDTO> {
@@ -40,7 +41,8 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
         this.supervisor = supervisor;
     }
 
-    protected Colaborador(){}
+    protected Colaborador() {
+    }
 
     @Override
     public boolean sameAs(Object other) {
@@ -64,11 +66,24 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
 
     @Override
     public ColaboradorDTO toDTO() {
-        return new ColaboradorDTO(morada,contacto,nomeCompleto,email,mNumber,alcunha,dataDeNascimento,funcao,supervisor);
+        return new ColaboradorDTO(morada, contacto, nomeCompleto, email, mNumber, alcunha, dataDeNascimento, funcao, supervisor);
     }
 
     @Override
     public String toString() {
-        return "Nome: "+nomeCompleto+" ID: "+mNumber+"\n";
+        return "Nome: " + nomeCompleto + " ID: " + mNumber + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Colaborador that = (Colaborador) o;
+        return this.mNumber.equals(that.mNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(morada, contacto, nomeCompleto, email, mNumber, alcunha, dataDeNascimento, funcao);
     }
 }

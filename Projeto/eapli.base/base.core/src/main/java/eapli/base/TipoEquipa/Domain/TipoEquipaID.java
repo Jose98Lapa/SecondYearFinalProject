@@ -12,7 +12,7 @@ public class TipoEquipaID implements ValueObject,Comparable<TipoEquipaID> {
     private String tipoEquipaID;
 
     public TipoEquipaID(String tipoEquipaID) {
-        if (StringPredicates.isNullOrEmpty(tipoEquipaID)||!tipoEquipaID.matches("^[0-9A-Z]{5}")){
+        if (StringPredicates.isNullOrEmpty(tipoEquipaID)||!tipoEquipaID.matches("^[0-9A-Z]{1,5}")){
             throw new IllegalArgumentException("ID do tipo de equipa inválido");
         }
         this.tipoEquipaID = tipoEquipaID;
