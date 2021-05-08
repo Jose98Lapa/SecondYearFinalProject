@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO> {
+public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,6 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long identity;
 
-    private CatalogoID identificadorUnico;
     private Titulo titulo;
     private Icon icon;
     private DescricaoBreve briefDesc;
@@ -42,7 +41,6 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
     public Catalogo(Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
-        identificadorUnico = new CatalogoID(String.valueOf(identity));
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -59,7 +57,6 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
     public Catalogo(String id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
-        identificadorUnico = new CatalogoID(String.valueOf(id));
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -105,8 +102,8 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
 
     }
 
-    public CatalogoID identity() {
-        return identificadorUnico;
+    public Long identity() {
+        return identity;
     }
 
     public Titulo title() {
@@ -148,7 +145,7 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
 
     @Override
     public CatalogoDTO toDTO() {
-        return new CatalogoDTO(identificadorUnico.toString(),
+        return new CatalogoDTO(identity,
                 titulo.toString(),
                 icon.toString(),
                 briefDesc.toString(),

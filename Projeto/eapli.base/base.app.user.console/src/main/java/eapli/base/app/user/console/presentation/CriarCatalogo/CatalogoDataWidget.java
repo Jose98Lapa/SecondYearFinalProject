@@ -16,7 +16,7 @@ import eapli.framework.io.util.Console;
 
 
     public void show() {
-        this.identificadorUnico = Console.readLine("Identificador Unico");
+        //this.identificadorUnico = Console.readLine("Identificador Unico");
         this.titulo = Console.readLine("Titulo");
         this.icon = Console.readLine("Icon");
         this.descBreve = Console.readLine("Descrição Breve");
