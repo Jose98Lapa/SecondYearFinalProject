@@ -7,10 +7,10 @@ import javax.persistence.Transient;
 
 @Embeddable
 public class IconServico implements ValueObject {
-    private String  temp;
+    private String  icon;
 
     public IconServico(String temp) {
-        this.temp = temp;
+        this.icon = temp;
     }
 
     protected IconServico() {
@@ -23,6 +23,6 @@ public class IconServico implements ValueObject {
 
     @Override
     public String toString() {
-        return temp;
+        return icon;
     }
 }

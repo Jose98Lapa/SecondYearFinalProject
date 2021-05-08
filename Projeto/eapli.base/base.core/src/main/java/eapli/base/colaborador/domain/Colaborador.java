@@ -25,7 +25,7 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
     private DataDeNascimento dataDeNascimento;
     @OneToOne
     private Colaborador supervisor;
-    @OneToOne
+    @ManyToOne
     private Funcao funcao;
 
     public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador supervisor) {

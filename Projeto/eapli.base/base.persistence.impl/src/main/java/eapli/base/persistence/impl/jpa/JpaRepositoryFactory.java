@@ -117,12 +117,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public CatalogRepository catalogs() {
-		return null;
+		return new JpaCatalogRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
 	public CatalogRepository catalogs(TransactionalContext autoTx) {
-		return null;
+		return new JpaCatalogRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class CreateCatalogController {
     private final CatalogBuilder catalogBuilder = new CatalogBuilder();
 
     public void insertBasicData(String id, String title, String icone, String briefDesc, String completeDesc){
-        authz.ensureAuthenticatedUserHasAnyOf();
+        //authz.ensureAuthenticatedUserHasAnyOf();
         catalogBuilder.withIdentity(id).withTitle(title).withIcon(icone)
                 .withBriefDesc(briefDesc).withCompleteDesc(completeDesc);
     }
