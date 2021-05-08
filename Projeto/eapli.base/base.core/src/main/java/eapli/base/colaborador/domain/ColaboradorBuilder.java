@@ -15,7 +15,7 @@ public class ColaboradorBuilder {
     private DataDeNascimento dataDeNascimento;
 
     private Funcao funcao;
-    private NumeroMecanografico mSupervisor;
+    private Colaborador supervisor;
 
     public ColaboradorBuilder withAddress(final Morada morada){
         this.morada = morada;
@@ -97,18 +97,13 @@ public class ColaboradorBuilder {
         return this;
     }
 
-    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final NumeroMecanografico mSupervisor){
-        this.mSupervisor = mSupervisor;
-        return this;
-    }
-
-    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final String mSupervisor){
-        this.mSupervisor = new NumeroMecanografico(mSupervisor);
+    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final Colaborador supervisor){
+        this.supervisor = supervisor;
         return this;
     }
 
     public Colaborador build() {
-        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,mSupervisor);
+        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,supervisor);
     }
 
 }

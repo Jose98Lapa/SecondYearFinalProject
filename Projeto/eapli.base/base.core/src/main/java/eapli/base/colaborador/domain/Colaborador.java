@@ -5,10 +5,7 @@ import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<ColaboradorDTO> {
@@ -17,17 +14,16 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
     private Contacto contacto;
     private NomeCompleto nomeCompleto;
     private EmailInstitucional email;
-    @Id
+    @EmbeddedId
     private NumeroMecanografico mNumber;
     private Alcunha alcunha;
     private DataDeNascimento dataDeNascimento;
-
+    @OneToOne
+    private Colaborador supervisor;
+    @OneToOne
     private Funcao funcao;
 
-    @AttributeOverride(name = "mecNumber", column = @Column(name = "shortDescription"))
-    private NumeroMecanografico mSupervisor;
-
-    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, NumeroMecanografico mSupervisor) {
+    public Colaborador(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador supervisor) {
         this.morada = morada;
         this.contacto = contacto;
         this.nomeCompleto = nomeCompleto;
@@ -36,7 +32,7 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
         this.alcunha = alcunha;
         this.dataDeNascimento = dataDeNascimento;
         this.funcao = funcao;
-        this.mSupervisor = mSupervisor;
+        this.supervisor = supervisor;
     }
 
     protected Colaborador(){}
@@ -63,6 +59,11 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
 
     @Override
     public ColaboradorDTO toDTO() {
-        return new ColaboradorDTO(morada,contacto,nomeCompleto,email,mNumber,alcunha,dataDeNascimento,funcao,mSupervisor);
+        return new ColaboradorDTO(morada,contacto,nomeCompleto,email,mNumber,alcunha,dataDeNascimento,funcao,supervisor);
+    }
+
+    @Override
+    public String toString() {
+        return "Name: "+nomeCompleto+" ID: "+mNumber+"\n";
     }
 }

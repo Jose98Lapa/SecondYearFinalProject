@@ -2,6 +2,9 @@ package eapli.base.funcao.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class IdFuncao implements ValueObject, Comparable<IdFuncao> {
 
     private String idFuncao;
@@ -11,6 +14,8 @@ public class IdFuncao implements ValueObject, Comparable<IdFuncao> {
             throw new IllegalArgumentException("The function ID does not fit the criteria");
         this.idFuncao = idFuncao;
     }
+
+    protected IdFuncao() {}
 
     public String getIdFuncao() {
         return idFuncao;

@@ -68,6 +68,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public CollaboratorRepository collaborators(TransactionalContext autoTx) {
+		return new JpaCollaboratorRepository(autoTx);
+	}
+
+	@Override
 	public FuncaoRepository funcao(TransactionalContext autoTx) {
 		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
 	}
@@ -75,11 +80,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FuncaoRepository funcao() {
 		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
-	}
-
-	@Override
-	public CollaboratorRepository collaborators(TransactionalContext autoTx) {
-		return null;
 	}
 
 	@Override

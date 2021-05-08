@@ -20,7 +20,7 @@ public class ColaboradorDTO {
     public String dataDeNascimento;
     public String designacao;
     public String IDfuncao;
-    public String mSupervisor;
+    public String supervisor;
 
     public ColaboradorDTO(String estrada, String numPorta, String andar, String localizacao, String codPostal, String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
         this.estrada = estrada;
@@ -36,7 +36,7 @@ public class ColaboradorDTO {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, NumeroMecanografico mSupervisor){
+    public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador supervisor){
         this.estrada=morada.getEstrada();
         this.numPorta=morada.getNumPorta();
         this.andar=morada.getAndar();
@@ -50,6 +50,6 @@ public class ColaboradorDTO {
         this.dataDeNascimento=dataDeNascimento.toString();
         this.designacao=funcao.toDTO().designacao;
         this.IDfuncao=funcao.toDTO().IdFuncao;
-        this.mSupervisor=mSupervisor.toString();
+        this.supervisor=supervisor.toString();
     }
 }
