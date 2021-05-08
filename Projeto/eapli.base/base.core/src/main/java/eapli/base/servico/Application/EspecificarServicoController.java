@@ -1,7 +1,6 @@
 package eapli.base.servico.Application;
 
 import eapli.base.catalogo.application.ListCatalogoService;
-import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.FormularioID;
@@ -13,14 +12,14 @@ import eapli.base.servico.builder.ServicoBuilder;
 import eapli.base.servico.domain.*;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class EspecificarServicoController {
     private Servico servico;
     ServicoBuilder builder = new ServicoBuilder();
+    ServicoRepository repo = PersistenceContext.repositories().servico();
 
     public void registo(ServicoDTO dto) {
-        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status("INATIVO").briefDesc(dto.briefDescription).compDesc(dto.completeDescription);
+        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription);
     }
 
     public void automatic(String script) {
@@ -41,8 +40,11 @@ public class EspecificarServicoController {
     }
 
     public void confirms(){
-        ServicoRepository repo = PersistenceContext.repositories().servico();
         repo.save(servico);
+    }
+
+    public ArrayList<ServicoDTO> getIncomplete(){
+        return new ListServicoService().IncompleteServicos();
     }
 
 }
