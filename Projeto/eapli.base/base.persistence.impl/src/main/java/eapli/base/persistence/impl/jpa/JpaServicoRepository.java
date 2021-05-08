@@ -30,6 +30,20 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         return q.getResultList();
     }
 
+    @Override
+    public void ativar(String servicoId) {
+        final TypedQuery<Servico> q = createQuery("Update Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
+        q.setParameter("status","ATIVO" );
+        q.setParameter("id",servicoId );
+    }
+
+    @Override
+    public void desativar(String servicoId) {
+        final TypedQuery<Servico> q = createQuery("Update Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
+        q.setParameter("status","INATIVO" );
+        q.setParameter("id",servicoId );
+    }
+
    /* public Servico updateServicoForm(String idServ,String idForm){
         final TypedQuery<Servico> q = createQuery("Update e From Service e where e.Form_FormularioID =: idForm ",Servico.class);
         q.setParameter("idForm",idForm);

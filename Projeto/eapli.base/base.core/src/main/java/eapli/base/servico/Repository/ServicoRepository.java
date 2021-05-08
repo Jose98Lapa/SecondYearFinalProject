@@ -9,5 +9,9 @@ import java.util.Optional;
 public interface ServicoRepository extends DomainRepository<ServicoID, Servico> {
     Optional<Servico> findByServicoID(ServicoID number);
     Iterable<Servico> incompleteServico();
-   // Servico getServicoById(String id);
+
+    void ativar(String servicoId);
+
+    void desativar(String servicoId);
+    // Servico getServicoById(String id);
     }

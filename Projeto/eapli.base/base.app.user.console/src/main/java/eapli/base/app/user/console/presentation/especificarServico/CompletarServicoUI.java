@@ -27,6 +27,10 @@ public class CompletarServicoUI extends AbstractUI {
         System.out.println("Lista de Servicos incompletos");
         int i = 0;
         incomplete = theController.getIncomplete();
+        if (incomplete.size()==0) {
+            System.out.println("Nao existem servicos");
+            return false;
+        }
         for (ServicoDTO s : incomplete) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
             System.out.println(s);

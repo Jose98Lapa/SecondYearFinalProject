@@ -64,7 +64,6 @@ public class EspecificarServicoUI extends AbstractUI {
             }else{
                  dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), theController.catalogList().get(Integer.parseInt(index)), null);
             }
-
             theController.registo(dto);
         }
 
@@ -77,7 +76,6 @@ public class EspecificarServicoUI extends AbstractUI {
             theController.manual(servicoUi.formId);
         }
         theController.confirms();
-
         return true;
     }
 

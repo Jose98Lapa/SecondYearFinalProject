@@ -47,4 +47,16 @@ public class EspecificarServicoController {
         return new ListServicoService().IncompleteServicos();
     }
 
+    public Iterable<ServicoDTO> all(){
+        return new ListServicoService().all();
+    }
+
+    public void ativarServico(String servicoId){
+        repo.ativar(servicoId);
+
+    }
+    public void desativarServico(String servicoId){
+        repo.desativar(servicoId);
+    }
+
 }
