@@ -18,7 +18,7 @@
         <emailInstitucional>raf@isep.ipp.pt</emailInstitucional>
         <alcunha>RAF</alcunha>
         <codPostal>4523-885</codPostal>
-        <supervisor>
+        <SUPERVISOR>
             <morada>
                 <srua>Rua das Formigas</srua>
                 <snumPorta>45</snumPorta>
@@ -32,16 +32,20 @@
             <semailInstitucional>raf@isep.ipp.pt</semailInstitucional>
             <salcunha>RAF</salcunha>
             <scodPostal>4523-885</scodPostal>
-        </supervisor>
+        </SUPERVISOR>
     </colaborador>
 
     <equipa>
         <tipoEquipa>
-            <descricao>Equipa Forte</descricao>
-            <tipoEquipaID>Experiente</tipoEquipaID>
+            <descricao>Forte</descricao>
+            <tipoEquipaID>123</tipoEquipaID>
         </tipoEquipa>
         <equipaId>123</equipaId>
         <acronimo>EF</acronimo>
         <TEdesignacao>So os mais fortes</TEdesignacao>
+        <cor>
+        <hexadecimal>0000FF</hexadecimal>
+        <nome>Azul</nome>
+        </cor>
     </equipa>
 </class>
