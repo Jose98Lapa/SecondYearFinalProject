@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<class>
+    <Servico>
+        <Formulario>
+            <fnome>nome</fnome>
+            <fscript>nome</fscript>
+            <Atributo>
+                <Alabel>nome</Alabel>
+                <Adescricao>nome</Adescricao>
+                <Atipo>nome</Atipo>
+                <Aregex>nome</Aregex>
+                <Anome>nome</Anome>
+            </Atributo>
+        </Formulario>
+        <descricaoBreve>nome</descricaoBreve>
+        <descricaoCompleta>nome</descricaoCompleta>
+        <ServicoID>nome</ServicoID>
+        <keyWords>nome</keyWords>
+        <dataDisponibilidade>nome</dataDisponibilidade>
+        <statusServico>nome</statusServico>
+        <iconServico>nome</iconServico>
+        <tituloServico>nome</tituloServico>
+    </Servico>
+
+    <catalogo>
+        <CcriteriosdeAcesso>nome</CcriteriosdeAcesso>
+        <iconCatalogo>nome</iconCatalogo>
+        <statusCatalogo>nome</statusCatalogo>
+        <tituloCatalogo>nome</tituloCatalogo>
+        <catalogoID>nome</catalogoID>
+        <descricaoBreve>nome</descricaoBreve>
+        <CdescricaoCompleta>nome</CdescricaoCompleta>
+
+    </catalogo>
+</class>
