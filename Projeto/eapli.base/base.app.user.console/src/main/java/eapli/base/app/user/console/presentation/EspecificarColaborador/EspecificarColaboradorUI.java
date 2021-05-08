@@ -6,17 +6,13 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.myclientuser.application.SignupController;
-import eapli.base.usermanagement.application.AddUserController;
-import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class EspecificarColaboradorUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(EspecificarColaboradorUI.class);

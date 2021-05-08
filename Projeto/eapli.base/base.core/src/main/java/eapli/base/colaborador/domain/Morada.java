@@ -1,18 +1,28 @@
 package eapli.base.colaborador.domain;
 
+import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.colaborador.dto.MoradaDTO;
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Version;
 import java.util.Objects;
 
-@Embeddable
-public class Morada implements ValueObject  {
+@Entity
+public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
     private Estrada estrada;
     private NumPorta numPorta;
     private Andar andar;
     private Localizacao localizacao;
+    @EmbeddedId
     private CodPostal codPostal;
+
+    @Version
+    Long version ;
 
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
         this.estrada = new Estrada(estrada);
@@ -24,40 +34,6 @@ public class Morada implements ValueObject  {
 
     protected Morada() {
 
-    }
-
-    public String getEstrada() {
-        return estrada.toString();
-    }
-
-    public String getNumPorta() {return numPorta.toString();}
-
-    public String getAndar() {
-        return andar.toString();
-    }
-
-    public String getLocalizacao() {
-        return localizacao.toString();
-    }
-
-    public String getCodPostal() {
-        return codPostal.toString();
-    }
-
-    public void setEstrada(String estrada) {this.estrada = new Estrada(estrada);}
-
-    public void setNumPorta(String numPorta) {this.numPorta = new NumPorta(numPorta);}
-
-    public void setAndar(String andar) {
-        this.andar = new Andar(andar);
-    }
-
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = new Localizacao(localizacao);
-    }
-
-    public void setCodPostal(String codPostal) {
-        this.codPostal = new CodPostal(codPostal);
     }
 
     @Override
@@ -81,5 +57,10 @@ public class Morada implements ValueObject  {
                 "Andar -> " + andar + "\n" +
                 "Localizacao -> " + localizacao + "\n" +
                 "Codigo postal -> " + codPostal;
+    }
+
+    @Override
+    public MoradaDTO toDTO() {
+        return new MoradaDTO(estrada.toString(),numPorta.toString(),andar.toString(),localizacao.toString(),codPostal.toString());
     }
 }
