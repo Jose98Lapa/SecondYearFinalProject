@@ -27,7 +27,7 @@ public class CriarEquipaController {
 
     public void registo(EquipaDTO equipaDTO){
         //authz.ensureAuthenticatedUserHasAnyOf();
-        Optional<Colaborador> colaborador = collaboratorRepository.ofIdentity(NumeroMecanografico.valueOf(equipaDTO.numeroMecanografico));
+        Optional<Colaborador> colaborador = collaboratorRepository.ofIdentity(NumeroMecanografico.valueOf("119111"));//equipaDTO.numeroMecanografico));
         if (colaborador.isPresent()){
             Optional<TipoEquipa> tipoEquipa = tipoEquipaRepository.ofIdentity(TipoEquipaID.valueOf(equipaDTO.tipoEquipaDTO.code));
             if (tipoEquipa.isPresent()){

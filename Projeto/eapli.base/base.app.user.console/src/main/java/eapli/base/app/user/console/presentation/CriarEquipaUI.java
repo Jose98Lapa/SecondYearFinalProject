@@ -1,6 +1,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
+import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -48,7 +49,7 @@ public class CriarEquipaUI extends AbstractUI {
         }
 
 
-        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,numeroMecanografico,tipoEquipaDTO);
+        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,new ArrayList<ColaboradorDTO>(),tipoEquipaDTO);
 
         try {
             this.criarEquipaController.registo(equipaDTO);
