@@ -3,29 +3,31 @@ package eapli.base.formulario.domain.atributo;
 import eapli.base.formulario.DTO.atributo.AtributoDTO;
 import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.representations.dto.DTOable;
-import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
-public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
+public class Atributo implements DomainEntity<AtributoID>, DTOable<AtributoDTO> {
     private AtributoNome nome;
     private AtributoLabel label;
     private AtributoDescricao desc;
     private AtributoRegex regex;
     private AtributoTipo tipo;
+    @EmbeddedId
+    private AtributoID AtributoID;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Version
+    Long version ;
 
-    public Atributo(AtributoNome nome, AtributoLabel label, AtributoDescricao desc, AtributoRegex regex, AtributoTipo tipo) {
+    public Atributo(AtributoNome nome, AtributoLabel label, AtributoDescricao desc, AtributoRegex regex, AtributoTipo tipo,AtributoID id) {
         this.nome = nome;
         this.label = label;
         this.desc = desc;
         this.regex = regex;
         this.tipo = tipo;
-        Preconditions.noneNull();
+        this.AtributoID = id;
+        //Preconditions.noneNull();
     }
 
     protected Atributo() {
@@ -62,25 +64,11 @@ public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
 
     @Override
     public AtributoDTO toDTO() {
-        return new AtributoDTO(nome.toString(), label.toString(),desc.toString(),regex.toString(),tipo.toString());
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
+        return new AtributoDTO(nome.toString(), label.toString(), desc.toString(), regex.toString(), tipo.toString(),AtributoID.toString());
     }
 
     @Override
-    public Object identity() {
-        return null;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+    public eapli.base.formulario.domain.atributo.AtributoID identity() {
+        return AtributoID;
     }
 }

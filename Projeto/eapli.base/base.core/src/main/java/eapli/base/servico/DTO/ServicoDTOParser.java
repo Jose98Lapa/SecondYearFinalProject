@@ -23,7 +23,7 @@ public class ServicoDTOParser implements DTOParser<ServicoDTO, Servico> {
 
     public Servico valueOfFormId(final ServicoDTO dto) {
         FormularioRepository repo = PersistenceContext.repositories().form();
-        final Formulario questionnaire = repo.ofIdentity(FormularioID.valueOf(dto.id))
+        final Formulario form = repo.ofIdentity(FormularioID.valueOf(dto.id))
                 .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + dto.id));
 
         Servico service = valueOf(dto);

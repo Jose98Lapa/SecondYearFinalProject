@@ -1,5 +1,6 @@
 package eapli.base.formulario.domain;
 
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
@@ -9,7 +10,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
-public class FormularioID implements Comparable<FormularioID>, Serializable {
+public class FormularioID implements ValueObject,Comparable<FormularioID>, Serializable {
 
     private String FormularioID;
     @Transient
