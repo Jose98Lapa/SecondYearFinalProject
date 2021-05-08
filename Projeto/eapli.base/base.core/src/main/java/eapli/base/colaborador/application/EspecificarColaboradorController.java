@@ -15,12 +15,6 @@ public class EspecificarColaboradorController {
     private final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
     private final ColaboradorBuilder colabBuilder = new ColaboradorBuilder();
 
-    public void method(String estrada,String numPorta,String andar,String localizacao,String codPostal,String contacto,
-                       String nomeCompleto,String email,String mNumero,String alcunha,String dataDeNascimento){
-        colabBuilder.withAddress(estrada,numPorta,andar,localizacao,codPostal).withContact(contacto).withFullName(nomeCompleto)
-                .withInstitutionalEmail(email).withNickname(alcunha).withDateOfBirth(dataDeNascimento);
-    }
-
     public void method(ColaboradorDTO colaboradorDTO){
         colabBuilder.withAddress(colaboradorDTO.estrada,colaboradorDTO.numPorta,colaboradorDTO.andar,colaboradorDTO.localizacao,colaboradorDTO.codPostal).withContact(colaboradorDTO.contacto).withFullName(colaboradorDTO.nomeCompleto)
                 .withInstitutionalEmail(colaboradorDTO.email).withMecanoGraphicNumber(colaboradorDTO.mNumber).withNickname(colaboradorDTO.alcunha).withDateOfBirth(colaboradorDTO.dataDeNascimento);
@@ -32,7 +26,7 @@ public class EspecificarColaboradorController {
 
     public Iterable<Colaborador> getCollaboratorList(){return collabRepo.findAll();}
 
-    public void defineSupervisor(Colaborador supervisor){colabBuilder.withSupervisorMecanoGraphicNumber(supervisor);}
+    public void defineSupervisor(Colaborador supervisor){colabBuilder.withSupervisor(supervisor);}
 
     public Colaborador registerCollaborator(){return colabBuilder.build();}
 

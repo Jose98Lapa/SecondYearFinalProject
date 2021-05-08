@@ -46,4 +46,9 @@ public class Funcao implements AggregateRoot<IdFuncao>, DTOable<FuncaoDTO> {
     public FuncaoDTO toDTO() {
         return new FuncaoDTO(idFuncao,designacao);
     }
+
+    @Override
+    public String toString() {
+        return "Designacao: "+designacao;
+    }
 }

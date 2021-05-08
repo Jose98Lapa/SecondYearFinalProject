@@ -66,6 +66,8 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
 
     @Override
     public ColaboradorDTO toDTO() {
+        if (supervisor==null)
+            return new ColaboradorDTO(morada, contacto, nomeCompleto, email, mNumber, alcunha, dataDeNascimento, funcao);
         return new ColaboradorDTO(morada, contacto, nomeCompleto, email, mNumber, alcunha, dataDeNascimento, funcao, supervisor);
     }
 
