@@ -25,7 +25,7 @@ package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
-import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
@@ -120,7 +120,7 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildServicoMenu() {
         final Menu servicoMenu = new Menu("Especificar Servico");
-        servicoMenu.addItem(REGISTER_SERVICE_OPTION, "Especificar Servico", () -> new EspecificarServicoUI().show());
+        servicoMenu.addItem(1, "Especificar Servico", () -> new EspecificarServicoUI().show());
         servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
     }
@@ -134,7 +134,7 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildCatalogoMenu() {
         final Menu equipaMenu = new Menu("Catalogo");
-        equipaMenu.addItem(CRIAR_CATALOGO_OPTION, "Criar Catalogo", () -> new CriarCatalogoUI().show());
+        equipaMenu.addItem(1, "Criar Catalogo", () -> new CriarCatalogoUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }

@@ -16,9 +16,7 @@ public class CodPostal implements ValueObject {
         this.codPostal = codPostal;
     }
 
-    protected CodPostal() {
-
-    }
+    protected CodPostal() {}
 
     @Override
     public boolean equals(Object o) {
