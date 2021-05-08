@@ -76,7 +76,11 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
     }
 
     public boolean containsTeamMember(Colaborador colaborador){
-        return teamMembers.contains(colaborador);
+        for (Colaborador colaborador1 : teamMembers){
+            if (colaborador1.identity().toString().equals(colaborador.identity().toString()))
+                return true;
+        }
+        return false;
     }
 
     @Override

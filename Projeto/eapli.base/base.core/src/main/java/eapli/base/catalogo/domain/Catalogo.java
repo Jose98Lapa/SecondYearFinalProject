@@ -1,5 +1,6 @@
 package eapli.base.catalogo.domain;
 
+import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
@@ -91,6 +92,16 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     private void addResponsableCollabs(final Set<Colaborador> responsableCollabs) {
         this.responsableCollabs.addAll(responsableCollabs);
+    }
+
+    public boolean isTipoEquipaValido(Set<String> equipaValidas){
+        for (Equipa e :accessCriteria){
+            if (equipaValidas.contains(e.identity().toString())){
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public Long identity() {

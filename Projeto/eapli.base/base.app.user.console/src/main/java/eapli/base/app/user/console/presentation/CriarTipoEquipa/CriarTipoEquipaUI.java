@@ -1,7 +1,8 @@
-package eapli.base.app.user.console.presentation;
+package eapli.base.app.user.console.presentation.CriarTipoEquipa;
 
 import eapli.base.TipoEquipa.Application.CriarTipoEquipaController;
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
+import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.cor.DTO.CorDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
