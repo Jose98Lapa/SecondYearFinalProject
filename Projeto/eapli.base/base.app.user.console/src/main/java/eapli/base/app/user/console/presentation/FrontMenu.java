@@ -56,8 +56,7 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(
-                BaseRoles.CLIENT_USER)::show, () -> {
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI()::show, () -> {
             new MainMenu().mainLoop();
             return true;
         }));

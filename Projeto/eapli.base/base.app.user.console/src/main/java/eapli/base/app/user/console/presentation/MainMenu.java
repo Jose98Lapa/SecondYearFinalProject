@@ -56,16 +56,22 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final int EXIT_OPTION = 0;
 
+    private static final int CRIAR_COR = 2;
+
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int REGISTER_SERVICE_OPTION = 2;
+
+    //RRH
+    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 2;
     private static final int CRIAR_EQUIPA_OPTION = 3;
-    private static final int CRIAR_CATALOGO_OPTION = 4;
-    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 5;
-    private static final int CRIAR_TIPO_EQUIPA_OPTION = 6;
-    private static final int CRIAR_COR = 7;
-    private static final int EDITAR_SERVICO = 8;
-    private static final int TOGGLE_SERVICO = 9;
+    private static final int CRIAR_TIPO_EQUIPA_OPTION = 4;
+
+
+    //GSH
+    private static final int CRIAR_CATALOGO_OPTION = 2;
+    private static final int SERVICE_OPTION = 3;
+    private static final int EDITAR_SERVICO = 4;
+    private static final int TOGGLE_SERVICO = 5;
 
 
     private final AuthorizationService authz =
@@ -105,12 +111,8 @@ class MainMenu extends ClientUserBaseUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.GSH)) {
             final Menu catalogoMenu = buildCatalogoMenu();
             mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
-            final Menu criarServicoMenu = buildServicoMenu();
-            mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, criarServicoMenu);
-            final Menu editarServicoMenu = buildEditarServico();
-            mainMenu.addSubMenu(EDITAR_SERVICO,editarServicoMenu);
-            final Menu toggleServicoMenu = buildAtivarDesativarServico();
-            mainMenu.addSubMenu(TOGGLE_SERVICO,toggleServicoMenu);
+            final Menu servicoMenu = buildServicoMenu();
+            mainMenu.addSubMenu(SERVICE_OPTION, servicoMenu);
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER,BaseRoles.ADMIN)) {
@@ -125,10 +127,25 @@ class MainMenu extends ClientUserBaseUI {
     }
 
     private Menu buildServicoMenu() {
-        final Menu servicoMenu = new Menu("Especificar Servico");
+        final Menu servicoMenu = new Menu("Servico");
         servicoMenu.addItem(1, "Especificar Servico", () -> new EspecificarServicoUI().show());
+        servicoMenu.addItem(2,"Alterar Servico",()->new CompletarServicoUI().show());
+        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
         servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
+    }
+
+    private Menu buildEditarServico(){
+        final Menu corMenu = new Menu("Alterar Servico");
+        corMenu.addItem(1,"Alterar Servico",()->new CompletarServicoUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+    private Menu buildAtivarDesativarServico(){
+        final Menu corMenu = new Menu("Ativar/Desativar Servico");
+        corMenu.addItem(1,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
     }
 
     private Menu buildEquipaMenu() {
@@ -162,19 +179,6 @@ class MainMenu extends ClientUserBaseUI {
     private Menu buildCorMenu(){
         final Menu corMenu = new Menu("Cor");
         corMenu.addItem(1,"Adicionar Cor",()->new CriarCorUI().show());
-        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
-        return corMenu;
-    }
-
-    private Menu buildEditarServico(){
-        final Menu corMenu = new Menu("Alterar Servico");
-        corMenu.addItem(1,"Alterar Servico",()->new CompletarServicoUI().show());
-        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
-        return corMenu;
-    }
-    private Menu buildAtivarDesativarServico(){
-        final Menu corMenu = new Menu("Ativar/Desativar Servico");
-        corMenu.addItem(1,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }
