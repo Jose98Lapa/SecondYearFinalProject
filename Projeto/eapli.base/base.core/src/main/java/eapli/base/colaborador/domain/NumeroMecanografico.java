@@ -24,25 +24,13 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
     private static final long serialVersionUID = 1L;
 
     private String mecNumber;
-    @Transient
-    private final String regex = "^[0-9]{1,6}$";
 
     public NumeroMecanografico(final String mecanographicmecNumber) {
-        if (StringPredicates.isNullOrEmpty(mecanographicmecNumber)) {
-            throw new IllegalArgumentException(
-                    "Mecanographic Number should neither be null nor empty");
+        if (mecanographicmecNumber == null || mecanographicmecNumber.isEmpty() || !mecanographicmecNumber.matches("^[0-9]{1,6}$"))
+            throw new IllegalArgumentException("Mecanographic Number does not fit the criteria");
+        this.mecNumber = mecanographicmecNumber;
         }
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(mecanographicmecNumber);
-
-        if (m.matches())
-            this.mecNumber=mecanographicmecNumber;
-        else
-            throw new IllegalArgumentException("Mecanographic Number does not fit the criteria");
-
-        //check if it already exists
-    }
 
     protected NumeroMecanografico() {
         // for ORM
