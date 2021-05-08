@@ -57,14 +57,17 @@ public class CriarCatalogoUI extends AbstractUI {
         final Set<EquipaDTO> accessCriteria = new HashSet<>();
         int index = 1;
 
+        System.out.printf("%n%s%n","Lista Criterios de Acesso:");
         while (index != 0) {
             for (EquipaDTO dto : lstEquipas)
                 System.out.printf("#%d - %s%n", index++, dto.acronimo);
             index = Console.readInteger("Insira o numero da equipa a ter acesso ao catalogo (0 - fim): ");
 
-            if (index > 0 && index-1 < accessCriteria.size() ) {
-                accessCriteria.add(lstEquipas.get(index));
-                lstEquipas.remove(index);
+            if (index > 0 && index-1 < lstEquipas.size() ) {
+                accessCriteria.add(lstEquipas.get(index-1));
+                lstEquipas.remove(index-1);
+                if(lstEquipas.isEmpty())
+                    index = 0;
             }else if (index < 0 && accessCriteria.isEmpty()) {
                 System.out.println("Por defeito todas as equipas irão ter acesso ao catalogo.");
                 accessCriteria.addAll(lstEquipas);
@@ -80,14 +83,17 @@ public class CriarCatalogoUI extends AbstractUI {
         final Set<ColaboradorDTO> responsaveis = new HashSet<>();
         int index = 1;
 
+        System.out.printf("%n%s%n","Lista Colaboradores:");
         while (index != 0) {
             for (ColaboradorDTO dto : lstColaboradores)
-                System.out.printf("#%d - %s - %s - %s\n",index++,dto.mNumber,dto.alcunha,dto.nomeCompleto);
+                System.out.printf("#%d - %s - %s - %s%n",index++,dto.mNumber,dto.alcunha,dto.nomeCompleto);
             index = Console.readInteger("Escolha um colaborador responsavel pelo catalogo (0 - fim): ");
 
             if (index > 0 && index-1 < lstColaboradores.size()) {
-                responsaveis.add(lstColaboradores.get(index));
-                lstColaboradores.remove(index);
+                responsaveis.add(lstColaboradores.get(index-1));
+                lstColaboradores.remove(index-1);
+                if(lstColaboradores.isEmpty())
+                    index = 0;
             }else if (index < 0 && responsaveis.isEmpty()) {
                 System.out.println("Um catalogo precisa de ter pelo menos um colaborador responsavel.");
                 index=1;
@@ -102,6 +108,7 @@ public class CriarCatalogoUI extends AbstractUI {
         CriticidadeDTO criticidade = null;
         int index = 1;
 
+        System.out.printf("%n%s%n","Lista Niveis criticidade:");
         while (index != 0) {
             for (CriticidadeDTO dto : lstCriticidade)
                 System.out.printf("#%d %n", index++);

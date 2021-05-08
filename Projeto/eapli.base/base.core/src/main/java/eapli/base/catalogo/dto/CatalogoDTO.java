@@ -29,6 +29,7 @@ import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTO;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
@@ -39,8 +40,8 @@ public class CatalogoDTO {
     public String icon;
     public String briefDesc;
     public String completeDesc;
-    public Set<EquipaDTO> accessCriteria;
-    public Set<ColaboradorDTO> responsableCollabs;
+    public Set<EquipaDTO> accessCriteria = new HashSet<>();
+    public Set<ColaboradorDTO> responsableCollabs = new HashSet<>();
 
 
     public CatalogoDTO(String catalogID, String catalogTitle, String icon,
