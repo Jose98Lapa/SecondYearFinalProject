@@ -32,9 +32,9 @@ public class CreateCatalogController {
     private final CatalogRepository catalogRepo = PersistenceContext.repositories().catalogs();
     private final CatalogBuilder catalogBuilder = new CatalogBuilder();
 
-    public void insertBasicData(String title, String icone, String briefDesc, String completeDesc){
+    public void insertBasicData(String identificadorUnico, String title, String icone, String briefDesc, String completeDesc){
         //authz.ensureAuthenticatedUserHasAnyOf();
-        catalogBuilder.withTitle(title).withIcon(icone)
+        catalogBuilder.withIdentity(identificadorUnico).withTitle(title).withIcon(icone)
                 .withBriefDesc(briefDesc).withCompleteDesc(completeDesc);
     }
 

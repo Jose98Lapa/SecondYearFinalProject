@@ -1,8 +1,10 @@
 package eapli.base.servico.Application;
 
 import eapli.base.catalogo.application.ListCatalogoService;
+import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.domain.CatalogoID;
 import eapli.base.catalogo.dto.CatalogoDTO;
-import eapli.base.catalogo.dto.CatalogoDTOParser;
+import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.repository.FormularioRepository;
@@ -13,14 +15,17 @@ import eapli.base.servico.builder.ServicoBuilder;
 import eapli.base.servico.domain.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class EspecificarServicoController {
     private Servico servico;
     ServicoBuilder builder = new ServicoBuilder();
     ServicoRepository repo = PersistenceContext.repositories().servico();
+    CatalogRepository catRepo = PersistenceContext.repositories().catalogs();
 
     public void registo(ServicoDTO dto) {
-        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription).Catalogo(new CatalogoDTOParser().valueOf(dto.catalogo));
+        final Catalogo catalogo =  catRepo.ofIdentity(new CatalogoID(dto.id)).orElseThrow(()-> new IllegalArgumentException("Unknown catalog: " + dto.id));
+        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription).Catalogo(catalogo);
     }
 
     public void automatic(String script) {

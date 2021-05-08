@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 @Embeddable
 public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
     private String catalogID;
+
     @Transient
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 

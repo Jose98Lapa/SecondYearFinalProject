@@ -1,5 +1,6 @@
 package eapli.base.funcao.domain;
 
+import eapli.base.formulario.domain.atributo.AtributoLabel;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
@@ -17,6 +18,10 @@ public class IdFuncao implements ValueObject, Comparable<IdFuncao> {
     }
 
     protected IdFuncao() {}
+
+    public static IdFuncao valueOf(String string) {
+        return new IdFuncao(string);
+    }
 
     public String getIdFuncao() {
         return idFuncao;

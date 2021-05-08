@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.CriarCatalogo;
+package eapli.base.app.user.console.presentation.criarCatalogo;
 
 import eapli.framework.io.util.Console;
 
@@ -8,7 +8,7 @@ import eapli.framework.io.util.Console;
  * widget for reading user data Jorge Santos ajs@isp.ipp.pt
  */
  class CatalogoDataWidget {
-
+    private String identificadorUnico;
     private String titulo;
     private String icon;
     private String descBreve;
@@ -16,12 +16,17 @@ import eapli.framework.io.util.Console;
 
 
     public void show() {
+        this.identificadorUnico = Console.readLine("Identificador Unico");
         this.titulo = Console.readLine("Titulo");
         this.icon = Console.readLine("Icon");
         this.descBreve = Console.readLine("Descrição Breve");
         this.descCompleta = Console.readLine("Descrição Completa");
     }
 
+
+    public String identificadorUnico() {
+        return this.identificadorUnico;
+    }
 
     public String titulo() {
         return this.titulo;

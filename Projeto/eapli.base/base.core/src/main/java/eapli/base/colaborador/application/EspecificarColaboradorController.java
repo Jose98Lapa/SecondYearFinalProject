@@ -16,7 +16,7 @@ public class EspecificarColaboradorController {
     private final ColaboradorBuilder colabBuilder = new ColaboradorBuilder();
 
     public void method(ColaboradorDTO colaboradorDTO){
-        colabBuilder.withAddress(colaboradorDTO.estrada,colaboradorDTO.numPorta,colaboradorDTO.andar,colaboradorDTO.localizacao,colaboradorDTO.codPostal).withContact(colaboradorDTO.contacto).withFullName(colaboradorDTO.nomeCompleto)
+        colabBuilder.withAddress(colaboradorDTO.rua,colaboradorDTO.numPorta,colaboradorDTO.andar,colaboradorDTO.localizacao,colaboradorDTO.codPostal).withContact(colaboradorDTO.contacto).withFullName(colaboradorDTO.nomeCompleto)
                 .withInstitutionalEmail(colaboradorDTO.email).withMecanoGraphicNumber(colaboradorDTO.mNumber).withNickname(colaboradorDTO.alcunha).withDateOfBirth(colaboradorDTO.dataDeNascimento);
     }
 

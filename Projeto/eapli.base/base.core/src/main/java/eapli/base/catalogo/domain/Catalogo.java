@@ -1,6 +1,5 @@
 package eapli.base.catalogo.domain;
 
-import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
@@ -13,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
+public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,9 +20,10 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Long version;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long identity;
 
+    private CatalogoID identificadorUnico;
     private Titulo titulo;
     private Icon icon;
     private DescricaoBreve briefDesc;
@@ -42,6 +42,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     public Catalogo(Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        identificadorUnico = new CatalogoID(String.valueOf(identity));
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -55,10 +56,10 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     protected Catalogo() {
     }
 
-    public Catalogo(Long id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+    public Catalogo(String id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
-        identity = id;
+        identificadorUnico = new CatalogoID(String.valueOf(id));
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -104,8 +105,8 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     }
 
-    public Long identity() {
-        return identity;
+    public CatalogoID identity() {
+        return identificadorUnico;
     }
 
     public Titulo title() {
@@ -147,7 +148,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     @Override
     public CatalogoDTO toDTO() {
-        return new CatalogoDTO(identity,
+        return new CatalogoDTO(identificadorUnico.toString(),
                 titulo.toString(),
                 icon.toString(),
                 briefDesc.toString(),

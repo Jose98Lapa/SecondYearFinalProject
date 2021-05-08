@@ -19,12 +19,12 @@ public class ColaboradorDTOParser implements DTOParser<ColaboradorDTO, Colaborad
     public Colaborador valueOf(ColaboradorDTO dto) {
         ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
         if (dto.mSupervisor.isEmpty())
-            return colaboradorBuilder.withAddress(dto.estrada,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
+            return colaboradorBuilder.withAddress(dto.rua,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
                 .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento).withFunction(dto.IDfuncao,dto.designacao).build();
 
         final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
         Optional<Colaborador> supervisor = collabRepo.ofIdentity(new NumeroMecanografico(dto.mSupervisor));
-        return colaboradorBuilder.withAddress(dto.estrada,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
+        return colaboradorBuilder.withAddress(dto.rua,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
                 .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento)
                 .withFunction(dto.IDfuncao,dto.designacao).withSupervisor(supervisor.get()).build();
     }

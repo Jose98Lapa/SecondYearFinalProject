@@ -35,7 +35,7 @@ import java.util.Set;
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class CatalogoDTO {
-    public Long identity;
+    public String identity;
     public String catalogTitle;
     public String icon;
     public String briefDesc;
@@ -44,7 +44,7 @@ public class CatalogoDTO {
     public Set<ColaboradorDTO> responsableCollabs = new HashSet<>();
 
 
-    public CatalogoDTO(Long identity, String catalogTitle, String icon,
+    public CatalogoDTO(String identity, String catalogTitle, String icon,
                        String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria) {
 
         this.identity = identity;

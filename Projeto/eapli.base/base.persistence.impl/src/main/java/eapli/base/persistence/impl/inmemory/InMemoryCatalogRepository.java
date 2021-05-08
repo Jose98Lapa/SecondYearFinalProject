@@ -6,7 +6,7 @@ import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 public class InMemoryCatalogRepository
-        extends InMemoryDomainRepository<Catalogo, Long>
+        extends InMemoryDomainRepository<Catalogo, CatalogoID>
         implements CatalogRepository {
 
     static {

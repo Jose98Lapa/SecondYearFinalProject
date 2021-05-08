@@ -1,21 +1,31 @@
 package eapli.base.colaborador.domain;
 
+import eapli.base.colaborador.dto.MoradaDTO;
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.representations.dto.DTOable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import java.util.Objects;
 
 @Embeddable
-public class Morada implements ValueObject  {
+public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
-    private Estrada estrada;
+    @Column @JoinColumn
+    private Rua rua;
+    @Column @JoinColumn
     private NumPorta numPorta;
+    @Column @JoinColumn
     private Andar andar;
+    @Column @JoinColumn
     private Localizacao localizacao;
+    @Column @JoinColumn
     private CodPostal codPostal;
 
+
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
-        this.estrada = new Estrada(estrada);
+        this.rua = new Rua(estrada);
         this.numPorta = new NumPorta(numPorta);
         this.andar = new Andar(andar);
         this.localizacao = new Localizacao(localizacao);
@@ -23,41 +33,6 @@ public class Morada implements ValueObject  {
     }
 
     protected Morada() {
-
-    }
-
-    public String getEstrada() {
-        return estrada.toString();
-    }
-
-    public String getNumPorta() {return numPorta.toString();}
-
-    public String getAndar() {
-        return andar.toString();
-    }
-
-    public String getLocalizacao() {
-        return localizacao.toString();
-    }
-
-    public String getCodPostal() {
-        return codPostal.toString();
-    }
-
-    public void setEstrada(String estrada) {this.estrada = new Estrada(estrada);}
-
-    public void setNumPorta(String numPorta) {this.numPorta = new NumPorta(numPorta);}
-
-    public void setAndar(String andar) {
-        this.andar = new Andar(andar);
-    }
-
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = new Localizacao(localizacao);
-    }
-
-    public void setCodPostal(String codPostal) {
-        this.codPostal = new CodPostal(codPostal);
     }
 
     @Override
@@ -65,21 +40,26 @@ public class Morada implements ValueObject  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Morada morada = (Morada) o;
-        return Objects.equals(estrada, morada.estrada) && Objects.equals(numPorta, morada.numPorta) && Objects.equals(andar, morada.andar) && Objects.equals(localizacao, morada.localizacao) && Objects.equals(codPostal, morada.codPostal);
+        return Objects.equals(rua, morada.rua) && Objects.equals(numPorta, morada.numPorta) && Objects.equals(andar, morada.andar) && Objects.equals(localizacao, morada.localizacao) && Objects.equals(codPostal, morada.codPostal);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estrada, numPorta, andar, localizacao, codPostal);
+        return Objects.hash(rua, numPorta, andar, localizacao, codPostal);
     }
 
     @Override
     public String toString() {
         return "Morada:\n" +
-                "Estrada -> " + estrada + "\n" +
+                "Estrada -> " + rua + "\n" +
                 "Numero da Porto -> " + numPorta + "\n" +
                 "Andar -> " + andar + "\n" +
                 "Localizacao -> " + localizacao + "\n" +
                 "Codigo postal -> " + codPostal;
+    }
+
+    @Override
+    public MoradaDTO toDTO() {
+        return new MoradaDTO(rua.toString(),numPorta.toString(),andar.toString(),localizacao.toString(),codPostal.toString());
     }
 }

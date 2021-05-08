@@ -4,7 +4,7 @@ import eapli.framework.io.util.Console;
 
 public class ColaboradorDataWidget {
 
-    private String estrada;
+    private String rua;
     private String numPorta;
     private String andar;
     private String localizacao;
@@ -24,7 +24,7 @@ public class ColaboradorDataWidget {
         this.alcunha=Console.readLine("Alcunha:");
         this.dataDeNascimento=Console.readLine("Data de nascimento [DD/MM/AAAA]:");
 
-        this.estrada=Console.readLine("Estrada:");
+        this.rua=Console.readLine("Rua:");
         this.numPorta=Console.readLine("Numero da Porta:");
         this.andar=Console.readLine("Andar:");
         this.localizacao=Console.readLine("Localizacao:");
@@ -32,7 +32,7 @@ public class ColaboradorDataWidget {
     }
 
     public String street() {
-        return estrada;
+        return rua;
     }
 
     public String doorNumber() {

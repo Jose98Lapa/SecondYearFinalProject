@@ -13,6 +13,7 @@ public class ServicoDTOParser implements DTOParser<ServicoDTO, Servico> {
     @Override
     public Servico valueOf(ServicoDTO dto) {
         ServicoBuilder svb = new ServicoBuilder();
+
         return svb.Icon(dto.icon).Id(dto.id).Keywords(dto.keywords).Status(dto.status).Title(dto.title).buildManual();
     }
 
