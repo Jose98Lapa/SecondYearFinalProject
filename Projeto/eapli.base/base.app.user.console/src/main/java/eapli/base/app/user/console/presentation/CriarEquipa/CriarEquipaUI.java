@@ -1,7 +1,6 @@
-package eapli.base.app.user.console.presentation;
+package eapli.base.app.user.console.presentation.CriarEquipa;
 
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
-import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;

@@ -24,6 +24,9 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.CriarCor.CriarCorUI;
+import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
+import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;

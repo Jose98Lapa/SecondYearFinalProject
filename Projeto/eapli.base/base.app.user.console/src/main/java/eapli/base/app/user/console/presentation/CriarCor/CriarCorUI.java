@@ -1,9 +1,9 @@
-package eapli.base.app.user.console.presentation;
+package eapli.base.app.user.console.presentation.CriarCor;
 
 
+import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.cor.Application.CriarCorController;
 import eapli.base.cor.DTO.CorDTO;
-import eapli.base.cor.Domain.Cor;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
