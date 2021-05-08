@@ -4,6 +4,7 @@ import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.funcao.domain.Funcao;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -18,14 +19,18 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
     private NomeCompleto nomeCompleto;
 
     private EmailInstitucional email;
+
     @EmbeddedId
     private NumeroMecanografico mNumber;
 
     private Alcunha alcunha;
 
     private DataDeNascimento dataDeNascimento;
-    @OneToOne
+
+    @Nullable
+    @ManyToOne
     private Colaborador supervisor;
+
     @ManyToOne
     private Funcao funcao;
 

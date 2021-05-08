@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO> {
+public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     @Id
     @GeneratedValue
@@ -76,8 +76,8 @@ public class Catalogo implements AggregateRoot<CatalogoID>, DTOable<CatalogoDTO>
         this.responsableCollabs.addAll(responsableCollabs);
     }
 
-    public CatalogoID identity() {
-        return identity;
+    public Long identity() {
+        return id;
     }
 
     public Titulo title() {

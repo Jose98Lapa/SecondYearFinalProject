@@ -4,5 +4,5 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.domain.CatalogoID;
 import eapli.framework.domain.repositories.DomainRepository;
 
-public interface CatalogRepository extends DomainRepository<CatalogoID, Catalogo> {
+public interface CatalogRepository extends DomainRepository<Long, Catalogo> {
 }
