@@ -3,8 +3,10 @@ package eapli.base.catalogo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.Calendars;
 
+import javax.persistence.Embeddable;
 import java.util.Calendar;
 
+@Embeddable
 public class Status implements ValueObject {
     private Calendar dataDisponibilidade;
     private boolean status;

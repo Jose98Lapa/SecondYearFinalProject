@@ -3,10 +3,12 @@ package eapli.base.catalogo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Embeddable
 public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
     private String catalogID;
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
@@ -26,6 +28,10 @@ public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
         }
 
         //check if already exists
+    }
+
+    public CatalogoID() {
+        //vazio
     }
 
 

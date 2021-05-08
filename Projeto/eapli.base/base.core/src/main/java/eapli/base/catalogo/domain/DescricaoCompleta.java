@@ -3,10 +3,12 @@ package eapli.base.catalogo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Embeddable
 public class DescricaoCompleta implements ValueObject {
     private String completeDescription;
     private final String regex = "^[ a-zA-Z]{1,100}$";
@@ -24,6 +26,10 @@ public class DescricaoCompleta implements ValueObject {
         } else {
             throw new IllegalArgumentException("Catalog Title does not fit the criteria");
         }
+    }
+
+    public DescricaoCompleta() {
+        //vazio
     }
 
     @Override
