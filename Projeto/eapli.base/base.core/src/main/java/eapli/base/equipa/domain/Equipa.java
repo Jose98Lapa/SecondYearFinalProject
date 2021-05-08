@@ -2,6 +2,7 @@ package eapli.base.equipa.domain;
 
 import javax.persistence.*;
 
+import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
@@ -21,23 +22,33 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
     private EquipaID equipaID;
     private String designacao;
     private Acronimo acronimo;
+    @OneToOne
+    private TipoEquipa tipoEquipa;
 
     @OneToMany
-    private final Set<Colaborador> colaboradorSet = new HashSet<>();
+    private final Set<Colaborador> colaboradorResponsaveisSet = new HashSet<>();
 
-    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador) {
+    @OneToMany
+    private final Set<Colaborador> teamMembers = new HashSet<>();
+
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador,TipoEquipa tipoEquipa) {
         this.designacao = designacao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;
-        this.colaboradorSet.add(colaborador);
+        this.colaboradorResponsaveisSet.add(colaborador);
+        this.tipoEquipa = tipoEquipa;
     }
 
     protected Equipa(){
 
     }
 
-    public void addColaborador(Colaborador colaborador){
-        colaboradorSet.add(colaborador);
+    public void addColaboradorResponsible(Colaborador colaborador){
+        colaboradorResponsaveisSet.add(colaborador);
+    }
+
+    public void addTeamMembers(Colaborador colaborador){
+        teamMembers.add(colaborador);
     }
 
     @Override
@@ -69,6 +80,6 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(),colaboradorSet.stream().findFirst().get().identity().toString());
+        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(), colaboradorResponsaveisSet.stream().findFirst().get().identity().toString(),tipoEquipa.toDTO());
     }
 }

@@ -8,10 +8,10 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 public class JpaEquipaRepository extends JpaAutoTxRepository<Equipa, EquipaID,EquipaID> implements EquipaRepository {
     public JpaEquipaRepository(TransactionalContext tx) {
-        super(tx,"TeamTypeID");
+        super(tx,"EquipaID");
     }
 
     public JpaEquipaRepository(String persistenceUnitName) {
-        super(persistenceUnitName, "TeamTypeID");
+        super(persistenceUnitName, "EquipaID");
     }
 }

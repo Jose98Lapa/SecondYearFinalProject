@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class Acronimo  {
+public class Acronimo implements ValueObject  {
     private String acronimo;
 
     public Acronimo(String acronimo) {

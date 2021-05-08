@@ -5,8 +5,7 @@ import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 @Entity
 public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
@@ -15,7 +14,9 @@ public class Atributo implements DomainEntity, DTOable<AtributoDTO>{
     private AtributoDescricao desc;
     private AtributoRegex regex;
     private AtributoTipo tipo;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Atributo(AtributoNome nome, AtributoLabel label, AtributoDescricao desc, AtributoRegex regex, AtributoTipo tipo) {

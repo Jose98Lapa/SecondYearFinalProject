@@ -25,6 +25,7 @@ package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
+import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -56,6 +57,14 @@ class MainMenu extends ClientUserBaseUI {
     private static final int ACCOUNT_OPTION = 4;
     private static final int SETTINGS_OPTION = 5;
     private static final int ESPECIFICAR_COLLABORADOR_OPTION = 6;
+    private static final int CRIAR_CATALOGO_OPTION = 6;
+    private static final int SETTINGS_OPTION = 4;
+    private static final int CRIAR_TIPO_EQUIPA_OPTION = 5;
+    private static final int CRIAR_COR = 9;
+
+    private static final int ACCOUNT_OPTION = 7;
+
+
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
     private static final int LIST_MY_BOOKINGS_OPTION = 3;
@@ -91,27 +100,41 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         final Menu serviceMenu = buildServicoMenu();
         final Menu equipaMenu = buildEquipaMenu();
+        final Menu catalogoMenu = buildCatalogoMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
         mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
         mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
+        mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION, equipaMenu);
+        mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
+        mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
+        mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
+
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
     }
+
     private Menu buildServicoMenu() {
         final Menu servicoMenu = new Menu("Servico");
-        servicoMenu.addItem(REGISTER_SERVICE_OPTION,"Especificar Servico",() -> new EspecificarServicoUI().show());
-        servicoMenu.addItem(EXIT_OPTION,RETURN, Actions.SUCCESS);
+        servicoMenu.addItem(REGISTER_SERVICE_OPTION, "Especificar Servico", () -> new EspecificarServicoUI().show());
+        servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
     }
 
-    private Menu buildEquipaMenu(){
+    private Menu buildEquipaMenu() {
         final Menu equipaMenu = new Menu("Equipa");
-        equipaMenu.addItem(1,"Criar Equipa",() -> new CriarEquipaUI().show());
-        equipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        equipaMenu.addItem(1, "Criar Equipa", () -> new CriarEquipaUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return equipaMenu;
+    }
+
+    private Menu buildCatalogoMenu() {
+        final Menu equipaMenu = new Menu("Catalogo");
+        equipaMenu.addItem(CRIAR_CATALOGO_OPTION, "Criar Catalogo", () -> new CriarCatalogoUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }
 
@@ -120,5 +143,19 @@ class MainMenu extends ClientUserBaseUI {
         colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new EspecificarColaboradorUI().show());
         colaboradorMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return colaboradorMenu;
+    }
+
+    private Menu buildTipoEquipaMenu(){
+        final Menu tipoEquipaMenu = new Menu("Tipo Equipa");
+        tipoEquipaMenu.addItem(1,"Criar Tipo Equipa",()->new CriarTipoEquipaUI().show());
+        tipoEquipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return tipoEquipaMenu;
+    }
+
+    private Menu buildCorMenu(){
+        final Menu corMenu = new Menu("Cor");
+        corMenu.addItem(1,"Adicionar Cor",()->new CriarCorUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
     }
 }

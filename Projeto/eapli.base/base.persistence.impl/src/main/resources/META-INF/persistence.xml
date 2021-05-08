@@ -18,6 +18,10 @@
     <class>eapli.base.equipa.domain.Equipa</class>
     <class>eapli.base.equipa.domain.EquipaID</class>
     <class>eapli.base.equipa.domain.Acronimo</class>
+    <class>eapli.base.TipoEquipa.Domain.TipoEquipa</class>
+    <class>eapli.base.TipoEquipa.Domain.TipoEquipaID</class>
+    <class>eapli.base.cor.Domain.Cor</class>
+    <class>eapli.base.cor.Domain.Hexadecimal</class>
     <class>eapli.base.colaborador.domain.Colaborador</class>
     <class>eapli.base.colaborador.domain.Alcunha</class>
     <class>eapli.base.colaborador.domain.CodPostal</class>

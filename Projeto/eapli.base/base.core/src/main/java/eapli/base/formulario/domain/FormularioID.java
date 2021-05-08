@@ -10,7 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
 public class FormularioID implements Comparable<FormularioID>, Serializable {
-    private String ID;
+
+    private String FormularioID;
     @Transient
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
@@ -23,7 +24,7 @@ public class FormularioID implements Comparable<FormularioID>, Serializable {
         Matcher m = p.matcher(ID);
 
         if (m.matches()) {
-            this.ID = ID;
+            this.FormularioID = ID;
         } else {
             throw new IllegalArgumentException("Formulario ID does not fit the criteria");
         }
@@ -35,7 +36,7 @@ public class FormularioID implements Comparable<FormularioID>, Serializable {
 
     @Override
     public String toString() {
-        return ID;
+        return FormularioID;
     }
 
     public static FormularioID valueOf(String string) {
@@ -47,16 +48,16 @@ public class FormularioID implements Comparable<FormularioID>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FormularioID that = (FormularioID) o;
-        return Objects.equals(ID, that.ID) && Objects.equals(regex, that.regex);
+        return Objects.equals(FormularioID, that.FormularioID) && Objects.equals(regex, that.regex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, regex);
+        return Objects.hash(FormularioID, regex);
     }
 
     @Override
     public int compareTo(FormularioID o) {
-        return ID.compareTo(o.ID);
+        return FormularioID.compareTo(o.FormularioID);
     }
 }

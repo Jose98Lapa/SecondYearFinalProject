@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.especificarServico;
+package eapli.base.app.user.console.presentation.EspecificarServico;
 
 import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.servico.Application.EspecificarServicoController;
@@ -42,7 +42,7 @@ public class EspecificarServicoUI extends AbstractUI {
         }else {
             FormularioUI servicoUi = new FormularioUI();
             servicoUi.show();
-            theController.manual(null);
+            theController.manual(servicoUi.formId);
         }
         theController.confirms();
 
