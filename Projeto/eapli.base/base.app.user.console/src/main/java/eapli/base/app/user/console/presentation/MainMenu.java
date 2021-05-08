@@ -28,10 +28,11 @@ import eapli.base.app.user.console.presentation.CriarCor.CriarCorUI;
 import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
-import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
-import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
-import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
-import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
+import eapli.base.app.user.console.presentation.EspecificarServico.CompletarServicoUI;
+import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -67,17 +68,6 @@ class MainMenu extends ClientUserBaseUI {
     private static final int TOGGLE_SERVICO = 9;
 
 
-
-    // BOOKINGS MENU
-    private static final int BOOK_A_MEAL_OPTION = 2;
-    private static final int LIST_MY_BOOKINGS_OPTION = 3;
-
-    // ACCOUNT MENU
-    private static final int LIST_MOVEMENTS_OPTION = 1;
-
-    // SETTINGS
-    private static final int SET_USER_ALERT_LIMIT_OPTION = 1;
-
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
 
@@ -101,18 +91,31 @@ class MainMenu extends ClientUserBaseUI {
         final Menu mainMenu = new Menu();
 
         final Menu myUserMenu = new MyUserMenu();
-        final Menu serviceMenu = buildServicoMenu();
-        final Menu equipaMenu = buildEquipaMenu();
-        final Menu catalogoMenu = buildCatalogoMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-        mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
-        mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
-        mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
-        mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
-        mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
-        mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
-        mainMenu.addSubMenu(EDITAR_SERVICO,buildEditarServico());
-        mainMenu.addSubMenu(TOGGLE_SERVICO,buildAtivarDesativarServico());
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.RRH)) {
+            final Menu especificarColaboradorMenu = buildEspecificarColaboradorMenu();
+            mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,especificarColaboradorMenu);
+            final Menu criarequipaMenu = buildEquipaMenu();
+            mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,criarequipaMenu);
+            final Menu criarTipoEquipaMenu = buildTipoEquipaMenu();
+            mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,criarTipoEquipaMenu);
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.GSH)) {
+            final Menu catalogoMenu = buildCatalogoMenu();
+            mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
+            final Menu criarServicoMenu = buildServicoMenu();
+            mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, criarServicoMenu);
+            final Menu editarServicoMenu = buildEditarServico();
+            mainMenu.addSubMenu(EDITAR_SERVICO,editarServicoMenu);
+            final Menu toggleServicoMenu = buildAtivarDesativarServico();
+            mainMenu.addSubMenu(TOGGLE_SERVICO,toggleServicoMenu);
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER,BaseRoles.ADMIN)) {
+            mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
+        }
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 

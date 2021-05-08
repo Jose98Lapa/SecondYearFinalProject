@@ -15,4 +15,9 @@ public class Icon implements ValueObject {
     public Icon() {
         //vazio
     }
+
+    @Override
+    public String toString() {
+        return iconPath;
+    }
 }
