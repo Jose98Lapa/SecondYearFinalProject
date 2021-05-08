@@ -8,12 +8,14 @@ public class AtributoDTO {
     public String desc;
     public String regex;
     public String tipo;
+    public String id;
 
-    public AtributoDTO(String nome, String label, String desc, String regex, String tipo) {
+    public AtributoDTO(String nome, String label, String desc, String regex, String tipo,String id) {
         this.nome = nome;
         this.label = label;
         this.desc = desc;
         this.regex = regex;
         this.tipo = tipo;
+        this.id = id;
     }
 }

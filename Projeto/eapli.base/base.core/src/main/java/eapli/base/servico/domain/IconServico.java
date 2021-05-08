@@ -1,10 +1,12 @@
 package eapli.base.servico.domain;
 
+import eapli.framework.domain.model.ValueObject;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 @Embeddable
-public class IconServico {
+public class IconServico implements ValueObject {
     private String  temp;
 
     public IconServico(String temp) {

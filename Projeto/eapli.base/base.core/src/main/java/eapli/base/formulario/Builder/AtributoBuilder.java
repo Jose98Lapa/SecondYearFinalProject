@@ -8,9 +8,10 @@ public class AtributoBuilder {
     private AtributoDescricao desc;
     private AtributoRegex regex;
     private AtributoTipo tipo;
+    private AtributoID id;
 
     public Atributo build(){
-        return new Atributo(nome,label,desc,regex,tipo);
+        return new Atributo(nome,label,desc,regex,tipo,id);
     }
 
     public AtributoBuilder withNome(String nome) {
@@ -35,6 +36,10 @@ public class AtributoBuilder {
 
     public AtributoBuilder withTipo(String tipo) {
         this.tipo = AtributoTipo.valueOf(tipo);
+        return this;
+    }
+    public AtributoBuilder withId(String id) {
+        this.id = AtributoID.valueOf(id);
         return this;
     }
 }
