@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
     @Column @JoinColumn
-    private Estrada estrada;
+    private Rua rua;
     @Column @JoinColumn
     private NumPorta numPorta;
     @Column @JoinColumn
@@ -25,7 +25,7 @@ public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
 
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
-        this.estrada = new Estrada(estrada);
+        this.rua = new Rua(estrada);
         this.numPorta = new NumPorta(numPorta);
         this.andar = new Andar(andar);
         this.localizacao = new Localizacao(localizacao);
@@ -40,18 +40,18 @@ public class Morada implements ValueObject, DTOable<MoradaDTO> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Morada morada = (Morada) o;
-        return Objects.equals(estrada, morada.estrada) && Objects.equals(numPorta, morada.numPorta) && Objects.equals(andar, morada.andar) && Objects.equals(localizacao, morada.localizacao) && Objects.equals(codPostal, morada.codPostal);
+        return Objects.equals(rua, morada.rua) && Objects.equals(numPorta, morada.numPorta) && Objects.equals(andar, morada.andar) && Objects.equals(localizacao, morada.localizacao) && Objects.equals(codPostal, morada.codPostal);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estrada, numPorta, andar, localizacao, codPostal);
+        return Objects.hash(rua, numPorta, andar, localizacao, codPostal);
     }
 
     @Override
     public String toString() {
         return "Morada:\n" +
-                "Estrada -> " + estrada + "\n" +
+                "Estrada -> " + rua + "\n" +
                 "Numero da Porto -> " + numPorta + "\n" +
                 "Andar -> " + andar + "\n" +
                 "Localizacao -> " + localizacao + "\n" +
@@ -60,6 +60,6 @@ public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
     @Override
     public MoradaDTO toDTO() {
-        return new MoradaDTO(estrada.toString(),numPorta.toString(),andar.toString(),localizacao.toString(),codPostal.toString());
+        return new MoradaDTO(rua.toString(),numPorta.toString(),andar.toString(),localizacao.toString(),codPostal.toString());
     }
 }
