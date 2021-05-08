@@ -49,6 +49,20 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     protected Catalogo() {
     }
 
+    public Catalogo(Long id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+                    DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
+                    final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        identity = id;
+        this.titulo = titulo;
+        this.icon = icon;
+        this.briefDesc = briefDesc;
+        this.completeDesc = completeDesc;
+        addResponsableCollabs(responsableCollabs);
+        addAccessCriteria(accessCriteria);
+        this.nivelCriticidade = nivelCriticidade;
+        this.status = true;
+    }
+
 
     @Override
     public boolean sameAs(final Object other) {
