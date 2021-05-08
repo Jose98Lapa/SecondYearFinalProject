@@ -24,7 +24,7 @@ public class EspecificarServicoController {
     CatalogRepository catRepo = PersistenceContext.repositories().catalogs();
 
     public void registo(ServicoDTO dto) {
-        final Catalogo catalogo = catRepo.ofIdentity(new CatalogoID(dto.catalogo.identity)).orElseThrow(() -> new IllegalArgumentException("Unknown catalog: " + dto.id));
+        final Catalogo catalogo = catRepo.ofIdentity(dto.catalogo.identity).orElseThrow(() -> new IllegalArgumentException("Unknown catalog: " + dto.id));
         builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription).Catalogo(catalogo);
     }
 
