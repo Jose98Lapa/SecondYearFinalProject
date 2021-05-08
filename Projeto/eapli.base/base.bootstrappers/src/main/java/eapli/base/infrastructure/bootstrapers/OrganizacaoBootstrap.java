@@ -102,7 +102,7 @@ public class OrganizacaoBootstrap {
                     String tipoEquipaID = element.getElementsByTagName("tipoEquipaID").item(0).getTextContent();
                     String equipaId = element.getElementsByTagName("equipaId").item(0).getTextContent();
                     String acronimo = element.getElementsByTagName("acronimo").item(0).getTextContent();
-                    String TEdesignacao = element.getElementsByTagName("designacao").item(0).getTextContent();
+                    String TEdesignacao = element.getElementsByTagName("TEdesignacao").item(0).getTextContent();
 
 
                 }
