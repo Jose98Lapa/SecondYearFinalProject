@@ -37,11 +37,12 @@ public class ColaboradorDTO {
     }
 
     public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador Supervisor){
-        this.estrada=morada.getEstrada();
-        this.numPorta=morada.getNumPorta();
-        this.andar=morada.getAndar();
-        this.localizacao=morada.getLocalizacao();
-        this.codPostal=morada.getCodPostal().toString();
+        MoradaDTO moradaDTO = morada.toDTO();
+        this.estrada=moradaDTO.estrada;
+        this.numPorta=moradaDTO.numPorta;
+        this.andar=moradaDTO.andar;
+        this.localizacao=moradaDTO.localizacao;
+        this.codPostal=moradaDTO.codPostal;
         this.contacto=contacto.toString();
         this.nomeCompleto=nomeCompleto.toString();
         this.email=email.toString();
@@ -54,11 +55,12 @@ public class ColaboradorDTO {
     }
 
     public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao){
-        this.estrada=morada.getEstrada();
-        this.numPorta=morada.getNumPorta();
-        this.andar=morada.getAndar();
-        this.localizacao=morada.getLocalizacao();
-        this.codPostal=morada.getCodPostal().toString();
+        MoradaDTO moradaDTO = morada.toDTO();
+        this.estrada=moradaDTO.estrada;
+        this.numPorta=moradaDTO.numPorta;
+        this.andar=moradaDTO.andar;
+        this.localizacao=moradaDTO.localizacao;
+        this.codPostal=moradaDTO.codPostal;
         this.contacto=contacto.toString();
         this.nomeCompleto=nomeCompleto.toString();
         this.email=email.toString();
