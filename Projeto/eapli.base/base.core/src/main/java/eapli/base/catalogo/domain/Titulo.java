@@ -3,13 +3,17 @@ package eapli.base.catalogo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class Titulo implements ValueObject {
     private String catalogTitle;
-    private String regex = "^[ a-zA-Z]{1,50}$";
+
+    @Transient
+    private String regex = "^[a-zA-Z]{1,50}$";
 
     public Titulo(String catalogTitle) {
         if (StringPredicates.isNullOrEmpty(catalogTitle)) {
@@ -24,6 +28,10 @@ public class Titulo implements ValueObject {
         } else {
             throw new IllegalArgumentException("Catalog Title does not fit the criteria");
         }
+    }
+
+    public Titulo() {
+        //vazio
     }
 
     @Override
@@ -41,9 +49,7 @@ public class Titulo implements ValueObject {
 
     @Override
     public String toString() {
-        return "tituloCatalogo{" +
-                "catalogTitle='" + catalogTitle + '\'' +
-                '}';
+        return catalogTitle;
     }
 
 }

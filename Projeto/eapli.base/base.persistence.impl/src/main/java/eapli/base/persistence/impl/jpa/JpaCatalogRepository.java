@@ -6,7 +6,7 @@ import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-public class JpaCatalogRepository extends JpaAutoTxRepository<Catalogo, CatalogoID, CatalogoID> implements CatalogRepository {
+public class JpaCatalogRepository extends JpaAutoTxRepository<Catalogo, Long, Long> implements CatalogRepository {
 
     public JpaCatalogRepository(TransactionalContext tx) {
         super(tx,"CatalogID");
