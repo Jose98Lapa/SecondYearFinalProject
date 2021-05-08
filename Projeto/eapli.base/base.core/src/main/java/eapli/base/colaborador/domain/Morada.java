@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class Morada implements ValueObject {
+public class Morada implements ValueObject  {
 
     private String estrada;
     private String numPorta;

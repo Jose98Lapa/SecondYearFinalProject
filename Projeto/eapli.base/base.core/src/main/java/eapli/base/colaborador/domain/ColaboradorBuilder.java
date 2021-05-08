@@ -97,7 +97,7 @@ public class ColaboradorBuilder {
         return this;
     }
 
-    public ColaboradorBuilder withSupervisorMecanoGraphicNumber(final Colaborador supervisor){
+    public ColaboradorBuilder withSupervisor(final Colaborador supervisor){
         this.supervisor = supervisor;
         return this;
     }

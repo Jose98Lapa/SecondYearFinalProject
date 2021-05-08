@@ -20,7 +20,7 @@ public class ColaboradorDTO {
     public String dataDeNascimento;
     public String designacao;
     public String IDfuncao;
-    public String supervisor;
+    public String mSupervisor;
 
     public ColaboradorDTO(String estrada, String numPorta, String andar, String localizacao, String codPostal, String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
         this.estrada = estrada;
@@ -36,7 +36,7 @@ public class ColaboradorDTO {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador supervisor){
+    public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador Supervisor){
         this.estrada=morada.getEstrada();
         this.numPorta=morada.getNumPorta();
         this.andar=morada.getAndar();
@@ -50,6 +50,22 @@ public class ColaboradorDTO {
         this.dataDeNascimento=dataDeNascimento.toString();
         this.designacao=funcao.toDTO().designacao;
         this.IDfuncao=funcao.toDTO().IdFuncao;
-        this.supervisor=supervisor.toString();
+        this.mSupervisor=Supervisor.identity().toString();
+    }
+
+    public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao){
+        this.estrada=morada.getEstrada();
+        this.numPorta=morada.getNumPorta();
+        this.andar=morada.getAndar();
+        this.localizacao=morada.getLocalizacao();
+        this.codPostal=morada.getCodPostal().toString();
+        this.contacto=contacto.toString();
+        this.nomeCompleto=nomeCompleto.toString();
+        this.email=email.toString();
+        this.mNumber=mNumber.toString();
+        this.alcunha=alcunha.toString();
+        this.dataDeNascimento=dataDeNascimento.toString();
+        this.designacao=funcao.toDTO().designacao;
+        this.IDfuncao=funcao.toDTO().IdFuncao;
     }
 }

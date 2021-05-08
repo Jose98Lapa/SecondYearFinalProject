@@ -3,12 +3,16 @@ package eapli.base.catalogo.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Embeddable
 public class DescricaoBreve implements ValueObject{
     private String briefDescription;
+    @Transient
     private final String regex = "^[ a-zA-Z]{1,50}$";
 
     public DescricaoBreve(String briefDescription) {
@@ -24,6 +28,10 @@ public class DescricaoBreve implements ValueObject{
         } else {
             throw new IllegalArgumentException("Catalog Title does not fit the criteria");
         }
+    }
+
+    public DescricaoBreve() {
+        //vazio
     }
 
     @Override
