@@ -55,6 +55,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
                         index=1;}
             }
 
+            //Colab
         List<Colaborador> lstColab = new ArrayList<>();
         Colaborador selectedC;
         this.controller.getCollaboratorList().forEach(lstColab::add);
@@ -65,7 +66,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 System.out.printf("#%d - %s%n", index++, colab.toString());
             index = Console.readInteger("Selecione o supervisor do Colaborador (0 - fim): ");
 
-            if (index > 0 && index - 1 < lstFunc.size()) {
+            if (index > 0 && index - 1 < lstColab.size()) {
                 controller.defineSupervisor(selectedC=lstColab.get(index-1));
                 index=0;
                 if (lstColab.isEmpty())
