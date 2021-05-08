@@ -15,9 +15,7 @@ public class NomeCompleto implements ValueObject {
         this.name = name;
     }
 
-    protected NomeCompleto() {
-
-    }
+    protected NomeCompleto() {}
 
     @Override
     public boolean equals(Object o) {
