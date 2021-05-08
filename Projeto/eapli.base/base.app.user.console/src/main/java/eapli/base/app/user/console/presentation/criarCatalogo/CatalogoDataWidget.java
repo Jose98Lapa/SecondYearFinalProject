@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.criarCatalogo;
+package eapli.base.app.user.console.presentation.CriarCatalogo;
 
 import eapli.framework.io.util.Console;
 

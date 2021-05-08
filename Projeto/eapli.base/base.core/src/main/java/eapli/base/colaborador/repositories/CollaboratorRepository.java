@@ -11,4 +11,6 @@ public interface CollaboratorRepository extends DomainRepository<NumeroMecanogra
     Iterable<Colaborador> findAll();
 
     Optional<Colaborador> ofIdentity(NumeroMecanografico id);
+
+    Optional<Colaborador> getColaboradorByEmail(String email);
 }

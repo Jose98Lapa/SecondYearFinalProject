@@ -44,7 +44,7 @@ public class ServicoID implements ValueObject, Comparable<ServicoID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ServicoID servicoID = (ServicoID) o;
-        return serviceID == servicoID.serviceID;
+        return serviceID.equals(servicoID.serviceID);
     }
 
     @Override
