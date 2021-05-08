@@ -27,11 +27,11 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TipoServico tipo;
     private ServicoScript script;
     private CompleteDescription compDesc;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "catalogo_id")
-    private Catalogo catalogo;
     private BriefDescription briedDesc;
+
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
+    private Catalogo catalogo;
+
     @OneToOne
     private Formulario form ;
 
