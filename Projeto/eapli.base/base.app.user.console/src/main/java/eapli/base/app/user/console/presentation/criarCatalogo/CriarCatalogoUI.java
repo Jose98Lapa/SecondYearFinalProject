@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.CriarCatalogo;
+package eapli.base.app.user.console.presentation.criarCatalogo;
 
 import eapli.base.catalogo.application.CreateCatalogController;
 import eapli.base.catalogo.dto.CatalogoDTO;
