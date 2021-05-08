@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoID;
 import eapli.base.servico.Repository.ServicoRepository;
+import eapli.base.servico.domain.StatusServico;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -25,22 +26,22 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
     }
 
     public Iterable<Servico> incompleteServico(){
-        final TypedQuery<Servico> q = createQuery("Select e From Servico e where e.status =: status ",Servico.class);
-        q.setParameter("status","INCOMPLETE" );
+        final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.status =: status ",Servico.class);
+        q.setParameter("status", StatusServico.valueOf("INCOMPLETO"));
         return q.getResultList();
     }
 
     @Override
     public void ativar(String servicoId) {
-        final TypedQuery<Servico> q = createQuery("Update Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
-        q.setParameter("status","ATIVO" );
+        final TypedQuery<Servico> q = createQuery("Update eapli.base.servico.domain.Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
+        q.setParameter("status",StatusServico.valueOf("ATIVO"));
         q.setParameter("id",servicoId );
     }
 
     @Override
     public void desativar(String servicoId) {
-        final TypedQuery<Servico> q = createQuery("Update Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
-        q.setParameter("status","INATIVO" );
+        final TypedQuery<Servico> q = createQuery("Update eapli.base.servico.domain.Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
+        q.setParameter("status",StatusServico.valueOf("INATIVO"));
         q.setParameter("id",servicoId );
     }
 

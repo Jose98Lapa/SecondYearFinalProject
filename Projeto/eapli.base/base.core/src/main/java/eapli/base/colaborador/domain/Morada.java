@@ -8,32 +8,18 @@ import java.util.Objects;
 @Embeddable
 public class Morada implements ValueObject  {
 
-    private String estrada;
-    private String numPorta;
-    private String andar;
-    private String localizacao;
-    private String codPostal;
+    private Estrada estrada;
+    private NumPorta numPorta;
+    private Andar andar;
+    private Localizacao localizacao;
+    private CodPostal codPostal;
 
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
-        if (estrada==null ||estrada.isEmpty()||!estrada.matches("^[A-zÀ-ú\\.\\- ]+$"))
-            throw new IllegalArgumentException("Estrada nao cumpre os critérios");
-        this.estrada = estrada;
-
-        if (numPorta==null ||numPorta.isEmpty()||!numPorta.matches("^\\d{0,4}$"))
-            throw new IllegalArgumentException("Numero de porta nao cumpre os critérios");
-        this.numPorta = numPorta;
-
-        if (andar==null ||andar.isEmpty()||!andar.matches("^\\d{0,3}$"))
-            throw new IllegalArgumentException("Andar nao cumpre os critérios");
-        this.andar = andar;
-
-        if (localizacao==null ||localizacao.isEmpty()||!localizacao.matches("^[a-zA-Z]+(?:[\\s-][A-zÀ-ú]+)*$"))
-            throw new IllegalArgumentException("Localizacao nao cumpre os critérios");
-        this.localizacao = localizacao;
-
-        if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
-            throw new IllegalArgumentException("Codigo postal nao cumpre os critérios");
-        this.codPostal = codPostal;
+        this.estrada = new Estrada(estrada);
+        this.numPorta = new NumPorta(numPorta);
+        this.andar = new Andar(andar);
+        this.localizacao = new Localizacao(localizacao);
+        this.codPostal = new CodPostal(codPostal);
     }
 
     protected Morada() {
@@ -41,43 +27,37 @@ public class Morada implements ValueObject  {
     }
 
     public String getEstrada() {
-        return estrada;
+        return estrada.toString();
     }
 
-    public String getNumPorta() {
-        return numPorta;
-    }
+    public String getNumPorta() {return numPorta.toString();}
 
     public String getAndar() {
-        return andar;
+        return andar.toString();
     }
 
     public String getLocalizacao() {
-        return localizacao;
+        return localizacao.toString();
     }
 
     public String getCodPostal() {
-        return codPostal;
+        return codPostal.toString();
     }
 
-    public void setEstrada(String estrada) {
-        this.estrada = estrada;
-    }
+    public void setEstrada(String estrada) {this.estrada = new Estrada(estrada);}
 
-    public void setNumPorta(String numPorta) {
-        this.numPorta = numPorta;
-    }
+    public void setNumPorta(String numPorta) {this.numPorta = new NumPorta(numPorta);}
 
     public void setAndar(String andar) {
-        this.andar = andar;
+        this.andar = new Andar(andar);
     }
 
     public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
+        this.localizacao = new Localizacao(localizacao);
     }
 
     public void setCodPostal(String codPostal) {
-        this.codPostal = codPostal;
+        this.codPostal = new CodPostal(codPostal);
     }
 
     @Override

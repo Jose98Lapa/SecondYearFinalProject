@@ -8,15 +8,18 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
+
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version;
+
     @EmbeddedId
     private ServicoID id;
     private IconServico icon;
@@ -25,6 +28,7 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TipoServico tipo;
     private ServicoScript script;
     private CompleteDescription compDesc;
+
     @OneToOne
     private Catalogo catalogo;
     private BriefDescription briedDesc;
@@ -80,7 +84,7 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
 
     @Override
     public ServicoID identity() {
-        return null;
+        return id;
     }
 
     @Override

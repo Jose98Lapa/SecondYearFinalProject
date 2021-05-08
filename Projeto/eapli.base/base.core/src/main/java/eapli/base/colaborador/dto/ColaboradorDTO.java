@@ -68,4 +68,6 @@ public class ColaboradorDTO {
         this.designacao=funcao.toDTO().designacao;
         this.IDfuncao=funcao.toDTO().IdFuncao;
     }
+
+
 }

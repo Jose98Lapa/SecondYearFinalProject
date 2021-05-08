@@ -20,7 +20,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+ *//*
+
 package eapli.base.catalogo.dto;
 
 import eapli.base.catalogo.domain.Status;
@@ -32,13 +33,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Set;
 
+*/
 /**
  * The builder for a CATALOGDTO using the RepresentationBuilder interface. This builder is forgiving in the sense that it
  * ignores properties that it doesn't understand in case the CATALOG has evolved to support new properties.
  *
  * @author Paulo Gandra de Sousa
  *
- */
+ *//*
+
 public class CatalogoDTORepresentationBuilder implements RepresentationBuilder<CatalogoDTO> {
 
     private static final Logger LOGGER = LogManager.getLogger(CatalogoDTORepresentationBuilder.class);
@@ -90,3 +93,4 @@ public class CatalogoDTORepresentationBuilder implements RepresentationBuilder<C
         return this;
     }
 }
+*/

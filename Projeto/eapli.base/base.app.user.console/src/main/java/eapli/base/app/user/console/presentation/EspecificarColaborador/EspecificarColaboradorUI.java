@@ -1,10 +1,13 @@
 package eapli.base.app.user.console.presentation.EspecificarColaborador;
 
 import eapli.base.colaborador.application.EspecificarColaboradorController;
+import eapli.base.colaborador.application.PasswordGenerator;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
-import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.funcao.domain.Funcao;
+import eapli.base.myclientuser.application.SignupController;
+import eapli.base.usermanagement.application.AddUserController;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
@@ -18,6 +21,7 @@ import java.util.Set;
 public class EspecificarColaboradorUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(EspecificarColaboradorUI.class);
     private final EspecificarColaboradorController controller = new EspecificarColaboradorController();
+    private final SignupController signupController = new SignupController();
 
     @Override
     protected boolean doShow() {
@@ -29,75 +33,58 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 cdw.contact(), cdw.fullName(), cdw.institutionalEmail(), cdw.mecanographicNumber(), cdw.nickname(), cdw.dateOfBirth());
         controller.method(colaboradorDTO);
 
-        boolean functionSelected = true;
-        while (functionSelected) {
-            System.out.println("Lista de funcoes:");
-            for (Funcao funcao : controller.getFunctionList()) {
-                System.out.println(funcao.toString());
-            }
-
 
             List<Funcao> lstFunc = new ArrayList<>();
+            Funcao selectedF;
             this.controller.getFunctionList().forEach(lstFunc::add);
-            final Set<Funcao> accessCriteria = new HashSet<>();
             int index = 1;
 
-            System.out.printf("%n%s%n","Lista de Funcoes:");
             while (index != 0) {
+                System.out.printf("%n%s%n","Lista de Funcoes:");
                 for (Funcao funcao : lstFunc)
                     System.out.printf("#%d - %s%n", index++, funcao.toString());
-                index = Console.readInteger("Insira o numero da funcao que deseja associar ao Colaborador (0 - fim): ");
+                    index = Console.readInteger("\nSelecione a funcao que deseja associar ao Colaborador (0 - fim): ");
 
-                if (index > 0 && index-1 < lstFunc.size() ) {
-                    accessCriteria.add(lstFunc.get(index-1));
-                    lstFunc.remove(index-1);
-                    if(lstFunc.isEmpty())
-                        index = 0;
-                }
+                    if (index > 0 && index - 1 < lstFunc.size()) {
+                        controller.defineFunction(selectedF=lstFunc.get(index-1));
+                        index=0;
+                        if (lstFunc.isEmpty())
+                            index = 0;
+                    }else {
+                        System.out.println("Opção inválida");
+                        index=1;}
             }
 
+            //Colab
+        List<Colaborador> lstColab = new ArrayList<>();
+        Colaborador selectedC;
+        this.controller.getCollaboratorList().forEach(lstColab::add);
+        index=1;
+        while (index != 0) {
+            System.out.printf("%n%s%n","Lista de Colaboradores:");
+            for (Colaborador colab : lstColab)
+                System.out.printf("#%d - %s%n", index++, colab.toString());
+            index = Console.readInteger("Selecione o supervisor do Colaborador (0 - fim): ");
 
-            String choosenFunction = Console.readLine("Escolha uma funcao:");
-
-            for (Funcao funcao : controller.getFunctionList()) {
-                if (funcao.identity().toString().equals(choosenFunction)) {
-                    controller.defineFunction(funcao);
-                    functionSelected = false;
-                    break;
-                }
-            }
-            if (!functionSelected) {
-                System.out.println("Funcao Invalida\n");
-            }
-        }
-
-        boolean supervisorSelected = true;
-        while (supervisorSelected) {
-            System.out.println("Lista de Supervisores:\n");
-            for (Colaborador colaborador : controller.getCollaboratorList()) {
-                System.out.println(colaborador);
-            }
-
-            String choosenSupervisor = Console.readLine("Escolha um supervisor(ID):");
-
-            for (Colaborador colaborador : controller.getCollaboratorList()) {
-                if (colaborador.identity().toString().equals(choosenSupervisor)) {
-                    controller.defineSupervisor(colaborador);
-                    supervisorSelected = false;
-                    break;
-                }
-            }
-            if (!supervisorSelected) {
-                System.out.println("Supervisor inválido\n");
-            }
+            if (index > 0 && index - 1 < lstColab.size()) {
+                controller.defineSupervisor(selectedC=lstColab.get(index-1));
+                index=0;
+                if (lstColab.isEmpty())
+                    index = 0;
+            }else {
+                System.out.println("Opção inválida");
+                index=1;}
         }
 
         Colaborador colaborador = controller.registerCollaborator();
 
         boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
-        if (answer)
+        if (answer) {
             controller.saveCollaborator(colaborador);
-        else
+            String[] name = cdw.fullName().split(" ");
+            PasswordGenerator pwrdGenerator = new PasswordGenerator();
+            signupController.signup(cdw.nickname(),pwrdGenerator.getPassword(7), name[0],name[name.length-1], cdw.institutionalEmail(),cdw.mecanographicNumber());
+        }else
             return false;
         return true;
     }

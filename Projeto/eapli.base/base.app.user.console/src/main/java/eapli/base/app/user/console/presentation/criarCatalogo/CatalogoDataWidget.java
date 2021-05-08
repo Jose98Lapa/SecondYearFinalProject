@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.criarCatalogo;
+package eapli.base.app.user.console.presentation.CriarCatalogo;
 
 import eapli.framework.io.util.Console;
 
@@ -7,7 +7,7 @@ import eapli.framework.io.util.Console;
  *
  * widget for reading user data Jorge Santos ajs@isp.ipp.pt
  */
-class CatalogoDataWidget {
+ class CatalogoDataWidget {
 
     private String titulo;
     private String icon;
