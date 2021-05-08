@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -54,7 +55,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int CRIAR_EQUIPA_OPTION = 3;
     private static final int ACCOUNT_OPTION = 4;
     private static final int SETTINGS_OPTION = 5;
-
+    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 6;
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
     private static final int LIST_MY_BOOKINGS_OPTION = 3;
@@ -93,7 +94,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
         mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
-
+        mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
@@ -112,5 +113,12 @@ class MainMenu extends ClientUserBaseUI {
         equipaMenu.addItem(1,"Criar Equipa",() -> new CriarEquipaUI().show());
         equipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return equipaMenu;
+    }
+
+    private Menu buildEspecificarColaboradorMenu(){
+        final Menu colaboradorMenu = new Menu("Colaborador");
+        colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new EspecificarColaboradorUI().show());
+        colaboradorMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return colaboradorMenu;
     }
 }
