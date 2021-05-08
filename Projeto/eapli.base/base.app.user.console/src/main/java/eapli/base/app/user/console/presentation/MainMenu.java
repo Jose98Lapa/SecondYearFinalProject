@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
@@ -60,7 +61,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int CRIAR_TIPO_EQUIPA_OPTION = 6;
     private static final int CRIAR_COR = 7;
     private static final int EDITAR_SERVICO = 8;
-    private static final int SETTINGS_OPTION = 5;
+    private static final int TOGGLE_SERVICO = 9;
 
 
 
@@ -108,6 +109,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
         mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
         mainMenu.addSubMenu(EDITAR_SERVICO,buildEditarServico());
+        mainMenu.addSubMenu(TOGGLE_SERVICO,buildAtivarDesativarServico());
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
@@ -117,7 +119,7 @@ class MainMenu extends ClientUserBaseUI {
     }
 
     private Menu buildServicoMenu() {
-        final Menu servicoMenu = new Menu("Servico");
+        final Menu servicoMenu = new Menu("Especificar Servico");
         servicoMenu.addItem(REGISTER_SERVICE_OPTION, "Especificar Servico", () -> new EspecificarServicoUI().show());
         servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
@@ -161,6 +163,12 @@ class MainMenu extends ClientUserBaseUI {
     private Menu buildEditarServico(){
         final Menu corMenu = new Menu("Alterar Servico");
         corMenu.addItem(1,"Alterar Servico",()->new CompletarServicoUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+    private Menu buildAtivarDesativarServico(){
+        final Menu corMenu = new Menu("Ativar/Desativar Servico");
+        corMenu.addItem(1,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }

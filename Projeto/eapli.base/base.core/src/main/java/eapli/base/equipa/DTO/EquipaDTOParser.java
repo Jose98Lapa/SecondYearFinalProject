@@ -7,7 +7,7 @@ import eapli.base.equipa.builder.EquipaBuilder;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTOParser;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class EquipaDTOParser implements DTOParser<EquipaDTO, Equipa> {
     @Override
@@ -15,7 +15,9 @@ public class EquipaDTOParser implements DTOParser<EquipaDTO, Equipa> {
         EquipaBuilder equipaBuilder = new EquipaBuilder();
         LinkedList<Colaborador> responsaveis = new LinkedList<>();
         dto.responsaveis.forEach(dtoColab -> responsaveis.add(new ColaboradorDTOParser().valueOf(dtoColab)));
-        Colaborador colaborador = responsaveis.removeFirst();
-        return equipaBuilder.designacao(dto.descricao).acronimo(dto.acronimo).equipaID(dto.equipaID).tipoDeEquipa(new TipoEquipaDTOParser().valueOf(dto.tipoEquipaDTO)).colaborador(colaborador).build();
+        List<Colaborador> membrosDeEquipa = new ArrayList<>();
+        dto.membrosDaEquipa.forEach(dtoColab -> membrosDeEquipa.add(new ColaboradorDTOParser().valueOf(dtoColab)));
+
+        return equipaBuilder.designacao(dto.descricao).acronimo(dto.acronimo).equipaID(dto.equipaID).colaboradores(membrosDeEquipa).tipoDeEquipa(new TipoEquipaDTOParser().valueOf(dto.tipoEquipaDTO)).responsaveis(responsaveis).build();
     }
 }

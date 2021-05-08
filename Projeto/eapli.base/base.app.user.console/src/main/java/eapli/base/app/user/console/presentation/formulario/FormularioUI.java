@@ -1,17 +1,13 @@
 package eapli.base.app.user.console.presentation.formulario;
 
-import eapli.base.formulario.Builder.AtributoBuilder;
 import eapli.base.formulario.DTO.FormularioDTO;
 import eapli.base.formulario.DTO.atributo.AtributoDTO;
 import eapli.base.formulario.application.FormularioController;
-import eapli.base.formulario.domain.FormularioID;
-import eapli.base.formulario.domain.atributo.Atributo;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.AnnotatedType;
 import java.util.HashSet;
 import java.util.Set;
 

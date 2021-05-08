@@ -24,4 +24,15 @@ import java.util.Optional;
         public Iterable<Servico> incompleteServico() {
             return null;
         }
+
+        @Override
+        public void ativar(String servicoId) {
+
+        }
+
+        @Override
+        public void desativar(String servicoId) {
+
+        }
+
     }
