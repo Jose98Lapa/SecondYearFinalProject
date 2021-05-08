@@ -1,5 +1,7 @@
 package eapli.base.servico.domain;
 
+import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.domain.CatalogoID;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
@@ -23,6 +25,8 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TipoServico tipo;
     private ServicoScript script;
     private CompleteDescription compDesc;
+    @OneToOne
+    private Catalogo catalogo;
     private BriefDescription briedDesc;
     @OneToOne
     private Formulario form ;
@@ -31,7 +35,7 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private Set<KeyWords> keywords;
 
 
-    public Servico(TituloServico title, ServicoID id, IconServico icon, Set<KeyWords> keywords, StatusServico status, TipoServico tipo,CompleteDescription compDesc,BriefDescription briedDesc, ServicoScript script, Formulario form) {
+    public Servico(TituloServico title, ServicoID id, IconServico icon, Set<KeyWords> keywords, StatusServico status, TipoServico tipo,CompleteDescription compDesc,BriefDescription briedDesc, ServicoScript script, Formulario form, Catalogo catalogo) {
 
         this.title = title;
         this.id = id;
@@ -44,6 +48,7 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         this.script=script;
         this.compDesc = compDesc;
         this.briedDesc = briedDesc;
+        this.catalogo=catalogo;
     }
 
     public void setScript(ServicoScript script) {
@@ -89,7 +94,7 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         for (KeyWords key:keywords) {
             key2.add(key.toString());
         }
-        return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString());
+        return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),catalogo.toDTO());
     }
 
     public ServicoDTO toDTOIncomplete() {

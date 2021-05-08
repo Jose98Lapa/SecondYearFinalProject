@@ -1,8 +1,8 @@
 package eapli.base.servico.builder;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.domain.*;
-
 import java.util.Set;
 
 public class ServicoBuilder {
@@ -16,13 +16,14 @@ public class ServicoBuilder {
     private Formulario form  ;
     private CompleteDescription compDesc  ;
     private BriefDescription briefDesc ;
+    private Catalogo catalogo ;
 
     public Servico buildManual() {
-        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("MANUAL"),compDesc,briefDesc,script,form);
+        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("MANUAL"),compDesc,briefDesc,script,form,catalogo);
     }
 
     public Servico buildAutomatic() {
-        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("AUTOMATICO"),compDesc,briefDesc,script,form );
+        return new Servico(title, id, icon, keywords, status, TipoServico.valueOf("AUTOMATICO"),compDesc,briefDesc,script,form,catalogo);
 
     }
 
@@ -74,4 +75,9 @@ public class ServicoBuilder {
         this.form = form;
         return this;
     }
+    public ServicoBuilder Catalogo(Catalogo cat) {
+        this.catalogo = cat;
+        return this;
+    }
+
 }

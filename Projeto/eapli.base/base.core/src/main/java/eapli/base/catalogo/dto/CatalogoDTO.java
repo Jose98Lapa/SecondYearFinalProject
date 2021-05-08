@@ -58,4 +58,17 @@ public class CatalogoDTO {
     public CatalogoDTO() {
         // empty
     }
+
+    @Override
+    public String toString() {
+        return "CatalogoDTO{" +
+                "catalogID='" + catalogID + '\'' +
+                ", catalogTitle='" + catalogTitle + '\'' +
+                ", icon='" + icon + '\'' +
+                ", briefDesc='" + briefDesc + '\'' +
+                ", completeDesc='" + completeDesc + '\'' +
+                ", accessCriteria=" + accessCriteria +
+                ", responsableCollabs=" + responsableCollabs +
+                '}';
+    }
 }

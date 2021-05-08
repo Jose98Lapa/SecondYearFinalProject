@@ -1,5 +1,6 @@
 package eapli.base.servico.DTO;
 
+import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.servico.domain.*;
 
 import java.util.HashSet;
@@ -14,8 +15,9 @@ public class ServicoDTO {
     public String tipo;
     public String briefDescription;
     public String completeDescription;
+    public CatalogoDTO catalogo;
 
-    public ServicoDTO( String title,String  id, String icon,Set<String> keywords,String  status,String  tipo,String briefDescription, String  completeDescription) {
+    public ServicoDTO( String title,String  id, String icon,Set<String> keywords,String  status,String  tipo,String briefDescription, String  completeDescription, CatalogoDTO cat) {
         Set<String> keywords2 = new HashSet<>();
         this.title= title;
         this.id= id;
@@ -25,6 +27,7 @@ public class ServicoDTO {
         this.keywords = keywords;
         this.completeDescription = completeDescription.toString();
         this.briefDescription = briefDescription.toString();
+        this.catalogo = cat;
     }
     public ServicoDTO(TituloServico title, ServicoID id) {
         this.title= title.toString();
