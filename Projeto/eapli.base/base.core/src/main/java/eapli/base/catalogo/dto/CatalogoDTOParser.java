@@ -58,7 +58,7 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
         return builder.withTitle(dto.catalogTitle).withIcon(dto.icon)
                 .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
-                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).build();
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).build();
     }
 
 }

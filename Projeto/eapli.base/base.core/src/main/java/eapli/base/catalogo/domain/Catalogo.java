@@ -13,6 +13,8 @@ import java.util.Set;
 
 @Entity
 public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
+    @Version
+    private Long version;
 
     @Id
     @GeneratedValue

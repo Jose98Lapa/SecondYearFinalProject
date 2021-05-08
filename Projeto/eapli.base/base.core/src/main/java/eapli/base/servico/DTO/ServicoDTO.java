@@ -19,7 +19,6 @@ public class ServicoDTO {
     public CatalogoDTO catalogo;
 
     public ServicoDTO( String title,String  id, String icon,Set<String> keywords,String  status,String  tipo,String briefDescription, String  completeDescription, CatalogoDTO cat,String script) {
-        Set<String> keywords2 = new HashSet<>();
         this.title= title;
         this.id= id;
         this.icon= icon;
