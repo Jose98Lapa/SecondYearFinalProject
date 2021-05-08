@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 @Embeddable
 public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecanografico> {
-
+    @Transient
     private static final long serialVersionUID = 1L;
 
     private String mecNumber;

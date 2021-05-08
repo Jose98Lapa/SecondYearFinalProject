@@ -1,15 +1,10 @@
 package eapli.base.formulario.application;
 
-import eapli.base.formulario.Builder.AtributoBuilder;
-import eapli.base.formulario.DTO.FormularioDTO;
-import eapli.base.formulario.DTO.FormularioDTOParser;
-import eapli.base.formulario.DTO.atributo.AtributoDTO;
-import eapli.base.formulario.domain.atributo.*;
 import eapli.base.formulario.Builder.FormularioBuilder;
+import eapli.base.formulario.DTO.FormularioDTO;
+import eapli.base.formulario.DTO.atributo.AtributoDTO;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.domain.FormularioID;
-import eapli.base.formulario.domain.FormularioNome;
-import eapli.base.formulario.domain.FormularioScript;
+import eapli.base.formulario.domain.atributo.*;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -22,17 +17,15 @@ import java.util.Set;
 
 public class FormularioController {
     @ElementCollection
-    private Set<Atributo> atributos = new HashSet<>();
     private final AuthorizationService authz =AuthzRegistry.authorizationService();
     private final FormularioRepository repo = PersistenceContext.repositories().form();
-    AtributoBuilder atributoBuilder = new AtributoBuilder();
     FormularioBuilder fmb = new FormularioBuilder();
 
     Formulario form;
     public void registo(FormularioDTO dto){
         Set<Atributo> atr2 = new HashSet<>();
         for (AtributoDTO atr:dto.atrDTO) {
-            atr2.add(new Atributo(AtributoNome.valueOf(atr.nome), AtributoLabel.valueOf(atr.label), AtributoDescricao.valueOf(atr.desc), AtributoRegex.valueOf(atr.regex),AtributoTipo.valueOf(atr.tipo)));
+            atr2.add(new Atributo(AtributoNome.valueOf(atr.nome), AtributoLabel.valueOf(atr.label), AtributoDescricao.valueOf(atr.desc), AtributoRegex.valueOf(atr.regex),AtributoTipo.valueOf(atr.tipo),AtributoID.valueOf(atr.id)));
         }
         fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
     }

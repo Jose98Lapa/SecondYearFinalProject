@@ -8,6 +8,7 @@ public class AtributosDataWidget {
     private String label;
     private String tipo;
     private String regex;
+    private String id;
 
     public void show() {
         this.nome = Console.readLine("Nome");
@@ -15,6 +16,7 @@ public class AtributosDataWidget {
         this.label = Console.readLine("Label");
         this.tipo = Console.readLine("Tipo");
         this.regex = Console.readLine("Regex");
+        this.id = Console.readLine("ID");
     }
 
     public String getNome() {
@@ -35,5 +37,9 @@ public class AtributosDataWidget {
 
     public String getRegex() {
         return regex;
+    }
+
+    public String getId() {
+        return id;
     }
 }

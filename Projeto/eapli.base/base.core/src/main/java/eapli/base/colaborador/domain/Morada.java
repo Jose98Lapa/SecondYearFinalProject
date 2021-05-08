@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class Morada implements ValueObject {
 
-    String estrada;
-    String numPorta;
-    String andar;
-    String localizacao;
-    String codPostal;
+    private String estrada;
+    private String numPorta;
+    private String andar;
+    private String localizacao;
+    private String codPostal;
 
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
         if (estrada==null ||estrada.isEmpty()||!estrada.matches("^[A-zÀ-ú\\.\\- ]+$"))

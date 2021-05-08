@@ -29,12 +29,12 @@ public class FormularioUI extends AbstractUI {
         final AtributosDataWidget atrib = new AtributosDataWidget();
         Set<AtributoDTO> atr = new HashSet<>();
         String opt;
-        opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair)");
+        opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair )");
         while (!opt.equalsIgnoreCase("Exit")) {
             atrib.show();
-            AtributoDTO dto = new AtributoDTO(atrib.getNome(),atrib.getLabel(),atrib.getDesc(),atrib.getRegex(),atrib.getTipo());
+            AtributoDTO dto = new AtributoDTO(atrib.getNome(),atrib.getLabel(),atrib.getDesc(),atrib.getRegex(),atrib.getTipo(),atrib.getId());
             atr.add(dto);
-            opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair)");
+            opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair )");
         }
         FormularioDTO dto = new FormularioDTO(ifo.script(), ifo.id(), ifo.nome(), atr);
         theController.registo(dto);

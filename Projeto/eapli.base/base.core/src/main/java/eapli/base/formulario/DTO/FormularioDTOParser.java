@@ -15,7 +15,7 @@ public class FormularioDTOParser implements DTOParser<FormularioDTO, Formulario>
         FormularioBuilder svb = new FormularioBuilder();
         Set<Atributo> atr = new HashSet<>();
         for (AtributoDTO atributo:dto.atrDTO) {
-            atr.add(new Atributo(AtributoNome.valueOf(atributo.nome), AtributoLabel.valueOf(atributo.label), AtributoDescricao.valueOf(atributo.desc), AtributoRegex.valueOf(atributo.regex),AtributoTipo.valueOf(atributo.tipo)));
+            atr.add(new Atributo(AtributoNome.valueOf(atributo.nome), AtributoLabel.valueOf(atributo.label), AtributoDescricao.valueOf(atributo.desc), AtributoRegex.valueOf(atributo.regex),AtributoTipo.valueOf(atributo.tipo),AtributoID.valueOf(atributo.id)));
         }
         return svb.setAtr(atr).setId(dto.id).setNome(dto.nome).setScript(dto.script).build();
     }

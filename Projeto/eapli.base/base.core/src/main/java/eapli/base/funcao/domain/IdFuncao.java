@@ -3,6 +3,7 @@ package eapli.base.funcao.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class IdFuncao implements ValueObject, Comparable<IdFuncao> {
@@ -33,5 +34,18 @@ public class IdFuncao implements ValueObject, Comparable<IdFuncao> {
     @Override
     public int compareTo(final IdFuncao arg0) {
         return idFuncao.compareTo(arg0.idFuncao);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IdFuncao idFuncao1 = (IdFuncao) o;
+        return Objects.equals(idFuncao, idFuncao1.idFuncao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idFuncao);
     }
 }
