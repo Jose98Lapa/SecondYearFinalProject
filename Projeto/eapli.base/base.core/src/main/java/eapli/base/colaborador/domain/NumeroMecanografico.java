@@ -27,7 +27,7 @@ public class NumeroMecanografico implements ValueObject, Comparable<NumeroMecano
 
     public NumeroMecanografico(final String mecanographicmecNumber) {
         if (mecanographicmecNumber == null || mecanographicmecNumber.isEmpty() || !mecanographicmecNumber.matches("^[0-9]{1,6}$"))
-            throw new IllegalArgumentException("Mecanographic Number does not fit the criteria");
+            throw new IllegalArgumentException("Numero Mecanografico nao cumpre os critérios");
         this.mecNumber = mecanographicmecNumber;
         }
 

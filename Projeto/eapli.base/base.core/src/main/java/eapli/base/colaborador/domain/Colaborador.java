@@ -64,6 +64,6 @@ public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<
 
     @Override
     public String toString() {
-        return "Name: "+nomeCompleto+" ID: "+mNumber+"\n";
+        return "Nome: "+nomeCompleto+" ID: "+mNumber+"\n";
     }
 }

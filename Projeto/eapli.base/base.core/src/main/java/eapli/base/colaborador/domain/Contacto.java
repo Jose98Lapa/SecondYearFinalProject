@@ -8,7 +8,7 @@ public class Contacto implements ValueObject {
 
     public Contacto(final String contact){
         if (contact==null ||contact.isEmpty()||!contact.matches("^[0-9]{9}$"))
-            throw new IllegalArgumentException("Contact does not fit the criteria");
+            throw new IllegalArgumentException("Contacto nao cumpre os critérios");
         this.contact = contact;
         //check if it already exists
 }

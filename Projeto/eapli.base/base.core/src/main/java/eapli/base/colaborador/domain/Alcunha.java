@@ -11,7 +11,7 @@ public class Alcunha implements ValueObject {
 
     public Alcunha(final String nickname){
         if (nickname==null ||nickname.isEmpty()||!nickname.matches("^\\w{1,15}$"))
-            throw new IllegalArgumentException("Nickname does not fit the criteria");
+            throw new IllegalArgumentException("Alcunha nao cumpre os critérios");
         this.nickname = nickname;
     }
 

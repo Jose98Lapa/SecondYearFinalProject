@@ -10,7 +10,7 @@ public class NomeCompleto implements ValueObject {
 
     public NomeCompleto(final String name) {
         if (name == null || name.isEmpty() || !name.matches("^([A-Z]{1}[A-zÀ-ú\\- ]{1,15}){3,5}$"))
-            throw new IllegalArgumentException("Full Name does not fit the criteria");
+            throw new IllegalArgumentException("Nome completo nao cumpre os critérios");
         this.name = name;
     }
 

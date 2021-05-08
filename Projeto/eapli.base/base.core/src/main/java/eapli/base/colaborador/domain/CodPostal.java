@@ -10,7 +10,7 @@ public class CodPostal implements ValueObject {
 
     public CodPostal(final String codPostal){
         if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
-            throw new IllegalArgumentException("Postal Code does not fit the criteria");
+            throw new IllegalArgumentException("Codigo Postal nao cumpre os critérios");
         this.codPostal = codPostal;
     }
 

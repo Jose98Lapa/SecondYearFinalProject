@@ -10,26 +10,28 @@ public class Morada implements ValueObject {
     String numPorta;
     String andar;
     String localizacao;
-    CodPostal codPostal;
+    String codPostal;
 
-    public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String postalCode){
-        if (estrada==null ||estrada.isEmpty()||!estrada.matches("^[\\w\\.]+(\\s\\w+){2,}$"))
-            throw new IllegalArgumentException("Street does not fit the criteria");
+    public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
+        if (estrada==null ||estrada.isEmpty()||!estrada.matches("^[A-zÀ-ú\\.\\- ]+$"))
+            throw new IllegalArgumentException("Estrada nao cumpre os critérios");
         this.estrada = estrada;
 
         if (numPorta==null ||numPorta.isEmpty()||!numPorta.matches("^\\d{0,4}$"))
-            throw new IllegalArgumentException("Door Number does not fit the criteria");
+            throw new IllegalArgumentException("Numero de porta nao cumpre os critérios");
         this.numPorta = numPorta;
 
         if (andar==null ||andar.isEmpty()||!andar.matches("^\\d{0,3}$"))
-            throw new IllegalArgumentException("Floor does not fit the criteria");
+            throw new IllegalArgumentException("Andar nao cumpre os critérios");
         this.andar = andar;
 
         if (localizacao==null ||localizacao.isEmpty()||!localizacao.matches("^[a-zA-Z]+(?:[\\s-][A-zÀ-ú]+)*$"))
-            throw new IllegalArgumentException("Location does not fit the criteria");
+            throw new IllegalArgumentException("Localizacao nao cumpre os critérios");
         this.localizacao = localizacao;
 
-        this.codPostal = new CodPostal(postalCode);
+        if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
+            throw new IllegalArgumentException("Codigo postal nao cumpre os critérios");
+        this.codPostal = codPostal;
     }
 
     public String getEstrada() {
@@ -48,7 +50,7 @@ public class Morada implements ValueObject {
         return localizacao;
     }
 
-    public CodPostal getCodPostal() {
+    public String getCodPostal() {
         return codPostal;
     }
 
@@ -67,11 +69,11 @@ public class Morada implements ValueObject {
 
     @Override
     public String toString() {
-        return "Address:\n" +
-                "Street -> " + estrada + "\n" +
-                "DoorNumber -> " + numPorta + "\n" +
-                "Floor -> " + andar + "\n" +
-                "Localization -> " + localizacao + "\n" +
-                "PostalCode -> " + codPostal;
+        return "Morada:\n" +
+                "Estrada -> " + estrada + "\n" +
+                "Numero da Porto -> " + numPorta + "\n" +
+                "Andar -> " + andar + "\n" +
+                "Localizacao -> " + localizacao + "\n" +
+                "Codigo postal -> " + codPostal;
     }
 }
