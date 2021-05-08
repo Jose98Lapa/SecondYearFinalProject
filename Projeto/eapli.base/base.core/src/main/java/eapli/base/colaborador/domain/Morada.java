@@ -85,7 +85,7 @@ public class Morada implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Morada morada = (Morada) o;
-        return estrada.equals(morada.estrada) && numPorta.equals(morada.numPorta) && andar.equals(morada.andar) && localizacao.equals(morada.localizacao) && codPostal.equals(morada.codPostal);
+        return Objects.equals(estrada, morada.estrada) && Objects.equals(numPorta, morada.numPorta) && Objects.equals(andar, morada.andar) && Objects.equals(localizacao, morada.localizacao) && Objects.equals(codPostal, morada.codPostal);
     }
 
     @Override

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
@@ -35,13 +36,22 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
             (name="EQUIPA_TEAM_MEMBERS",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
-    private final List<Colaborador> teamMembers = new ArrayList<>();
+    private final Set<Colaborador> teamMembers = new HashSet<>();
 
     public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador,TipoEquipa tipoEquipa) {
         this.designacao = designacao;
         this.acronimo = acronimo;
         this.equipaID = equipaID;
         this.colaboradorResponsaveisSet.add(colaborador);
+        this.tipoEquipa = tipoEquipa;
+    }
+
+    public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Set<Colaborador> colaboradores,TipoEquipa tipoEquipa,List<Colaborador> responsaveis) {
+        this.designacao = designacao;
+        this.acronimo = acronimo;
+        this.equipaID = equipaID;
+        this.teamMembers.addAll(colaboradores);
+        this.colaboradorResponsaveisSet.addAll(responsaveis);
         this.tipoEquipa = tipoEquipa;
     }
 
@@ -55,6 +65,18 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     public void addTeamMembers(Colaborador colaborador){
         teamMembers.add(colaborador);
+    }
+
+    public boolean containsResponsavel(Colaborador colaborador){
+        for (Colaborador colaborador1 : colaboradorResponsaveisSet){
+            if (colaborador1.identity().toString().equals(colaborador.identity().toString()))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean containsTeamMember(Colaborador colaborador){
+        return teamMembers.contains(colaborador);
     }
 
     @Override
@@ -86,6 +108,8 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     @Override
     public EquipaDTO toDTO() {
-        return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(), colaboradorResponsaveisSet.stream().findFirst().get().identity().toString(),tipoEquipa.toDTO());
+        List<ColaboradorDTO> responsaveis = new ArrayList<>();
+        colaboradorResponsaveisSet.forEach(collab -> responsaveis.add(collab.toDTO()));
+        return new EquipaDTO(equipaID.toString(),acronimo.toString(),designacao, responsaveis,tipoEquipa.toDTO());
     }
 }
