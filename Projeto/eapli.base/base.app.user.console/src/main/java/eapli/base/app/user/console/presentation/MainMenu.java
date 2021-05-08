@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.criarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -58,7 +59,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int ESPECIFICAR_COLLABORADOR_OPTION = 5;
     private static final int CRIAR_TIPO_EQUIPA_OPTION = 6;
     private static final int CRIAR_COR = 7;
-    private static final int ACCOUNT_OPTION = 4;
+    private static final int EDITAR_SERVICO = 8;
     private static final int SETTINGS_OPTION = 5;
 
 
@@ -106,6 +107,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
         mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
         mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
+        mainMenu.addSubMenu(EDITAR_SERVICO,buildEditarServico());
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
@@ -152,6 +154,13 @@ class MainMenu extends ClientUserBaseUI {
     private Menu buildCorMenu(){
         final Menu corMenu = new Menu("Cor");
         corMenu.addItem(1,"Adicionar Cor",()->new CriarCorUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+
+    private Menu buildEditarServico(){
+        final Menu corMenu = new Menu("Alterar Servico");
+        corMenu.addItem(1,"Alterar Servico",()->new CompletarServicoUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }

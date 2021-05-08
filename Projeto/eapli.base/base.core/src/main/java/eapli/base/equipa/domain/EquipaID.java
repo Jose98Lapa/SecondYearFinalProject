@@ -10,7 +10,7 @@ import java.util.Objects;
 public class EquipaID implements ValueObject, Comparable<EquipaID> {
     private String ID;
     public EquipaID(String ID){
-        if (ID==null||ID.isEmpty()||!ID.matches("^[a-zA-Z0-9]{5}$")){
+        if (ID==null||ID.isEmpty()||!ID.matches("^[0-9]{1,5}$")){
             throw new IllegalArgumentException("ID de Equipa Inválido");
         }
         this.ID = ID;

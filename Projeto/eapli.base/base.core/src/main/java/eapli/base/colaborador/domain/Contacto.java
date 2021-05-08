@@ -3,6 +3,7 @@ package eapli.base.colaborador.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class Contacto implements ValueObject {
@@ -21,21 +22,16 @@ public class Contacto implements ValueObject {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Contacto)) {
-            return false;
-        }
-
-        final Contacto that = (Contacto) o;
-        return this.contact.equals(that.contact);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contacto contacto = (Contacto) o;
+        return Objects.equals(contact, contacto.contact);
     }
 
     @Override
     public int hashCode() {
-        return this.contact.hashCode();
+        return Objects.hash(contact);
     }
 
     @Override

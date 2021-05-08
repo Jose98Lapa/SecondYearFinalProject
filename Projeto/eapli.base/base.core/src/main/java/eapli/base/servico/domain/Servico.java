@@ -94,10 +94,6 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         for (KeyWords key:keywords) {
             key2.add(key.toString());
         }
-        return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),catalogo.toDTO());
-    }
-
-    public ServicoDTO toDTOIncomplete() {
-        return new ServicoDTO(this.title,this.id);
+        return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),catalogo.toDTO(),script.toString());
     }
 }

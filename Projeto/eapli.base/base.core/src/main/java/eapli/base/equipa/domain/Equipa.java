@@ -36,7 +36,7 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
             (name="EQUIPA_TEAM_MEMBERS",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
-    private final List<Colaborador> teamMembers = new ArrayList<>();
+    private final Set<Colaborador> teamMembers = new HashSet<>();
 
     public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador,TipoEquipa tipoEquipa) {
         this.designacao = designacao;
@@ -65,6 +65,18 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
 
     public void addTeamMembers(Colaborador colaborador){
         teamMembers.add(colaborador);
+    }
+
+    public boolean containsResponsavel(Colaborador colaborador){
+        for (Colaborador colaborador1 : colaboradorResponsaveisSet){
+            if (colaborador1.identity().toString().equals(colaborador.identity().toString()))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean containsTeamMember(Colaborador colaborador){
+        return teamMembers.contains(colaborador);
     }
 
     @Override

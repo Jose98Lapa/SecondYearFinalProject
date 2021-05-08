@@ -6,6 +6,8 @@ import eapli.base.servico.Repository.ServicoRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
+import java.net.ServerSocket;
 import java.util.Optional;
 
 public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID,ServicoID> implements ServicoRepository {
@@ -21,4 +23,16 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
     public Optional<Servico> findByServicoID(ServicoID number) {
         return Optional.empty();
     }
+
+    public Iterable<Servico> incompleteServico(){
+        final TypedQuery<Servico> q = createQuery("Select e From Servico e where e.status =: status ",Servico.class);
+        q.setParameter("status","INCOMPLETE" );
+        return q.getResultList();
+    }
+
+   /* public Servico updateServicoForm(String idServ,String idForm){
+        final TypedQuery<Servico> q = createQuery("Update e From Service e where e.Form_FormularioID =: idForm ",Servico.class);
+        q.setParameter("idForm",idForm);
+        return q.getSingleResult();
+    }*/
 }

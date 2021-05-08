@@ -9,12 +9,12 @@ import eapli.framework.io.util.Console;
  */
 class ServicoDataWidget {
 
-    private String title;
-    private String type;
-    private String id;
-    private String icon;
-    private String briefDesc;
-    private String compDesc;
+    public String title;
+    public String type;
+    public String id;
+    public String icon;
+    public String briefDesc;
+    public String compDesc;
 
     public void show() {
         System.out.println("Insira \"none\" se não pretender preencher ");

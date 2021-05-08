@@ -19,4 +19,9 @@ import java.util.Optional;
         public Optional<Servico> findByServicoID(ServicoID number) {
             return Optional.of(data().get(number));
         }
-}
+
+        @Override
+        public Iterable<Servico> incompleteServico() {
+            return null;
+        }
+    }

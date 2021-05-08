@@ -9,6 +9,7 @@ import eapli.base.colaborador.domain.*;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.builder.EquipaBuilder;
+import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -30,8 +31,18 @@ public class CriarEquipaController {
         if (colaborador.isPresent()){
             Optional<TipoEquipa> tipoEquipa = tipoEquipaRepository.ofIdentity(TipoEquipaID.valueOf(equipaDTO.tipoEquipaDTO.code));
             if (tipoEquipa.isPresent()){
-                Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).colaborador(colaborador.get()).tipoDeEquipa(tipoEquipa.get()).build();
-                equipaRepository.save(equipa);
+                if (equipaRepository.canIAddTheColaborador(colaborador.get(),tipoEquipa.get())){
+                    if (equipaRepository.isAcronimoValid(Acronimo.valueOf(equipaDTO.acronimo))){
+                        Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).colaborador(colaborador.get()).tipoDeEquipa(tipoEquipa.get()).build();
+                        equipaRepository.save(equipa);
+                    }else{
+                        throw new IllegalArgumentException("Acronimo tem de ser único");
+                    }
+                }else{
+                    throw new IllegalArgumentException("Este colaborador já gere uma equipa deste tipo");
+                }
+
+
             }else{
                 throw new IllegalArgumentException("Tipo de Equipa não presente em sistema");
             }

@@ -22,6 +22,8 @@ public class EspecificarServicoUI extends AbstractUI {
         final ServicoDataWidget ifo = new ServicoDataWidget();
         System.out.println("Escolha um catalogo para adicionar o servico criado");
         int i = 0;
+        boolean incomplete = false;
+        ServicoDTO dto;
 
         for (CatalogoDTO cat : theController.catalogList()) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
@@ -41,14 +43,35 @@ public class EspecificarServicoUI extends AbstractUI {
             System.out.println("O id e o titulo sao obrigatórios");
             return false;
         } else {
-            ServicoDTO dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(),theController.catalogList().get(Integer.parseInt(index)));
+            if (ifo.icon().equalsIgnoreCase("none")) {
+                ifo.icon=null;
+                incomplete = true;
+            }
+            if (ifo.title().equalsIgnoreCase("none")) {
+                ifo.title=null;
+                incomplete = true;
+            }
+            if (ifo.briefDesc().equalsIgnoreCase("none")) {
+                ifo.briefDesc=null;
+                incomplete = true;
+            }
+            if (ifo.compDesc().equalsIgnoreCase("none")) {
+                ifo.compDesc=null;
+                incomplete = true;
+            }
+            if (incomplete){
+                dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INCOMPLETO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), theController.catalogList().get(Integer.parseInt(index)), null);
+            }else{
+                 dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), theController.catalogList().get(Integer.parseInt(index)), null);
+            }
+
             theController.registo(dto);
         }
 
         if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {
             String script = Console.readLine("Script:");
             theController.automatic(script);
-        } else {
+        } else if (ifo.type().equalsIgnoreCase("MANUAL")) {
             FormularioUI servicoUi = new FormularioUI();
             servicoUi.show();
             theController.manual(servicoUi.formId);
