@@ -6,6 +6,10 @@ import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.domain.EquipaID;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class EquipaBuilder {
     private String designacao;
     private EquipaID equipaID;
@@ -16,9 +20,12 @@ public class EquipaBuilder {
 
     private TipoEquipa tipoEquipa;
 
+    private Set<Colaborador> colaboradores;
+    private Set<Colaborador> responsaveis;
+
 
     public EquipaBuilder() {
-
+            //vazio
     }
 
     public EquipaBuilder designacao(String designacao){
@@ -39,6 +46,18 @@ public class EquipaBuilder {
         return this;
     }
 
+    public EquipaBuilder colaboradores(List<Colaborador> colaborador){
+        this.colaboradores = new HashSet<>();
+        this.colaboradores.addAll(colaborador);
+        return this;
+    }
+
+    public EquipaBuilder responsaveis(List<Colaborador> responsaveis){
+        this.responsaveis = new HashSet<>();
+        this.responsaveis.addAll(responsaveis);
+        return this;
+    }
+
     public EquipaBuilder tipoDeEquipa(TipoEquipa tipoEquipa){
         this.tipoEquipa = tipoEquipa;
         return this;
@@ -48,4 +67,5 @@ public class EquipaBuilder {
     public Equipa build(){
         return new Equipa(designacao,acronimo,equipaID,colaborador,tipoEquipa);
     }
+
 }
