@@ -3,8 +3,9 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-
+@Embeddable
 public class Alcunha implements ValueObject {
 
     private String nickname;
@@ -13,6 +14,10 @@ public class Alcunha implements ValueObject {
         if (nickname==null ||nickname.isEmpty()||!nickname.matches("^\\w{1,15}$"))
             throw new IllegalArgumentException("Alcunha nao cumpre os critérios");
         this.nickname = nickname;
+    }
+
+    protected Alcunha() {
+
     }
 
     @Override

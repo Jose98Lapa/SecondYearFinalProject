@@ -2,8 +2,9 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-
+@Embeddable
 public class NomeCompleto implements ValueObject {
 
     private String name;
@@ -12,6 +13,10 @@ public class NomeCompleto implements ValueObject {
         if (name == null || name.isEmpty() || !name.matches("^([A-Z]{1}[A-zÀ-ú\\- ]{1,15}){3,5}$"))
             throw new IllegalArgumentException("Nome completo nao cumpre os critérios");
         this.name = name;
+    }
+
+    protected NomeCompleto() {
+
     }
 
     @Override

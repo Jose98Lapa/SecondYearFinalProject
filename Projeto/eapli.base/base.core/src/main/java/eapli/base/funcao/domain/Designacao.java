@@ -2,8 +2,9 @@ package eapli.base.funcao.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-
+@Embeddable
 public class Designacao implements ValueObject {
 
     private String designation;
@@ -12,6 +13,10 @@ public class Designacao implements ValueObject {
         if (designation==null ||designation.isEmpty()||!designation.matches("^\\w{1,30}$"))
             throw new IllegalArgumentException("The designation does not fit the criteria");
         this.designation = designation;
+    }
+
+    protected Designacao() {
+
     }
 
     @Override

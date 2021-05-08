@@ -2,6 +2,9 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Contacto implements ValueObject {
 
     private String contact;
@@ -12,6 +15,10 @@ public class Contacto implements ValueObject {
         this.contact = contact;
         //check if it already exists
 }
+
+    protected Contacto() {
+
+    }
 
     @Override
     public boolean equals(final Object o) {

@@ -9,9 +9,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
@@ -26,10 +24,18 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
     private TipoEquipa tipoEquipa;
 
     @OneToMany
+    @JoinTable
+            (name="EQUIPA_RESPONSAVEIS",
+                    joinColumns = @JoinColumn(name="EQUIPA_ID")
+            )
     private final Set<Colaborador> colaboradorResponsaveisSet = new HashSet<>();
 
     @OneToMany
-    private final Set<Colaborador> teamMembers = new HashSet<>();
+    @JoinTable
+            (name="EQUIPA_TEAM_MEMBERS",
+                    joinColumns = @JoinColumn(name="EQUIPA_ID")
+            )
+    private final List<Colaborador> teamMembers = new ArrayList<>();
 
     public Equipa(String designacao, Acronimo acronimo,EquipaID equipaID,Colaborador colaborador,TipoEquipa tipoEquipa) {
         this.designacao = designacao;

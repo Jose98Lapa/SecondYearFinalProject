@@ -57,6 +57,7 @@ public class TipoEquipa implements AggregateRoot<TipoEquipaID>, DTOable<TipoEqui
         return new TipoEquipaDTO(tipoEquipaID.toString(),descricao, cor.toDTO());
     }
 
+
     @Override
     public String toString() {
         return "TipoEquipa{" +

@@ -2,6 +2,8 @@ package eapli.base.equipa.application;
 
 import eapli.base.TipoEquipa.Application.ListTipoEquipa;
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
+import eapli.base.TipoEquipa.Domain.TipoEquipa;
+import eapli.base.TipoEquipa.Domain.TipoEquipaID;
 import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
 import eapli.base.colaborador.domain.*;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
@@ -26,8 +28,14 @@ public class CriarEquipaController {
         //authz.ensureAuthenticatedUserHasAnyOf();
         Optional<Colaborador> colaborador = collaboratorRepository.ofIdentity(NumeroMecanografico.valueOf(equipaDTO.numeroMecanografico));
         if (colaborador.isPresent()){
-            Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).colaborador(colaborador.get()).build();
-            equipaRepository.save(equipa);
+            Optional<TipoEquipa> tipoEquipa = tipoEquipaRepository.ofIdentity(TipoEquipaID.valueOf(equipaDTO.tipoEquipaDTO.code));
+            if (tipoEquipa.isPresent()){
+                Equipa equipa = equipaBuilder.designacao(equipaDTO.descricao).acronimo(equipaDTO.acronimo).equipaID(equipaDTO.equipaID).colaborador(colaborador.get()).tipoDeEquipa(tipoEquipa.get()).build();
+                equipaRepository.save(equipa);
+            }else{
+                throw new IllegalArgumentException("Tipo de Equipa não presente em sistema");
+            }
+
         }else{
             throw new IllegalArgumentException("Numero Mecanografico nao presente em sistema");
         }

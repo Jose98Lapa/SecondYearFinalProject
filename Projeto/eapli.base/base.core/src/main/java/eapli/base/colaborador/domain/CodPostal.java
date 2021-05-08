@@ -2,8 +2,10 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
 public class CodPostal implements ValueObject {
 
     private String codPostal;
@@ -12,6 +14,10 @@ public class CodPostal implements ValueObject {
         if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
             throw new IllegalArgumentException("Codigo Postal nao cumpre os critérios");
         this.codPostal = codPostal;
+    }
+
+    protected CodPostal() {
+
     }
 
     @Override

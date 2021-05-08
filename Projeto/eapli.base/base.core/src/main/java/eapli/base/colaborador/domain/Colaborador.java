@@ -9,19 +9,19 @@ import javax.persistence.*;
 
 @Entity
 public class Colaborador implements AggregateRoot<NumeroMecanografico>, DTOable<ColaboradorDTO> {
-    @Column(name = "MORADA", columnDefinition = "VARCHAR(255)")
+
     private Morada morada;
-    @Column(name = "CONTACTO", columnDefinition = "VARCHAR(255)")
+
     private Contacto contacto;
-    @Column(name = "NOMECOMPLETO", columnDefinition = "VARCHAR(255)")
+
     private NomeCompleto nomeCompleto;
-    @Column(name = "EMAIL", columnDefinition = "VARCHAR(255)")
+
     private EmailInstitucional email;
     @EmbeddedId
     private NumeroMecanografico mNumber;
-    @Column(name = "ALCUNHA", columnDefinition = "VARCHAR(255)")
+
     private Alcunha alcunha;
-    @Column(name = "DATADENASCIMENTO", columnDefinition = "VARCHAR(255)")
+
     private DataDeNascimento dataDeNascimento;
     @OneToOne
     private Colaborador supervisor;

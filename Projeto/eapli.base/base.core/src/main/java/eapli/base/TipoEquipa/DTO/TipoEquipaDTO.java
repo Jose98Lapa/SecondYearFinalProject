@@ -12,4 +12,13 @@ public class TipoEquipaDTO {
         this.descricao = descricao;
         this.corDTO = corDTO;
     }
+
+    @Override
+    public String toString() {
+        return "TipoEquipaDTO{" +
+                "code='" + code + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", corDTO=" + corDTO +
+                '}';
+    }
 }

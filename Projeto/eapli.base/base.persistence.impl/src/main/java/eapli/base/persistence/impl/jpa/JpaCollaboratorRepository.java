@@ -33,7 +33,7 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, 
 
     @Override
     public Optional<Colaborador> ofIdentity(NumeroMecanografico id){
-        final TypedQuery<Colaborador> q = createQuery("Select e From Collaborator e where e.NumeroMecanografico =:id ",Colaborador.class);
+        final TypedQuery<Colaborador> q = createQuery("Select e From eapli.base.colaborador.domain.Colaborador e where e.mNumber =:id ",Colaborador.class);
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }

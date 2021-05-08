@@ -2,8 +2,10 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
 public class Morada implements ValueObject {
 
     private String estrada;
@@ -34,6 +36,10 @@ public class Morada implements ValueObject {
         this.codPostal = codPostal;
     }
 
+    protected Morada() {
+
+    }
+
     public String getEstrada() {
         return estrada;
     }
@@ -52,6 +58,26 @@ public class Morada implements ValueObject {
 
     public String getCodPostal() {
         return codPostal;
+    }
+
+    public void setEstrada(String estrada) {
+        this.estrada = estrada;
+    }
+
+    public void setNumPorta(String numPorta) {
+        this.numPorta = numPorta;
+    }
+
+    public void setAndar(String andar) {
+        this.andar = andar;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public void setCodPostal(String codPostal) {
+        this.codPostal = codPostal;
     }
 
     @Override

@@ -8,4 +8,12 @@ public class CorDTO {
         this.valorHexadecimal = valorHexadecimal;
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "CorDTO{" +
+                "valorHexadecimal='" + valorHexadecimal + '\'' +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }

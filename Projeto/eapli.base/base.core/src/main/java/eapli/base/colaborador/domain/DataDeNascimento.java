@@ -2,8 +2,10 @@ package eapli.base.colaborador.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
 public class DataDeNascimento implements ValueObject {
 
     private String dataDeNascimento;
@@ -12,6 +14,10 @@ public class DataDeNascimento implements ValueObject {
         if (dataDeNascimento==null ||dataDeNascimento.isEmpty()||!dataDeNascimento.matches("^(0?[1-9]|1[0-9]|2[0-9]|30|31)/(0?[1-9]|1[0-2])/(1[0-9]{3}|2[0-9]{3})$"))
             throw new IllegalArgumentException("Data de nascimento nao cumpre os critérios");
         this.dataDeNascimento = dataDeNascimento;
+    }
+
+    protected DataDeNascimento() {
+
     }
 
     @Override
