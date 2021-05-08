@@ -1,28 +1,28 @@
 package eapli.base.colaborador.domain;
 
-import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.colaborador.dto.MoradaDTO;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.representations.dto.DTOable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Version;
+import javax.persistence.JoinColumn;
 import java.util.Objects;
 
-@Entity
+@Embeddable
 public class Morada implements ValueObject, DTOable<MoradaDTO> {
 
+    @Column @JoinColumn
     private Estrada estrada;
+    @Column @JoinColumn
     private NumPorta numPorta;
+    @Column @JoinColumn
     private Andar andar;
+    @Column @JoinColumn
     private Localizacao localizacao;
-    @EmbeddedId
+    @Column @JoinColumn
     private CodPostal codPostal;
 
-    @Version
-    Long version ;
 
     public Morada(final String estrada, final String numPorta, final String andar, final String localizacao, final String codPostal){
         this.estrada = new Estrada(estrada);
@@ -33,7 +33,6 @@ public class Morada implements ValueObject, DTOable<MoradaDTO> {
     }
 
     protected Morada() {
-
     }
 
     @Override
