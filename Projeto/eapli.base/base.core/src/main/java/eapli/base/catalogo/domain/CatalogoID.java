@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 @Embeddable
 public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
     private String catalogID;
+
     @Transient
     private String regex = "^[a-zA-Z0-9-]{1,10}$";
 
@@ -42,7 +43,7 @@ public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CatalogoID catalogoID = (CatalogoID) o;
-        return catalogID == catalogoID.catalogID;
+        return catalogID.equals(catalogoID.catalogID);
     }
 
     @Override

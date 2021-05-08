@@ -1,6 +1,5 @@
 package eapli.base.catalogo.domain;
 
-import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
@@ -21,7 +20,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Long version;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long identity;
 
     private Titulo titulo;
@@ -55,10 +54,9 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     protected Catalogo() {
     }
 
-    public Catalogo(Long id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+    public Catalogo(String id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
-        identity = id;
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;

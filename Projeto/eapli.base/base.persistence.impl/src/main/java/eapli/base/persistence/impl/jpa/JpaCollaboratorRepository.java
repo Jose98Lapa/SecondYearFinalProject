@@ -26,4 +26,11 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, 
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }
+
+    @Override
+    public Optional<Colaborador> getColaboradorByEmail(String email) {
+        final TypedQuery<Colaborador> q = createQuery("Select e From eapli.base.colaborador.domain.Colaborador e where e.email =:id ",Colaborador.class);
+        q.setParameter("id", email);
+        return q.getResultStream().findFirst();
+    }
 }

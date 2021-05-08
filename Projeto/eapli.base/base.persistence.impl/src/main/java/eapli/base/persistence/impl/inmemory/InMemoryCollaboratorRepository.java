@@ -5,12 +5,19 @@ import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.Optional;
+
 public class InMemoryCollaboratorRepository
         extends InMemoryDomainRepository<Colaborador, NumeroMecanografico>
         implements CollaboratorRepository {
 
     static {
         InMemoryInitializer.init();
+    }
+
+    @Override
+    public Optional<Colaborador> getColaboradorByEmail(String email) {
+        return Optional.empty();
     }
 /*
     @Override
