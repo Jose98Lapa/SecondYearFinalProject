@@ -43,7 +43,7 @@ public class CatalogoID implements ValueObject, Comparable<CatalogoID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CatalogoID catalogoID = (CatalogoID) o;
-        return catalogID == catalogoID.catalogID;
+        return catalogID.equals(catalogoID.catalogID);
     }
 
     @Override

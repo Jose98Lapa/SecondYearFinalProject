@@ -24,7 +24,7 @@ public class EspecificarServicoController {
     CatalogRepository catRepo = PersistenceContext.repositories().catalogs();
 
     public void registo(ServicoDTO dto) {
-        final Catalogo catalogo =  catRepo.ofIdentity(new CatalogoID(dto.id)).orElseThrow(()-> new IllegalArgumentException("Unknown catalog: " + dto.id));
+        final Catalogo catalogo = catRepo.ofIdentity(new CatalogoID(dto.catalogo.identity)).orElseThrow(() -> new IllegalArgumentException("Unknown catalog: " + dto.id));
         builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription).Catalogo(catalogo);
     }
 
@@ -33,35 +33,37 @@ public class EspecificarServicoController {
     }
 
     public void manual(String id) {
-            FormularioRepository repo = PersistenceContext.repositories().form();
-            final Formulario form2 = repo.ofIdentity(FormularioID.valueOf(id))
-                    .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
+        FormularioRepository repo = PersistenceContext.repositories().form();
+        final Formulario form2 = repo.ofIdentity(FormularioID.valueOf(id))
+                .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
 
 
         servico = builder.Form(form2).buildManual();
     }
-    public ArrayList<CatalogoDTO> catalogList(){
+
+    public ArrayList<CatalogoDTO> catalogList() {
         ListCatalogoService lc = new ListCatalogoService();
         return lc.allCatalogos();
     }
 
-    public void confirms(){
+    public void confirms() {
         repo.save(servico);
     }
 
-    public ArrayList<ServicoDTO> getIncomplete(){
+    public ArrayList<ServicoDTO> getIncomplete() {
         return new ListServicoService().IncompleteServicos();
     }
 
-    public Iterable<ServicoDTO> all(){
+    public Iterable<ServicoDTO> all() {
         return new ListServicoService().all();
     }
 
-    public void ativarServico(String servicoId){
+    public void ativarServico(String servicoId) {
         repo.ativar(servicoId);
 
     }
-    public void desativarServico(String servicoId){
+
+    public void desativarServico(String servicoId) {
         repo.desativar(servicoId);
     }
 
