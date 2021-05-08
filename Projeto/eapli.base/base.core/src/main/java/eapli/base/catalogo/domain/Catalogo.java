@@ -13,6 +13,9 @@ import java.util.Set;
 
 @Entity
 public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
+
+    private static final long serialVersionUID = 1L;
+
     @Version
     private Long version;
 

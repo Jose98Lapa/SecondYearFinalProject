@@ -14,6 +14,9 @@ import java.util.Set;
 
 @Entity
 public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
+
+    private static final long serialVersionUID = 1L;
+
     @Version
     private Long version;
 
@@ -25,7 +28,8 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TipoServico tipo;
     private ServicoScript script;
     private CompleteDescription compDesc;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @OneToOne
     private Catalogo catalogo;
     private BriefDescription briedDesc;
     @OneToOne
