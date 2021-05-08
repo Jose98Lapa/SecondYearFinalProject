@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class CodPostal implements ValueObject {
 
-    String codPostal;
+    private String codPostal;
 
     public CodPostal(final String codPostal){
         if (codPostal==null ||codPostal.isEmpty()||!codPostal.matches("^[0-9]{4}-[0-9]{3}$"))
