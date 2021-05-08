@@ -1,7 +1,6 @@
 package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.catalogo.domain.CatalogoID;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
@@ -14,6 +13,9 @@ import java.util.Set;
 
 @Entity
 public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
+
+    private static final long serialVersionUID = 1L;
+
     @Version
     private Long version;
 
@@ -25,7 +27,9 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private TipoServico tipo;
     private ServicoScript script;
     private CompleteDescription compDesc;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "catalogo_id")
     private Catalogo catalogo;
     private BriefDescription briedDesc;
     @OneToOne
