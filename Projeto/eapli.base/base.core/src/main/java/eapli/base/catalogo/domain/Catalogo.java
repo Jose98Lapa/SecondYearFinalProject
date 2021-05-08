@@ -13,12 +13,13 @@ import java.util.Set;
 
 @Entity
 public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
+    @Version
+    private Long version;
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long identity;
 
-    private CatalogoID identity;
     private Titulo titulo;
     private Icon icon;
     private DescricaoBreve briefDesc;
@@ -34,10 +35,9 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private boolean status;
 
 
-    public Catalogo(CatalogoID identity, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+    public Catalogo(Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
-        this.identity = identity;
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -49,6 +49,20 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     }
 
     protected Catalogo() {
+    }
+
+    public Catalogo(Long id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+                    DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
+                    final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        identity = id;
+        this.titulo = titulo;
+        this.icon = icon;
+        this.briefDesc = briefDesc;
+        this.completeDesc = completeDesc;
+        addResponsableCollabs(responsableCollabs);
+        addAccessCriteria(accessCriteria);
+        this.nivelCriticidade = nivelCriticidade;
+        this.status = true;
     }
 
 
@@ -77,7 +91,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     }
 
     public Long identity() {
-        return id;
+        return identity;
     }
 
     public Titulo title() {
@@ -119,7 +133,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
 
     @Override
     public CatalogoDTO toDTO() {
-        return new CatalogoDTO(identity.toString(),
+        return new CatalogoDTO(identity,
                 titulo.toString(),
                 icon.toString(),
                 briefDesc.toString(),

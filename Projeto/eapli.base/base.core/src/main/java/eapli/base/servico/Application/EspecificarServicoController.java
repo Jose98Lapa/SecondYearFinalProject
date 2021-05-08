@@ -2,6 +2,7 @@ package eapli.base.servico.Application;
 
 import eapli.base.catalogo.application.ListCatalogoService;
 import eapli.base.catalogo.dto.CatalogoDTO;
+import eapli.base.catalogo.dto.CatalogoDTOParser;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.repository.FormularioRepository;
@@ -19,7 +20,7 @@ public class EspecificarServicoController {
     ServicoRepository repo = PersistenceContext.repositories().servico();
 
     public void registo(ServicoDTO dto) {
-        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription);
+        builder.Title(dto.title).Icon(dto.icon).Keywords(dto.keywords).Id(dto.id).Status(dto.status).briefDesc(dto.briefDescription).compDesc(dto.completeDescription).Catalogo(new CatalogoDTOParser().valueOf(dto.catalogo));
     }
 
     public void automatic(String script) {

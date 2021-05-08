@@ -9,6 +9,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class EspecificarServicoUI extends AbstractUI {
         int i = 0;
         boolean incomplete = false;
         ServicoDTO dto;
+        ArrayList<CatalogoDTO> catalogos = theController.catalogList();
 
         for (CatalogoDTO cat : theController.catalogList()) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
@@ -36,9 +38,10 @@ public class EspecificarServicoUI extends AbstractUI {
         Set<String> keys = new HashSet<>();
         s = (Console.readLine("Keyword - Exit to stop"));
         while (!(s.equalsIgnoreCase("Exit"))) {
-            s = Console.readLine("Keyword - Exit to stop");
             keys.add(s);
+            s = Console.readLine("Keyword - Exit to stop");
         }
+        keys.remove("Exit");
         if (ifo.id().equalsIgnoreCase("none") || ifo.title().equalsIgnoreCase("none")) {
             System.out.println("O id e o titulo sao obrigatórios");
             return false;
@@ -60,9 +63,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 incomplete = true;
             }
             if (incomplete){
-                dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INCOMPLETO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), theController.catalogList().get(Integer.parseInt(index)), null);
+                dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INCOMPLETO", ifo.type(), ifo.briefDesc(), ifo.compDesc(),catalogos.get(Integer.parseInt(index)) , null);
             }else{
-                 dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), theController.catalogList().get(Integer.parseInt(index)), null);
+                 dto = new ServicoDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
             }
             theController.registo(dto);
         }

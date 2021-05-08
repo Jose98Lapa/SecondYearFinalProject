@@ -27,7 +27,7 @@ public class CriarCatalogoUI extends AbstractUI {
         widget.show();
 
         try {
-            this.theController.insertBasicData("1", widget.titulo(), widget.icon(),
+            this.theController.insertBasicData(widget.titulo(), widget.icon(),
                     widget.descBreve(), widget.descCompleta());
 
             this.theController.defineAccessCriteria(showAccessAndChoose());

@@ -56,9 +56,9 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
         final Set<Colaborador> lstResponsable = new HashSet<>();
         dto.responsableCollabs.forEach( a -> lstResponsable.add(new ColaboradorDTOParser().valueOf(a)));
 
-        return builder.withIdentity(dto.catalogID).withTitle(dto.catalogTitle).withIcon(dto.icon)
+        return builder.withTitle(dto.catalogTitle).withIcon(dto.icon)
                 .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
-                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).build();
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).build();
     }
 
 }

@@ -101,9 +101,10 @@ public class CompletarServicoUI extends AbstractUI {
                     Set<String> keys = new HashSet<>();
                     string = (Console.readLine("Keyword - Exit to stop"));
                     while (!(string.equalsIgnoreCase("Exit"))) {
-                        string = Console.readLine("Keyword - Exit to stop");
                         keys.add(string);
+                        string = Console.readLine("Keyword - Exit to stop");
                     }
+                    keys.remove("Exit");
                     toComplete.keywords.addAll(keys);
                     System.out.println("Alterado com sucesso");
                 }
