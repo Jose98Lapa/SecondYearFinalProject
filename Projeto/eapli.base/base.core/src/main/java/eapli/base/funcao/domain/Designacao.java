@@ -1,5 +1,6 @@
 package eapli.base.funcao.domain;
 
+import eapli.base.formulario.domain.atributo.AtributoLabel;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
@@ -17,6 +18,10 @@ public class Designacao implements ValueObject {
 
     protected Designacao() {
 
+    }
+
+    public static Designacao valueOf(String string) {
+        return new Designacao(string);
     }
 
     @Override

@@ -5,6 +5,7 @@ import eapli.base.clientusermanagement.application.eventhandlers.NewUserRegister
 import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
+import eapli.base.infrastructure.bootstrapers.OrganizacaoBootstrap;
 import eapli.base.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.smoketests.BaseDemoSmokeTester;
@@ -41,6 +42,9 @@ public final class BaseBootstrap extends BaseApplication {
     @Override
     protected void doMain(final String[] args) {
         handleArgs(args);
+
+        OrganizacaoBootstrap o = new OrganizacaoBootstrap();
+        o.initiate();
 
         System.out.println("\n\n------- MASTER DATA -------");
         new BaseBootstrapper().execute();
