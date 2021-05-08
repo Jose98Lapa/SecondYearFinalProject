@@ -9,6 +9,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.domain.ColaboradorBuilder;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
+import eapli.base.cor.Application.CriarCorController;
 import eapli.base.cor.DTO.CorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
@@ -157,8 +158,12 @@ public class OrganizacaoBootstrap {
                     String nome = element.getElementsByTagName("nome").item(0).getTextContent();
                     String hexadecimal = element.getElementsByTagName("hexadecimal").item(0).getTextContent();
 
+
+
                     CriarTipoEquipaController controller = new CriarTipoEquipaController();
+                    CriarCorController corController = new CriarCorController();
                     CorDTO cor = new CorDTO(hexadecimal, nome);
+                    corController.registo(cor);
                     TipoEquipaDTO dto = new TipoEquipaDTO(tipoEquipaID, TEdesignacao, cor);
                     controller.registo(dto);
 
