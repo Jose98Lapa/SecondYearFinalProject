@@ -1,6 +1,8 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -26,7 +28,6 @@ public class CriarEquipaUI extends AbstractUI {
         String equipaID = Console.readLine("Insira o ID da equipa");
         String acronimo = Console.readLine("Insira o Acrónimo da Equipa");
         String descricao = Console.readLine("Insira a descricao");
-        String numeroMecanografico = Console.readLine("Insira o número mecanográfico de um colaborador");
         List<TipoEquipaDTO> equipaDTOList = new ArrayList<>(20);
         for (TipoEquipaDTO tipoEquipaDTO: criarEquipaController.getTipoEquipaDTO()){
             equipaDTOList.add(tipoEquipaDTO);
@@ -46,9 +47,32 @@ public class CriarEquipaUI extends AbstractUI {
                 tipoEquipaDTO = equipaDTOList.get(posicao-1);
             }
         }
+        ColaboradorDTO colaboradorDTO = null;
+        List<ColaboradorDTO> colaboradorDTOList = new ArrayList<>(20);
+        for (ColaboradorDTO colaboradorDTOl : criarEquipaController.getColaboradorDTO()){
+            colaboradorDTOList.add(colaboradorDTOl);
+        }
+        continueLoop = true;
 
 
-        EquipaDTO equipaDTO = new EquipaDTO(equipaID,acronimo,descricao,numeroMecanografico,tipoEquipaDTO);
+        while (continueLoop){
+            for (int i=0;i<colaboradorDTOList.size();i++){
+                System.out.printf("%d %s \n",i+1,colaboradorDTOList.get(i));
+            }
+            int posicao = Console.readInteger("Insira uma posição válida");
+            if (posicao<0||posicao>colaboradorDTOList.size()){
+                System.out.println("A posição está errada por isso será necessário reintroduzir o valor da posição dentro dos limites");
+
+            }else{
+                continueLoop = false;
+                colaboradorDTO = colaboradorDTOList.get(posicao-1);
+            }
+        }
+
+
+
+
+        EquipaDTO equipaDTO = new EquipaDTO(descricao,acronimo,equipaID,tipoEquipaDTO,colaboradorDTO);
 
         try {
             this.criarEquipaController.registo(equipaDTO);

@@ -110,6 +110,8 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
     public EquipaDTO toDTO() {
         List<ColaboradorDTO> responsaveis = new ArrayList<>();
         colaboradorResponsaveisSet.forEach(collab -> responsaveis.add(collab.toDTO()));
-        return new EquipaDTO(equipaID.toString(),acronimo.toString(),designacao, responsaveis,tipoEquipa.toDTO());
+        List<ColaboradorDTO> membros = new ArrayList<>();
+        teamMembers.forEach(collab -> membros.add(collab.toDTO()));
+        return new EquipaDTO(equipaID.toString(),acronimo.toString(),designacao, responsaveis,tipoEquipa.toDTO(),membros);
     }
 }

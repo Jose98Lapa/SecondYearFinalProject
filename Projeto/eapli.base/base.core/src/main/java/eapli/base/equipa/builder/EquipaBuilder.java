@@ -6,9 +6,7 @@ import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.domain.EquipaID;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class EquipaBuilder {
     private String designacao;
@@ -16,12 +14,12 @@ public class EquipaBuilder {
 
     private Acronimo acronimo;
 
-    private Colaborador colaborador;
+
 
     private TipoEquipa tipoEquipa;
 
-    private Set<Colaborador> colaboradores;
-    private Set<Colaborador> responsaveis;
+    private Set<Colaborador> colaboradores = new HashSet<>();
+    private List<Colaborador> responsaveis = new ArrayList<>();
 
 
     public EquipaBuilder() {
@@ -41,19 +39,14 @@ public class EquipaBuilder {
         this.acronimo = Acronimo.valueOf(acronimo);
         return this;
     }
-    public EquipaBuilder colaborador(Colaborador colaborador){
-        this.colaborador = colaborador;
-        return this;
-    }
+
 
     public EquipaBuilder colaboradores(List<Colaborador> colaborador){
-        this.colaboradores = new HashSet<>();
         this.colaboradores.addAll(colaborador);
         return this;
     }
 
     public EquipaBuilder responsaveis(List<Colaborador> responsaveis){
-        this.responsaveis = new HashSet<>();
         this.responsaveis.addAll(responsaveis);
         return this;
     }
@@ -65,7 +58,14 @@ public class EquipaBuilder {
 
 
     public Equipa build(){
-        return new Equipa(designacao,acronimo,equipaID,colaborador,tipoEquipa);
+        Equipa e = new Equipa(designacao,acronimo,equipaID,responsaveis.remove(0),tipoEquipa);
+        for (Colaborador colaborador:colaboradores){
+            e.addTeamMembers(colaborador);
+        }
+        for (Colaborador colaborador:responsaveis){
+            e.addColaboradorResponsible(colaborador);
+        }
+        return e;
     }
 
 }
