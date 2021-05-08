@@ -28,7 +28,7 @@ public class ColaboradorDataWidget {
         this.numPorta=Console.readLine("Numero da Porta:");
         this.andar=Console.readLine("Andar:");
         this.localizacao=Console.readLine("Localizacao:");
-        this.codPostal=Console.readLine("Codigo Postal:");
+        this.codPostal=Console.readLine("Codigo Postal [XXXX-XXX]:");
     }
 
     public String street() {
