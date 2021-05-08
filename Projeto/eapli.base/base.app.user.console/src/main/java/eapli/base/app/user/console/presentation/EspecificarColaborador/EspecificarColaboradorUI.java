@@ -1,20 +1,27 @@
 package eapli.base.app.user.console.presentation.EspecificarColaborador;
 
 import eapli.base.colaborador.application.EspecificarColaboradorController;
+import eapli.base.colaborador.application.PasswordGenerator;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.funcao.domain.Funcao;
+import eapli.base.myclientuser.application.SignupController;
+import eapli.base.usermanagement.application.AddUserController;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EspecificarColaboradorUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(EspecificarColaboradorUI.class);
     private final EspecificarColaboradorController controller = new EspecificarColaboradorController();
+    private final SignupController signupController = new SignupController();
 
     @Override
     protected boolean doShow() {
@@ -28,6 +35,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
 
 
             List<Funcao> lstFunc = new ArrayList<>();
+            Funcao selectedF;
             this.controller.getFunctionList().forEach(lstFunc::add);
             int index = 1;
 
@@ -38,14 +46,17 @@ public class EspecificarColaboradorUI extends AbstractUI {
                     index = Console.readInteger("\nSelecione a funcao que deseja associar ao Colaborador (0 - fim): ");
 
                     if (index > 0 && index - 1 < lstFunc.size()) {
-                        controller.defineFunction(lstFunc.get(index-1));
+                        controller.defineFunction(selectedF=lstFunc.get(index-1));
                         index=0;
                         if (lstFunc.isEmpty())
                             index = 0;
-                    }else {System.out.println("Opção inválida");}
+                    }else {
+                        System.out.println("Opção inválida");
+                        index=1;}
             }
 
         List<Colaborador> lstColab = new ArrayList<>();
+        Colaborador selectedC;
         this.controller.getCollaboratorList().forEach(lstColab::add);
         index=1;
         while (index != 0) {
@@ -55,19 +66,24 @@ public class EspecificarColaboradorUI extends AbstractUI {
             index = Console.readInteger("Selecione o supervisor do Colaborador (0 - fim): ");
 
             if (index > 0 && index - 1 < lstFunc.size()) {
-                controller.defineSupervisor(lstColab.get(index-1));
+                controller.defineSupervisor(selectedC=lstColab.get(index-1));
                 index=0;
                 if (lstColab.isEmpty())
                     index = 0;
-            }else {System.out.println("Opção inválida");}
+            }else {
+                System.out.println("Opção inválida");
+                index=1;}
         }
 
         Colaborador colaborador = controller.registerCollaborator();
 
         boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
-        if (answer)
+        if (answer) {
             controller.saveCollaborator(colaborador);
-        else
+            String[] name = cdw.fullName().split(" ");
+            PasswordGenerator pwrdGenerator = new PasswordGenerator();
+            signupController.signup(cdw.nickname(),pwrdGenerator.getPassword(7), name[0],name[name.length-1], cdw.institutionalEmail(),cdw.mecanographicNumber());
+        }else
             return false;
         return true;
     }
