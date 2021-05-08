@@ -54,15 +54,13 @@ class MainMenu extends ClientUserBaseUI {
     private static final int MY_USER_OPTION = 1;
     private static final int REGISTER_SERVICE_OPTION = 2;
     private static final int CRIAR_EQUIPA_OPTION = 3;
+    private static final int CRIAR_CATALOGO_OPTION = 4;
+    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 5;
+    private static final int CRIAR_TIPO_EQUIPA_OPTION = 6;
+    private static final int CRIAR_COR = 7;
     private static final int ACCOUNT_OPTION = 4;
     private static final int SETTINGS_OPTION = 5;
-    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 6;
-    private static final int CRIAR_CATALOGO_OPTION = 6;
-    private static final int SETTINGS_OPTION = 4;
-    private static final int CRIAR_TIPO_EQUIPA_OPTION = 5;
-    private static final int CRIAR_COR = 9;
 
-    private static final int ACCOUNT_OPTION = 7;
 
 
     // BOOKINGS MENU
@@ -104,9 +102,8 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(REGISTER_SERVICE_OPTION, serviceMenu);
         mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,equipaMenu);
-        mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
-        mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION, equipaMenu);
         mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
+        mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,buildEspecificarColaboradorMenu());
         mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,buildTipoEquipaMenu());
         mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
 

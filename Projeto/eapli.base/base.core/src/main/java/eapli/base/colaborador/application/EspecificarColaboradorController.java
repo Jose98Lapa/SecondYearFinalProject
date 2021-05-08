@@ -23,7 +23,7 @@ public class EspecificarColaboradorController {
 
     public void method(ColaboradorDTO colaboradorDTO){
         colabBuilder.withAddress(colaboradorDTO.estrada,colaboradorDTO.numPorta,colaboradorDTO.andar,colaboradorDTO.localizacao,colaboradorDTO.codPostal).withContact(colaboradorDTO.contacto).withFullName(colaboradorDTO.nomeCompleto)
-                .withInstitutionalEmail(colaboradorDTO.email).withNickname(colaboradorDTO.alcunha).withDateOfBirth(colaboradorDTO.dataDeNascimento);
+                .withInstitutionalEmail(colaboradorDTO.email).withMecanoGraphicNumber(colaboradorDTO.mNumber).withNickname(colaboradorDTO.alcunha).withDateOfBirth(colaboradorDTO.dataDeNascimento);
     }
 
     public Iterable<Funcao> getFunctionList(){return funcRepo.findAll();}

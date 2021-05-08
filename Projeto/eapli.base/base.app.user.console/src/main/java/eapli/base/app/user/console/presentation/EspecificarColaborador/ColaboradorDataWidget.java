@@ -17,18 +17,18 @@ public class ColaboradorDataWidget {
     private String dataDeNascimento;
 
     public void show(){
-        this.contacto=Console.readLine("Contact:");
-        this.nomeCompleto=Console.readLine("Full Name:");
-        this.emailInstitucional=Console.readLine("Institutional Email:");
-        this.numeroMecanografico=Console.readLine("Mecanographic Number:");
-        this.alcunha=Console.readLine("Nickname:");
-        this.dataDeNascimento=Console.readLine("Date Of Birth:");
+        this.contacto=Console.readLine("Contacto:");
+        this.nomeCompleto=Console.readLine("Nome completo:");
+        this.emailInstitucional=Console.readLine("Email instuticional:");
+        this.numeroMecanografico=Console.readLine("Numero mecanografico:");
+        this.alcunha=Console.readLine("Alcunha:");
+        this.dataDeNascimento=Console.readLine("Data de nascimento [DD/MM/AAAA]:");
 
-        this.estrada=Console.readLine("Street:");
-        this.numPorta=Console.readLine("Door number:");
-        this.andar=Console.readLine("Floor:");
-        this.localizacao=Console.readLine("Location:");
-        this.codPostal=Console.readLine("Postal Code:");
+        this.estrada=Console.readLine("Estrada:");
+        this.numPorta=Console.readLine("Numero da Porta:");
+        this.andar=Console.readLine("Andar:");
+        this.localizacao=Console.readLine("Localizacao:");
+        this.codPostal=Console.readLine("Codigo Postal:");
     }
 
     public String street() {

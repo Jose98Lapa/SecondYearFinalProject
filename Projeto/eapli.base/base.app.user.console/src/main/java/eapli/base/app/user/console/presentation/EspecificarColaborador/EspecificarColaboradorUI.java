@@ -25,12 +25,12 @@ public class EspecificarColaboradorUI extends AbstractUI {
 
         boolean functionSelected = false;
         while (functionSelected) {
-            System.out.println("Function List:\n");
+            System.out.println("Lista de funcoes:\n");
             for (Funcao funcao : controller.getFunctionList()) {
                 System.out.println(funcao.toString());
             }
 
-            String choosenFunction = Console.readLine("Choose a function:");
+            String choosenFunction = Console.readLine("Escolha uma funcao:");
 
             for (Funcao funcao : controller.getFunctionList()) {
                 if (funcao.toString().equals(choosenFunction)) {
@@ -40,18 +40,18 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 }
             }
             if (!functionSelected) {
-                System.out.println("Invalid function\n");
+                System.out.println("Funcao Invalida\n");
             }
         }
 
         boolean supervisorSelected = false;
         while (supervisorSelected) {
-            System.out.println("Supervisor List:\n");
+            System.out.println("Lista de Supervisores:\n");
             for (Colaborador colaborador : controller.getCollaboratorList()) {
                 System.out.println(colaborador);
             }
 
-            String choosenSupervisor = Console.readLine("Choose a supervisor(ID):");
+            String choosenSupervisor = Console.readLine("Escolha um supervisor(ID):");
 
             for (Colaborador colaborador : controller.getCollaboratorList()) {
                 if (colaborador.identity().toString().equals(choosenSupervisor)) {
@@ -61,13 +61,13 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 }
             }
             if (!supervisorSelected) {
-                System.out.println("Invalid supervisor\n");
+                System.out.println("Supervisor inválido\n");
             }
         }
 
         Colaborador colaborador = controller.registerCollaborator();
 
-        boolean answer = Console.readBoolean("Is all the info correct?(Y/N)");
+        boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
         if (answer)
             controller.saveCollaborator(colaborador);
         else
