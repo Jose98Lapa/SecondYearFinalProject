@@ -1,7 +1,6 @@
 package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.catalogo.domain.CatalogoID;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.framework.domain.model.AggregateRoot;
@@ -29,7 +28,8 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     private ServicoScript script;
     private CompleteDescription compDesc;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "catalogo_id")
     private Catalogo catalogo;
     private BriefDescription briedDesc;
     @OneToOne
