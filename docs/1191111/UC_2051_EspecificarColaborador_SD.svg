@@ -183,16 +183,16 @@
       ><path d="M425 10 L425 25 L336 25 L336 10 ZM458 44 L458 59 L300 59 L300 44 ZM529 74 L529 89 L227 89 L227 74 ZM478 113 L478 128 L278 128 L278 113 ZM500 143 L500 158 L254 158 L254 143 ZM465 177 L465 192 L300 192 L300 177 ZM0 0 L0 204 L771 204 L771 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath60"
-      ><path d="M458 11 L458 26 L300 26 L300 11 ZM529 41 L529 56 L227 56 L227 41 ZM478 80 L478 95 L278 95 L278 80 ZM500 110 L500 125 L254 125 L254 110 ZM465 144 L465 159 L300 159 L300 144 ZM549 177 L549 192 L196 192 L196 177 ZM0 0 L0 204 L771 204 L771 0 Z"
+      ><path d="M458 11 L458 26 L300 26 L300 11 ZM529 41 L529 56 L227 56 L227 41 ZM478 80 L478 95 L278 95 L278 80 ZM500 110 L500 125 L254 125 L254 110 ZM465 144 L465 159 L300 159 L300 144 ZM539 177 L539 192 L206 192 L206 177 ZM0 0 L0 204 L771 204 L771 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath61"
-      ><path d="M529 11 L529 26 L227 26 L227 11 ZM478 50 L478 65 L278 65 L278 50 ZM500 80 L500 95 L254 95 L254 80 ZM465 114 L465 129 L300 129 L300 114 ZM549 147 L549 162 L196 162 L196 147 ZM0 0 L0 204 L771 204 L771 0 Z"
+      ><path d="M529 11 L529 26 L227 26 L227 11 ZM478 50 L478 65 L278 65 L278 50 ZM500 80 L500 95 L254 95 L254 80 ZM465 114 L465 129 L300 129 L300 114 ZM539 147 L539 162 L206 162 L206 147 ZM0 0 L0 204 L771 204 L771 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath62"
-      ><path d="M478 13 L478 28 L278 28 L278 13 ZM500 43 L500 58 L254 58 L254 43 ZM465 77 L465 92 L300 92 L300 77 ZM549 110 L549 125 L196 125 L196 110 ZM0 0 L0 204 L771 204 L771 0 Z"
+      ><path d="M478 13 L478 28 L278 28 L278 13 ZM500 43 L500 58 L254 58 L254 43 ZM465 77 L465 92 L300 92 L300 77 ZM539 110 L539 125 L206 125 L206 110 ZM0 0 L0 204 L771 204 L771 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath63"
-      ><path d="M500 10 L500 25 L254 25 L254 10 ZM465 44 L465 59 L300 59 L300 44 ZM549 77 L549 92 L196 92 L196 77 ZM0 0 L0 204 L771 204 L771 0 Z"
+      ><path d="M500 10 L500 25 L254 25 L254 10 ZM465 44 L465 59 L300 59 L300 44 ZM539 77 L539 92 L206 92 L206 77 ZM0 0 L0 204 L771 204 L771 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath64"
       ><path d="M424 79 L424 94 L295 94 L295 79 ZM0 0 L0 204 L724 204 L724 109 L694 109 L694 94 L724 94 L724 0 Z"
@@ -297,7 +297,7 @@
       ><path d="M0 0 L1537 0 L1537 204 L0 204 L0 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath98"
-      ><path d="M989 62 L989 92 L537 92 L537 62 ZM429 170 L429 185 L261 185 L261 170 ZM952 184 L952 199 L863 199 L863 184 ZM9 0 L9 22 L0 22 L0 204 L1537 204 L1537 0 Z"
+      ><path d="M988 63 L988 93 L536 93 L536 63 ZM429 170 L429 185 L261 185 L261 170 ZM952 184 L952 199 L863 199 L863 184 ZM9 0 L9 22 L0 22 L0 204 L1537 204 L1537 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath99"
       ><path d="M-452 -30 L904 -30 L904 60 L-452 60 L-452 -30 Z"
@@ -372,7 +372,7 @@
       ><path d="M-129 -15 L258 -15 L258 30 L-129 30 L-129 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath123"
-      ><path d="M-353 -15 L706 -15 L706 30 L-353 30 L-353 -15 Z"
+      ><path d="M-333 -15 L666 -15 L666 30 L-333 30 L-333 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath124"
       ><path d="M-165 -15 L330 -15 L330 30 L-165 30 L-165 -15 Z"
@@ -965,12 +965,12 @@
       /><polygon points=" 1433 100 1421 94 1421 106" clip-path="url(#clipPath98)" stroke="none"
       /><polygon fill="none" points=" 1433 100 1421 94 1421 106" clip-path="url(#clipPath98)"
     /></g
-    ><g font-size="11px" transform="translate(1284,194)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
+    ><g font-size="11px" transform="translate(1283,195)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
     ><rect x="0" width="452" height="30" y="0" clip-path="url(#clipPath99)" stroke="none"
       /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath99)" stroke="none"
       >2.1: create(contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha,</text
-      ><text fill="black" x="36" xml:space="preserve" y="27" clip-path="url(#clipPath99)" stroke="none"
-      >funcao, dataDeNascimento, estrada, numPorta,andar, localizacao, codPostal)</text
+      ><text fill="black" x="46" xml:space="preserve" y="27" clip-path="url(#clipPath99)" stroke="none"
+      >funcao, dataDeNascimento, rua, numPorta,andar, localizacao, codPostal)</text
     ></g
     ><g font-size="11px" transform="translate(1983,1598)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
     ><rect x="0" width="140" height="14" y="0" clip-path="url(#clipPath100)" stroke="none"
@@ -1094,10 +1094,10 @@
       /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath122)" stroke="none"
       >2.3: getFunctionsList()</text
     ></g
-    ><g font-size="11px" transform="translate(1470,516)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
-    ><rect x="0" width="353" height="15" y="0" clip-path="url(#clipPath123)" stroke="none"
+    ><g font-size="11px" transform="translate(1480,516)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
+    ><rect x="0" width="333" height="15" y="0" clip-path="url(#clipPath123)" stroke="none"
       /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath123)" stroke="none"
-      >2.2.7: withAddress(estrada,numeroPorta,andar,locazicao,codPostal)</text
+      >2.2.7: withAddress(rua,numeroPorta,andar,locazicao,codPostal)</text
     ></g
     ><g font-size="11px" transform="translate(1574,483)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
     ><rect x="0" width="165" height="15" y="0" clip-path="url(#clipPath124)" stroke="none"

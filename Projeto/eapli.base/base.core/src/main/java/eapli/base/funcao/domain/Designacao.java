@@ -1,5 +1,6 @@
 package eapli.base.funcao.domain;
 
+import eapli.base.formulario.domain.atributo.AtributoLabel;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
@@ -10,13 +11,17 @@ public class Designacao implements ValueObject {
     private String designation;
 
     public Designacao(final String designation){
-        if (designation==null ||designation.isEmpty()||!designation.matches("^\\w{1,30}$"))
+        if (designation==null ||designation.isEmpty()||!designation.matches("^[ a-zA-Z]{1,30}$"))
             throw new IllegalArgumentException("The designation does not fit the criteria");
         this.designation = designation;
     }
 
     protected Designacao() {
 
+    }
+
+    public static Designacao valueOf(String string) {
+        return new Designacao(string);
     }
 
     @Override

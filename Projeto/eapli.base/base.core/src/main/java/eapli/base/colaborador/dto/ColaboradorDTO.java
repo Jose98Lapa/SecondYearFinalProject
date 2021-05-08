@@ -7,7 +7,7 @@ import eapli.framework.representations.dto.DTO;
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class ColaboradorDTO {
-    public String estrada;
+    public String rua;
     public String numPorta;
     public String andar;
     public String localizacao;
@@ -22,8 +22,8 @@ public class ColaboradorDTO {
     public String IDfuncao;
     public String mSupervisor;
 
-    public ColaboradorDTO(String estrada, String numPorta, String andar, String localizacao, String codPostal, String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
-        this.estrada = estrada;
+    public ColaboradorDTO(String rua, String numPorta, String andar, String localizacao, String codPostal, String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
+        this.rua = rua;
         this.numPorta = numPorta;
         this.andar = andar;
         this.localizacao = localizacao;
@@ -38,7 +38,7 @@ public class ColaboradorDTO {
 
     public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao, Colaborador Supervisor){
         MoradaDTO moradaDTO = morada.toDTO();
-        this.estrada=moradaDTO.estrada;
+        this.rua=moradaDTO.rua;
         this.numPorta=moradaDTO.numPorta;
         this.andar=moradaDTO.andar;
         this.localizacao=moradaDTO.localizacao;
@@ -56,7 +56,7 @@ public class ColaboradorDTO {
 
     public ColaboradorDTO(Morada morada, Contacto contacto, NomeCompleto nomeCompleto, EmailInstitucional email, NumeroMecanografico mNumber, Alcunha alcunha, DataDeNascimento dataDeNascimento, Funcao funcao){
         MoradaDTO moradaDTO = morada.toDTO();
-        this.estrada=moradaDTO.estrada;
+        this.rua=moradaDTO.rua;
         this.numPorta=moradaDTO.numPorta;
         this.andar=moradaDTO.andar;
         this.localizacao=moradaDTO.localizacao;

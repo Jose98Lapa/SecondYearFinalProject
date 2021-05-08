@@ -7,6 +7,6 @@ public class MoradaDTOParser implements DTOParser<MoradaDTO, Morada> {
 
     @Override
     public Morada valueOf(MoradaDTO dto) {
-        return new Morada(dto.estrada, dto.numPorta, dto.andar, dto.localizacao, dto.codPostal);
+        return new Morada(dto.rua, dto.numPorta, dto.andar, dto.localizacao, dto.codPostal);
     }
 }
