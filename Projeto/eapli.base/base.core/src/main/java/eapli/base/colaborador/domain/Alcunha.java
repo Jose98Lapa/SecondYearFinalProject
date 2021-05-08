@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Alcunha implements ValueObject {
 
-    String nickname;
+    private String nickname;
 
     public Alcunha(final String nickname){
         if (nickname==null ||nickname.isEmpty()||!nickname.matches("^\\w{1,15}$"))

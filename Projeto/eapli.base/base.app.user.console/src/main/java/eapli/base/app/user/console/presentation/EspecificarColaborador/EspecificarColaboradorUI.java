@@ -23,7 +23,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 cdw.contact(), cdw.fullName(), cdw.institutionalEmail(), cdw.mecanographicNumber(), cdw.nickname(), cdw.dateOfBirth());
         controller.method(colaboradorDTO);
 
-        boolean functionSelected = false;
+        boolean functionSelected = true;
         while (functionSelected) {
             System.out.println("Lista de funcoes:\n");
             for (Funcao funcao : controller.getFunctionList()) {
@@ -44,7 +44,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
             }
         }
 
-        boolean supervisorSelected = false;
+        boolean supervisorSelected = true;
         while (supervisorSelected) {
             System.out.println("Lista de Supervisores:\n");
             for (Colaborador colaborador : controller.getCollaboratorList()) {

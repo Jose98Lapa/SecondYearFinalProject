@@ -4,6 +4,7 @@ import eapli.base.funcao.DTO.FuncaoDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -12,6 +13,7 @@ public class Funcao implements AggregateRoot<IdFuncao>, DTOable<FuncaoDTO> {
 
     @EmbeddedId
     private IdFuncao idFuncao;
+    @Column(name = "DESIGNACAO", columnDefinition = "VARCHAR(255)")
     private Designacao designacao;
 
     public Funcao(IdFuncao idFuncao, Designacao designacao){
