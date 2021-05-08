@@ -19,17 +19,6 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, 
         super(persistenceUnitName, "MecanographicNumber");
     }
 
-    /**
-     * returns the client user (utente) with the given mecanographic number
-     *
-     * @return
-     */
-    @Override
-    public Iterable<Colaborador> findAll() {
-        final TypedQuery<Colaborador> q = createQuery("SELECT e FROM Collaborator e",
-                Colaborador.class);
-        return q.getResultList();
-    }
 
     @Override
     public Optional<Colaborador> ofIdentity(NumeroMecanografico id){
