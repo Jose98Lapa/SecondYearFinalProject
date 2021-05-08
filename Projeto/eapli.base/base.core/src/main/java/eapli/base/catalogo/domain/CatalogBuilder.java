@@ -8,7 +8,6 @@ import eapli.framework.domain.model.DomainFactory;
 import java.util.*;
 
 public class CatalogBuilder implements DomainFactory<Catalogo> {
-    private CatalogoID identity;
     private Titulo titulo;
     private Icon icon;
     private DescricaoBreve briefDesc;
@@ -17,6 +16,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     private final Set<Equipa> accessCriteria = new HashSet<>();
     private Criticidade nivelCriticidade;
 
+    /*
     public CatalogBuilder withIdentity(final CatalogoID identity) {
         this.identity = identity;
         return this;
@@ -26,6 +26,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
         this.identity = new CatalogoID(identity);
         return this;
     }
+    */
 
     public CatalogBuilder withTitle(final Titulo titulo) {
         this.titulo = titulo;
@@ -84,6 +85,6 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
 
     @Override
     public Catalogo build() {
-        return new Catalogo(identity, titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
+        return new Catalogo(titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
     }
 }

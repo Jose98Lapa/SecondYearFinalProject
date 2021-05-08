@@ -35,7 +35,7 @@ import java.util.Set;
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class CatalogoDTO {
-    public String catalogID;
+    public Long identity;
     public String catalogTitle;
     public String icon;
     public String briefDesc;
@@ -44,10 +44,10 @@ public class CatalogoDTO {
     public Set<ColaboradorDTO> responsableCollabs = new HashSet<>();
 
 
-    public CatalogoDTO(String catalogID, String catalogTitle, String icon,
+    public CatalogoDTO(Long identity, String catalogTitle, String icon,
                        String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria) {
 
-        this.catalogID = catalogID;
+        this.identity = identity;
         this.catalogTitle = catalogTitle;
         this.icon = icon;
         this.briefDesc = briefDesc;
@@ -63,7 +63,7 @@ public class CatalogoDTO {
     @Override
     public String toString() {
         return "CatalogoDTO{" +
-                "catalogID='" + catalogID + '\'' +
+                "identity='" + identity + '\'' +
                 ", catalogTitle='" + catalogTitle + '\'' +
                 ", icon='" + icon + '\'' +
                 ", briefDesc='" + briefDesc + '\'' +
