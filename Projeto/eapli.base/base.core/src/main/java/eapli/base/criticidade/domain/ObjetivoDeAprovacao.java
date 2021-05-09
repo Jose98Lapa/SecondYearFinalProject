@@ -10,6 +10,8 @@ public class ObjetivoDeAprovacao  extends ObjetivoSLA implements ValueObject{
     private String tempoMaximoA;
     private String tempoMedioA;
     public ObjetivoDeAprovacao(String tempMaxA, String tempMedA) {
+        if (tempMaxA.isEmpty()  || tempMedA.isEmpty() )
+            throw new IllegalArgumentException("Tempo Maximo/Medio nao pode(m) estar vazio");
         this.tempoMaximoA=tempMaxA;
         this.tempoMedioA=tempMedA;
     }

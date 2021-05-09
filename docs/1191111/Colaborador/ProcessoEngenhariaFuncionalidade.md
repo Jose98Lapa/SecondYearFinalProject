@@ -203,24 +203,24 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 # 4. Implementação
 
 ### Colaborador Builder
-public class ColaboradorBuilder {
-    private Morada morada;
-    private Contacto contacto;
-    private NomeCompleto nomeCompleto;
-    private EmailInstitucional email;
-    private NumeroMecanografico mNumber;
-    private Alcunha alcunha;
-    private DataDeNascimento dataDeNascimento;
+	public class ColaboradorBuilder {
+		private Morada morada;
+		private Contacto contacto;
+		private NomeCompleto nomeCompleto;
+		private EmailInstitucional email;
+		private NumeroMecanografico mNumber;
+		private Alcunha alcunha;
+		private DataDeNascimento dataDeNascimento;
 
-    private Funcao funcao;
-    private Colaborador supervisor;
+		private Funcao funcao;
+		private Colaborador supervisor;
 
-	...
+		...
 
-	@Override
-    public Colaborador build() {
-        return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,supervisor);
-    }
+		@Override
+		public Colaborador build() {
+			return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,supervisor);
+		}
 
 
 
@@ -258,15 +258,23 @@ public class ColaboradorBuilder {
     }
 
 ### Colaborador DTO Parser
-	public class CriticidadeDTOParser implements DTOParser<CriticidadeDTO, Criticidade> {
+	public class ColaboradorDTOParser implements DTOParser<ColaboradorDTO, Colaborador> {
 
-		@Override
-		public Criticidade valueOf(final CriticidadeDTO dto) {
-			CriticidadeBuilder criticidadeBuilder = new CriticidadeBuilder();
-			return criticidadeBuilder.withLabel(dto.label).withValorCriticidade(dto.valorCriticidade).withObjetivoDeAprovacao(dto.tempoMaximoA,dto.tempoMedioA)
-					.withObjetivoDeResolucao(dto.tempoMaximoR,dto.tempoMedioR).build();
-		}
-	}
+    final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
+
+    @Override
+    public Colaborador valueOf(ColaboradorDTO dto) {
+        ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
+        if (dto.mSupervisor!=null)
+            return colaboradorBuilder.withAddress(dto.rua,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
+                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento).withFunction(dto.IDfuncao,dto.designacao).build();
+
+        final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
+        Optional<Colaborador> supervisor = collabRepo.ofIdentity(new NumeroMecanografico(dto.mSupervisor));
+        return colaboradorBuilder.withAddress(dto.rua,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
+                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento)
+                .withFunction(dto.IDfuncao,dto.designacao).withSupervisor(supervisor.get()).build();
+    }
 
 ### Funcao Builder
 
@@ -309,7 +317,7 @@ public class ColaboradorBuilder {
         FuncaoBuilder funcaoBuilder = new FuncaoBuilder();
         return funcaoBuilder.withIdFuncao(dto.IdFuncao).withDesignacao(dto.designacao).build();
     }
-}
+
 
 # 5. Integração/Demonstração
 
