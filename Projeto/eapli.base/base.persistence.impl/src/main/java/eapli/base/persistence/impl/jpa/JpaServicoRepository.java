@@ -50,7 +50,7 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
     @Override
     public List<Servico> getServicoListByCatalogo(Catalogo catalogo) {
         final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.catalogo =: status ",Servico.class);
-        q.setParameter("status", StatusServico.valueOf("INCOMPLETO"));
+        q.setParameter("status", catalogo);
         return q.getResultList();
     }
 

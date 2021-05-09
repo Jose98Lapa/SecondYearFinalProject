@@ -39,8 +39,10 @@ public class ListServicoService {
 
     public List<ServicoDTO> getServicoDTOByCatalogo(Catalogo catalogo){
         List<ServicoDTO> servicoDTOList = new ArrayList<>();
-        for (Servico servico: repo.getServicoListByCatalogo(catalogo)){
-            servicoDTOList.add(servico.toDTO());
+        for (Servico servico: repo.findAll()){
+            if (servico.catalogo().identity().equals(catalogo.identity())){
+                servicoDTOList.add(servico.toDTO());
+            }
         }
         return servicoDTOList;
 
