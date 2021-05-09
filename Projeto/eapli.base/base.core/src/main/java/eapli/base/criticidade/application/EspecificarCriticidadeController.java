@@ -1,6 +1,5 @@
 package eapli.base.criticidade.application;
 
-import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.criticidade.builder.CriticidadeBuilder;
 import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.base.criticidade.dto.CriticidadeDTOParser;
@@ -8,7 +7,6 @@ import eapli.base.criticidade.repository.CriticidadeRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class EspecificarCriticidadeController {

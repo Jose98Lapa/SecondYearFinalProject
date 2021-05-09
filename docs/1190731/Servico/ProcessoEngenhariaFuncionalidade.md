@@ -14,6 +14,13 @@ Critérios de Aceitação / Observações :
 
 Exemplo de tipos de dados a considerar nos formulários: Inteiro, String, Bool, Data, Ficheiro, ListaDeValores (Enumerado).
 
+![moodle1](moodle/moodle(1).png)
+![moodle2](moodle/moodle(2).png)
+![moodle3](moodle/moodle(3).png)
+![moodle4](moodle/moodle(4).png)
+![moodle5](moodle/moodle(5).png)
+![moodle6](moodle/moodle(6).png)
+
 
 
 # 2. Análise
@@ -134,7 +141,7 @@ Exemplo de tipos de dados a considerar nos formulários: Inteiro, String, Bool, 
 }
 
 ```
-#### Formulario DTO
+#### Formulario DTO Parser
 ```
    public class FormularioDTOParser implements DTOParser<FormularioDTO, Formulario> {
     @Override

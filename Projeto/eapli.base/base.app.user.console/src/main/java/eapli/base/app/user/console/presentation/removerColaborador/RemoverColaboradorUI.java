@@ -1,7 +1,9 @@
 package eapli.base.app.user.console.presentation.removerColaborador;
 
 import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.colaborador.dto.ColaboradorDTOParser;
 import eapli.base.equipa.DTO.EquipaDTO;
+import eapli.base.equipa.DTO.EquipaDTOParser;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.base.equipa.application.RemoverColaboradorController;
 import eapli.framework.io.util.Console;
@@ -12,8 +14,7 @@ import java.util.List;
 
 public class RemoverColaboradorUI extends AbstractUI {
 
-    private RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
-    private CriarEquipaController equipaController = new CriarEquipaController();
+    private final RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
 
     @Override
     protected boolean doShow() {
@@ -33,7 +34,10 @@ public class RemoverColaboradorUI extends AbstractUI {
 
         System.out.println( "Escolha um colaborador\n" );
         List<ColaboradorDTO> colaboradores = new ArrayList<>();
-        removerColaboradorController.getColaboradores().forEach( colaboradores::add );
+        removerColaboradorController.getColaboradores(
+                new EquipaDTOParser()
+                        .valueOf( equipas.get( opcaoEquipa ) ) )
+                .forEach( colaboradores::add );
 
         for ( int i = 0; i < colaboradores.size() ; i++) {
             ColaboradorDTO atual = colaboradores.get( i );
@@ -43,10 +47,9 @@ public class RemoverColaboradorUI extends AbstractUI {
         opcaoColaborador = Console.readOption( 0, colaboradores.size(), 0 );
 
         EquipaDTO equipa = equipas.get( opcaoEquipa );
-        equipa.membrosDaEquipa.remove( opcaoColaborador );
 
-        equipaController.registo( equipa );
-        return true;
+
+        return removerColaboradorController.save( equipa.membrosDaEquipa.get(opcaoColaborador),equipa );
     }
 
     @Override
@@ -54,3 +57,4 @@ public class RemoverColaboradorUI extends AbstractUI {
         return "Remover Colaborador";
     }
 }
+

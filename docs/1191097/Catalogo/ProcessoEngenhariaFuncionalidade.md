@@ -26,11 +26,6 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 
 # 3. Design
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
-
 ## 3.1. Realização da Funcionalidade
 
 ### Criar Catalogo
@@ -46,8 +41,6 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 ![ListCriticidadeService_SD](ListCriticidadeService_SD.svg)
 
 ## 3.2. Diagrama de Classes
-
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
 ## 3.3. Padrões Aplicados
 
@@ -190,17 +183,89 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+#### Catalogo Builder
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+```
+public class CatalogBuilder implements DomainFactory<Catalogo> {
+    private Long identity;
+    private Titulo titulo;
+    private Icon icon;
+    private DescricaoBreve briefDesc;
+    private DescricaoCompleta completeDesc;
+    private final Set<Colaborador> responsableCollabs = new HashSet<>();
+    private final Set<Equipa> accessCriteria = new HashSet<>();
+    private Criticidade nivelCriticidade;
+
+    ...
+
+     @Override
+    public Catalogo build() {
+        if(identity == null)
+            return new Catalogo(titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
+        return new Catalogo(identity,titulo,icon,briefDesc,completeDesc,responsableCollabs,accessCriteria,nivelCriticidade);
+    }
+ ```  
+
+ #### Catalogo DTO 
+
+ ```
+@DTO
+public class CatalogoDTO {
+    public Long identity;
+    public String catalogTitle;
+    public String icon;
+    public String briefDesc;
+    public String completeDesc;
+    public Set<EquipaDTO> accessCriteria = new HashSet<>();
+    public Set<ColaboradorDTO> responsableCollabs = new HashSet<>();
+    public CriticidadeDTO nivelCriticidade;
+
+
+    public CatalogoDTO(Long identity, String catalogTitle, String icon,
+                       String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria, Criticidade nivelCriticidade) {
+
+        this.identity = identity;
+        this.catalogTitle = catalogTitle;
+        this.icon = icon;
+        this.briefDesc = briefDesc;
+        this.completeDesc = completeDesc;
+        responsableCollabs.forEach(a -> this.responsableCollabs.add(a.toDTO()));
+        accessCriteria.forEach(a -> this.accessCriteria.add(a.toDTO()));
+        this.nivelCriticidade = nivelCriticidade.toDTO();
+    }
+
+```
+
+
+ #### Catalogo DTO Parser 
+ 
+```
+public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
+
+    public CatalogoDTOParser() {
+        //empty
+    }
+
+    @Override
+    public Catalogo valueOf(CatalogoDTO dto) {
+        CatalogBuilder builder = new CatalogBuilder();
+
+        final Set<Equipa> accessCriteria = new HashSet<>();
+        dto.accessCriteria.forEach( a -> accessCriteria.add(new EquipaDTOParser().valueOf(a)));
+
+        final Set<Colaborador> lstResponsable = new HashSet<>();
+        dto.responsableCollabs.forEach( a -> lstResponsable.add(new ColaboradorDTOParser().valueOf(a)));
+
+        return builder.withTitle(dto.catalogTitle).withIcon(dto.icon)
+                .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).withNivelCriticidade(new CriticidadeDTOParser().valueOf(dto.nivelCriticidade)).build();
+    }
+```
 
 # 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+No decorrer da implementação desta funcionalidade encontrei algumas dependencias com outras user stories, visto que o catalogo possui relações com varios colabotradores, tipos de equipa e criticidades. Porém o trabalho foi sempre bastante fluido, pois trabalhando em grupo as dependencias iam desaparecendo. 
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
-
-
-
+Penso que esta funcionalidade esteja de acordo com os requerimentos do cliente. O forum demonstrou-se bastante util pois sempre que uma duvida me surgia, ou alguem já a tinha tido ou então facilmente a colocava ao cliente. Dito isto, penso que esta funcionalidade está de acordo com as informações relativas ao catalogo por parte do caderno de encargos e do o forum.

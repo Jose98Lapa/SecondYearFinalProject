@@ -56,9 +56,9 @@
     <criticidade>
             <labelCriti>medio</labelCriti>
             <valorCriticidade>4</valorCriticidade>
-        <tempoMaximoA>30</tempoMaximoA>
-        <tempoMedioA>20</tempoMedioA>
-        <tempoMaximoR>240</tempoMaximoR>
-        <tempoMedioR>150</tempoMedioR>
+        <tempoMaximoA>10:10</tempoMaximoA>
+        <tempoMedioA>10:30</tempoMedioA>
+        <tempoMaximoR>10:10</tempoMaximoR>
+        <tempoMedioR>10:30</tempoMedioR>
     </criticidade>
 </class>

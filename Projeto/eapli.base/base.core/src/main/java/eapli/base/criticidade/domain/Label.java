@@ -10,7 +10,7 @@ public class Label implements ValueObject{
     private String label;
 
     public Label(String label) {
-        if (label==null ||label.isEmpty()||!label.matches("^[ a-zA-Z]{1,50}$"))
+        if (label==null ||label.isEmpty()||!label.matches("^[ A-zÀ-ú]{1,50}$"))
             throw new IllegalArgumentException("Label nao cumpre os critérios");
         this.label = label;
     }
