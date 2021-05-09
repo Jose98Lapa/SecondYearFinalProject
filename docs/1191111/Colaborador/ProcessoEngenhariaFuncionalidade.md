@@ -27,7 +27,7 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 
 ## 3.1. Realização da Funcionalidade
 
-###Especificar Colaborador
+### Especificar Colaborador
 ![UC_2051_SD](UC_2051_EspecificarColaborador_SD.svg)
 
 
@@ -203,7 +203,7 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 # 4. Implementação
 
 ### Colaborador Builder
-	public class ColaboradorBuilder {
+	public class ColaboradorBuilder implements DomainFactory<Colaborador>{
 		private Morada morada;
 		private Contacto contacto;
 		private NomeCompleto nomeCompleto;
