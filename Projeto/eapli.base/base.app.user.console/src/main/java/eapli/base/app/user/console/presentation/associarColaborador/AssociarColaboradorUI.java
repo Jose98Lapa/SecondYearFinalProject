@@ -13,7 +13,6 @@ import java.util.List;
 public class AssociarColaboradorUI extends AbstractUI {
 
     private AssociarColaboradorController associarColaboradorController = new AssociarColaboradorController();
-    private CriarEquipaController equipaController = new CriarEquipaController();
 
     @Override
     protected boolean doShow() {
@@ -46,8 +45,7 @@ public class AssociarColaboradorUI extends AbstractUI {
         EquipaDTO equipa = equipas.get( opcaoEquipa );
         equipa.membrosDaEquipa.add( colaborador );
 
-        equipaController.registo( equipa );
-        return true;
+        return associarColaboradorController.save( equipa );
     }
 
     @Override
