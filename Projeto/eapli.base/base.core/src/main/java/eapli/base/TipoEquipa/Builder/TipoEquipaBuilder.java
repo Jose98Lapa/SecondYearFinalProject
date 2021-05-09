@@ -3,8 +3,9 @@ package eapli.base.TipoEquipa.Builder;
 import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.TipoEquipa.Domain.TipoEquipaID;
 import eapli.base.cor.Domain.Cor;
+import eapli.framework.domain.model.DomainFactory;
 
-public class TipoEquipaBuilder {
+public class TipoEquipaBuilder implements DomainFactory<TipoEquipa> {
     private TipoEquipaID tipoEquipaID;
     private String descricao;
     private Cor cor;
@@ -24,6 +25,7 @@ public class TipoEquipaBuilder {
         return this;
     }
 
+    @Override
     public TipoEquipa build(){
         return new TipoEquipa(tipoEquipaID,descricao,cor);
     }

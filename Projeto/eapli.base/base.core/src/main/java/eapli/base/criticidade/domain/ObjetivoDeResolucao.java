@@ -12,10 +12,10 @@ public class ObjetivoDeResolucao extends ObjetivoSLA implements ValueObject {
 
     public ObjetivoDeResolucao(String tempMaxR, String tempMedR) {
         if (tempMaxR==null ||tempMaxR.isEmpty()||!tempMaxR.matches("^([0-1]{1}[0-9]{1}|2{1}[0-4]{1}|[0-9]{1})\\:([0-5]{1}[0-9]{1}|60)$"))
-            throw new IllegalArgumentException("Label nao cumpre os critérios");
+            throw new IllegalArgumentException("Tempo Máximo de resolução os critérios");
         this.tempoMaximoR=tempMaxR;
         if (tempMedR==null ||tempMedR.isEmpty()||!tempMedR.matches("^([0-1]{1}[0-9]{1}|2{1}[0-4]{1}|[0-9]{1})\\:([0-5]{1}[0-9]{1}|60)$"))
-            throw new IllegalArgumentException("Label nao cumpre os critérios");
+            throw new IllegalArgumentException("Tempo Médio de resolução cumpre os critérios");
         this.tempoMedioR=tempMedR;
     }
 

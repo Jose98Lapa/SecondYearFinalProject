@@ -1,7 +1,9 @@
 package eapli.base.TipoEquipa.DTO;
 
 import eapli.base.cor.DTO.CorDTO;
+import eapli.framework.representations.dto.DTO;
 
+@DTO
 public class TipoEquipaDTO {
     public String code;
     public String descricao;
