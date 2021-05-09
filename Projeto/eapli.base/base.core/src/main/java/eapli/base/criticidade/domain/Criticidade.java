@@ -61,6 +61,6 @@ public class Criticidade implements AggregateRoot<ValorCriticidade>, DTOable<Cri
     @Override
     public String toString() {
         return "Valor da Criticidade: "+valorCriticidade +"\nLabel: "+label + "\nTempo Maximo de Aprovação: " + objetivoAprov.tempoMaximo() +
-                " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() + "\nTempo Maximo de Resolução: " + objetivoAprov.tempoMaximo() + " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() +"\n";
+                " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() + "\nTempo Maximo de Resolução: " + objetivoAprov.tempoMaximo() + " Tempo Medio de Resolução: " + objetivoAprov.tempoMedio() +"\n";
     }
 }

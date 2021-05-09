@@ -30,4 +30,12 @@ public class CriticidadeDTO {
         this.tempoMaximoR = objResolucao.tempoMaximo();
         this.tempoMedioR = objResolucao.tempoMedio();
     }
+
+    @Override
+    public String toString() {
+        return "Valor da Criticidade: "+valorCriticidade +"\nLabel: "+label + "\nTempo Maximo de Aprovação: " + tempoMaximoA +
+                " Tempo Medio de Aprovação: " + tempoMedioA + "\nTempo Maximo de Resolução: " + tempoMaximoR + " Tempo Medio de Resolução: " + tempoMedioR +"\n";
+    }
+
+
 }

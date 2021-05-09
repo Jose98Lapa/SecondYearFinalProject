@@ -86,10 +86,10 @@ public class OrganizacaoBootstrap {
                     colabController.method(colaDTO);
                     Funcao func = new Funcao(IdFuncao.valueOf(idFunc), Designacao.valueOf(designacao));
                     repo.save(func);
-                    colabController.defineFunction(func);
+                    colabController.defineFunction(func.toDTO());
                     CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
                     repo2.save(supervisor);
-                    colabController.defineSupervisor(supervisor);
+                    colabController.defineSupervisor(supervisor.toDTO());
                     Colaborador finale = colabController.registerCollaborator();
                     colabController.saveCollaborator(finale);
 

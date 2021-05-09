@@ -18,7 +18,7 @@ public class EspecificarCriticidadeUI extends AbstractUI {
     @Override
     protected boolean doShow(){
         final CriticidadeDataWidget cdw= new CriticidadeDataWidget();
-        Iterator<Criticidade> iterableCriticidade =controller.getNiveisDeCriticidade().iterator();
+        Iterator<CriticidadeDTO> iterableCriticidade =controller.getNiveisDeCriticidade().iterator();
         System.out.println("Criticidades Existentes:");
         while (iterableCriticidade.hasNext()){
             System.out.println(iterableCriticidade.next().toString());
@@ -28,7 +28,7 @@ public class EspecificarCriticidadeUI extends AbstractUI {
         cdw.show();
 
         CriticidadeDTO criticidadeDTO = new CriticidadeDTO(cdw.label(),cdw.valorCriticidade(), cdw.tempoMaximoA(), cdw.tempoMedioA(), cdw.tempoMaximoR(), cdw.tempoMedioR());
-        Criticidade criticidade = controller.method(criticidadeDTO);
+        CriticidadeDTO criticidade = controller.method(criticidadeDTO);
 
         System.out.println(criticidade);
         boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
