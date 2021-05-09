@@ -29,6 +29,7 @@ import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.EspecificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
@@ -72,7 +73,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int SERVICE_OPTION = 3;
     private static final int EDITAR_SERVICO = 4;
     private static final int TOGGLE_SERVICO = 5;
-    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 10;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 6;
 
 
     private final AuthorizationService authz =

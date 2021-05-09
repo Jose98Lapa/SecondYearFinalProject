@@ -4,10 +4,14 @@ package eapli.base.criticidade.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.Objects;
 
 @Embeddable
 public class ValorCriticidade implements ValueObject, Comparable<ValorCriticidade> {
+    @Transient
+    private static final long serialVersionUID = 1L;
+
     private String valor;
 
     public ValorCriticidade(String valor){

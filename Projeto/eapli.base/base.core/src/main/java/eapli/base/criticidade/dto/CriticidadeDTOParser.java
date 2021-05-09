@@ -23,11 +23,8 @@
  */
 package eapli.base.criticidade.dto;
 
-import eapli.base.colaborador.domain.ColaboradorBuilder;
 import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.criticidade.domain.CriticidadeBuilder;
-import eapli.base.criticidade.repository.CriticidadeRepository;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.framework.representations.dto.DTOParser;
 
 /**
