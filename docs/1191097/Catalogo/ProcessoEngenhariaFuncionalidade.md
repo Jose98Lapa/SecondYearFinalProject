@@ -209,7 +209,8 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
  #### Catalogo DTO 
 
  ```
- @DTO
+
+@DTO
 public class CatalogoDTO {
     public Long identity;
     public String catalogTitle;
@@ -263,8 +264,8 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
 # 5. Integração/Demonstração
 
-    No decorrer da implementação desta funcionalidade encontrei algumas dependencias com outras user stories, visto que o catalogo possui relações com varios colabotradores, tipos de equipa e criticidades. Porém o trabalho foi sempre bastante fluido, pois trabalhando em grupo as dependencias iam desaparecendo. 
+No decorrer da implementação desta funcionalidade encontrei algumas dependencias com outras user stories, visto que o catalogo possui relações com varios colabotradores, tipos de equipa e criticidades. Porém o trabalho foi sempre bastante fluido, pois trabalhando em grupo as dependencias iam desaparecendo. 
 
 # 6. Observações
 
-    Penso que esta funcionalidade esteja de acordo com os requerimentos do cliente. O forum demonstrou-se bastante util pois sempre que uma duvida me surgia, ou alguem já a tinha tido ou então facilmente a colocava ao cliente. Dito isto, penso que esta funcionalidade está de acordo com as informações relativas ao catalogo por parte do caderno de encargos e do o forum.
+Penso que esta funcionalidade esteja de acordo com os requerimentos do cliente. O forum demonstrou-se bastante util pois sempre que uma duvida me surgia, ou alguem já a tinha tido ou então facilmente a colocava ao cliente. Dito isto, penso que esta funcionalidade está de acordo com as informações relativas ao catalogo por parte do caderno de encargos e do o forum.

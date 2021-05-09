@@ -13,22 +13,14 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 
 # 3. Design
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
 
 ## 3.1. Realização da Funcionalidade
 
-*Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
 
 Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes valores como o ID, acrónimo e descrição além disso é dada a opção de escolher um tipo de equipa e um colaborador responsável por gerrir a equipa. O UI transmite esses dados ao Controller que por sua vez os manda para o Builer.
 
 ![UC_2052_SD](UC_2052 _CriarUmaNovaEquipa_SD.svg)
 
-## 3.2. Diagrama de Classes
-
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
 ## 3.3. Padrões Aplicados
 
@@ -37,7 +29,7 @@ Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes
 * Pardrão DTO - de modo a passar informação da camada de dominio para a camada de apresentação foi utilizado o padrão DTO, isolando assim o modelo de dominio da apresentação.
 
 ## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
+
 
 **Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
 
