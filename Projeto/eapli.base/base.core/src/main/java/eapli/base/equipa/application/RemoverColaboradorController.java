@@ -27,9 +27,9 @@ public class RemoverColaboradorController {
         return servicoListarEquipas.allTeams();
     }
 
-    public Iterable<ColaboradorDTO> getColaboradores() {
+    public Iterable<ColaboradorDTO> getColaboradores( Equipa equipa) {
         ListColaboradorService servicoListarColaboradores = new ListColaboradorService();
-        return servicoListarColaboradores.colaboradores();
+        return servicoListarColaboradores.getColadorDumEquipas( equipa );
     }
 
     public boolean save( EquipaDTO equipaDTO ) {
