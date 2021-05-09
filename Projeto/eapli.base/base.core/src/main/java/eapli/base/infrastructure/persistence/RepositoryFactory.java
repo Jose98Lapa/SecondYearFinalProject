@@ -14,7 +14,6 @@ import eapli.base.criticidade.repository.CriticidadeRepository;
 import eapli.base.equipa.repositories.EquipaRepository;
 import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.servico.Repository.ServicoRepository;
-import eapli.base.teamtype.repositories.TeamTypeRepository;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -89,19 +88,6 @@ public interface RepositoryFactory {
 	 */
 	ClientUserRepository clientUsers();
 
-	/**
-	 * repository will be created in auto transaction mode
-	 *
-	 * @return
-	 */
-	TeamTypeRepository teamTypes();
-
-	/**
-	 * repository will be created in auto transaction mode
-	 *
-	 * @return
-	 */
-	TeamTypeRepository teamTypes(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode

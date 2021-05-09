@@ -23,7 +23,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CreateCatalogController {
+public class CriarCatalogoController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final ListEquipaService listEquipasSvc = new ListEquipaService();
