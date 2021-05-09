@@ -35,41 +35,4 @@
         <catalogoS>1</catalogoS>
     </Servico>
 </class1>
-
-    <class1>
-        <catalogo>
-            <criteriosdeAcesso>1</criteriosdeAcesso>
-            <responsaveis>1</responsaveis>
-            <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
-            <tituloCatalogoC>Instalação</tituloCatalogoC>
-            <descricaoBreveC>descricao breve instalação</descricaoBreveC>
-            <descricaoCompletaC>Catalogo de instalações</descricaoCompletaC>
-            <criticidade>1</criticidade>
-        </catalogo>
-
-        <Servico>
-            <Formulario>
-                <fId>10</fId>
-                <fnome>Formularioo</fnome>
-                <fscript>C:/Joao/scripts</fscript>
-                <Atributo>
-                    <Alabel>tipo</Alabel>
-                    <Adescricao>Qual o tipo</Adescricao>
-                    <Atipo>String</Atipo>
-                    <Aregex>[a-z]</Aregex>
-                    <Anome>tipoInstalacao</Anome>
-                    <aID>10</aID>
-                </Atributo>
-            </Formulario>
-            <descricaoBreve>Instalcao OS</descricaoBreve>
-            <descricaoCompleta>Instalcao OS mas mais completo</descricaoCompleta>
-            <ServicoID>10</ServicoID>
-            <keyWords>os</keyWords>
-            <statusServico>INCOMPLETO</statusServico>
-            <iconServico>C:/Joao/iconCatalogos.png</iconServico>
-            <tituloServico>Instalacao OS</tituloServico>
-            <catalogoS>1</catalogoS>
-        </Servico>
-    </class1>
-
 </class>
