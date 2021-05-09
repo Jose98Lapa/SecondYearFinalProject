@@ -3,8 +3,9 @@ package eapli.base.colaborador.builder;
 import eapli.base.colaborador.domain.*;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.funcao.builder.FuncaoBuilder;
+import eapli.framework.domain.model.DomainFactory;
 
-public class ColaboradorBuilder {
+public class ColaboradorBuilder implements DomainFactory<Colaborador> {
     private Morada morada;
     private Contacto contacto;
     private NomeCompleto nomeCompleto;
@@ -101,6 +102,7 @@ public class ColaboradorBuilder {
         return this;
     }
 
+    @Override
     public Colaborador build() {
         return new Colaborador(morada, contacto, nomeCompleto,email,mNumber, alcunha,dataDeNascimento,funcao,supervisor);
     }
