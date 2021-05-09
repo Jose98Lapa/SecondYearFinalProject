@@ -1,41 +1,37 @@
 package eapli.base.criticidade.domain;
 
-import eapli.framework.strings.util.StringPredicates;
+import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Label implements Comparable<Label> {
+@Embeddable
+public class Label implements ValueObject{
     private String label;
-    private String regex = "^[ a-zA-Z]{1,50}$";
 
     public Label(String label) {
-        if (StringPredicates.isNullOrEmpty(label)) {
-            throw new IllegalArgumentException("Label não pode ser vazia.");
-        }
+        if (label==null ||label.isEmpty()||!label.matches("^[ a-zA-Z]{1,50}$"))
+            throw new IllegalArgumentException("Label nao cumpre os critérios");
+        this.label = label;
+    }
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(label);
+    protected Label(){}
 
-        if (m.matches()) {
-            this.label = label;
-        } else {
-            throw new IllegalArgumentException("Limite de carateres atingido.");
-        }
+    public static Label valueOf(String label) {
+        return new Label(label);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Label that = (Label) o;
-        return Objects.equals(label, that.label) && Objects.equals(regex, that.label);
+        Label label1 = (Label) o;
+        return label.equals(label1.label);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(label, regex);
+        return Objects.hash(label);
     }
 
     @Override
@@ -43,8 +39,4 @@ public class Label implements Comparable<Label> {
         return this.label;
     }
 
-    @Override
-    public int compareTo(Label o) {
-        return 0;
-    }
 }
