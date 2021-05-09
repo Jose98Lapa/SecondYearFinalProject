@@ -4,7 +4,9 @@ import eapli.base.criticidade.domain.Label;
 import eapli.base.criticidade.domain.ObjetivoDeAprovacao;
 import eapli.base.criticidade.domain.ObjetivoDeResolucao;
 import eapli.base.criticidade.domain.ValorCriticidade;
+import eapli.framework.representations.dto.DTO;
 
+@DTO
 public class CriticidadeDTO {
     public String label;
     public String valorCriticidade;
