@@ -111,9 +111,9 @@ public class CatalogosEServicosBootstrap {
                     AtributoDTO at = new AtributoDTO(Anome, Alabel, Adescricao, Aregex, Atipo,aID);
                     lstAtributos.add(at);
                     FormularioDTO fdto = new FormularioDTO(fscript,fId,fnome,  lstAtributos);
-                    formController.registo(fdto);
-                    formController.save();
-                    servicoController.manual(fId);
+                    //formController.registo(fdto);
+                    //formController.save();
+                    servicoController.automatic(fId);
                     servicoController.confirms();
 
                 }

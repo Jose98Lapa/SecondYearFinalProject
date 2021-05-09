@@ -35,39 +35,41 @@
         <catalogoS>1</catalogoS>
     </Servico>
 </class1>
-<class1>
-<catalogo>
-    <criteriosdeAcesso>1</criteriosdeAcesso>
-    <responsaveis>2</responsaveis>
-    <iconCatalogo>C:/Rui/iconCatalogo.png</iconCatalogo>
-    <tituloCatalogoC>Instalacoes</tituloCatalogoC>
-    <descricaoBreveC>descricao breve instalacoes</descricaoBreveC>
-    <descricaoCompletaC>Catalogo de instalacoes</descricaoCompletaC>
-    <criticidade>1</criticidade>
-</catalogo>
 
-<Servico>
-    <Formulario>
-        <fId>2</fId>
-        <fnome>FormularioX</fnome>
-        <fscript>C:/Joao/script</fscript>
-        <Atributo>
-            <Alabel>Label</Alabel>
-            <Adescricao>Onde</Adescricao>
-            <Atipo>String</Atipo>
-            <Aregex>[a-z]</Aregex>
-            <Anome>lugarInstalacao</Anome>
-            <aID>2</aID>
-        </Atributo>
-    </Formulario>
-    <descricaoBreve>Instalar sitstema operativo</descricaoBreve>
-    <descricaoCompleta>Instalar sitstema operativo mas mais completo</descricaoCompleta>
-    <ServicoID>2</ServicoID>
-    <keyWords>os</keyWords>
-    <statusServico>INCOMPLETO</statusServico>
-    <iconServico>C:/Joao/iconCatalogo.png</iconServico>
-    <tituloServico>Instalar OS</tituloServico>
-    <catalogoS>2</catalogoS>
-</Servico>
-</class1>
+    <class1>
+        <catalogo>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
+            <tituloCatalogoC>Instalação</tituloCatalogoC>
+            <descricaoBreveC>descricao breve instalação</descricaoBreveC>
+            <descricaoCompletaC>Catalogo de instalações</descricaoCompletaC>
+            <criticidade>1</criticidade>
+        </catalogo>
+
+        <Servico>
+            <Formulario>
+                <fId>10</fId>
+                <fnome>Formularioo</fnome>
+                <fscript>C:/Joao/scripts</fscript>
+                <Atributo>
+                    <Alabel>tipo</Alabel>
+                    <Adescricao>Qual o tipo</Adescricao>
+                    <Atipo>String</Atipo>
+                    <Aregex>[a-z]</Aregex>
+                    <Anome>tipoInstalacao</Anome>
+                    <aID>10</aID>
+                </Atributo>
+            </Formulario>
+            <descricaoBreve>Instalcao OS</descricaoBreve>
+            <descricaoCompleta>Instalcao OS mas mais completo</descricaoCompleta>
+            <ServicoID>10</ServicoID>
+            <keyWords>os</keyWords>
+            <statusServico>INCOMPLETO</statusServico>
+            <iconServico>C:/Joao/iconCatalogos.png</iconServico>
+            <tituloServico>Instalacao OS</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+    </class1>
+
 </class>
