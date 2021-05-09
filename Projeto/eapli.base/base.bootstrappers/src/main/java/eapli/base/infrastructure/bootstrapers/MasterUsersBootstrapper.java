@@ -25,6 +25,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
                 "rrh@email.local");
         registerGSH("gsh", "123456789Aa?", "Tomas", "Flores",
                 "gshe@email.local");
+        registerGSH("Tomas","Tiago123","Tomas","Machado","raf@isep.ipp.pt");
         return true;
     }
 
