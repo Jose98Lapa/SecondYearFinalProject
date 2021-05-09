@@ -10,11 +10,14 @@ public class ObjetivoDeAprovacao  extends ObjetivoSLA implements ValueObject{
     private String tempoMaximoA;
     private String tempoMedioA;
     public ObjetivoDeAprovacao(String tempMaxA, String tempMedA) {
-        if (tempMaxA.isEmpty()  || tempMedA.isEmpty() )
-            throw new IllegalArgumentException("Tempo Maximo/Medio nao pode(m) estar vazio");
+        if (tempMaxA==null ||tempMaxA.isEmpty()||!tempMedA.matches("^([0-1]{1}[0-9]{1}|2{1}[0-4]{1}|[0-9]{1})\\:([0-5]{1}[0-9]{1}|60)$"))
+            throw new IllegalArgumentException("Label nao cumpre os critérios");
         this.tempoMaximoA=tempMaxA;
+        if (tempMedA==null ||tempMedA.isEmpty()||!tempMedA.matches("^([0-1]{1}[0-9]{1}|2{1}[0-4]{1}|[0-9]{1})\\:([0-5]{1}[0-9]{1}|60)$"))
+            throw new IllegalArgumentException("Label nao cumpre os critérios");
         this.tempoMedioA=tempMedA;
     }
+
 
     protected ObjetivoDeAprovacao() {}
 

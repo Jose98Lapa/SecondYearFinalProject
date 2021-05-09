@@ -1,8 +1,9 @@
 package eapli.base.criticidade.builder;
 
 import eapli.base.criticidade.domain.*;
+import eapli.framework.domain.model.DomainFactory;
 
-public class CriticidadeBuilder {
+public class CriticidadeBuilder implements DomainFactory<Criticidade> {
     private ValorCriticidade valorCriticidade;
     private Label label;
     private ObjetivoDeResolucao objetivoDeResolucao;
@@ -48,6 +49,7 @@ public class CriticidadeBuilder {
         return this;
     }
 
+    @Override
     public Criticidade build() {
         return new Criticidade(label,valorCriticidade,objetivoDeAprovacao,objetivoDeResolucao);
     }
