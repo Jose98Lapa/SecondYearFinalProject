@@ -21,9 +21,4 @@ public class AssociarColaboradorController {
         ListColaboradorService servicoListarColaboradores = new ListColaboradorService();
         return servicoListarColaboradores.colaboradores();
     }
-
-    public void adicionarColaborador( Colaborador colaborador, Equipa equipa ) {
-        equipa.addTeamMembers( colaborador );
-        equipaRepository.save( equipa );
-    }
 }
