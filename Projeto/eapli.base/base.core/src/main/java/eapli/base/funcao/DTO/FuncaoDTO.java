@@ -16,4 +16,9 @@ public class FuncaoDTO {
         this.IdFuncao=idFuncao.toString();
         this.designacao=designacao.toString();
     }
+
+    @Override
+    public String toString() {
+        return "Designacao: "+designacao;
+    }
 }

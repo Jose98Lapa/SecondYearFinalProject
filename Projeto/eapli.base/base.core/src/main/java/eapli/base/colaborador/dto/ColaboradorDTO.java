@@ -71,5 +71,9 @@ public class ColaboradorDTO {
         this.IDfuncao=funcao.toDTO().IdFuncao;
     }
 
+    @Override
+    public String toString() {
+        return "Nome: " + nomeCompleto + " ID: " + mNumber + "\n";
+    }
 
 }

@@ -4,6 +4,7 @@ import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.application.PasswordGenerator;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.funcao.DTO.FuncaoDTO;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.myclientuser.application.SignupController;
 import eapli.framework.io.util.Console;
@@ -30,14 +31,14 @@ public class EspecificarColaboradorUI extends AbstractUI {
         controller.method(colaboradorDTO);
 
 
-            List<Funcao> lstFunc = new ArrayList<>();
-            Funcao selectedF;
+            List<FuncaoDTO> lstFunc = new ArrayList<>();
+            FuncaoDTO selectedF;
             this.controller.getFunctionList().forEach(lstFunc::add);
             int index = 1;
 
             while (index != 0) {
                 System.out.printf("%n%s%n","Lista de Funcoes:");
-                for (Funcao funcao : lstFunc)
+                for (FuncaoDTO funcao : lstFunc)
                     System.out.printf("#%d - %s%n", index++, funcao.toString());
                     index = Console.readInteger("\nSelecione a funcao que deseja associar ao Colaborador (0 - fim): ");
 
@@ -52,13 +53,13 @@ public class EspecificarColaboradorUI extends AbstractUI {
             }
 
             //Colab
-        List<Colaborador> lstColab = new ArrayList<>();
-        Colaborador selectedC;
+        List<ColaboradorDTO> lstColab = new ArrayList<>();
+        ColaboradorDTO selectedC;
         this.controller.getCollaboratorList().forEach(lstColab::add);
         index=1;
         while (index != 0) {
             System.out.printf("%n%s%n","Lista de Colaboradores:");
-            for (Colaborador colab : lstColab)
+            for (ColaboradorDTO colab : lstColab)
                 System.out.printf("#%d - %s%n", index++, colab.toString());
             index = Console.readInteger("Selecione o supervisor do Colaborador (0 - fim): ");
 
