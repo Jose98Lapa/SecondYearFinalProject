@@ -23,9 +23,4 @@ public class RemoverColaboradorController {
         ListColaboradorService servicoListarColaboradores = new ListColaboradorService();
         return servicoListarColaboradores.colaboradores();
     }
-
-    public void removerColaborador( Colaborador colaborador, Equipa equipa ) {
-        equipa.addTeamMembers( colaborador );
-        equipaRepository.delete( equipa );
-    }
 }
