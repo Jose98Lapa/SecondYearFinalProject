@@ -73,8 +73,9 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 index=1;}
         }
 
-        Colaborador colaborador = controller.registerCollaborator();
+        ColaboradorDTO colaborador = controller.registerCollaborator();
 
+        System.out.println(colaborador.toString());
         boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
         if (answer) {
             controller.saveCollaborator(colaborador);

@@ -93,7 +93,7 @@ public class OrganizacaoBootstrap {
                     CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
                     repo2.save(supervisor);
                     colabController.defineSupervisor(supervisor.toDTO());
-                    Colaborador finale = colabController.registerCollaborator();
+                    ColaboradorDTO finale = colabController.registerCollaborator();
                     colabController.saveCollaborator(finale);
 
                     String descricao = element.getElementsByTagName("descricao").item(0).getTextContent();
@@ -113,7 +113,7 @@ public class OrganizacaoBootstrap {
 
                     CriarEquipaController equipaController = new CriarEquipaController();
                     List<ColaboradorDTO> responsaveis = new ArrayList<>();
-                    ColaboradorDTO colaboradorDTO= finale.toDTO();
+                    ColaboradorDTO colaboradorDTO= finale;
                     responsaveis.add(colaboradorDTO);
                     List<ColaboradorDTO> members = new ArrayList<>();
                     members.add(colaboradorDTO);
