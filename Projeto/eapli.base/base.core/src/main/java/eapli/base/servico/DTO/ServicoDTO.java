@@ -31,5 +31,19 @@ public class ServicoDTO {
         this.script = script;
     }
 
-
+    @Override
+    public String toString() {
+        return "ServicoDTO{" +
+                "title='" + title + '\'' +
+                ", id='" + id + '\'' +
+                ", icon='" + icon + '\'' +
+                ", keywords=" + keywords +
+                ", status='" + status + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", briefDescription='" + briefDescription + '\'' +
+                ", completeDescription='" + completeDescription + '\'' +
+                ", script='" + script + '\'' +
+                ", catalogo=" + catalogo +
+                '}';
+    }
 }

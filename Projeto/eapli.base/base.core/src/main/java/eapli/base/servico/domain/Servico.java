@@ -72,6 +72,10 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     protected Servico() {
     }
 
+    public Catalogo catalogo(){
+        return this.catalogo;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;

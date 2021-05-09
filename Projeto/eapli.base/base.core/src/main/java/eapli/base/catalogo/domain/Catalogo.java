@@ -28,7 +28,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
-    @OneToOne
+
     private Criticidade nivelCriticidade;
 
     @OneToMany
@@ -61,9 +61,10 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     protected Catalogo() {
     }
 
-    public Catalogo(String id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+    public Catalogo(Long identity, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        this.identity = identity;
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
