@@ -31,6 +31,18 @@ public class ConsultarServicosController {
             for (CatalogoDTO catalogoDTO : listCatalogoService.allCompatibleCatalogo(equipaDTO)){
                 servicoDTOList.addAll(listServicoService.getServicoDTOByCatalogo(new CatalogoDTOParser().valueOf(catalogoDTO)));
             }
+            if (parametro!=4){
+                switch (parametro){
+                    case 1:
+                        servicoDTOList.removeIf(servicoDTO -> !servicoDTO.title.equals(valor));
+                        break;
+                    case 2:
+                        servicoDTOList.removeIf(servicoDTO -> !servicoDTO.id.equals(valor));
+                        break;
+                    default:
+                        servicoDTOList.removeIf(servicoDTO -> !servicoDTO.status.equals(valor));
+                }
+            }
             return servicoDTOList;
         }else{
             throw new IllegalArgumentException("Colaborador Inválido");
