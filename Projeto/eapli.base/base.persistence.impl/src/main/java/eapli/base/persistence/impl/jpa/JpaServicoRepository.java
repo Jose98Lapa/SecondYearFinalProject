@@ -7,6 +7,7 @@ import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.servico.domain.StatusServico;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.TypedQuery;
 import java.net.ServerSocket;
@@ -33,6 +34,7 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         return q.getResultList();
     }
 
+    @Modifying
     @Override
     public void ativar(String servicoId) {
         final TypedQuery<Servico> q = createQuery("Update eapli.base.servico.domain.Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
@@ -40,6 +42,7 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         q.setParameter("id",servicoId );
     }
 
+    @Modifying
     @Override
     public void desativar(String servicoId) {
         final TypedQuery<Servico> q = createQuery("Update eapli.base.servico.domain.Servico t SET t.status=:status WHERE t.id=:id",Servico.class);

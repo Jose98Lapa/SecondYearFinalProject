@@ -37,7 +37,6 @@ public class EspecificarServicoController {
         final Formulario form2 = repo.ofIdentity(FormularioID.valueOf(id))
                 .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
 
-
         servico = builder.Form(form2).buildManual();
     }
 
@@ -47,6 +46,11 @@ public class EspecificarServicoController {
     }
 
     public void confirms() {
+        try {
+            repo.delete(servico);
+        }catch (Exception ignored) {
+
+        }
         repo.save(servico);
     }
 
