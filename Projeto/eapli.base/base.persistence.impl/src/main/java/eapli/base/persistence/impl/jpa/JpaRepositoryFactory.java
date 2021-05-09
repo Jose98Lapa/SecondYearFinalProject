@@ -116,6 +116,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public CriticidadeRepository criticidade() {
+		return new JpaCriticidadeRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public CriticidadeRepository criticidade(TransactionalContext autoTx) {
+		return new JpaCriticidadeRepository(autoTx);
+	}
+
+	@Override
 	public CatalogRepository catalogs() {
 		return new JpaCatalogRepository(Application.settings().getPersistenceUnitName());
 	}
