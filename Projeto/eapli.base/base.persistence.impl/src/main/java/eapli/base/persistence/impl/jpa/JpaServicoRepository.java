@@ -28,6 +28,13 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Servico> ofIdentity(ServicoID servicoID){
+        final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.id =: id ",Servico.class);
+        q.setParameter("id", servicoID);
+        return q.getResultStream().findFirst();
+    }
+
     public Iterable<Servico> incompleteServico(){
         final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.status =: status ",Servico.class);
         q.setParameter("status", StatusServico.valueOf("INCOMPLETO"));
@@ -56,6 +63,8 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         q.setParameter("status", catalogo);
         return q.getResultList();
     }
+
+
 
    /* public Servico updateServicoForm(String idServ,String idForm){
         final TypedQuery<Servico> q = createQuery("Update e From Service e where e.Form_FormularioID =: idForm ",Servico.class);

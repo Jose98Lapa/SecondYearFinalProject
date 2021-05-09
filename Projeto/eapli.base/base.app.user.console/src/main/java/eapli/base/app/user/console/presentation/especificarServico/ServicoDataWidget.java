@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.especificarServico;
+package eapli.base.app.user.console.presentation.EspecificarServico;
 
 import eapli.framework.io.util.Console;
 
