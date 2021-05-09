@@ -16,10 +16,7 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Optional;
->>>>>>> d382a7da72ece0e2256551bbc64faa2d886264b3
 
 public class AssociarColaboradorController {
 
@@ -36,19 +33,11 @@ public class AssociarColaboradorController {
         return servicoListarColaboradores.colaboradores();
     }
 
-<<<<<<< HEAD
-    public void save( EquipaDTO equipaDTO ) {
-        Colaborador colaborador = new ColaboradorDTOParser().valueOf(equipaDTO.colaboradorDTO);
-        TipoEquipa tipoEquipa = new TipoEquipaDTOParser().valueOf(equipaDTO.tipoEquipaDTO);
-
-        if (equipaRepository.canIAddTheColaborador(colaborador, tipoEquipa)) {
-=======
     public boolean save( EquipaDTO equipaDTO, ColaboradorDTO colaboradorDTO ) {
         /*Colaborador colaborador = new ColaboradorDTOParser().valueOf(equipaDTO.colaboradorDTO);
         TipoEquipa tipoEquipa = new TipoEquipaDTOParser().valueOf(equipaDTO.tipoEquipaDTO);
 
         if ( equipaRepository.canIAddTheColaborador(colaborador, tipoEquipa) ) {
->>>>>>> d382a7da72ece0e2256551bbc64faa2d886264b3
             List<Colaborador> colaboradorList = new ArrayList<>();
             colaboradorList.add(colaborador);
 
@@ -60,15 +49,6 @@ public class AssociarColaboradorController {
                     .tipoDeEquipa(tipoEquipa)
                     .build();
 
-<<<<<<< HEAD
-            equipaRepository.save(equipa);
-
-        } else {
-            throw new IllegalArgumentException("Este colaborador já gere uma equipa deste tipo");
-        }
-    }
-
-=======
             return equipaRepository.save(equipa) != null;
         }*/
 
@@ -85,5 +65,4 @@ public class AssociarColaboradorController {
 
         return false;
     }
->>>>>>> d382a7da72ece0e2256551bbc64faa2d886264b3
 }
