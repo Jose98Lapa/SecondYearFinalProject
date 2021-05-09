@@ -114,4 +114,25 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     public void deactivate(){
         this.status = StatusServico.valueOf("INATIVO");
     }
+
+    public void setIcon(IconServico icon) {
+        this.icon = icon;
+    }
+
+    public void setTitle(TituloServico title) {
+        this.title = title;
+    }
+
+    public void setTipo(TipoServico tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setCompDesc(CompleteDescription compDesc) {
+        this.compDesc = compDesc;
+    }
+
+    public void setBriedDesc(BriefDescription briedDesc) {
+        this.briedDesc = briedDesc;
+    }
+
 }
