@@ -12,8 +12,7 @@ import java.util.List;
 
 public class RemoverColaboradorUI extends AbstractUI {
 
-    private RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
-    private CriarEquipaController equipaController = new CriarEquipaController();
+    private final RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
 
     @Override
     protected boolean doShow() {
@@ -45,8 +44,7 @@ public class RemoverColaboradorUI extends AbstractUI {
         EquipaDTO equipa = equipas.get( opcaoEquipa );
         equipa.membrosDaEquipa.remove( opcaoColaborador );
 
-        equipaController.registo( equipa );
-        return true;
+        return removerColaboradorController.save( equipa );
     }
 
     @Override
@@ -54,3 +52,4 @@ public class RemoverColaboradorUI extends AbstractUI {
         return "Remover Colaborador";
     }
 }
+
