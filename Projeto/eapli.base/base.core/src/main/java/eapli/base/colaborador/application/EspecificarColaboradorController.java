@@ -21,6 +21,7 @@ public class EspecificarColaboradorController {
     private final FuncaoRepository funcRepo = PersistenceContext.repositories().funcao();
     private final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
     private final ColaboradorBuilder colabBuilder = new ColaboradorBuilder();
+    private final ColaboradorDTOParser colaboradorDTOParser = new ColaboradorDTOParser();
 
     public void method(ColaboradorDTO colaboradorDTO){
         colabBuilder.withAddress(colaboradorDTO.rua,colaboradorDTO.numPorta,colaboradorDTO.andar,colaboradorDTO.localizacao,colaboradorDTO.codPostal).withContact(colaboradorDTO.contacto).withFullName(colaboradorDTO.nomeCompleto)
@@ -43,10 +44,9 @@ public class EspecificarColaboradorController {
     }
 
     public void defineSupervisor(ColaboradorDTO supervisor){
-        ColaboradorDTOParser colaboradorDTOParser = new ColaboradorDTOParser();
         colabBuilder.withSupervisor(colaboradorDTOParser.valueOf(supervisor));}
 
-    public Colaborador registerCollaborator(){return colabBuilder.build();}
+    public ColaboradorDTO registerCollaborator(){return colabBuilder.build().toDTO();}
 
-    public void saveCollaborator(Colaborador colaborador){collabRepo.save(colaborador);}
+    public void saveCollaborator(ColaboradorDTO colaborador){collabRepo.save(colaboradorDTOParser.valueOf(colaborador));}
 }
