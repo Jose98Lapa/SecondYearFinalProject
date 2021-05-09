@@ -1,7 +1,9 @@
 package eapli.base.app.user.console.presentation.removerColaborador;
 
 import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.colaborador.dto.ColaboradorDTOParser;
 import eapli.base.equipa.DTO.EquipaDTO;
+import eapli.base.equipa.DTO.EquipaDTOParser;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.base.equipa.application.RemoverColaboradorController;
 import eapli.framework.io.util.Console;
@@ -32,7 +34,10 @@ public class RemoverColaboradorUI extends AbstractUI {
 
         System.out.println( "Escolha um colaborador\n" );
         List<ColaboradorDTO> colaboradores = new ArrayList<>();
-        removerColaboradorController.getColaboradores().forEach( colaboradores::add );
+        removerColaboradorController.getColaboradores(
+                new EquipaDTOParser()
+                        .valueOf( equipas.get( opcaoEquipa ) ) )
+                .forEach( colaboradores::add );
 
         for ( int i = 0; i < colaboradores.size() ; i++) {
             ColaboradorDTO atual = colaboradores.get( i );
