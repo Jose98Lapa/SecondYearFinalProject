@@ -118,4 +118,8 @@ public class Equipa implements AggregateRoot<EquipaID>, DTOable<EquipaDTO> {
         teamMembers.forEach(collab -> membros.add(collab.toDTO()));
         return new EquipaDTO(designacao,acronimo.toString(),equipaID.toString(), responsaveis,tipoEquipa.toDTO(),membros);
     }
+
+    public void removeColaborador(Colaborador colaborador){
+        teamMembers.removeIf(col -> col.identity().equals(colaborador.identity()));
+    }
 }
