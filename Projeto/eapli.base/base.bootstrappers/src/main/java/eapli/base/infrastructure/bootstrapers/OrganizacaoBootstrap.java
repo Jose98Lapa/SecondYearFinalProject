@@ -113,7 +113,7 @@ public class OrganizacaoBootstrap {
 
                     CriarEquipaController equipaController = new CriarEquipaController();
                     List<ColaboradorDTO> responsaveis = new ArrayList<>();
-                    ColaboradorDTO colaboradorDTO= finale.toDTO();
+                    ColaboradorDTO colaboradorDTO= finale;
                     responsaveis.add(colaboradorDTO);
                     List<ColaboradorDTO> members = new ArrayList<>();
                     members.add(colaboradorDTO);
