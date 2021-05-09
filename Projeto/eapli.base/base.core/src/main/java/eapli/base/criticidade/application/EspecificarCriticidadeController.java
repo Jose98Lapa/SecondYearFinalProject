@@ -1,7 +1,7 @@
 package eapli.base.criticidade.application;
 
 import eapli.base.criticidade.domain.Criticidade;
-import eapli.base.criticidade.domain.CriticidadeBuilder;
+import eapli.base.criticidade.builder.CriticidadeBuilder;
 import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.base.criticidade.repository.CriticidadeRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;

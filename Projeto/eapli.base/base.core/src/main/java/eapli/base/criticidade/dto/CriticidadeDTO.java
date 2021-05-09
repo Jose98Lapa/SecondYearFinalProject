@@ -25,9 +25,9 @@ public class CriticidadeDTO {
     public CriticidadeDTO(Label label,ValorCriticidade valorCriticidade, ObjetivoDeAprovacao objAprovacao, ObjetivoDeResolucao objResolucao) {
         this.label = label.toString();
         this.valorCriticidade = valorCriticidade.toString();
-        this.tempoMaximoA = objAprovacao.tempoMax();
+        this.tempoMaximoA = objAprovacao.tempoMaximo();
         this.tempoMedioA = objAprovacao.tempoMedio();
-        this.tempoMaximoR = objResolucao.tempoMax();
+        this.tempoMaximoR = objResolucao.tempoMaximo();
         this.tempoMedioR = objResolucao.tempoMedio();
     }
 }

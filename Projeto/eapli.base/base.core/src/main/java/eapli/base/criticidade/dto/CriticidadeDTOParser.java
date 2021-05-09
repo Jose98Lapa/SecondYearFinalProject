@@ -24,7 +24,7 @@
 package eapli.base.criticidade.dto;
 
 import eapli.base.criticidade.domain.Criticidade;
-import eapli.base.criticidade.domain.CriticidadeBuilder;
+import eapli.base.criticidade.builder.CriticidadeBuilder;
 import eapli.framework.representations.dto.DTOParser;
 
 /**

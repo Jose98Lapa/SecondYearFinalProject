@@ -24,16 +24,27 @@
     <class>eapli.base.cor.Domain.Hexadecimal</class>
     <class>eapli.base.colaborador.domain.Colaborador</class>
     <class>eapli.base.colaborador.domain.Alcunha</class>
+    <class>eapli.base.colaborador.domain.Andar</class>
     <class>eapli.base.colaborador.domain.CodPostal</class>
     <class>eapli.base.colaborador.domain.Contacto</class>
     <class>eapli.base.colaborador.domain.DataDeNascimento</class>
     <class>eapli.base.colaborador.domain.EmailInstitucional</class>
+    <class>eapli.base.colaborador.domain.Localizacao</class>
     <class>eapli.base.colaborador.domain.Morada</class>
     <class>eapli.base.colaborador.domain.NomeCompleto</class>
     <class>eapli.base.colaborador.domain.NumeroMecanografico</class>
+    <class>eapli.base.colaborador.domain.NumPorta</class>
+    <class>eapli.base.colaborador.domain.Rua</class>
     <class>eapli.base.catalogo.domain.Catalogo</class>
     <class>eapli.base.funcao.domain.Funcao</class>
     <class>eapli.base.funcao.domain.IdFuncao</class>
+    <class>eapli.base.funcao.domain.Designacao</class>
+    <class>eapli.base.criticidade.domain.Criticidade</class>
+    <class>eapli.base.criticidade.domain.Label</class>
+    <class>eapli.base.criticidade.domain.ValorCriticidade</class>
+    <class>eapli.base.criticidade.domain.ObjetivoSLA</class>
+    <class>eapli.base.criticidade.domain.ObjetivoDeAprovacao</class>
+    <class>eapli.base.criticidade.domain.ObjetivoDeResolucao</class>
 
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/dados"/>
