@@ -115,6 +115,9 @@ public class OrganizacaoBootstrap {
                     List<ColaboradorDTO> responsaveis = new ArrayList<>();
                     ColaboradorDTO colaboradorDTO= finale.toDTO();
                     responsaveis.add(colaboradorDTO);
+                    //List<ColaboradorDTO> members = new ArrayList<>();
+                    //members.add(colaboradorDTO);
+                    //EquipaDTO equipaDto = new EquipaDTO(descricao,acronimo,equipaId,responsaveis,dto,members);
                     EquipaDTO equipaDto = new EquipaDTO(descricao,acronimo,equipaId,dto,colaboradorDTO);
                     equipaController.registo(equipaDto);
 
