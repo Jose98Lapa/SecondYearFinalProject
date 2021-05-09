@@ -27,6 +27,7 @@ import eapli.base.catalogo.builder.CatalogBuilder;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTOParser;
+import eapli.base.criticidade.dto.CriticidadeDTOParser;
 import eapli.base.equipa.DTO.EquipaDTOParser;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTOParser;
@@ -57,7 +58,7 @@ public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
         return builder.withTitle(dto.catalogTitle).withIcon(dto.icon)
                 .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
-                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).build();
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).withNivelCriticidade(new CriticidadeDTOParser().valueOf(dto.nivelCriticidade)).build();
     }
 
 }

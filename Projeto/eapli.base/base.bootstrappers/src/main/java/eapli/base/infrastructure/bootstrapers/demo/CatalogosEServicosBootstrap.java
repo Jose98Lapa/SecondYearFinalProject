@@ -35,9 +35,6 @@ public class CatalogosEServicosBootstrap {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-         CriarCatalogoController catalogoController = new CriarCatalogoController();
-         EspecificarServicoController servicoController = new EspecificarServicoController();
-         FormularioController formController = new FormularioController();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new File(FILENAME));
@@ -54,7 +51,9 @@ public class CatalogosEServicosBootstrap {
                     String tituloCatalogoC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
                     String descricaoBreveC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
                     String descricaoCompletaC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
+                    String criticidade = element.getElementsByTagName("criticidade").item(0).getTextContent();
 
+                    CriarCatalogoController catalogoController = new CriarCatalogoController();
                     catalogoController.insertBasicData(tituloCatalogoC, iconCatalogo,
                             descricaoBreveC, descricaoCompletaC);
 
@@ -66,6 +65,7 @@ public class CatalogosEServicosBootstrap {
                     catalogoController.defineAccessCriteria(accessCriteria);
 
 
+
                     List<ColaboradorDTO> lstColaboradores = new ArrayList<>();
                     catalogoController.getCollabs().forEach(lstColaboradores::add);
                     final Set<ColaboradorDTO> lstResponsaveis = new HashSet<>();
@@ -73,9 +73,10 @@ public class CatalogosEServicosBootstrap {
 
                     catalogoController.defineResponsibleCollaborator(lstResponsaveis);
 
-                    //List<CriticidadeDTO> lstCriticidade = new ArrayList<>();
-                    //catalogoController.getCriticidades().forEach(lstCriticidade::add);
-                    //this.theController.defineCriticidade(showCriticityAndChoose());
+                    List<CriticidadeDTO> lstCriticidade = new ArrayList<>();
+                    catalogoController.getCriticidades().forEach(lstCriticidade::add);
+                    CriticidadeDTO criticidadeDTO = lstCriticidade.get(Integer.parseInt(criticidade)-1);
+                    catalogoController.defineCriticidade(criticidadeDTO);
 
                     CatalogoDTO catalogo = catalogoController.registerCatalog();
                     catalogoController.saveCatalog(catalogo);
@@ -98,6 +99,9 @@ public class CatalogosEServicosBootstrap {
                     String iconServico = element.getElementsByTagName("iconServico").item(0).getTextContent();
                     String tituloServico = element.getElementsByTagName("tituloServico").item(0).getTextContent();
                     String catalogoS = element.getElementsByTagName("catalogoS").item(0).getTextContent();
+                    EspecificarServicoController servicoController = new EspecificarServicoController();
+                    FormularioController formController = new FormularioController();
+
                     ArrayList<CatalogoDTO> catalogos = servicoController.catalogList();
                     final Set<String> lstkeyWords = new HashSet<>();
                     lstkeyWords.add(keyWords);

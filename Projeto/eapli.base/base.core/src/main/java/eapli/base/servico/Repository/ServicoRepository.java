@@ -1,6 +1,8 @@
 package eapli.base.servico.Repository;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.FormularioID;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoID;
 import eapli.framework.domain.repositories.DomainRepository;
@@ -19,4 +21,5 @@ public interface ServicoRepository extends DomainRepository<ServicoID, Servico> 
 
     List<Servico> getServicoListByCatalogo(Catalogo catalogo);
 
-    }
+    Optional<Formulario> getFormById(FormularioID formid);
+}

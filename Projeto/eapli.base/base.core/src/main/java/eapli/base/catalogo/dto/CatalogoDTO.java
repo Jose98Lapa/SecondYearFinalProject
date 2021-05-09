@@ -25,6 +25,9 @@ package eapli.base.catalogo.dto;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTO;
+import eapli.base.criticidade.domain.Criticidade;
+import eapli.base.criticidade.dto.CriticidadeDTO;
+import eapli.base.criticidade.dto.CriticidadeDTOParser;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.representations.dto.DTO;
@@ -42,10 +45,11 @@ public class CatalogoDTO {
     public String completeDesc;
     public Set<EquipaDTO> accessCriteria = new HashSet<>();
     public Set<ColaboradorDTO> responsableCollabs = new HashSet<>();
+    public CriticidadeDTO nivelCriticidade;
 
 
     public CatalogoDTO(Long identity, String catalogTitle, String icon,
-                       String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria) {
+                       String briefDesc, String completeDesc, Set<Colaborador> responsableCollabs, Set<Equipa> accessCriteria, Criticidade nivelCriticidade) {
 
         this.identity = identity;
         this.catalogTitle = catalogTitle;
@@ -54,6 +58,7 @@ public class CatalogoDTO {
         this.completeDesc = completeDesc;
         responsableCollabs.forEach(a -> this.responsableCollabs.add(a.toDTO()));
         accessCriteria.forEach(a -> this.accessCriteria.add(a.toDTO()));
+        this.nivelCriticidade = nivelCriticidade.toDTO();
     }
 
     public CatalogoDTO() {

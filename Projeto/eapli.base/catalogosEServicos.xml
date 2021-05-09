@@ -8,6 +8,7 @@
         <tituloCatalogoC>Restauros</tituloCatalogoC>
         <descricaoBreveC>descricao breve restauros</descricaoBreveC>
         <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
+        <criticidade>1</criticidade>
     </catalogo>
 
     <Servico>
@@ -42,6 +43,7 @@
     <tituloCatalogoC>Instalacoes</tituloCatalogoC>
     <descricaoBreveC>descricao breve instalacoes</descricaoBreveC>
     <descricaoCompletaC>Catalogo de instalacoes</descricaoCompletaC>
+    <criticidade>1</criticidade>
 </catalogo>
 
 <Servico>

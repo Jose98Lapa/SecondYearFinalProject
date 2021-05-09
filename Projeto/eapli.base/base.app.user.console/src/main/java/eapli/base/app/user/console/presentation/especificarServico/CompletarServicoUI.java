@@ -1,9 +1,11 @@
-package eapli.base.app.user.console.presentation.EspecificarServico;
+package eapli.base.app.user.console.presentation.especificarServico;
 
 import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.servico.Application.EspecificarServicoController;
+import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
 import eapli.base.servico.DTO.ServicoDTO;
+import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ public class CompletarServicoUI extends AbstractUI {
         for (ServicoDTO s : incomplete) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
             System.out.println(s);
+            i++;
         }
         String index = Console.readLine("Index");
 
@@ -51,7 +54,7 @@ public class CompletarServicoUI extends AbstractUI {
                         toComplete.script = scanner.nextLine();
                         System.out.println("Alterado com sucesso");
                     }
-                    theController.confirms();
+                    theController.update(toComplete);
                     break;
 
                 }
@@ -74,33 +77,25 @@ public class CompletarServicoUI extends AbstractUI {
                 }
                 case 3: {
                     toComplete.title = scanner.nextLine();
-                    theController.registo(toComplete);
-                    //theController.manual(toComplete.);
+                    theController.update(toComplete);
                     System.out.println("Alterado com sucesso");
-
-                    theController.confirms();
                     break;
                 }
                 case 4: { //Formulario
                     if (toComplete.tipo.equalsIgnoreCase("MANUAL")) {
                         FormularioUI formUi = new FormularioUI();
                         formUi.show();
-                        theController.registo(toComplete);
-                        theController.manual(formUi.formId);
+                        theController.updateForm(formUi.formId,toComplete);
                         System.out.println("Alterado com sucesso");
                     } else {
                         System.out.println("Apenas é permitido alterar o Formulario em Servicos do tipo Manual");
                     }
-
-                    theController.confirms();
                     break;
-
                 }
                 case 5: {
                     toComplete.icon = scanner.nextLine();
-                    theController.registo(toComplete);
+                    theController.update(toComplete);
 
-                    theController.confirms();
                     break;
                 }
                 case 6: {
@@ -114,7 +109,7 @@ public class CompletarServicoUI extends AbstractUI {
                     toComplete.catalogo = theController.catalogList().get(Integer.parseInt(index2));
                     System.out.println("Alterado com sucesso");
 
-                    theController.confirms();
+                    theController.update(toComplete);
                     break;
 
                 }
@@ -130,7 +125,7 @@ public class CompletarServicoUI extends AbstractUI {
                     toComplete.keywords.addAll(keys);
                     System.out.println("Alterado com sucesso");
 
-                    theController.confirms();
+                    theController.update(toComplete);
                     break;
                 }
             }

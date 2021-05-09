@@ -3,6 +3,8 @@ package eapli.base.catalogo.builder;
 import eapli.base.catalogo.domain.*;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
+import eapli.base.criticidade.dto.CriticidadeDTO;
+import eapli.base.criticidade.dto.CriticidadeDTOParser;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 

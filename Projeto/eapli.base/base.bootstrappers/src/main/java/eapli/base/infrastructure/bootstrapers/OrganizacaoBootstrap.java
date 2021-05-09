@@ -9,6 +9,9 @@ import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.cor.Application.CriarCorController;
 import eapli.base.cor.DTO.CorDTO;
+import eapli.base.criticidade.application.EspecificarCriticidadeController;
+import eapli.base.criticidade.domain.Criticidade;
+import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.base.funcao.domain.Designacao;
@@ -114,6 +117,18 @@ public class OrganizacaoBootstrap {
                     responsaveis.add(colaboradorDTO);
                     EquipaDTO equipaDto = new EquipaDTO(descricao,acronimo,equipaId,dto,colaboradorDTO);
                     equipaController.registo(equipaDto);
+
+                    EspecificarCriticidadeController criticidadeController = new EspecificarCriticidadeController();
+                    String labelCriti = element.getElementsByTagName("labelCriti").item(0).getTextContent();
+                    String valorCriticidade = element.getElementsByTagName("valorCriticidade").item(0).getTextContent();
+                    String tempoMaximoA = element.getElementsByTagName("tempoMaximoA").item(0).getTextContent();
+                    String tempoMedioA = element.getElementsByTagName("tempoMedioA").item(0).getTextContent();
+                    String tempoMaximoR = element.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
+                    String tempoMedioR = element.getElementsByTagName("tempoMedioR").item(0).getTextContent();
+
+                    CriticidadeDTO criticidadeDTO = new CriticidadeDTO(labelCriti,valorCriticidade,tempoMaximoA,tempoMedioA,tempoMaximoR,tempoMedioR);
+                    Criticidade criticidade =  criticidadeController.method(criticidadeDTO);
+                    criticidadeController.save(criticidade);
                 }
             }
         } catch (ParserConfigurationException | IOException | org.xml.sax.SAXException e) {

@@ -28,8 +28,9 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
-    //@OneToOne
-    //private Criticidade nivelCriticidade;
+
+    @OneToOne
+    private Criticidade nivelCriticidade;
 
     @ManyToMany
     @JoinTable(name="CATALOGO_RESPONSAVEIS", joinColumns = @JoinColumn(name="CATALOGO_ID"))
@@ -47,7 +48,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
         Preconditions.nonNull(accessCriteria);
         Preconditions.nonNull(responsableCollabs);
-     //   Preconditions.nonNull(nivelCriticidade);
+        Preconditions.nonNull(nivelCriticidade);
         Preconditions.nonEmpty(accessCriteria);
         Preconditions.nonEmpty(responsableCollabs);
         this.titulo = titulo;
@@ -56,7 +57,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        //this.nivelCriticidade = nivelCriticidade;
+        this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -73,7 +74,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        //this.nivelCriticidade = nivelCriticidade;
+        this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -132,11 +133,11 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         return completeDesc;
     }
 
-    /*
+
     public Criticidade nivelCriticidade() {
         return nivelCriticidade;
     }
-    */
+
 
     public Set<Colaborador> responsableCollabs() {
         return responsableCollabs;
@@ -161,6 +162,6 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
                 titulo.toString(),
                 icon.toString(),
                 briefDesc.toString(),
-                completeDesc.toString(),responsableCollabs,accessCriteria);
+                completeDesc.toString(),responsableCollabs,accessCriteria,nivelCriticidade);
     }
 }
