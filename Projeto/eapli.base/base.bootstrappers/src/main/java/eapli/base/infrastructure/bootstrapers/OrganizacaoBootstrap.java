@@ -127,7 +127,7 @@ public class OrganizacaoBootstrap {
                     String tempoMedioR = element.getElementsByTagName("tempoMedioR").item(0).getTextContent();
 
                     CriticidadeDTO criticidadeDTO = new CriticidadeDTO(labelCriti,valorCriticidade,tempoMaximoA,tempoMedioA,tempoMaximoR,tempoMedioR);
-                    Criticidade criticidade =  criticidadeController.method(criticidadeDTO);
+                    CriticidadeDTO criticidade =  criticidadeController.method(criticidadeDTO);
                     criticidadeController.save(criticidade);
                 }
             }
