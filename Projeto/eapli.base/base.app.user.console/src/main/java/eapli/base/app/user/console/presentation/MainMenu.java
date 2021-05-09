@@ -28,11 +28,10 @@ import eapli.base.app.user.console.presentation.CriarCor.CriarCorUI;
 import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
-import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
-import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
-import eapli.base.app.user.console.presentation.EspecificarServico.CompletarServicoUI;
-import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
+import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
+import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -161,7 +160,7 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildCatalogoMenu() {
         final Menu equipaMenu = new Menu("Catalogo");
-        equipaMenu.addItem(1, "Criar Catalogo", () -> new CriarCatalogoUI().show());
+        equipaMenu.addItem(1, "Criar Catalogo", () -> new eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }

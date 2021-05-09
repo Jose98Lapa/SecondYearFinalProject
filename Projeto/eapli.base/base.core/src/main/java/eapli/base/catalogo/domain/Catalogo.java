@@ -28,6 +28,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
+    @OneToOne
     private Criticidade nivelCriticidade;
 
     @OneToMany
@@ -44,7 +45,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
         Preconditions.nonNull(accessCriteria);
         Preconditions.nonNull(responsableCollabs);
-        Preconditions.nonNull(nivelCriticidade);
+     //   Preconditions.nonNull(nivelCriticidade);
         Preconditions.nonEmpty(accessCriteria);
         Preconditions.nonEmpty(responsableCollabs);
         this.titulo = titulo;
