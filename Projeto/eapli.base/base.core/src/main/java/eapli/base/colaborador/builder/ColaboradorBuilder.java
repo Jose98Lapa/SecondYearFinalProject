@@ -2,7 +2,7 @@ package eapli.base.colaborador.builder;
 
 import eapli.base.colaborador.domain.*;
 import eapli.base.funcao.domain.Funcao;
-import eapli.base.funcao.domain.FuncaoBuilder;
+import eapli.base.funcao.builder.FuncaoBuilder;
 
 public class ColaboradorBuilder {
     private Morada morada;

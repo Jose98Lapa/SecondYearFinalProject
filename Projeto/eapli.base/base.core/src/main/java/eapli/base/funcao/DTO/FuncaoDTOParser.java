@@ -1,7 +1,7 @@
 package eapli.base.funcao.DTO;
 
 import eapli.base.funcao.domain.Funcao;
-import eapli.base.funcao.domain.FuncaoBuilder;
+import eapli.base.funcao.builder.FuncaoBuilder;
 import eapli.framework.representations.dto.DTOParser;
 
 public class FuncaoDTOParser implements DTOParser<FuncaoDTO, Funcao> {

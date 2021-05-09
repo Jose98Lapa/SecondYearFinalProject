@@ -1,4 +1,8 @@
-package eapli.base.funcao.domain;
+package eapli.base.funcao.builder;
+
+import eapli.base.funcao.domain.Designacao;
+import eapli.base.funcao.domain.Funcao;
+import eapli.base.funcao.domain.IdFuncao;
 
 public class FuncaoBuilder  {
     private Designacao designacao;
