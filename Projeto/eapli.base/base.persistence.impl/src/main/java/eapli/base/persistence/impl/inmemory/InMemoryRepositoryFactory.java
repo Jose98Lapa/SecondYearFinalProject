@@ -131,6 +131,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public FuncaoRepository funcao() {return funcao(null);}
 
 	@Override
+	public CriticidadeRepository criticidade(TransactionalContext autoTx) {
+		return new InMemoryCriticidadeRepository();
+	}
+
+	@Override
+	public CriticidadeRepository criticidade() {
+		return criticidade(null);
+	}
+
+	@Override
 	public CatalogRepository catalogs (final TransactionalContext tx) {
 
 		return new InMemoryCatalogRepository();
