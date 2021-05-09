@@ -14,7 +14,6 @@ import eapli.base.funcao.repositories.FuncaoRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.Repository.ServicoRepository;
-import eapli.base.teamtype.repositories.TeamTypeRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -49,12 +48,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	@Override
 	public ClientUserRepository clientUsers() {
 		return clientUsers(null);
-	}
-
-	@Override
-	public TeamTypeRepository teamTypes(final TransactionalContext tx) {
-
-		return new InMemoryTeamTypeRepository();
 	}
 
 
@@ -107,10 +100,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return null;
 	}
 
-	@Override
-	public TeamTypeRepository teamTypes() {
-		return teamTypes(null);
-	}
 
 	@Override
 	public CollaboratorRepository collaborators (final TransactionalContext tx) {

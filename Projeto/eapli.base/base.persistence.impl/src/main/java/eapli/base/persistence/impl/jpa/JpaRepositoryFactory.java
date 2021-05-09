@@ -44,10 +44,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 		return new JpaClientUserRepository(Application.settings().getPersistenceUnitName());
 	}
 
-	@Override
-	public JpaTeamTypeRepository teamTypes() {
-		return new JpaTeamTypeRepository(Application.settings().getPersistenceUnitName());
-	}
 
 	@Override
 	public JpaEquipaRepository teams(final TransactionalContext autoTx) {
@@ -90,10 +86,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 		return new JpaEquipaRepository(Application.settings().getPersistenceUnitName());
 	}
 
-	@Override
-	public JpaTeamTypeRepository teamTypes(final TransactionalContext autoTx) {
-		return new JpaTeamTypeRepository(autoTx);
-	}
 
 	@Override
 	public CollaboratorRepository collaborators() {
