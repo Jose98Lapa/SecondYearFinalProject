@@ -1,7 +1,7 @@
 package eapli.base.colaborador.dto;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.ColaboradorBuilder;
+import eapli.base.colaborador.builder.ColaboradorBuilder;
 import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;

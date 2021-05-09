@@ -1,7 +1,7 @@
 package eapli.base.colaborador.application;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.ColaboradorBuilder;
+import eapli.base.colaborador.builder.ColaboradorBuilder;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.funcao.domain.Funcao;

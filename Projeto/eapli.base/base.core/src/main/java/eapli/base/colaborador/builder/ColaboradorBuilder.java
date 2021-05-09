@@ -1,9 +1,8 @@
-package eapli.base.colaborador.domain;
+package eapli.base.colaborador.builder;
 
-import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.base.colaborador.domain.*;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.funcao.domain.FuncaoBuilder;
-import eapli.framework.domain.model.DomainFactory;
 
 public class ColaboradorBuilder {
     private Morada morada;

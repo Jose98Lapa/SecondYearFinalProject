@@ -1,33 +1,22 @@
 package eapli.base.catalogo.domain;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.util.StringPredicates;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Embeddable
 public class DescricaoBreve implements ValueObject{
     private String briefDescription;
-    @Transient
-    private final String regex = "^[ a-zA-Z]{1,50}$";
 
     public DescricaoBreve(String briefDescription) {
-        if (StringPredicates.isNullOrEmpty(briefDescription)) {
-            throw new IllegalArgumentException("Catalog title should neither be null nor empty");
-        }
+        Preconditions.nonEmpty(briefDescription, "Description should neither be null nor empty");
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(briefDescription);
+        if(briefDescription.length()>50)
+            throw new IllegalArgumentException("Descrição demasiado grande.");
 
-        if (m.matches()) {
-            this.briefDescription = briefDescription;
-        } else {
-            throw new IllegalArgumentException("Catalog Title does not fit the criteria");
-        }
+        this.briefDescription = briefDescription;
     }
 
     public DescricaoBreve() {
@@ -39,12 +28,12 @@ public class DescricaoBreve implements ValueObject{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DescricaoBreve that = (DescricaoBreve) o;
-        return Objects.equals(briefDescription, that.briefDescription) && Objects.equals(regex, that.briefDescription);
+        return Objects.equals(briefDescription, that.briefDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(briefDescription, regex);
+        return Objects.hash(briefDescription);
     }
 
     @Override

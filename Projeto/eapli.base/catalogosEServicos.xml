@@ -2,34 +2,31 @@
 <class>
     <Servico>
         <Formulario>
-            <fnome>nome</fnome>
-            <fscript>nome</fscript>
+            <fnome>Formulario</fnome>
+            <fscript>C:/Joao/script</fscript>
             <Atributo>
                 <Alabel>nome</Alabel>
-                <Adescricao>nome</Adescricao>
+                <Adescricao>Qual o tipo</Adescricao>
                 <Atipo>nome</Atipo>
                 <Aregex>nome</Aregex>
                 <Anome>nome</Anome>
             </Atributo>
         </Formulario>
-        <descricaoBreve>nome</descricaoBreve>
-        <descricaoCompleta>nome</descricaoCompleta>
-        <ServicoID>nome</ServicoID>
-        <keyWords>nome</keyWords>
+        <descricaoBreve>Restauro de uma bicicleta</descricaoBreve>
+        <descricaoCompleta>Restauro de uma bicicleta mas mais completo</descricaoCompleta>
+        <ServicoID>1</ServicoID>
+        <keyWords>bicileta</keyWords>
         <dataDisponibilidade>nome</dataDisponibilidade>
         <statusServico>nome</statusServico>
-        <iconServico>nome</iconServico>
-        <tituloServico>nome</tituloServico>
+        <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+        <tituloServico>Restauro Bicileta</tituloServico>
     </Servico>
 
     <catalogo>
         <CcriteriosdeAcesso>nome</CcriteriosdeAcesso>
-        <iconCatalogo>nome</iconCatalogo>
-        <statusCatalogo>nome</statusCatalogo>
-        <tituloCatalogo>nome</tituloCatalogo>
-        <catalogoID>nome</catalogoID>
+        <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
+        <tituloCatalogo>Restauros</tituloCatalogo>
         <descricaoBreve>nome</descricaoBreve>
-        <CdescricaoCompleta>nome</CdescricaoCompleta>
-
+        <CdescricaoCompleta>Catalogo de restuaros</CdescricaoCompleta>
     </catalogo>
 </class>

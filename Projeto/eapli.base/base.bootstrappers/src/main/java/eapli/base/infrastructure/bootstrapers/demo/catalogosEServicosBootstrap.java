@@ -1,21 +1,6 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
-import eapli.base.TipoEquipa.Application.CriarTipoEquipaController;
-import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.ColaboradorBuilder;
-import eapli.base.colaborador.dto.ColaboradorDTO;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
-import eapli.base.cor.Application.CriarCorController;
-import eapli.base.cor.DTO.CorDTO;
-import eapli.base.equipa.DTO.EquipaDTO;
-import eapli.base.equipa.application.CriarEquipaController;
-import eapli.base.funcao.domain.Designacao;
-import eapli.base.funcao.domain.Funcao;
-import eapli.base.funcao.domain.IdFuncao;
-import eapli.base.funcao.repositories.FuncaoRepository;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,8 +11,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class catalogosEServicosBootstrap {
     private static final String FILENAME = "catalogosEServicos.xml";

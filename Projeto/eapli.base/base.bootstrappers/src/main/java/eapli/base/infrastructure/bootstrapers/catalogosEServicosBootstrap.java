@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizacaoBootstrap {
+public class catalogosEServicosBootstrap {
     private static final String FILENAME = "Organizacao.xml";
 
     public void initiate() {
