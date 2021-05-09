@@ -71,9 +71,9 @@ class MainMenu extends ClientUserBaseUI {
     //GSH
     private static final int CRIAR_CATALOGO_OPTION = 2;
     private static final int SERVICE_OPTION = 3;
-    private static final int EDITAR_SERVICO = 4;
-    private static final int TOGGLE_SERVICO = 5;
-    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 6;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 4;
+    private static final int EDITAR_SERVICO = 5;
+    private static final int TOGGLE_SERVICO = 6;
 
 
     private final AuthorizationService authz =
