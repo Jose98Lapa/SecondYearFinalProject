@@ -20,6 +20,10 @@ public class EmailInstitucional implements ValueObject {
 
     }
 
+    public static EmailInstitucional valueOf(String email){
+        return new EmailInstitucional(email);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

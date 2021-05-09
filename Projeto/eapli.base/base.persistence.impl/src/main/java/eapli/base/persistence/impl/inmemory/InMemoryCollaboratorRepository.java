@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.EmailInstitucional;
 import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
@@ -16,7 +17,7 @@ public class InMemoryCollaboratorRepository
     }
 
     @Override
-    public Optional<Colaborador> getColaboradorByEmail(String email) {
+    public Optional<Colaborador> getColaboradorByEmail(EmailInstitucional email) {
         return Optional.empty();
     }
 /*

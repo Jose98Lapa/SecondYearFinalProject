@@ -3,6 +3,7 @@ package eapli.base.catalogo.application;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.catalogo.dto.CatalogoDTOParser;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.EmailInstitucional;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.equipa.application.ListEquipaService;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -18,7 +19,7 @@ public class ConsultarServicosController {
     private final CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
     public List<ServicoDTO> procuraServico(int parametro, String valor){
         String email = authz.session().get().authenticatedUser().email().toString();
-        Optional<Colaborador> optionalColaborador = collaboratorRepository.getColaboradorByEmail(email);
+        Optional<Colaborador> optionalColaborador = collaboratorRepository.getColaboradorByEmail(EmailInstitucional.valueOf(email));
         if (optionalColaborador.isPresent()){
             Colaborador colaborador = optionalColaborador.get();
             ListCatalogoService listCatalogoService = new ListCatalogoService();
