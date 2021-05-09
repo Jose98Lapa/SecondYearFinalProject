@@ -36,7 +36,7 @@ public class CriarCatalogoUI extends AbstractUI {
 
 
 
-            //this.theController.defineCriticidade(showCriticityAndChoose());
+            this.theController.defineCriticidade(showCriticityAndChoose());
 
 
             CatalogoDTO catalogo = this.theController.registerCatalog();
@@ -61,6 +61,8 @@ public class CriarCatalogoUI extends AbstractUI {
         dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n",eDto.acronimo));
         System.out.println("Colaboradores Responsaveis:");
         dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.alcunha,cDto.nomeCompleto));
+        System.out.println("Nivel de Criticidade:");
+        System.out.printf("  -> %s - %s%n",dto.nivelCriticidade.label,dto.nivelCriticidade.valorCriticidade);
     }
 
     protected Set<EquipaDTO> showAccessAndChoose() {
@@ -123,11 +125,11 @@ public class CriarCatalogoUI extends AbstractUI {
         System.out.printf("%n%s%n","Lista Niveis criticidade:");
         while (index != 0) {
             for (CriticidadeDTO dto : lstCriticidade)
-                System.out.printf("#%d %n", index++);
+                System.out.printf("#%d %s - %s5n", index++,dto.label,dto.valorCriticidade);
             index = Console.readInteger("Escolha uma criticidade para o catalogo: ");
 
             if (index > 0 && index-1 < lstCriticidade.size()) {
-                criticidade = lstCriticidade.get(index);
+                criticidade = lstCriticidade.get(index-1);
                 index = 0;
             }
         }
