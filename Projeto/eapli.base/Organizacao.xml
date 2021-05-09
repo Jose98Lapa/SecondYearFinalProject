@@ -52,4 +52,13 @@
         <nome>Azul</nome>
         </cor>
     </equipa>
+
+    <criticidade>
+            <labelCriti>medio</labelCriti>
+            <valorCriticidade>4</valorCriticidade>
+        <tempoMaximoA>30</tempoMaximoA>
+        <tempoMedioA>20</tempoMedioA>
+        <tempoMaximoR>240</tempoMaximoR>
+        <tempoMedioR>150</tempoMedioR>
+    </criticidade>
 </class>
