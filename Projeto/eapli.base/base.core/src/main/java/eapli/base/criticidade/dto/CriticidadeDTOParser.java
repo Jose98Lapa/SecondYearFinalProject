@@ -24,7 +24,7 @@
 package eapli.base.criticidade.dto;
 
 import eapli.base.criticidade.domain.Criticidade;
-import eapli.base.criticidade.repository.CriticidadeRepository;
+import eapli.base.criticidade.domain.CriticidadeBuilder;
 import eapli.framework.representations.dto.DTOParser;
 
 /**
@@ -34,22 +34,10 @@ import eapli.framework.representations.dto.DTOParser;
  */
 public class CriticidadeDTOParser implements DTOParser<CriticidadeDTO, Criticidade> {
 
-
-
-    public CriticidadeDTOParser() {
-
-    }
-
     @Override
     public Criticidade valueOf(final CriticidadeDTO dto) {
-        /*
-        final DishType type = dishTypeRepository.ofIdentity(dto.dishTypeAcronym)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Unknown dish type: " + dto.dishTypeAcronym));
-        */
-
-        // TODO: we are ignoring the currency and hardcoding everything is EUR
-        //return new Criticidade();
-        return null;
+        CriticidadeBuilder criticidadeBuilder = new CriticidadeBuilder();
+        return criticidadeBuilder.withLabel(dto.label).withValorCriticidade(dto.valorCriticidade).withObjetivoDeAprovacao(dto.tempoMaximoA,dto.tempoMedioA)
+                .withObjetivoDeResolucao(dto.tempoMaximoR,dto.tempoMedioR).build();
     }
 }

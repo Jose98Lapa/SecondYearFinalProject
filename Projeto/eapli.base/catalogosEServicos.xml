@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<class>
+    <Servico>
+        <Formulario>
+            <fnome>Formulario</fnome>
+            <fscript>C:/Joao/script</fscript>
+            <Atributo>
+                <Alabel>nome</Alabel>
+                <Adescricao>Qual o tipo</Adescricao>
+                <Atipo>nome</Atipo>
+                <Aregex>nome</Aregex>
+                <Anome>nome</Anome>
+            </Atributo>
+        </Formulario>
+        <descricaoBreve>Restauro de uma bicicleta</descricaoBreve>
+        <descricaoCompleta>Restauro de uma bicicleta mas mais completo</descricaoCompleta>
+        <ServicoID>1</ServicoID>
+        <keyWords>bicileta</keyWords>
+        <dataDisponibilidade>nome</dataDisponibilidade>
+        <statusServico>nome</statusServico>
+        <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+        <tituloServico>Restauro Bicileta</tituloServico>
+    </Servico>
+
+    <catalogo>
+        <CcriteriosdeAcesso>nome</CcriteriosdeAcesso>
+        <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
+        <tituloCatalogo>Restauros</tituloCatalogo>
+        <descricaoBreve>nome</descricaoBreve>
+        <CdescricaoCompleta>Catalogo de restuaros</CdescricaoCompleta>
+    </catalogo>
+</class>

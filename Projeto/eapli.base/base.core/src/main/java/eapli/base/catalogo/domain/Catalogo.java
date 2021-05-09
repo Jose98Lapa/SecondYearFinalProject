@@ -6,6 +6,7 @@ import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -41,6 +42,11 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     public Catalogo(Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        Preconditions.nonNull(accessCriteria);
+        Preconditions.nonNull(responsableCollabs);
+        Preconditions.nonNull(nivelCriticidade);
+        Preconditions.nonEmpty(accessCriteria);
+        Preconditions.nonEmpty(responsableCollabs);
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;

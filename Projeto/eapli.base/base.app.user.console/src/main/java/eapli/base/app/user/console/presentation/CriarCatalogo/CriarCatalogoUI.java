@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.CriarCatalogo;
+package eapli.base.app.user.console.presentation.criarCatalogo;
 
 import eapli.base.catalogo.application.CreateCatalogController;
 import eapli.base.catalogo.dto.CatalogoDTO;
@@ -22,7 +22,7 @@ public class CriarCatalogoUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final CatalogoDataWidget widget = new CatalogoDataWidget();
+        final eapli.base.app.user.console.presentation.CriarCatalogo.CatalogoDataWidget widget = new eapli.base.app.user.console.presentation.CriarCatalogo.CatalogoDataWidget();
 
         widget.show();
 

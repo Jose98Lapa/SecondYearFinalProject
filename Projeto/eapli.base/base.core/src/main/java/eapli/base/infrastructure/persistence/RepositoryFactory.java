@@ -193,6 +193,20 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
+	CriticidadeRepository criticidade(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	CriticidadeRepository criticidade();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
 	CollaboratorRepository collaborators(TransactionalContext autoTx);
 	/**
 	 * repository will be created in auto transaction mode
