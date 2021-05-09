@@ -24,11 +24,11 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.ConsultarServicosUI.ConsultarServicosUI;
 import eapli.base.app.user.console.presentation.CriarCor.CriarCorUI;
 import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
-import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
 import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.EspecificarServico.CompletarServicoUI;
@@ -61,19 +61,20 @@ class MainMenu extends ClientUserBaseUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
+    private static final int CONSULTAR_SERVICO_OPTION = 2;
 
     //RRH
-    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 2;
-    private static final int CRIAR_EQUIPA_OPTION = 3;
-    private static final int CRIAR_TIPO_EQUIPA_OPTION = 4;
+    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 3;
+    private static final int CRIAR_EQUIPA_OPTION = 4;
+    private static final int CRIAR_TIPO_EQUIPA_OPTION = 5;
 
 
     //GSH
-    private static final int CRIAR_CATALOGO_OPTION = 2;
-    private static final int SERVICE_OPTION = 3;
-    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 4;
-    private static final int EDITAR_SERVICO = 5;
-    private static final int TOGGLE_SERVICO = 6;
+    private static final int CRIAR_CATALOGO_OPTION = 3;
+    private static final int SERVICE_OPTION = 4;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 5;
+    private static final int EDITAR_SERVICO = 6;
+    private static final int TOGGLE_SERVICO = 7;
 
 
     private final AuthorizationService authz =
@@ -100,6 +101,7 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
+        mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION,builderConsultarServicoMenu());
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.RRH)) {
             final Menu especificarColaboradorMenu = buildEspecificarColaboradorMenu();
@@ -161,7 +163,7 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildCatalogoMenu() {
         final Menu equipaMenu = new Menu("Catalogo");
-        equipaMenu.addItem(1, "Criar Catalogo", () -> new CriarCatalogoUI().show());
+        equipaMenu.addItem(1, "Criar Catalogo", () -> new eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }
@@ -192,5 +194,12 @@ class MainMenu extends ClientUserBaseUI {
         corMenu.addItem(1,"Adicionar Cor",()->new CriarCorUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
+    }
+
+    private Menu builderConsultarServicoMenu(){
+        final Menu consultarServicoMenu = new Menu("Consultar Serviços");
+        consultarServicoMenu.addItem(1,"Consultar Serviços",()->new ConsultarServicosUI().show());
+        consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return consultarServicoMenu;
     }
 }

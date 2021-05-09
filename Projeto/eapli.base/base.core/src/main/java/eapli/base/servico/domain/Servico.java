@@ -72,6 +72,10 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
     protected Servico() {
     }
 
+    public Catalogo catalogo(){
+        return this.catalogo;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -98,6 +102,16 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         for (KeyWords key:keywords) {
             key2.add(key.toString());
         }
+        if (script==null)
+            script = ServicoScript.valueOf(" ");
         return new ServicoDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),catalogo.toDTO(),script.toString());
+    }
+
+    public void activate(){
+        this.status = StatusServico.valueOf("ATIVO");
+    }
+
+    public void deactivate(){
+        this.status = StatusServico.valueOf("INATIVO");
     }
 }

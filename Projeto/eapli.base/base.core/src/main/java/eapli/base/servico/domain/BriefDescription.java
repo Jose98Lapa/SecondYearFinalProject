@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 
 @Embeddable
 public class BriefDescription implements ValueObject {
-    @Transient
-    private String desc;
+    private String briefDesc;
     @Transient
     private String regex = "^[a-zA-Z ]{1,30}$";
 
@@ -25,7 +24,7 @@ public class BriefDescription implements ValueObject {
         Matcher m = p.matcher(desc);
 
         if (m.matches()) {
-            this.desc = desc;
+            this.briefDesc = desc;
         } else {
             throw new IllegalArgumentException("Brief Description does not fit the criteria");
         }
@@ -40,7 +39,7 @@ public class BriefDescription implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BriefDescription that = (BriefDescription) o;
-        return Objects.equals(desc, that.desc) && Objects.equals(regex, that.regex);
+        return Objects.equals(briefDesc, that.briefDesc) && Objects.equals(regex, that.regex);
     }
 
     public static BriefDescription valueOf(String string) {
@@ -49,12 +48,12 @@ public class BriefDescription implements ValueObject {
 
     @Override
     public int hashCode() {
-        return Objects.hash(desc, regex);
+        return Objects.hash(briefDesc, regex);
     }
 
     @Override
     public String toString() {
-        return desc;
+        return briefDesc;
     }
 
 }

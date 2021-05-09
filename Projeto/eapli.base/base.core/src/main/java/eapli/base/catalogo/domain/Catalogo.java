@@ -28,12 +28,15 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
-    private Criticidade nivelCriticidade;
+    //@OneToOne
+    //private Criticidade nivelCriticidade;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name="CATALOGO_RESPONSAVEIS", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Colaborador> responsableCollabs = new HashSet<>();
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name="CATALOGO_ACESSO", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Equipa> accessCriteria = new HashSet<>();
 
     private boolean status;
@@ -44,7 +47,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
         Preconditions.nonNull(accessCriteria);
         Preconditions.nonNull(responsableCollabs);
-        Preconditions.nonNull(nivelCriticidade);
+     //   Preconditions.nonNull(nivelCriticidade);
         Preconditions.nonEmpty(accessCriteria);
         Preconditions.nonEmpty(responsableCollabs);
         this.titulo = titulo;
@@ -53,23 +56,24 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticidade = nivelCriticidade;
+        //this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
     protected Catalogo() {
     }
 
-    public Catalogo(String id, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
+    public Catalogo(Long identity, Titulo titulo, Icon icon, DescricaoBreve briefDesc,
                     DescricaoCompleta completeDesc, final Set<Colaborador> responsableCollabs,
                     final Set<Equipa> accessCriteria,Criticidade nivelCriticidade) {
+        this.identity = identity;
         this.titulo = titulo;
         this.icon = icon;
         this.briefDesc = briefDesc;
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticidade = nivelCriticidade;
+        //this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -128,9 +132,11 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         return completeDesc;
     }
 
+    /*
     public Criticidade nivelCriticidade() {
         return nivelCriticidade;
     }
+    */
 
     public Set<Colaborador> responsableCollabs() {
         return responsableCollabs;

@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.EmailInstitucional;
 import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -28,7 +29,7 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Colaborador, 
     }
 
     @Override
-    public Optional<Colaborador> getColaboradorByEmail(String email) {
+    public Optional<Colaborador> getColaboradorByEmail(EmailInstitucional email) {
         final TypedQuery<Colaborador> q = createQuery("Select e From eapli.base.colaborador.domain.Colaborador e where e.email =:id ",Colaborador.class);
         q.setParameter("id", email);
         return q.getResultStream().findFirst();

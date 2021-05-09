@@ -9,7 +9,7 @@ import eapli.framework.domain.model.DomainFactory;
 import java.util.*;
 
 public class CatalogBuilder implements DomainFactory<Catalogo> {
-    private String identity;
+    private Long identity;
     private Titulo titulo;
     private Icon icon;
     private DescricaoBreve briefDesc;
@@ -25,7 +25,7 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     }
     */
 
-    public CatalogBuilder withIdentity(final String identity) {
+    public CatalogBuilder withIdentity(final Long identity) {
         this.identity = identity;
         return this;
     }

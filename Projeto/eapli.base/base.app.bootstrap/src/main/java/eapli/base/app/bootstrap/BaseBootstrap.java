@@ -7,6 +7,7 @@ import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.bootstrapers.OrganizacaoBootstrap;
 import eapli.base.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
+import eapli.base.infrastructure.bootstrapers.demo.CatalogosEServicosBootstrap;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.smoketests.BaseDemoSmokeTester;
 import eapli.base.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
@@ -48,6 +49,9 @@ public final class BaseBootstrap extends BaseApplication {
 
         System.out.println("\n\n------- MASTER DATA -------");
         new BaseBootstrapper().execute();
+
+        System.out.println("\n\n------- Catalog and Service DATA -------");
+        new CatalogosEServicosBootstrap().initiate();
 
         if (isToBootstrapDemoData) {
             System.out.println("\n\n------- DEMO DATA -------");

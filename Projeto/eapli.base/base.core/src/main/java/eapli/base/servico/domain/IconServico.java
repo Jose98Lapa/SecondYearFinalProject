@@ -18,7 +18,7 @@ public class IconServico implements ValueObject {
     }
 
     public static IconServico valueof(String icon) {
-        return null;
+        return new IconServico(icon);
     }
 
     @Override

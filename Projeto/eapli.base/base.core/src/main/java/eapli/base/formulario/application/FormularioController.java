@@ -31,7 +31,7 @@ public class FormularioController {
     }
     public Formulario save(){
         form=fmb.build();
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CLIENT_USER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.GSH,BaseRoles.POWER_USER);
         return repo.save(form);
     }
    /* public void atributo(String nome, String desc, String label, String tipo, String regex){

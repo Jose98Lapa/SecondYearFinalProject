@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class AtivarDesativarServico extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormularioUI.class);
     private final EspecificarServicoController theController = new EspecificarServicoController();
-    ArrayList<ServicoDTO> sservices = new ArrayList();
+    ArrayList<ServicoDTO> sservices = new ArrayList<>();
 
     @Override
     protected boolean doShow() {
@@ -34,9 +34,10 @@ public class AtivarDesativarServico extends AbstractUI {
         String opt = Console.readLine("Insira 1 para Ativar e 0 para Desativar");
         
         if (Integer.parseInt(opt)==1){
-            theController.ativarServico(sservices.get(Integer.parseInt(index)).id);
+            theController.ativarServico(sservices.get(Integer.parseInt(index)));
+
         }else if (Integer.parseInt(opt)==0){
-            theController.desativarServico(sservices.get(Integer.parseInt(index)).id);
+            theController.desativarServico(sservices.get(Integer.parseInt(index)));
         }else {
             System.out.println("Error");
         }

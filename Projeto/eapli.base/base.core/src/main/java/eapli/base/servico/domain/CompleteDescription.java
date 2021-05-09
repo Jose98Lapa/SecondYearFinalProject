@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 
 @Embeddable
 public class CompleteDescription implements ValueObject {
-    @Transient
-    private String desc;
+    private String descCompleta;
     @Transient
     private String regex = "^[a-zA-Z ]{1,60}$";
 
@@ -25,7 +24,7 @@ public class CompleteDescription implements ValueObject {
         Matcher m = p.matcher(desc);
 
         if (m.matches()) {
-            this.desc = desc;
+            this.descCompleta = desc;
         } else {
             throw new IllegalArgumentException("Complete Description does not fit the criteria");
         }
@@ -40,7 +39,7 @@ public class CompleteDescription implements ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompleteDescription that = (CompleteDescription) o;
-        return Objects.equals(desc, that.desc) && Objects.equals(regex, that.regex);
+        return Objects.equals(descCompleta, that.descCompleta) && Objects.equals(regex, that.regex);
     }
 
     public static CompleteDescription valueOf(String string) {
@@ -49,12 +48,12 @@ public class CompleteDescription implements ValueObject {
 
     @Override
     public int hashCode() {
-        return Objects.hash(desc, regex);
+        return Objects.hash(descCompleta, regex);
     }
 
     @Override
     public String toString() {
-        return desc;
+        return descCompleta;
     }
 
 }

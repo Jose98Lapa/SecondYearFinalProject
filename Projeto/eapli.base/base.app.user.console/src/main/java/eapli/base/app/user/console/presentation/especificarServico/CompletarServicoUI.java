@@ -51,6 +51,9 @@ public class CompletarServicoUI extends AbstractUI {
                         toComplete.script = scanner.nextLine();
                         System.out.println("Alterado com sucesso");
                     }
+                    theController.confirms();
+                    break;
+
                 }
                 case 2: {
         /*            String opcao = scanner.nextLine();
@@ -63,12 +66,20 @@ public class CompletarServicoUI extends AbstractUI {
                         toComplete.tipo="MANUAL";
                     }else{
                         System.out.println("Alteracao invalida");
+
+                    theController.confirms();
+                    break;
                     }*/
 
                 }
                 case 3: {
                     toComplete.title = scanner.nextLine();
+                    theController.registo(toComplete);
+                    //theController.manual(toComplete.);
                     System.out.println("Alterado com sucesso");
+
+                    theController.confirms();
+                    break;
                 }
                 case 4: { //Formulario
                     if (toComplete.tipo.equalsIgnoreCase("MANUAL")) {
@@ -80,9 +91,17 @@ public class CompletarServicoUI extends AbstractUI {
                     } else {
                         System.out.println("Apenas é permitido alterar o Formulario em Servicos do tipo Manual");
                     }
+
+                    theController.confirms();
+                    break;
+
                 }
                 case 5: {
                     toComplete.icon = scanner.nextLine();
+                    theController.registo(toComplete);
+
+                    theController.confirms();
+                    break;
                 }
                 case 6: {
                     System.out.println("Escolha um catalogo para adicionar o servico criado");
@@ -94,6 +113,9 @@ public class CompletarServicoUI extends AbstractUI {
                     String index2 = Console.readLine("Index");
                     toComplete.catalogo = theController.catalogList().get(Integer.parseInt(index2));
                     System.out.println("Alterado com sucesso");
+
+                    theController.confirms();
+                    break;
 
                 }
                 case 7: {
@@ -107,8 +129,10 @@ public class CompletarServicoUI extends AbstractUI {
                     keys.remove("Exit");
                     toComplete.keywords.addAll(keys);
                     System.out.println("Alterado com sucesso");
-                }
 
+                    theController.confirms();
+                    break;
+                }
             }
         }
         theController.confirms();
