@@ -102,7 +102,8 @@ Para esta use case precisei de esperar pela equipa até que todos os seviços e 
 
 # 4. Observações
 
-Para esta funcionalidade foi necessário trabalhar em sincronização com o meu colega que estava a desenvolver o bootstrap relativo à estrutura orgânica da organização. Isto porque na criação de um calaogo, por exemplo, são necessárias equipas e colaboradores já em sistema.
+Para esta funcionalidade foi necessário trabalhar em sincronização com o meu colega que estava a desenvolver o bootstrap relativo à estrutura orgânica da organização. Isto porque na criação de um calaogo, por exemplo, são necessárias equipas e colaboradores já em sistema. Infelizmente, só foi possivel a criação de um catalogo e de um serviço pois de vez em quando, na criação dos varios, a base de dados ficava sobrecarregada.   
+```HibernateException : The internal connection pool has reached its maximum size and no connection is currently available```
 
 
 
