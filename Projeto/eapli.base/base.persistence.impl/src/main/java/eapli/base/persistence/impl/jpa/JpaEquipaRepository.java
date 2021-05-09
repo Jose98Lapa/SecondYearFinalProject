@@ -12,6 +12,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class JpaEquipaRepository extends JpaAutoTxRepository<Equipa, EquipaID,EquipaID> implements EquipaRepository {
     public JpaEquipaRepository(TransactionalContext tx) {
@@ -20,6 +21,13 @@ public class JpaEquipaRepository extends JpaAutoTxRepository<Equipa, EquipaID,Eq
 
     public JpaEquipaRepository(String persistenceUnitName) {
         super(persistenceUnitName, "EquipaID");
+    }
+
+    @Override
+    public Optional<Equipa> ofIdentity(EquipaID id) {
+        final TypedQuery<Equipa> q = createQuery("SELECT e FROM eapli.base.equipa.domain.Equipa e WHERE e.equipaID=:id",Equipa.class);
+        q.setParameter("id",id);
+        return q.getResultStream().findFirst();
     }
 
     @Override

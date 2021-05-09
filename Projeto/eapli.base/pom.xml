@@ -9,15 +9,18 @@
     <packaging>pom</packaging>
 
     <properties>
-        <eapli.framework.version>16.3.0</eapli.framework.version>
+        <eapli.framework.version>16.3.1</eapli.framework.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
+<<<<<<< HEAD
+=======
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+>>>>>>> d382a7da72ece0e2256551bbc64faa2d886264b3
     </properties>
 
     <modules>
@@ -68,10 +71,10 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.1</version>
-		</dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -90,9 +93,16 @@
     </dependencyManagement>
 
     <repositories>
+<<<<<<< HEAD
+    <repository>
+        <id>jfrog-pagsousa</id>
+        <url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
+    </repository>
+=======
         <repository>
             <id>jfrog-pagsousa</id>
             <url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
         </repository>
+>>>>>>> d382a7da72ece0e2256551bbc64faa2d886264b3
     </repositories>
 </project>

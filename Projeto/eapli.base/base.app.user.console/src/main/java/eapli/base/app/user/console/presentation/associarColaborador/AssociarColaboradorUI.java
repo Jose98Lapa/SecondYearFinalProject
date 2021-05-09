@@ -45,7 +45,7 @@ public class AssociarColaboradorUI extends AbstractUI {
         EquipaDTO equipa = equipas.get( opcaoEquipa );
         equipa.membrosDaEquipa.add( colaborador );
 
-        return associarColaboradorController.save( equipa );
+        return associarColaboradorController.save( equipa,colaboradores.get(opcaoColaborador) );
     }
 
     @Override

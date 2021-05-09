@@ -47,9 +47,9 @@ public class RemoverColaboradorUI extends AbstractUI {
         opcaoColaborador = Console.readOption( 0, colaboradores.size(), 0 );
 
         EquipaDTO equipa = equipas.get( opcaoEquipa );
-        equipa.membrosDaEquipa.remove( opcaoColaborador );
 
-        return removerColaboradorController.save( equipa );
+
+        return removerColaboradorController.save( equipa.membrosDaEquipa.get(opcaoColaborador),equipa );
     }
 
     @Override
