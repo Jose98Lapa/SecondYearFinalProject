@@ -30,7 +30,7 @@ import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
-import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
+import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
 import eapli.base.usermanagement.domain.BaseRoles;

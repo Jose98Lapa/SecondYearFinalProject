@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.EspecificarServico;
+package eapli.base.app.user.console.presentation.especificarServico;
 
 import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.formulario.application.FormularioController;
@@ -29,6 +29,7 @@ public class AtivarDesativarServico extends AbstractUI {
         for (ServicoDTO s : sservices) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
             System.out.println(s);
+            i++;
         }
         String index = Console.readLine("Selecione o index");
         String opt = Console.readLine("Insira 1 para Ativar e 0 para Desativar");

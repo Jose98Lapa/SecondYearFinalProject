@@ -36,6 +36,7 @@ public class CompletarServicoUI extends AbstractUI {
         for (ServicoDTO s : incomplete) {
             System.out.println("-------------------------------- | Index : " + i + " | -------------------------------------------");
             System.out.println(s);
+            i++;
         }
         String index = Console.readLine("Index");
 
