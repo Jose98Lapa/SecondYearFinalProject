@@ -1,12 +1,10 @@
 package eapli.base.criticidade.domain;
 
-import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +13,9 @@ public class Criticidade implements AggregateRoot<ValorCriticidade>, DTOable<Cri
     @EmbeddedId
     private ValorCriticidade valorCriticidade;
     private Label label;
+    @Column @JoinColumn
     private ObjetivoDeResolucao objetivoRes;
+    @Column @JoinColumn
     private ObjetivoDeAprovacao objetivoAprov;
 
     public Criticidade(Label label, ValorCriticidade valor, ObjetivoDeAprovacao objetivoAprov, ObjetivoDeResolucao objetivoRes) {
@@ -42,7 +42,7 @@ public class Criticidade implements AggregateRoot<ValorCriticidade>, DTOable<Cri
 
     @Override
     public CriticidadeDTO toDTO() {
-        return new CriticidadeDTO(label.toString(),valorCriticidade.toString(),objetivoAprov.tempoMax(),objetivoAprov.tempoMedio(),objetivoRes.tempoMax(),objetivoRes.tempoMedio());
+        return new CriticidadeDTO(label.toString(),valorCriticidade.toString(),objetivoAprov.tempoMaximo(),objetivoAprov.tempoMedio(),objetivoRes.tempoMaximo(),objetivoRes.tempoMedio());
     }
 
     @Override
@@ -60,6 +60,7 @@ public class Criticidade implements AggregateRoot<ValorCriticidade>, DTOable<Cri
 
     @Override
     public String toString() {
-        return "Valor da Criticidade: "+valorCriticidade +" Label: "+label;
+        return "Valor da Criticidade: "+valorCriticidade +"\nLabel: "+label + "\nTempo Maximo de Aprovação: " + objetivoAprov.tempoMaximo() +
+                " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() + "\nTempo Maximo de Resolução: " + objetivoAprov.tempoMaximo() + " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() +"\n";
     }
 }

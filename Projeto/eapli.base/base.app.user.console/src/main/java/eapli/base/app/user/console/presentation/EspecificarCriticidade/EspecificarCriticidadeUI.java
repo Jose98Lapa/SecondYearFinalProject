@@ -21,11 +21,10 @@ public class EspecificarCriticidadeUI extends AbstractUI {
         Iterator<Criticidade> iterableCriticidade =controller.getNiveisDeCriticidade().iterator();
         System.out.println("Criticidades Existentes:");
         while (iterableCriticidade.hasNext()){
-            System.out.println(iterableCriticidade.toString());
-            iterableCriticidade.next();
+            System.out.println(iterableCriticidade.next().toString());
         }
 
-        System.out.println("Insira a informação necessária para a Criticidade");
+        System.out.println("\nInsira a informação necessária para a Criticidade");
         cdw.show();
 
         CriticidadeDTO criticidadeDTO = new CriticidadeDTO(cdw.label(),cdw.valorCriticidade(), cdw.tempoMaximoA(), cdw.tempoMedioA(), cdw.tempoMaximoR(), cdw.tempoMedioR());

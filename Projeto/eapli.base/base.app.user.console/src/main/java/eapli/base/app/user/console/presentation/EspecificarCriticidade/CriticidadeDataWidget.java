@@ -15,10 +15,10 @@ public class CriticidadeDataWidget {
     public void show(){
         this.valorCriticidade= Console.readLine("ValorCriticidade:");
         this.label= Console.readLine("Label:");
-        System.out.println("--Objetivo de Aprovação--");
+        System.out.println("\n--Objetivo de Aprovação [HH:MM]--");
         this.tempoMaximoA= Console.readLine("Tempo Maximo:");
         this.tempoMedioA= Console.readLine("Tempo Medio:");
-        System.out.println("--Objetivo de Resolção--");
+        System.out.println("\n--Objetivo de Resolção [HH:MM]--");
         this.tempoMaximoR= Console.readLine("Tempo Maximo:");
         this.tempoMedioR= Console.readLine("Tempo Maximo:");
     }

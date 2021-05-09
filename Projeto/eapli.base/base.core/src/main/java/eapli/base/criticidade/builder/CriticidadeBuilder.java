@@ -1,6 +1,6 @@
-package eapli.base.criticidade.domain;
+package eapli.base.criticidade.builder;
 
-import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.criticidade.domain.*;
 
 public class CriticidadeBuilder {
     private ValorCriticidade valorCriticidade;
