@@ -2,7 +2,9 @@ package eapli.base.funcao.DTO;
 
 import eapli.base.funcao.domain.Designacao;
 import eapli.base.funcao.domain.IdFuncao;
+import eapli.framework.representations.dto.DTO;
 
+@DTO
 public class FuncaoDTO {
     public String designacao;
     public String IdFuncao;

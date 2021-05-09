@@ -3,8 +3,9 @@ package eapli.base.funcao.builder;
 import eapli.base.funcao.domain.Designacao;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.funcao.domain.IdFuncao;
+import eapli.framework.domain.model.DomainFactory;
 
-public class FuncaoBuilder  {
+public class FuncaoBuilder  implements DomainFactory<Funcao> {
     private Designacao designacao;
     private IdFuncao idFuncao;
 
@@ -28,6 +29,7 @@ public class FuncaoBuilder  {
         return this;
     }
 
+    @Override
     public Funcao build(){
         return new Funcao(idFuncao,designacao);
     }
