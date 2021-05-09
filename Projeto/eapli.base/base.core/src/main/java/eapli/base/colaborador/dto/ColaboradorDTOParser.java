@@ -17,7 +17,7 @@ public class ColaboradorDTOParser implements DTOParser<ColaboradorDTO, Colaborad
     @Override
     public Colaborador valueOf(ColaboradorDTO dto) {
         ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
-        if (dto.mSupervisor.isEmpty())
+        if (dto.mSupervisor==null)
             return colaboradorBuilder.withAddress(dto.rua,dto.numPorta,dto.andar,dto.localizacao,dto.codPostal).withContact(dto.contacto).withFullName(dto.nomeCompleto)
                 .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento).withFunction(dto.IDfuncao,dto.designacao).build();
 

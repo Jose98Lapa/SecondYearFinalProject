@@ -57,11 +57,17 @@ public class OrganizacaoBootstrap {
                     String salcunha = element.getElementsByTagName("salcunha").item(0).getTextContent();
                     String scodPostal = element.getElementsByTagName("scodPostal").item(0).getTextContent();
                     String sdataDeNascimento = element.getElementsByTagName("sdataDeNascimento").item(0).getTextContent();
+                    String Superdesignacao = element.getElementsByTagName("Superdesignacao").item(0).getTextContent();
+                    String SuperidFunc = element.getElementsByTagName("SuperidFunc").item(0).getTextContent();
+
+                    Funcao funcaoSupe = new Funcao(IdFuncao.valueOf(SuperidFunc),Designacao.valueOf(Superdesignacao));
+                    FuncaoRepository repo = PersistenceContext.repositories().funcao();
+                    repo.save(funcaoSupe);
 
                     ColaboradorBuilder builder = new ColaboradorBuilder();
                     Colaborador supervisor = builder.withAddress(srua, snumPorta, sandar, slocalizacao, scodPostal).withContact(scontacto)
                             .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumPorta)
-                            .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).build();
+                            .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(funcaoSupe).build();
                     String designacao = element.getElementsByTagName("designacao").item(0).getTextContent();
                     String dataDeNascimento = element.getElementsByTagName("datanascimento").item(0).getTextContent();
                     String rua = element.getElementsByTagName("rua").item(0).getTextContent();
@@ -79,7 +85,6 @@ public class OrganizacaoBootstrap {
                     ColaboradorDTO colaDTO = new ColaboradorDTO(rua, numPorta, andar, localizacao, codPostal, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
                     colabController.method(colaDTO);
                     Funcao func = new Funcao(IdFuncao.valueOf(idFunc), Designacao.valueOf(designacao));
-                    FuncaoRepository repo = PersistenceContext.repositories().funcao();
                     repo.save(func);
                     colabController.defineFunction(func);
                     CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
