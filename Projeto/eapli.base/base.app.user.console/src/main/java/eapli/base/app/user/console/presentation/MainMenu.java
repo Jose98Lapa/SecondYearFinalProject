@@ -29,6 +29,7 @@ import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI;
+import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.EspecificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
@@ -66,6 +67,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int CRIAR_COR = 7;
     private static final int EDITAR_SERVICO = 8;
     private static final int TOGGLE_SERVICO = 9;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 10;
 
 
     private final AuthorizationService authz =
@@ -111,6 +113,8 @@ class MainMenu extends ClientUserBaseUI {
             mainMenu.addSubMenu(EDITAR_SERVICO,editarServicoMenu);
             final Menu toggleServicoMenu = buildAtivarDesativarServico();
             mainMenu.addSubMenu(TOGGLE_SERVICO,toggleServicoMenu);
+            final Menu especificarCriticidadeMenu = buildEspecificarCriticidadeMenu();
+            mainMenu.addSubMenu(ESPECIFICAR_CRITICIDADE_OPTION,especificarCriticidadeMenu);
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER,BaseRoles.ADMIN)) {
@@ -150,6 +154,13 @@ class MainMenu extends ClientUserBaseUI {
         colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new EspecificarColaboradorUI().show());
         colaboradorMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return colaboradorMenu;
+    }
+
+    private Menu buildEspecificarCriticidadeMenu(){
+        final Menu criticidadeMenu = new Menu("Criticidade");
+        criticidadeMenu.addItem(1,"Especificar Criticidade",() -> new EspecificarCriticidadeUI().show());
+        criticidadeMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return criticidadeMenu;
     }
 
     private Menu buildTipoEquipaMenu(){
