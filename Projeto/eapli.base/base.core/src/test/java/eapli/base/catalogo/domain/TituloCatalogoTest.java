@@ -1,4 +1,4 @@
-package eapli.base.catalog.Domain.Domain;
+package eapli.base.catalogo.domain;
 
 import eapli.base.catalogo.domain.Titulo;
 import org.junit.Test;
