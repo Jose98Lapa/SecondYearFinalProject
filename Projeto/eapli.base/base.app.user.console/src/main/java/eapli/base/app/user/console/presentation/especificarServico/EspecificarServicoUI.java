@@ -1,6 +1,6 @@
-package eapli.base.app.user.console.presentation.especificarServico;
+package eapli.base.app.user.console.presentation.EspecificarServico;
 
-import eapli.base.app.user.console.presentation.especificarServico.ServicoDataWidget;
+import eapli.base.app.user.console.presentation.EspecificarServico.ServicoDataWidget;
 import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.servico.Application.EspecificarServicoController;

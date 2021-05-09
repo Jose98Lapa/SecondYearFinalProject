@@ -10,6 +10,7 @@ import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.DTO.ServicoDTO;
+import eapli.base.servico.DTO.ServicoDTOParser;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.servico.builder.ServicoBuilder;
 import eapli.base.servico.domain.*;
@@ -46,11 +47,6 @@ public class EspecificarServicoController {
     }
 
     public void confirms() {
-        try {
-            repo.delete(servico);
-        }catch (Exception ignored) {
-
-        }
         repo.save(servico);
     }
 
@@ -62,13 +58,22 @@ public class EspecificarServicoController {
         return new ListServicoService().all();
     }
 
-    public void ativarServico(String servicoId) {
-        repo.ativar(servicoId);
-
+    public void ativarServico(ServicoDTO servicoDTO) {
+        Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(servicoDTO.id));
+        if (optionalServico.isPresent()){
+            Servico servico = optionalServico.get();
+            servico.activate();
+            repo.save(servico);
+        }
     }
 
-    public void desativarServico(String servicoId) {
-        repo.desativar(servicoId);
+    public void desativarServico(ServicoDTO servicoDTO) {
+        Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(servicoDTO.id));
+        if (optionalServico.isPresent()){
+            Servico servico = optionalServico.get();
+            servico.deactivate();
+            repo.save(servico);
+        }
     }
 
 }
