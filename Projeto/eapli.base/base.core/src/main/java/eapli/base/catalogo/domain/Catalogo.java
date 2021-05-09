@@ -28,13 +28,15 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
     private Icon icon;
     private DescricaoBreve briefDesc;
     private DescricaoCompleta completeDesc;
-    @OneToOne
-    private Criticidade nivelCriticidade;
+    //@OneToOne
+    //private Criticidade nivelCriticidade;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name="CATALOGO_RESPONSAVEIS", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Colaborador> responsableCollabs = new HashSet<>();
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name="CATALOGO_ACESSO", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Equipa> accessCriteria = new HashSet<>();
 
     private boolean status;
@@ -54,7 +56,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticidade = nivelCriticidade;
+        //this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -70,7 +72,7 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticidade = nivelCriticidade;
+        //this.nivelCriticidade = nivelCriticidade;
         this.status = true;
     }
 
@@ -129,9 +131,11 @@ public class Catalogo implements AggregateRoot<Long>, DTOable<CatalogoDTO> {
         return completeDesc;
     }
 
+    /*
     public Criticidade nivelCriticidade() {
         return nivelCriticidade;
     }
+    */
 
     public Set<Colaborador> responsableCollabs() {
         return responsableCollabs;

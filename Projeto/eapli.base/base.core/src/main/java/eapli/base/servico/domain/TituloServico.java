@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class TituloServico implements ValueObject {
     private String serviceTitle;
     @Transient
-    private String regex = "^[a-zA-Z]{1,50}$";
+    private String regex = "^[ a-zA-Z]{1,50}$";
 
     public TituloServico(String serviceTitle) {
         if (StringPredicates.isNullOrEmpty(serviceTitle)) {

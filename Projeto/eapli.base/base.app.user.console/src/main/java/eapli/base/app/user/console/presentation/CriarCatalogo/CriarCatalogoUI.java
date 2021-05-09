@@ -1,6 +1,6 @@
 package eapli.base.app.user.console.presentation.CriarCatalogo;
 
-import eapli.base.catalogo.application.CreateCatalogController;
+import eapli.base.catalogo.application.CriarCatalogoController;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.criticidade.dto.CriticidadeDTO;
@@ -18,11 +18,11 @@ import java.util.*;
 public class CriarCatalogoUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(CriarCatalogoUI.class);
 
-    private final CreateCatalogController theController = new CreateCatalogController();
+    private final CriarCatalogoController theController = new CriarCatalogoController();
 
     @Override
     protected boolean doShow() {
-        final eapli.base.app.user.console.presentation.CriarCatalogo.CatalogoDataWidget widget = new eapli.base.app.user.console.presentation.CriarCatalogo.CatalogoDataWidget();
+        final CatalogoDataWidget widget = new CatalogoDataWidget();
 
         widget.show();
 
@@ -36,11 +36,14 @@ public class CriarCatalogoUI extends AbstractUI {
 
 
 
-            //this.theController.defineNivelCriticidade(criticidade);
+            //this.theController.defineCriticidade(showCriticityAndChoose());
+
 
             CatalogoDTO catalogo = this.theController.registerCatalog();
+            showCatalogDTO(catalogo);
 
-            this.theController.saveCatalog(catalogo);
+            if(Console.readBoolean("Confirma (s/n)"))
+                this.theController.saveCatalog(catalogo);
 
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             LOGGER.error("Error performing the operation", e);
@@ -49,6 +52,15 @@ public class CriarCatalogoUI extends AbstractUI {
         }
 
         return true;
+    }
+
+    protected  void showCatalogDTO(CatalogoDTO dto){
+        System.out.println("Dados Catalogo:");
+        System.out.printf("Titulo: %s%nDescrição Breve: %s%nDescrição Completa: %s%n",dto.catalogTitle,dto.briefDesc,dto.completeDesc);
+        System.out.println("Criterios de acesso:");
+        dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n",eDto.acronimo));
+        System.out.println("Colaboradores Responsaveis:");
+        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.alcunha,cDto.nomeCompleto));
     }
 
     protected Set<EquipaDTO> showAccessAndChoose() {
