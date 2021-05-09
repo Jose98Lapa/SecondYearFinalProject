@@ -23,9 +23,8 @@
  */
 package eapli.base.catalogo.dto;
 
-import eapli.base.catalogo.domain.CatalogBuilder;
+import eapli.base.catalogo.builder.CatalogBuilder;
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.dto.ColaboradorDTOParser;
 import eapli.base.equipa.DTO.EquipaDTOParser;

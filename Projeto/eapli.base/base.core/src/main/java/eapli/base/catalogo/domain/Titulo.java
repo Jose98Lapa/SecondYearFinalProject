@@ -13,11 +13,11 @@ public class Titulo implements ValueObject {
     private String catalogTitle;
 
     @Transient
-    private String regex = "^[a-zA-Z]{1,50}$";
+    private String regex = "^[ a-zA-Z0-9À-ú!?]{1,20}$";
 
     public Titulo(String catalogTitle) {
-        if (StringPredicates.isNullOrEmpty(catalogTitle)) {
-            throw new IllegalArgumentException("Catalog title should neither be null nor empty");
+        if (StringPredicates.isNullOrEmpty(catalogTitle) || catalogTitle.trim().isEmpty()) {
+            throw new IllegalArgumentException("Titulo não pode ser vazio.");
         }
 
         Pattern p = Pattern.compile(regex);

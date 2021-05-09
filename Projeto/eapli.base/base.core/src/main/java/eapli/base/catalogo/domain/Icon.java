@@ -1,6 +1,7 @@
 package eapli.base.catalogo.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
 
@@ -9,6 +10,7 @@ public class Icon implements ValueObject {
     String iconPath;
 
     public Icon(String icon) {
+        Preconditions.nonEmpty(icon, "Path não pode ser vazio.");
         this.iconPath = icon;
     }
 

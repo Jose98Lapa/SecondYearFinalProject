@@ -2,11 +2,9 @@ package eapli.base.infrastructure.bootstrapers;
 
 import eapli.base.TipoEquipa.Application.CriarTipoEquipaController;
 import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
-import eapli.base.TipoEquipa.DTO.TipoEquipaDTOParser;
-import eapli.base.TipoEquipa.Domain.TipoEquipa;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.ColaboradorBuilder;
+import eapli.base.colaborador.builder.ColaboradorBuilder;
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.cor.Application.CriarCorController;

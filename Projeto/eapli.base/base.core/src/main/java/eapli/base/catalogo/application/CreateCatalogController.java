@@ -1,6 +1,6 @@
 package eapli.base.catalogo.application;
 
-import eapli.base.catalogo.domain.CatalogBuilder;
+import eapli.base.catalogo.builder.CatalogBuilder;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.catalogo.dto.CatalogoDTOParser;
 import eapli.base.colaborador.application.ListColaboradorService;
