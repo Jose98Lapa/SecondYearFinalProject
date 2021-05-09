@@ -12,6 +12,7 @@ public class ValorCriticidadeTest {
     public void test(){
         assertEquals(valorCriticidade, new ValorCriticidade("1"));
         assertNotEquals(valorCriticidade, new ValorCriticidade("2"));
+        assertThrows(IllegalArgumentException.class,() -> new ValorCriticidade("a"));
         assertThrows(IllegalArgumentException.class,() -> new ValorCriticidade(""));
         assertThrows(IllegalArgumentException.class,() -> new ValorCriticidade(null));
     }

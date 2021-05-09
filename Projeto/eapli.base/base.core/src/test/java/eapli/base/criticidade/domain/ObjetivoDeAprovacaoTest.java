@@ -13,6 +13,8 @@ public class ObjetivoDeAprovacaoTest {
         assertEquals(objetivoDeAprovacao, new ObjetivoDeAprovacao("02:40","02:10"));
         assertNotEquals(objetivoDeAprovacao, new ObjetivoDeAprovacao("02:40","02:00"));
         assertThrows(IllegalArgumentException.class,() -> new ObjetivoDeAprovacao("",""));
+        assertThrows(IllegalArgumentException.class,() -> new ObjetivoDeResolucao("25:40","02:10"));
+        assertThrows(IllegalArgumentException.class,() -> new ObjetivoDeResolucao("2:61","02:10"));
     }
 
 }
