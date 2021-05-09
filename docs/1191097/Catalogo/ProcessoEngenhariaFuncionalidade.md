@@ -209,7 +209,6 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
  #### Catalogo DTO 
 
  ```
-
 @DTO
 public class CatalogoDTO {
     public Long identity;
@@ -239,6 +238,7 @@ public class CatalogoDTO {
 
 
  #### Catalogo DTO Parser 
+ 
 ```
 public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
