@@ -1,10 +1,12 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoID;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.List;
 import java.util.Optional;
 
     public class InMemoryServiceRepository
@@ -33,6 +35,11 @@ import java.util.Optional;
         @Override
         public void desativar(String servicoId) {
 
+        }
+
+        @Override
+        public List<Servico> getServicoListByCatalogo(Catalogo catalogo) {
+            return null;
         }
 
     }

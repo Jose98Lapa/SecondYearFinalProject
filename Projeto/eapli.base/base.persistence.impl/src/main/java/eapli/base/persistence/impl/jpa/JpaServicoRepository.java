@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoID;
 import eapli.base.servico.Repository.ServicoRepository;
@@ -9,6 +10,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
 import java.net.ServerSocket;
+import java.util.List;
 import java.util.Optional;
 
 public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID,ServicoID> implements ServicoRepository {
@@ -43,6 +45,13 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         final TypedQuery<Servico> q = createQuery("Update eapli.base.servico.domain.Servico t SET t.status=:status WHERE t.id=:id",Servico.class);
         q.setParameter("status",StatusServico.valueOf("INATIVO"));
         q.setParameter("id",servicoId );
+    }
+
+    @Override
+    public List<Servico> getServicoListByCatalogo(Catalogo catalogo) {
+        final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.catalogo =: status ",Servico.class);
+        q.setParameter("status", StatusServico.valueOf("INCOMPLETO"));
+        return q.getResultList();
     }
 
    /* public Servico updateServicoForm(String idServ,String idForm){
