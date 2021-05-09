@@ -7,10 +7,5 @@
 
 | Sprint | Funcionalidade     |
 |--------|--------------------|
-| **B**  | [USDemo1](USDemo1) |
+| **B**  | [Criar catálogo de serviços](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1191097/ProcessoEngenhariaFuncionalidade.md) |
 | **B**  | [USDemo2](USDemo2) |
-| **C**  | [USDemo3](USDemo3) |
-| **C**  | [USDemo3](USDemo4) |
-| **D**  | [USDemo3](USDemo5) |
-| **D**  | [USDemo3](USDemo6) |
-| **D**  | [USDemo3](USDemo7) |

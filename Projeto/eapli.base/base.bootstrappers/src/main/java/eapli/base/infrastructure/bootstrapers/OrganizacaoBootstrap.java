@@ -10,7 +10,6 @@ import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.cor.Application.CriarCorController;
 import eapli.base.cor.DTO.CorDTO;
 import eapli.base.criticidade.application.EspecificarCriticidadeController;
-import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;

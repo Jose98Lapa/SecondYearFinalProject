@@ -3,8 +3,6 @@ package eapli.base.catalogo.builder;
 import eapli.base.catalogo.domain.*;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.Criticidade;
-import eapli.base.criticidade.dto.CriticidadeDTO;
-import eapli.base.criticidade.dto.CriticidadeDTOParser;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 
@@ -19,13 +17,6 @@ public class CatalogBuilder implements DomainFactory<Catalogo> {
     private final Set<Colaborador> responsableCollabs = new HashSet<>();
     private final Set<Equipa> accessCriteria = new HashSet<>();
     private Criticidade nivelCriticidade;
-
-    /*
-    public CatalogBuilder withIdentity(final CatalogoID identity) {
-        this.identity = identity;
-        return this;
-    }
-    */
 
     public CatalogBuilder withIdentity(final Long identity) {
         this.identity = identity;
