@@ -32,25 +32,87 @@ Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes
 
 ## 3.3. Padrões Aplicados
 
-* Para evitar diferentes construtores para diferentes situações e para possibilitar a criação do catalogo por etapas foi usado o padrão Builder.
-* De modo a simplificar a a manipulação de diferentes repositorios foi utilizado o padrão Factory.
+* Pardrão Builder - Para evitar diferentes construtores para diferentes situações e para possibilitar a criação do catalogo por etapas foi usado o padrão Builder.
+* Pardrão Factory - e modo a simplificar a a manipulação de diferentes repositorios foi utilizado o padrão Factory.
+* Pardrão DTO - de modo a passar informação da camada de dominio para a camada de apresentação foi utilizado o padrão DTO, isolando assim o modelo de dominio da apresentação.
 
 ## 3.4. Testes 
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
 **Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+	@Test
+    public void test() {
+        assertEquals(acronimo, new EquipaID("123"));
+        assertNotEquals(acronimo, new EquipaID("12"));
+        assertThrows(IllegalArgumentException.class,() -> new EquipaID("a"));
+        assertThrows(IllegalArgumentException.class,() -> new EquipaID(""));
+        assertThrows(IllegalArgumentException.class,() -> new EquipaID(null));
+    }
+
 
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+#### Equipa Builder
+```
+    public Equipa build(){
+        Equipa e = new Equipa(designacao,acronimo,equipaID,responsaveis.remove(0),tipoEquipa);
+        for (Colaborador colaborador:colaboradores){
+            e.addTeamMembers(colaborador);
+        }
+        for (Colaborador colaborador:responsaveis){
+            e.addColaboradorResponsible(colaborador);
+        }
+        return e;
+    }
+```
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+#### Equipa DTO
+```
+   public class EquipaDTO {
+    public String descricao;
+    public String acronimo;
+    public String equipaID;
+    public List<ColaboradorDTO> responsaveis = new ArrayList<>();
+    public TipoEquipaDTO tipoEquipaDTO;
+    public List<ColaboradorDTO> membrosDaEquipa= new ArrayList<>();
+    public ColaboradorDTO colaboradorDTO;
+
+    public EquipaDTO(String descricao, String acronimo, String equipaID, List<ColaboradorDTO> responsaveis, TipoEquipaDTO tipoEquipaDTO, List<ColaboradorDTO> membrosDaEquipa) {
+        this.descricao = descricao;
+        this.acronimo = acronimo;
+        this.equipaID = equipaID;
+        this.responsaveis.addAll(responsaveis);
+        this.tipoEquipaDTO = tipoEquipaDTO;
+        this.membrosDaEquipa.addAll(membrosDaEquipa);
+    }
+
+    public EquipaDTO(String descricao, String acronimo, String equipaID, TipoEquipaDTO tipoEquipaDTO, ColaboradorDTO colaboradorDTO) {
+        this.descricao = descricao;
+        this.acronimo = acronimo;
+        this.equipaID = equipaID;
+        this.tipoEquipaDTO = tipoEquipaDTO;
+        this.colaboradorDTO = colaboradorDTO;
+    }
+}
+
+```
+#### Equipa DTO
+```
+  public class EquipaDTOParser implements DTOParser<EquipaDTO, Equipa> {
+    @Override
+    public Equipa valueOf(EquipaDTO dto) {
+        EquipaBuilder equipaBuilder = new EquipaBuilder();
+        LinkedList<Colaborador> responsaveis = new LinkedList<>();
+        dto.responsaveis.forEach(dtoColab -> responsaveis.add(new ColaboradorDTOParser().valueOf(dtoColab)));
+        List<Colaborador> membrosDeEquipa = new ArrayList<>();
+        dto.membrosDaEquipa.forEach(dtoColab -> membrosDeEquipa.add(new ColaboradorDTOParser().valueOf(dtoColab)));
+
+        return equipaBuilder.designacao(dto.descricao).acronimo(dto.acronimo).equipaID(dto.equipaID).colaboradores(membrosDeEquipa).tipoDeEquipa(new TipoEquipaDTOParser().valueOf(dto.tipoEquipaDTO)).responsaveis(responsaveis).build();
+    }
+}
+```
 
 # 5. Integração/Demonstração
 
