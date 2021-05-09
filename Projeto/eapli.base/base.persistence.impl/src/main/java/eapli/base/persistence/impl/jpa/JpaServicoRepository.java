@@ -1,6 +1,8 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.FormularioID;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoID;
 import eapli.base.servico.Repository.ServicoRepository;
@@ -62,6 +64,12 @@ public class JpaServicoRepository extends JpaAutoTxRepository<Servico, ServicoID
         final TypedQuery<Servico> q = createQuery("Select e From eapli.base.servico.domain.Servico e where e.catalogo =: status ",Servico.class);
         q.setParameter("status", catalogo);
         return q.getResultList();
+    }
+    @Override
+    public Optional<Formulario> getFormById(FormularioID formId) {
+        final TypedQuery<Formulario> q = createQuery("Select e From eapli.base.formulario.domain.Formulario e where e.FormularioID =: formId ",Formulario.class);
+        q.setParameter("formId", formId);
+        return q.getResultStream().findFirst();
     }
 
 

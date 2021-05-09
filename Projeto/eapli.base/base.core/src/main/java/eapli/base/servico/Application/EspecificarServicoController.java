@@ -2,7 +2,6 @@ package eapli.base.servico.Application;
 
 import eapli.base.catalogo.application.ListCatalogoService;
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.catalogo.domain.CatalogoID;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.catalogo.repositories.CatalogRepository;
 import eapli.base.formulario.domain.Formulario;
@@ -10,7 +9,6 @@ import eapli.base.formulario.domain.FormularioID;
 import eapli.base.formulario.repository.FormularioRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.DTO.ServicoDTO;
-import eapli.base.servico.DTO.ServicoDTOParser;
 import eapli.base.servico.Repository.ServicoRepository;
 import eapli.base.servico.builder.ServicoBuilder;
 import eapli.base.servico.domain.*;
@@ -20,6 +18,7 @@ import java.util.Optional;
 
 public class EspecificarServicoController {
     private Servico servico;
+    private Servico servUp;
     ServicoBuilder builder = new ServicoBuilder();
     ServicoRepository repo = PersistenceContext.repositories().servico();
     CatalogRepository catRepo = PersistenceContext.repositories().catalogs();
@@ -60,7 +59,7 @@ public class EspecificarServicoController {
 
     public void ativarServico(ServicoDTO servicoDTO) {
         Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(servicoDTO.id));
-        if (optionalServico.isPresent()){
+        if (optionalServico.isPresent()) {
             Servico servico = optionalServico.get();
             servico.activate();
             repo.save(servico);
@@ -69,11 +68,36 @@ public class EspecificarServicoController {
 
     public void desativarServico(ServicoDTO servicoDTO) {
         Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(servicoDTO.id));
-        if (optionalServico.isPresent()){
+        if (optionalServico.isPresent()) {
             Servico servico = optionalServico.get();
             servico.deactivate();
             repo.save(servico);
         }
     }
 
+    public void update(ServicoDTO servicoDTO) {
+        Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(servicoDTO.id));
+        if (optionalServico.isPresent()) {
+            Servico servico = optionalServico.get();
+            servico.setBriedDesc(BriefDescription.valueOf(servicoDTO.briefDescription));
+            servico.setCompDesc(CompleteDescription.valueOf(servicoDTO.completeDescription));
+            servico.setIcon(IconServico.valueof(servicoDTO.icon));
+            servico.setTitle(TituloServico.valueOf(servicoDTO.title));
+            servico.setScript(ServicoScript.valueOf(servicoDTO.script));
+            repo.save(servico);
+        }
+    }
+
+    public void updateForm(String formId, ServicoDTO serv) {
+        Optional<Formulario> form = repo.getFormById(FormularioID.valueOf(formId));
+        if (form.isPresent()){
+            Optional<Servico> optionalServico = repo.ofIdentity(ServicoID.valueOf(serv.id));
+            Formulario formu = form.get();
+            if (optionalServico.isPresent()) {
+                Servico servico = optionalServico.get();
+                servico.setForm(formu);
+                repo.save(servico);
+            }
+        }
+    }
 }
