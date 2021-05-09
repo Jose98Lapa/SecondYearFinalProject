@@ -30,9 +30,12 @@ import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
 import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
 import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
 import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
+import eapli.base.app.user.console.presentation.associarColaborador.AssociarColaboradorUI;
 import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
 import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.removerColaborador.RemoverColaboradorUI;
+import eapli.base.equipa.application.RemoverColaboradorController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -157,6 +160,8 @@ class MainMenu extends ClientUserBaseUI {
     private Menu buildEquipaMenu() {
         final Menu equipaMenu = new Menu("Equipa");
         equipaMenu.addItem(1, "Criar Equipa", () -> new CriarEquipaUI().show());
+        equipaMenu.addItem(2,"Associar Colaborador",()->new AssociarColaboradorUI().show());
+        equipaMenu.addItem(3,"Remover Colaborador",()->new RemoverColaboradorUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }

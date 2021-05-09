@@ -10,10 +10,10 @@ import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.cor.Application.CriarCorController;
 import eapli.base.cor.DTO.CorDTO;
 import eapli.base.criticidade.application.EspecificarCriticidadeController;
-import eapli.base.criticidade.domain.Criticidade;
 import eapli.base.criticidade.dto.CriticidadeDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.CriarEquipaController;
+import eapli.base.equipa.application.CriarEquipaControllerBootstrap;
 import eapli.base.funcao.domain.Designacao;
 import eapli.base.funcao.domain.Funcao;
 import eapli.base.funcao.domain.IdFuncao;
@@ -113,9 +113,15 @@ public class OrganizacaoBootstrap {
 
                     CriarEquipaController equipaController = new CriarEquipaController();
                     List<ColaboradorDTO> responsaveis = new ArrayList<>();
-                    responsaveis.add(finale);
-                    EquipaDTO equipaDto = new EquipaDTO(descricao,acronimo,equipaId,dto, finale);
-                    equipaController.registo(equipaDto);
+                    ColaboradorDTO colaboradorDTO= finale.toDTO();
+                    responsaveis.add(colaboradorDTO);
+                    List<ColaboradorDTO> members = new ArrayList<>();
+                    members.add(colaboradorDTO);
+                    EquipaDTO equipaDto1 = new EquipaDTO(descricao,acronimo,equipaId,responsaveis,dto,members);
+
+
+                    CriarEquipaControllerBootstrap equipaControllerBootstrap = new CriarEquipaControllerBootstrap();
+                    equipaControllerBootstrap.registo(equipaDto1);
 
                     EspecificarCriticidadeController criticidadeController = new EspecificarCriticidadeController();
                     String labelCriti = element.getElementsByTagName("labelCriti").item(0).getTextContent();

@@ -2,19 +2,21 @@ package eapli.base.app.user.console.presentation.removerColaborador;
 
 import eapli.base.colaborador.dto.ColaboradorDTO;
 import eapli.base.equipa.DTO.EquipaDTO;
-import eapli.base.equipa.application.AssociarColaboradorController;
 import eapli.base.equipa.application.CriarEquipaController;
+import eapli.base.equipa.application.RemoverColaboradorController;
 import eapli.framework.io.util.Console;
+import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoverColaboradorUI {
+public class RemoverColaboradorUI extends AbstractUI {
 
-    private AssociarColaboradorController removerColaboradorController;
-    private CriarEquipaController equipaController;
+    private RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
+    private CriarEquipaController equipaController = new CriarEquipaController();
 
-    public void doShow() {
+    @Override
+    protected boolean doShow() {
 
         System.out.println( "Escolha uma equipa\n" );
         List<EquipaDTO> equipas = new ArrayList<>();
@@ -27,7 +29,7 @@ public class RemoverColaboradorUI {
             System.out.printf( " %d - %s | %s |%s\n", i, atual.acronimo, atual.equipaID, atual.descricao );
         }
 
-        opcaoEquipa = Console.readOption( 0, equipas.size() - 1, -1 );
+        opcaoEquipa = Console.readOption( 0, equipas.size(), 0);
 
         System.out.println( "Escolha um colaborador\n" );
         List<ColaboradorDTO> colaboradores = new ArrayList<>();
@@ -38,11 +40,17 @@ public class RemoverColaboradorUI {
             System.out.printf( " %d - %s | %s |%s\n", i, atual.mNumber, atual.nomeCompleto, atual.email  );
         }
 
-        opcaoColaborador = Console.readOption( 0, colaboradores.size() - 1, 0 );
+        opcaoColaborador = Console.readOption( 0, colaboradores.size(), 0 );
 
         EquipaDTO equipa = equipas.get( opcaoEquipa );
         equipa.membrosDaEquipa.remove( opcaoColaborador );
 
         equipaController.registo( equipa );
+        return true;
+    }
+
+    @Override
+    public String headline() {
+        return "Remover Colaborador";
     }
 }

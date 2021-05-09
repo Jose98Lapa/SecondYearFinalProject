@@ -5,16 +5,18 @@ import eapli.base.equipa.DTO.EquipaDTO;
 import eapli.base.equipa.application.AssociarColaboradorController;
 import eapli.base.equipa.application.CriarEquipaController;
 import eapli.framework.io.util.Console;
+import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssociarColaboradorUI {
+public class AssociarColaboradorUI extends AbstractUI {
 
-    private AssociarColaboradorController associarColaboradorController;
-    private CriarEquipaController equipaController;
+    private AssociarColaboradorController associarColaboradorController = new AssociarColaboradorController();
+    private CriarEquipaController equipaController = new CriarEquipaController();
 
-    public void doShow() {
+    @Override
+    protected boolean doShow() {
 
         System.out.println( "Escolha uma equipa\n" );
         List<EquipaDTO> equipas = new ArrayList<>();
@@ -45,5 +47,11 @@ public class AssociarColaboradorUI {
         equipa.membrosDaEquipa.add( colaborador );
 
         equipaController.registo( equipa );
+        return true;
+    }
+
+    @Override
+    public String headline() {
+        return "Associar Colaborador";
     }
 }

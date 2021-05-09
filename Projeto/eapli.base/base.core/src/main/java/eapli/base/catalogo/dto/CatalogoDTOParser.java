@@ -35,11 +35,6 @@ import eapli.framework.representations.dto.DTOParser;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- *
- * @author Paulo Gandra de Sousa 2021/04/28
- *
- */
 public class CatalogoDTOParser implements DTOParser<CatalogoDTO, Catalogo> {
 
     public CatalogoDTOParser() {
