@@ -5,7 +5,6 @@ import eapli.base.colaborador.domain.ColaboradorBuilder;
 import eapli.base.colaborador.domain.NumeroMecanografico;
 import eapli.base.colaborador.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.servico.builder.ServicoBuilder;
 import eapli.framework.representations.dto.DTOParser;
 
 import java.util.Optional;
