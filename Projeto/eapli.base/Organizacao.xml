@@ -1,34 +1,34 @@
 <?xml version="1.0"?>
 <class>
-    <colaborador>
-        <funcao>
-            <designacao>Gestor</designacao>
+    <collaborator>
+        <function>
+            <designation>Gestor</designation>
             <idFunc>5</idFunc>
-        </funcao>
-        <morada>
+        </function>
+        <address>
             <rua>Rua das Formigas</rua>
             <numPorta>45</numPorta>
             <andar>1</andar>
             <localizacao>Porto</localizacao>
-        </morada>
+        </address>
         <numeroMecanografico>119654</numeroMecanografico>
         <datanascimento>05/06/1998</datanascimento>
-        <contacto>913586789</contacto>
-        <nomeCompleto>Rodrigo Alberto Figueira</nomeCompleto>
+        <contact>913586789</contact>
+        <fullName>Rodrigo Alberto Figueira</fullName>
         <emailInstitucional>raf@isep.ipp.pt</emailInstitucional>
-        <alcunha>RAF</alcunha>
+        <nickname>RAF</nickname>
         <codPostal>4523-885</codPostal>
         <SUPERVISOR>
-            <funcao>
+            <function>
                 <Superdesignacao>Administrador</Superdesignacao>
                 <SuperidFunc>6</SuperidFunc>
-            </funcao>
-            <morada>
+            </function>
+            <address>
                 <srua>Rua das Formigas</srua>
                 <snumPorta>45</snumPorta>
                 <sandar>1</sandar>
                 <slocalizacao>Porto</slocalizacao>
-            </morada>
+            </address>
             <snumeroMecanografico>119643</snumeroMecanografico>
             <sdataDeNascimento>05/06/1998</sdataDeNascimento>
             <scontacto>913586789</scontacto>
@@ -37,28 +37,28 @@
             <salcunha>RAF</salcunha>
             <scodPostal>4523-885</scodPostal>
         </SUPERVISOR>
-    </colaborador>
+    </collaborator>
 
-    <equipa>
-        <tipoEquipa>
+    <team>
+        <teamType>
             <descricao>Forte</descricao>
-            <tipoEquipaID>123</tipoEquipaID>
-        </tipoEquipa>
+            <teamTypeID>123</teamTypeID>
+        </teamType>
         <equipaId>123</equipaId>
-        <acronimo>EF</acronimo>
+        <acronym>EF</acronym>
         <TEdesignacao>So os mais fortes</TEdesignacao>
-        <cor>
+        <colour>
         <hexadecimal>0000FF</hexadecimal>
         <nome>Azul</nome>
-        </cor>
-    </equipa>
+        </colour>
+    </team>
 
-    <criticidade>
+    <criticality>
             <labelCriti>medio</labelCriti>
-            <valorCriticidade>4</valorCriticidade>
+            <criticalityValue>4</criticalityValue>
         <tempoMaximoA>10:10</tempoMaximoA>
         <tempoMedioA>10:30</tempoMedioA>
         <tempoMaximoR>10:10</tempoMaximoR>
         <tempoMedioR>10:30</tempoMedioR>
-    </criticidade>
+    </criticality>
 </class>

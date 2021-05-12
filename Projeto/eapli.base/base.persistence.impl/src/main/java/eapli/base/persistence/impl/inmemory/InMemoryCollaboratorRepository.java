@@ -1,15 +1,15 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.EmailInstitucional;
-import eapli.base.colaborador.domain.NumeroMecanografico;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
+import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.domain.InstituionalEmail;
+import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
 
 public class InMemoryCollaboratorRepository
-        extends InMemoryDomainRepository<Colaborador, NumeroMecanografico>
+        extends InMemoryDomainRepository<Collaborator, MecanographicNumber>
         implements CollaboratorRepository {
 
     static {
@@ -17,7 +17,7 @@ public class InMemoryCollaboratorRepository
     }
 
     @Override
-    public Optional<Colaborador> getColaboradorByEmail(EmailInstitucional email) {
+    public Optional<Collaborator> getColaboradorByEmail(InstituionalEmail email) {
         return Optional.empty();
     }
 /*

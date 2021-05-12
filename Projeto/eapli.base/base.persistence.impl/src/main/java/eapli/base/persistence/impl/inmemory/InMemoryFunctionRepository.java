@@ -1,13 +1,13 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.funcao.domain.Funcao;
-import eapli.base.funcao.domain.IdFuncao;
-import eapli.base.funcao.repositories.FuncaoRepository;
+import eapli.base.function.domain.Function;
+import eapli.base.function.domain.IdFunction;
+import eapli.base.function.repositories.FunctionRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 public class InMemoryFunctionRepository
-        extends InMemoryDomainRepository<Funcao, IdFuncao>
-        implements FuncaoRepository {
+        extends InMemoryDomainRepository<Function, IdFunction>
+        implements FunctionRepository {
 
     static {
         InMemoryInitializer.init();

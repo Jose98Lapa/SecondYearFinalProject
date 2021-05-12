@@ -1,23 +1,23 @@
 package eapli.base.infrastructure.bootstrapers;
 
-import eapli.base.TipoEquipa.Application.CriarTipoEquipaController;
-import eapli.base.TipoEquipa.DTO.TipoEquipaDTO;
-import eapli.base.colaborador.application.EspecificarColaboradorController;
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.builder.ColaboradorBuilder;
-import eapli.base.colaborador.dto.ColaboradorDTO;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
-import eapli.base.cor.Application.CriarCorController;
-import eapli.base.cor.DTO.CorDTO;
-import eapli.base.criticidade.application.EspecificarCriticidadeController;
-import eapli.base.criticidade.dto.CriticidadeDTO;
-import eapli.base.equipa.DTO.EquipaDTO;
-import eapli.base.equipa.application.CriarEquipaController;
-import eapli.base.equipa.application.CriarEquipaControllerBootstrap;
-import eapli.base.funcao.domain.Designacao;
-import eapli.base.funcao.domain.Funcao;
-import eapli.base.funcao.domain.IdFuncao;
-import eapli.base.funcao.repositories.FuncaoRepository;
+import eapli.base.teamType.Application.CreateTeamTypeController;
+import eapli.base.teamType.DTO.TeamTypeDTO;
+import eapli.base.collaborator.application.SpecifyCollaboratorController;
+import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.builder.CollaboratorBuilder;
+import eapli.base.collaborator.dto.CollaboratorDTO;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colour.Application.CreateColourController;
+import eapli.base.colour.DTO.ColourDTO;
+import eapli.base.criticality.application.SpecifyCriticalityController;
+import eapli.base.criticality.dto.CriticalityDTO;
+import eapli.base.function.domain.Designation;
+import eapli.base.function.domain.Function;
+import eapli.base.team.DTO.TeamDTO;
+import eapli.base.team.application.CreateTeamController;
+import eapli.base.team.application.CreateTeamBootstrap;
+import eapli.base.function.domain.IdFunction;
+import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,7 +38,7 @@ public class OrganizacaoBootstrap {
     public void initiate() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-        EspecificarColaboradorController colabController = new EspecificarColaboradorController();
+        SpecifyCollaboratorController colabController = new SpecifyCollaboratorController();
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -63,76 +63,76 @@ public class OrganizacaoBootstrap {
                     String Superdesignacao = element.getElementsByTagName("Superdesignacao").item(0).getTextContent();
                     String SuperidFunc = element.getElementsByTagName("SuperidFunc").item(0).getTextContent();
 
-                    Funcao funcaoSupe = new Funcao(IdFuncao.valueOf(SuperidFunc),Designacao.valueOf(Superdesignacao));
-                    FuncaoRepository repo = PersistenceContext.repositories().funcao();
-                    repo.save(funcaoSupe);
+                    Function functionSupe = new Function(IdFunction.valueOf(SuperidFunc), Designation.valueOf(Superdesignacao));
+                    FunctionRepository repo = PersistenceContext.repositories().funcao();
+                    repo.save(functionSupe);
 
-                    ColaboradorBuilder builder = new ColaboradorBuilder();
-                    Colaborador supervisor = builder.withAddress(srua, snumPorta, sandar, slocalizacao, scodPostal).withContact(scontacto)
+                    CollaboratorBuilder builder = new CollaboratorBuilder();
+                    Collaborator supervisor = builder.withAddress(srua, snumPorta, sandar, slocalizacao, scodPostal).withContact(scontacto)
                             .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumPorta)
-                            .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(funcaoSupe).build();
-                    String designacao = element.getElementsByTagName("designacao").item(0).getTextContent();
+                            .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(functionSupe).build();
+                    String designacao = element.getElementsByTagName("designation").item(0).getTextContent();
                     String dataDeNascimento = element.getElementsByTagName("datanascimento").item(0).getTextContent();
                     String rua = element.getElementsByTagName("rua").item(0).getTextContent();
                     String numPorta = element.getElementsByTagName("numPorta").item(0).getTextContent();
                     String andar = element.getElementsByTagName("andar").item(0).getTextContent();
                     String localizacao = element.getElementsByTagName("localizacao").item(0).getTextContent();
                     String numeroMecanografico = element.getElementsByTagName("numeroMecanografico").item(0).getTextContent();
-                    String contacto = element.getElementsByTagName("contacto").item(0).getTextContent();
-                    String nomeCompleto = element.getElementsByTagName("nomeCompleto").item(0).getTextContent();
+                    String contacto = element.getElementsByTagName("contact").item(0).getTextContent();
+                    String nomeCompleto = element.getElementsByTagName("fullName").item(0).getTextContent();
                     String emailInstitucional = element.getElementsByTagName("emailInstitucional").item(0).getTextContent();
-                    String alcunha = element.getElementsByTagName("alcunha").item(0).getTextContent();
+                    String alcunha = element.getElementsByTagName("nickname").item(0).getTextContent();
                     String codPostal = element.getElementsByTagName("codPostal").item(0).getTextContent();
                     String idFunc = element.getElementsByTagName("idFunc").item(0).getTextContent();
 
-                    ColaboradorDTO colaDTO = new ColaboradorDTO(rua, numPorta, andar, localizacao, codPostal, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
+                    CollaboratorDTO colaDTO = new CollaboratorDTO(rua, numPorta, andar, localizacao, codPostal, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
                     colabController.method(colaDTO);
-                    Funcao func = new Funcao(IdFuncao.valueOf(idFunc), Designacao.valueOf(designacao));
+                    Function func = new Function(IdFunction.valueOf(idFunc), Designation.valueOf(designacao));
                     repo.save(func);
                     colabController.defineFunction(func.toDTO());
                     CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
                     repo2.save(supervisor);
                     colabController.defineSupervisor(supervisor.toDTO());
-                    ColaboradorDTO finale = colabController.registerCollaborator();
+                    CollaboratorDTO finale = colabController.registerCollaborator();
                     colabController.saveCollaborator(finale);
 
                     String descricao = element.getElementsByTagName("descricao").item(0).getTextContent();
-                    String tipoEquipaID = element.getElementsByTagName("tipoEquipaID").item(0).getTextContent();
+                    String tipoEquipaID = element.getElementsByTagName("teamTypeID").item(0).getTextContent();
                     String equipaId = element.getElementsByTagName("equipaId").item(0).getTextContent();
-                    String acronimo = element.getElementsByTagName("acronimo").item(0).getTextContent();
+                    String acronimo = element.getElementsByTagName("acronym").item(0).getTextContent();
                     String TEdesignacao = element.getElementsByTagName("TEdesignacao").item(0).getTextContent();
                     String nome = element.getElementsByTagName("nome").item(0).getTextContent();
                     String hexadecimal = element.getElementsByTagName("hexadecimal").item(0).getTextContent();
 
-                    CriarTipoEquipaController controller = new CriarTipoEquipaController();
-                    CriarCorController corController = new CriarCorController();
-                    CorDTO cor = new CorDTO(hexadecimal, nome);
+                    CreateTeamTypeController controller = new CreateTeamTypeController();
+                    CreateColourController corController = new CreateColourController();
+                    ColourDTO cor = new ColourDTO(hexadecimal, nome);
                     corController.registo(cor);
-                    TipoEquipaDTO dto = new TipoEquipaDTO(tipoEquipaID, TEdesignacao, cor);
+                    TeamTypeDTO dto = new TeamTypeDTO(tipoEquipaID, TEdesignacao, cor);
                     controller.registo(dto);
 
-                    CriarEquipaController equipaController = new CriarEquipaController();
-                    List<ColaboradorDTO> responsaveis = new ArrayList<>();
-                    ColaboradorDTO colaboradorDTO= finale;
-                    responsaveis.add(colaboradorDTO);
-                    List<ColaboradorDTO> members = new ArrayList<>();
-                    members.add(colaboradorDTO);
-                    EquipaDTO equipaDto1 = new EquipaDTO(descricao,acronimo,equipaId,responsaveis,dto,members);
+                    CreateTeamController equipaController = new CreateTeamController();
+                    List<CollaboratorDTO> responsaveis = new ArrayList<>();
+                    CollaboratorDTO collaboratorDTO = finale;
+                    responsaveis.add(collaboratorDTO);
+                    List<CollaboratorDTO> members = new ArrayList<>();
+                    members.add(collaboratorDTO);
+                    TeamDTO teamDto1 = new TeamDTO(descricao,acronimo,equipaId,responsaveis,dto,members);
 
 
-                    CriarEquipaControllerBootstrap equipaControllerBootstrap = new CriarEquipaControllerBootstrap();
-                    equipaControllerBootstrap.registo(equipaDto1);
+                    CreateTeamBootstrap equipaControllerBootstrap = new CreateTeamBootstrap();
+                    equipaControllerBootstrap.registo(teamDto1);
 
-                    EspecificarCriticidadeController criticidadeController = new EspecificarCriticidadeController();
+                    SpecifyCriticalityController criticidadeController = new SpecifyCriticalityController();
                     String labelCriti = element.getElementsByTagName("labelCriti").item(0).getTextContent();
-                    String valorCriticidade = element.getElementsByTagName("valorCriticidade").item(0).getTextContent();
+                    String valorCriticidade = element.getElementsByTagName("criticalityValue").item(0).getTextContent();
                     String tempoMaximoA = element.getElementsByTagName("tempoMaximoA").item(0).getTextContent();
                     String tempoMedioA = element.getElementsByTagName("tempoMedioA").item(0).getTextContent();
                     String tempoMaximoR = element.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
                     String tempoMedioR = element.getElementsByTagName("tempoMedioR").item(0).getTextContent();
 
-                    CriticidadeDTO criticidadeDTO = new CriticidadeDTO(labelCriti,valorCriticidade,tempoMaximoA,tempoMedioA,tempoMaximoR,tempoMedioR);
-                    CriticidadeDTO criticidade =  criticidadeController.method(criticidadeDTO);
+                    CriticalityDTO criticalityDTO = new CriticalityDTO(labelCriti,valorCriticidade,tempoMaximoA,tempoMedioA,tempoMaximoR,tempoMedioR);
+                    CriticalityDTO criticidade =  criticidadeController.method(criticalityDTO);
                     criticidadeController.save(criticidade);
                 }
             }

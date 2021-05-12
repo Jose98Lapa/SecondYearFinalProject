@@ -3,18 +3,18 @@
  */
 package eapli.base.infrastructure.persistence;
 
-import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
-import eapli.base.catalogo.repositories.CatalogRepository;
+import eapli.base.teamType.repository.TeamTypeRepository;
+import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
-import eapli.base.cor.reposotories.CorRepository;
-import eapli.base.criticidade.repository.CriticidadeRepository;
-import eapli.base.equipa.repositories.EquipaRepository;
-import eapli.base.funcao.repositories.FuncaoRepository;
-import eapli.base.servico.Repository.ServicoRepository;
-import eapli.base.formulario.repository.FormularioRepository;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colour.reposotories.ColourRepository;
+import eapli.base.criticality.repository.CriticalityRepository;
+import eapli.base.team.repositories.TeamRepository;
+import eapli.base.function.repositories.FunctionRepository;
+import eapli.base.service.Repository.ServiceRepository;
+import eapli.base.form.repository.FormRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -30,28 +30,28 @@ public interface RepositoryFactory {
 	 * @param autoTx the transactional context to enrol
 	 * @return
 	 */
-	ServicoRepository servico(TransactionalContext autoTx);
+	ServiceRepository servico(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	ServicoRepository servico();
+	ServiceRepository servico();
 
 	/**
 	 *
 	 * @param autoTx the transactional context to enrol
 	 * @return
 	 */
-	FormularioRepository form(TransactionalContext autoTx);
+	FormRepository form(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	FormularioRepository form();
+	FormRepository form();
 
 	/**
 	 * factory method to create a transactional context to use in the repositories
@@ -94,45 +94,28 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
-	EquipaRepository teams();
+	TeamRepository teams();
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	EquipaRepository teams(TransactionalContext autoTx);
+	TeamRepository teams(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	CriticidadeRepository criticidades();
+	CriticalityRepository criticidades();
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	CriticidadeRepository criticidades(TransactionalContext autoTx);
-
-	/**
-	 * repository will be created in auto transaction mode
-	 *
-	 * @return
-	 */
-
-
-
-	CorRepository cores();
-
-	/**
-	 * repository will be created in auto transaction mode
-	 *
-	 * @return
-	 */
-	CorRepository cores(TransactionalContext autoTx);
+	CriticalityRepository criticidades(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
@@ -141,14 +124,31 @@ public interface RepositoryFactory {
 	 */
 
 
-	TipoEquipaRepository tiposDeEquipa();
+
+	ColourRepository cores();
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	TipoEquipaRepository tiposDeEquipa(TransactionalContext autoTx);
+	ColourRepository cores(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+
+	TeamTypeRepository tiposDeEquipa();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	TeamTypeRepository tiposDeEquipa(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
@@ -165,28 +165,28 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
-	FuncaoRepository funcao(TransactionalContext autoTx);
+	FunctionRepository funcao(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	FuncaoRepository funcao();
+	FunctionRepository funcao();
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	CriticidadeRepository criticidade(TransactionalContext autoTx);
+	CriticalityRepository criticidade(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	CriticidadeRepository criticidade();
+	CriticalityRepository criticidade();
 
 	/**
 	 * repository will be created in auto transaction mode
@@ -199,14 +199,14 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
-	CatalogRepository catalogs();
+	CatalogueRepository catalogs();
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	CatalogRepository catalogs(TransactionalContext autoTx);
+	CatalogueRepository catalogs(TransactionalContext autoTx);
 
 	/**
 	 *

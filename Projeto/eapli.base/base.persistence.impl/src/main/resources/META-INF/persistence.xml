@@ -12,39 +12,39 @@
     <class>eapli.framework.infrastructure.authz.domain.model.RoleAssignment</class>
     <class>eapli.base.clientusermanagement.domain.ClientUser</class>
     <class>eapli.base.clientusermanagement.domain.SignupRequest</class>
-    <class>eapli.base.formulario.domain.Formulario</class>
-    <class>eapli.base.formulario.domain.atributo.Atributo</class>
-    <class>eapli.base.servico.domain.Servico</class>
-    <class>eapli.base.equipa.domain.Equipa</class>
-    <class>eapli.base.equipa.domain.EquipaID</class>
-    <class>eapli.base.equipa.domain.Acronimo</class>
-    <class>eapli.base.TipoEquipa.Domain.TipoEquipa</class>
-    <class>eapli.base.TipoEquipa.Domain.TipoEquipaID</class>
-    <class>eapli.base.cor.Domain.Cor</class>
-    <class>eapli.base.cor.Domain.Hexadecimal</class>
-    <class>eapli.base.colaborador.domain.Colaborador</class>
-    <class>eapli.base.colaborador.domain.Alcunha</class>
-    <class>eapli.base.colaborador.domain.Andar</class>
-    <class>eapli.base.colaborador.domain.CodPostal</class>
-    <class>eapli.base.colaborador.domain.Contacto</class>
-    <class>eapli.base.colaborador.domain.DataDeNascimento</class>
-    <class>eapli.base.colaborador.domain.EmailInstitucional</class>
-    <class>eapli.base.colaborador.domain.Localizacao</class>
-    <class>eapli.base.colaborador.domain.Morada</class>
-    <class>eapli.base.colaborador.domain.NomeCompleto</class>
-    <class>eapli.base.colaborador.domain.NumeroMecanografico</class>
-    <class>eapli.base.colaborador.domain.NumPorta</class>
-    <class>eapli.base.colaborador.domain.Rua</class>
-    <class>eapli.base.catalogo.domain.Catalogo</class>
-    <class>eapli.base.funcao.domain.Funcao</class>
-    <class>eapli.base.funcao.domain.IdFuncao</class>
-    <class>eapli.base.funcao.domain.Designacao</class>
-    <class>eapli.base.criticidade.domain.Criticidade</class>
-    <class>eapli.base.criticidade.domain.Label</class>
-    <class>eapli.base.criticidade.domain.ValorCriticidade</class>
-    <class>eapli.base.criticidade.domain.ObjetivoSLA</class>
-    <class>eapli.base.criticidade.domain.ObjetivoDeAprovacao</class>
-    <class>eapli.base.criticidade.domain.ObjetivoDeResolucao</class>
+    <class>eapli.base.form.domain.Form</class>
+    <class>eapli.base.form.domain.attribute.Attribute</class>
+    <class>eapli.base.service.domain.Service</class>
+    <class>eapli.base.team.domain.Team</class>
+    <class>eapli.base.team.domain.TeamID</class>
+    <class>eapli.base.team.domain.Acronym</class>
+    <class>eapli.base.teamType.Domain.TeamType</class>
+    <class>eapli.base.teamType.Domain.TeamTypeID</class>
+    <class>eapli.base.colour.Domain.Colour</class>
+    <class>eapli.base.colour.Domain.Hexadecimal</class>
+    <class>eapli.base.collaborator.domain.Collaborator</class>
+    <class>eapli.base.collaborator.domain.Nickname</class>
+    <class>eapli.base.collaborator.domain.Floor</class>
+    <class>eapli.base.collaborator.domain.ZipCode</class>
+    <class>eapli.base.collaborator.domain.Contact</class>
+    <class>eapli.base.collaborator.domain.BirthDate</class>
+    <class>eapli.base.collaborator.domain.InstituionalEmail</class>
+    <class>eapli.base.collaborator.domain.Localization</class>
+    <class>eapli.base.collaborator.domain.Address</class>
+    <class>eapli.base.collaborator.domain.FullName</class>
+    <class>eapli.base.collaborator.domain.MecanographicNumber</class>
+    <class>eapli.base.collaborator.domain.DoorNumber</class>
+    <class>eapli.base.collaborator.domain.Rua</class>
+    <class>eapli.base.catalogue.domain.Catalogue</class>
+    <class>eapli.base.function.domain.Function</class>
+    <class>eapli.base.function.domain.IdFunction</class>
+    <class>eapli.base.function.domain.Designation</class>
+    <class>eapli.base.criticality.domain.Criticality</class>
+    <class>eapli.base.criticality.domain.Label</class>
+    <class>eapli.base.criticality.domain.CriticalityValue</class>
+    <class>eapli.base.criticality.domain.SLAObjective</class>
+    <class>eapli.base.criticality.domain.ApprovalObjective</class>
+    <class>eapli.base.criticality.domain.ResolutionObjective</class>
 
     <properties>
       <!-- <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vs221.dei.isep.ipp.pt:1521/dados"/>-->

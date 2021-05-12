@@ -1,18 +1,15 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
-import eapli.base.catalogo.application.CriarCatalogoController;
-import eapli.base.catalogo.dto.CatalogoDTO;
-import eapli.base.colaborador.application.EspecificarColaboradorController;
-import eapli.base.colaborador.dto.ColaboradorDTO;
-import eapli.base.criticidade.dto.CriticidadeDTO;
-import eapli.base.equipa.DTO.EquipaDTO;
-import eapli.base.formulario.DTO.FormularioDTO;
-import eapli.base.formulario.DTO.atributo.AtributoDTO;
-import eapli.base.formulario.application.FormularioController;
-import eapli.base.formulario.domain.FormularioID;
-import eapli.base.servico.Application.EspecificarServicoController;
-import eapli.base.servico.DTO.ServicoDTO;
-import eapli.framework.io.util.Console;
+import eapli.base.catalogue.application.CreateCatalogueController;
+import eapli.base.catalogue.dto.CatalogueDTO;
+import eapli.base.collaborator.dto.CollaboratorDTO;
+import eapli.base.criticality.dto.CriticalityDTO;
+import eapli.base.team.DTO.TeamDTO;
+import eapli.base.form.DTO.FormDTO;
+import eapli.base.form.DTO.attribute.AttributeDTO;
+import eapli.base.form.application.FormController;
+import eapli.base.service.Application.SpecifyServiceController;
+import eapli.base.service.DTO.ServiceDTO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,34 +48,34 @@ public class CatalogosEServicosBootstrap {
                     String tituloCatalogoC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
                     String descricaoBreveC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
                     String descricaoCompletaC = element.getElementsByTagName("tituloCatalogoC").item(0).getTextContent();
-                    String criticidade = element.getElementsByTagName("criticidade").item(0).getTextContent();
+                    String criticidade = element.getElementsByTagName("criticality").item(0).getTextContent();
 
-                    CriarCatalogoController catalogoController = new CriarCatalogoController();
+                    CreateCatalogueController catalogoController = new CreateCatalogueController();
                     catalogoController.insertBasicData(tituloCatalogoC, iconCatalogo,
                             descricaoBreveC, descricaoCompletaC);
 
-                    List<EquipaDTO> lstEquipas = new ArrayList<>();
+                    List<TeamDTO> lstEquipas = new ArrayList<>();
                     catalogoController.getTeams().forEach(lstEquipas::add);
-                    final Set<EquipaDTO> accessCriteria = new HashSet<>();
+                    final Set<TeamDTO> accessCriteria = new HashSet<>();
                     accessCriteria.add(lstEquipas.get(Integer.parseInt(criteriosdeAcesso)-1));
 
                     catalogoController.defineAccessCriteria(accessCriteria);
 
 
 
-                    List<ColaboradorDTO> lstColaboradores = new ArrayList<>();
+                    List<CollaboratorDTO> lstColaboradores = new ArrayList<>();
                     catalogoController.getCollabs().forEach(lstColaboradores::add);
-                    final Set<ColaboradorDTO> lstResponsaveis = new HashSet<>();
+                    final Set<CollaboratorDTO> lstResponsaveis = new HashSet<>();
                     lstResponsaveis.add(lstColaboradores.get(Integer.parseInt(responsaveis)-1));
 
                     catalogoController.defineResponsibleCollaborator(lstResponsaveis);
 
-                    List<CriticidadeDTO> lstCriticidade = new ArrayList<>();
+                    List<CriticalityDTO> lstCriticidade = new ArrayList<>();
                     catalogoController.getCriticidades().forEach(lstCriticidade::add);
-                    CriticidadeDTO criticidadeDTO = lstCriticidade.get(Integer.parseInt(criticidade)-1);
-                    catalogoController.defineCriticidade(criticidadeDTO);
+                    CriticalityDTO criticalityDTO = lstCriticidade.get(Integer.parseInt(criticidade)-1);
+                    catalogoController.defineCriticidade(criticalityDTO);
 
-                    CatalogoDTO catalogo = catalogoController.registerCatalog();
+                    CatalogueDTO catalogo = catalogoController.registerCatalog();
                     catalogoController.saveCatalog(catalogo);
 
 
@@ -99,18 +96,18 @@ public class CatalogosEServicosBootstrap {
                     String iconServico = element.getElementsByTagName("iconServico").item(0).getTextContent();
                     String tituloServico = element.getElementsByTagName("tituloServico").item(0).getTextContent();
                     String catalogoS = element.getElementsByTagName("catalogoS").item(0).getTextContent();
-                    EspecificarServicoController servicoController = new EspecificarServicoController();
-                    FormularioController formController = new FormularioController();
+                    SpecifyServiceController servicoController = new SpecifyServiceController();
+                    FormController formController = new FormController();
 
-                    ArrayList<CatalogoDTO> catalogos = servicoController.catalogList();
+                    ArrayList<CatalogueDTO> catalogos = servicoController.catalogList();
                     final Set<String> lstkeyWords = new HashSet<>();
                     lstkeyWords.add(keyWords);
-                    ServicoDTO dto = new ServicoDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta,catalogos.get(Integer.parseInt(catalogoS)-1) , null);
+                    ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta,catalogos.get(Integer.parseInt(catalogoS)-1) , null);
                     servicoController.registo(dto);
-                    final Set<AtributoDTO> lstAtributos = new HashSet<>();
-                    AtributoDTO at = new AtributoDTO(Anome, Alabel, Adescricao, Aregex, Atipo,aID);
+                    final Set<AttributeDTO> lstAtributos = new HashSet<>();
+                    AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo,aID);
                     lstAtributos.add(at);
-                    FormularioDTO fdto = new FormularioDTO(fscript,fId,fnome,  lstAtributos);
+                    FormDTO fdto = new FormDTO(fscript,fId,fnome,  lstAtributos);
                     //formController.registo(fdto);
                     //formController.save();
                     servicoController.automatic(fId);

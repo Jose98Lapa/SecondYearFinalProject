@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <class>
 <class1>
-    <catalogo>
+    <catalogue>
         <criteriosdeAcesso>1</criteriosdeAcesso>
         <responsaveis>1</responsaveis>
         <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
         <tituloCatalogoC>Restauros</tituloCatalogoC>
         <descricaoBreveC>descricao breve restauros</descricaoBreveC>
         <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
-        <criticidade>1</criticidade>
-    </catalogo>
+        <criticality>1</criticality>
+    </catalogue>
 
     <Servico>
         <Formulario>

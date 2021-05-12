@@ -24,18 +24,15 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
-import eapli.base.app.user.console.presentation.ConsultarServicosUI.ConsultarServicosUI;
-import eapli.base.app.user.console.presentation.CriarCor.CriarCorUI;
-import eapli.base.app.user.console.presentation.CriarEquipa.CriarEquipaUI;
-import eapli.base.app.user.console.presentation.CriarTipoEquipa.CriarTipoEquipaUI;
-import eapli.base.app.user.console.presentation.EspecificarColaborador.EspecificarColaboradorUI;
-import eapli.base.app.user.console.presentation.EspecificarCriticidade.EspecificarCriticidadeUI;
-import eapli.base.app.user.console.presentation.associarColaborador.AssociarColaboradorUI;
-import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
-import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
-import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
-import eapli.base.app.user.console.presentation.removerColaborador.RemoverColaboradorUI;
-import eapli.base.equipa.application.RemoverColaboradorController;
+import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
+import eapli.base.app.user.console.presentation.createCatalogue.CreateCatalogueUI;
+import eapli.base.app.user.console.presentation.createColour.CreateColourUI;
+import eapli.base.app.user.console.presentation.createTeam.CreateTeamUI;
+import eapli.base.app.user.console.presentation.createTeamType.CreateTeamTypeUI;
+import eapli.base.app.user.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
+import eapli.base.app.user.console.presentation.specifyCriticality.SpecifyCriticalityUI;
+import eapli.base.app.user.console.presentation.associateCollaborator.AssociateCollaboratorUI;
+import eapli.base.app.user.console.presentation.removeCollaborator.RemoveCollaboratorUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -137,73 +134,73 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildServicoMenu() {
         final Menu servicoMenu = new Menu("Servico");
-        servicoMenu.addItem(1, "Especificar Servico", () -> new EspecificarServicoUI().show());
-        servicoMenu.addItem(2,"Alterar Servico",()->new CompletarServicoUI().show());
-        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
+        servicoMenu.addItem(1, "Especificar Servico", () -> new eapli.base.app.user.console.presentation.especificarServico.SpecifyServiceUI().show());
+        servicoMenu.addItem(2,"Alterar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.CompleteServiceUI().show());
+        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.ActivateDeactivateService().show());
         servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
     }
 
     private Menu buildEditarServico(){
         final Menu corMenu = new Menu("Alterar Servico");
-        corMenu.addItem(1,"Alterar Servico",()->new CompletarServicoUI().show());
+        corMenu.addItem(1,"Alterar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.CompleteServiceUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }
     private Menu buildAtivarDesativarServico(){
         final Menu corMenu = new Menu("Ativar/Desativar Servico");
-        corMenu.addItem(1,"Ativar/Desativar Servico",()->new AtivarDesativarServico().show());
+        corMenu.addItem(1,"Ativar/Desativar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.ActivateDeactivateService().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }
 
     private Menu buildEquipaMenu() {
         final Menu equipaMenu = new Menu("Equipa");
-        equipaMenu.addItem(1, "Criar Equipa", () -> new CriarEquipaUI().show());
-        equipaMenu.addItem(2,"Associar Colaborador",()->new AssociarColaboradorUI().show());
-        equipaMenu.addItem(3,"Remover Colaborador",()->new RemoverColaboradorUI().show());
+        equipaMenu.addItem(1, "Criar Equipa", () -> new CreateTeamUI().show());
+        equipaMenu.addItem(2,"Associar Colaborador",()->new AssociateCollaboratorUI().show());
+        equipaMenu.addItem(3,"Remover Colaborador",()->new RemoveCollaboratorUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }
 
     private Menu buildCatalogoMenu() {
         final Menu equipaMenu = new Menu("Catalogo");
-        equipaMenu.addItem(1, "Criar Catalogo", () -> new eapli.base.app.user.console.presentation.CriarCatalogo.CriarCatalogoUI().show());
+        equipaMenu.addItem(1, "Criar Catalogo", () -> new CreateCatalogueUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }
 
     private Menu buildEspecificarColaboradorMenu(){
         final Menu colaboradorMenu = new Menu("Colaborador");
-        colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new EspecificarColaboradorUI().show());
+        colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new SpecifyCollaboratorUI().show());
         colaboradorMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return colaboradorMenu;
     }
 
     private Menu buildEspecificarCriticidadeMenu(){
         final Menu criticidadeMenu = new Menu("Criticidade");
-        criticidadeMenu.addItem(1,"Especificar Criticidade",() -> new EspecificarCriticidadeUI().show());
+        criticidadeMenu.addItem(1,"Especificar Criticidade",() -> new SpecifyCriticalityUI().show());
         criticidadeMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return criticidadeMenu;
     }
 
     private Menu buildTipoEquipaMenu(){
         final Menu tipoEquipaMenu = new Menu("Tipo Equipa");
-        tipoEquipaMenu.addItem(1,"Criar Tipo Equipa",()->new CriarTipoEquipaUI().show());
+        tipoEquipaMenu.addItem(1,"Criar Tipo Equipa",()->new CreateTeamTypeUI().show());
         tipoEquipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return tipoEquipaMenu;
     }
 
     private Menu buildCorMenu(){
         final Menu corMenu = new Menu("Cor");
-        corMenu.addItem(1,"Adicionar Cor",()->new CriarCorUI().show());
+        corMenu.addItem(1,"Adicionar Cor",()->new CreateColourUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }
 
     private Menu builderConsultarServicoMenu(){
         final Menu consultarServicoMenu = new Menu("Consultar Serviços");
-        consultarServicoMenu.addItem(1,"Consultar Serviços",()->new ConsultarServicosUI().show());
+        consultarServicoMenu.addItem(1,"Consultar Serviços",()->new CheckServicesUI().show());
         consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return consultarServicoMenu;
     }

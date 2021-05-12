@@ -1,16 +1,16 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
-import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
-import eapli.base.catalogo.repositories.CatalogRepository;
+import eapli.base.teamType.repository.TeamTypeRepository;
+import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
-import eapli.base.cor.reposotories.CorRepository;
-import eapli.base.criticidade.repository.CriticidadeRepository;
-import eapli.base.formulario.repository.FormularioRepository;
-import eapli.base.funcao.repositories.FuncaoRepository;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colour.reposotories.ColourRepository;
+import eapli.base.criticality.repository.CriticalityRepository;
+import eapli.base.form.repository.FormRepository;
+import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
-import eapli.base.servico.Repository.ServicoRepository;
+import eapli.base.service.Repository.ServiceRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -46,44 +46,44 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
 
 	@Override
-	public JpaEquipaRepository teams(final TransactionalContext autoTx) {
-		return new JpaEquipaRepository(autoTx);
+	public JpaTeamRepository teams(final TransactionalContext autoTx) {
+		return new JpaTeamRepository(autoTx);
 	}
 
 	@Override
-	public CriticidadeRepository criticidades() {
+	public CriticalityRepository criticidades() {
 		return null;
 	}
 
 	@Override
-	public CriticidadeRepository criticidades(TransactionalContext autoTx) {
+	public CriticalityRepository criticidades(TransactionalContext autoTx) {
 		return null;
 	}
 
 	@Override
-	public CorRepository cores() {
-		return new JpaCorRepository(Application.settings().getPersistenceUnitName());
+	public ColourRepository cores() {
+		return new JpaColourRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public CorRepository cores(TransactionalContext autoTx) {
-		return new JpaCorRepository(autoTx);
+	public ColourRepository cores(TransactionalContext autoTx) {
+		return new JpaColourRepository(autoTx);
 	}
 
 	@Override
-	public TipoEquipaRepository tiposDeEquipa() {
-		return new JpaTipoEquipaRepository(Application.settings().getPersistenceUnitName());
+	public TeamTypeRepository tiposDeEquipa() {
+		return new JpaTeamTypeRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public TipoEquipaRepository tiposDeEquipa(TransactionalContext autoTx) {
-		return new JpaTipoEquipaRepository(autoTx);
+	public TeamTypeRepository tiposDeEquipa(TransactionalContext autoTx) {
+		return new JpaTeamTypeRepository(autoTx);
 	}
 
 
 	@Override
-	public JpaEquipaRepository teams() {
-		return new JpaEquipaRepository(Application.settings().getPersistenceUnitName());
+	public JpaTeamRepository teams() {
+		return new JpaTeamRepository(Application.settings().getPersistenceUnitName());
 	}
 
 
@@ -98,33 +98,33 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public FuncaoRepository funcao(TransactionalContext autoTx) {
-		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
+	public FunctionRepository funcao(TransactionalContext autoTx) {
+		return new JpaFunctionReposiory(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public FuncaoRepository funcao() {
-		return new JpaFuncaoReposiory(Application.settings().getPersistenceUnitName());
+	public FunctionRepository funcao() {
+		return new JpaFunctionReposiory(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public CriticidadeRepository criticidade() {
-		return new JpaCriticidadeRepository(Application.settings().getPersistenceUnitName());
+	public CriticalityRepository criticidade() {
+		return new JpaCriticalityRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public CriticidadeRepository criticidade(TransactionalContext autoTx) {
-		return new JpaCriticidadeRepository(autoTx);
+	public CriticalityRepository criticidade(TransactionalContext autoTx) {
+		return new JpaCriticalityRepository(autoTx);
 	}
 
 	@Override
-	public CatalogRepository catalogs() {
-		return new JpaCatalogRepository(Application.settings().getPersistenceUnitName());
+	public CatalogueRepository catalogs() {
+		return new JpaCatalogueRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public CatalogRepository catalogs(TransactionalContext autoTx) {
-		return new JpaCatalogRepository(Application.settings().getPersistenceUnitName());
+	public CatalogueRepository catalogs(TransactionalContext autoTx) {
+		return new JpaCatalogueRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
@@ -138,22 +138,22 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public ServicoRepository servico(TransactionalContext autoTx) {
-		return new JpaServicoRepository(autoTx);
+	public ServiceRepository servico(TransactionalContext autoTx) {
+		return new JpaServiceRepository(autoTx);
 	}
 
 	@Override
-	public ServicoRepository servico() {
-		return new JpaServicoRepository(Application.settings().getPersistenceUnitName());	}
+	public ServiceRepository servico() {
+		return new JpaServiceRepository(Application.settings().getPersistenceUnitName());	}
 
 	@Override
-	public FormularioRepository form(final TransactionalContext autoTx) {
-		return new JpaFormularioRepository(autoTx);
+	public FormRepository form(final TransactionalContext autoTx) {
+		return new JpaFormRepository(autoTx);
 	}
 
 	@Override
-	public FormularioRepository form() {
-		return new JpaFormularioRepository(Application.settings().getPersistenceUnitName());
+	public FormRepository form() {
+		return new JpaFormRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

@@ -1,19 +1,18 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.TipoEquipa.Builder.TipoEquipaBuilder;
-import eapli.base.TipoEquipa.repository.TipoEquipaRepository;
-import eapli.base.catalogo.repositories.CatalogRepository;
+import eapli.base.teamType.repository.TeamTypeRepository;
+import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.base.colaborador.repositories.CollaboratorRepository;
-import eapli.base.cor.reposotories.CorRepository;
-import eapli.base.criticidade.repository.CriticidadeRepository;
-import eapli.base.equipa.repositories.EquipaRepository;
-import eapli.base.formulario.repository.FormularioRepository;
-import eapli.base.funcao.repositories.FuncaoRepository;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.colour.reposotories.ColourRepository;
+import eapli.base.criticality.repository.CriticalityRepository;
+import eapli.base.team.repositories.TeamRepository;
+import eapli.base.form.repository.FormRepository;
+import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
-import eapli.base.servico.Repository.ServicoRepository;
+import eapli.base.service.Repository.ServiceRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -52,51 +51,51 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 
 	@Override
-	public EquipaRepository teams() {
+	public TeamRepository teams() {
 
 		return teams(null);
 	}
 
 	@Override
-	public EquipaRepository teams(final TransactionalContext tx) {
+	public TeamRepository teams(final TransactionalContext tx) {
 
-		return new InMemoryEquipaRepository();
+		return new InMemoryTeamRepository();
 	}
 
 
 	@Override
-	public CorRepository cores() {
+	public ColourRepository cores() {
 
 		return cores(null);
 	}
 
 	@Override
-	public CorRepository cores(final TransactionalContext tx) {
+	public ColourRepository cores(final TransactionalContext tx) {
 
-		return new InMemoryCorRepository();
+		return new InMemoryColourRepository();
 	}
 
 
 	@Override
-	public TipoEquipaRepository tiposDeEquipa() {
+	public TeamTypeRepository tiposDeEquipa() {
 
 		return tiposDeEquipa(null);
 	}
 
 	@Override
-	public TipoEquipaRepository tiposDeEquipa(final TransactionalContext tx) {
+	public TeamTypeRepository tiposDeEquipa(final TransactionalContext tx) {
 
-		return new InMemoryTipoEquipaRepository();
+		return new InMemoryTeamTypeRepository();
 	}
 
 
 	@Override
-	public CriticidadeRepository criticidades() {
+	public CriticalityRepository criticidades() {
 		return null;
 	}
 
 	@Override
-	public CriticidadeRepository criticidades(TransactionalContext autoTx) {
+	public CriticalityRepository criticidades(TransactionalContext autoTx) {
 		return null;
 	}
 
@@ -112,31 +111,31 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public FuncaoRepository funcao(TransactionalContext autoTx) {
+	public FunctionRepository funcao(TransactionalContext autoTx) {
 		return new InMemoryFunctionRepository();
 	}
 
 	@Override
-	public FuncaoRepository funcao() {return funcao(null);}
+	public FunctionRepository funcao() {return funcao(null);}
 
 	@Override
-	public CriticidadeRepository criticidade(TransactionalContext autoTx) {
-		return new InMemoryCriticidadeRepository();
+	public CriticalityRepository criticidade(TransactionalContext autoTx) {
+		return new InMemoryCriticalityRepository();
 	}
 
 	@Override
-	public CriticidadeRepository criticidade() {
+	public CriticalityRepository criticidade() {
 		return criticidade(null);
 	}
 
 	@Override
-	public CatalogRepository catalogs (final TransactionalContext tx) {
+	public CatalogueRepository catalogs (final TransactionalContext tx) {
 
-		return new InMemoryCatalogRepository();
+		return new InMemoryCatalogueRepository();
 	}
 
 	@Override
-	public CatalogRepository catalogs() {
+	public CatalogueRepository catalogs() {
 		return catalogs(null);
 	}
 
@@ -152,22 +151,22 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public FormularioRepository form(TransactionalContext autoTx) {
+	public FormRepository form(TransactionalContext autoTx) {
 		return null;
 	}
 
 	@Override
-	public FormularioRepository form() {
+	public FormRepository form() {
 		return form(null);
 	}
 
 	@Override
-	public ServicoRepository servico(TransactionalContext autoTx) {
+	public ServiceRepository servico(TransactionalContext autoTx) {
 		return null;
 	}
 
 	@Override
-	public ServicoRepository servico() {
+	public ServiceRepository servico() {
 		return servico(null);
 	}
 
