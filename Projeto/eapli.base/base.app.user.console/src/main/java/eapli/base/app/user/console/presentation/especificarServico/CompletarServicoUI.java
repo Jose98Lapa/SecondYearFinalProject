@@ -3,7 +3,7 @@ package eapli.base.app.user.console.presentation.especificarServico;
 import eapli.base.app.user.console.presentation.formulario.FormularioUI;
 import eapli.base.catalogo.dto.CatalogoDTO;
 import eapli.base.servico.Application.EspecificarServicoController;
-import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.base.servico.DTO.ServicoDTO;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;

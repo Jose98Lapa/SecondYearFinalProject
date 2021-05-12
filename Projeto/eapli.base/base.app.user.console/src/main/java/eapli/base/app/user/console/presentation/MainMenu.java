@@ -33,7 +33,7 @@ import eapli.base.app.user.console.presentation.EspecificarCriticidade.Especific
 import eapli.base.app.user.console.presentation.associarColaborador.AssociarColaboradorUI;
 import eapli.base.app.user.console.presentation.especificarServico.AtivarDesativarServico;
 import eapli.base.app.user.console.presentation.especificarServico.CompletarServicoUI;
-import eapli.base.app.user.console.presentation.EspecificarServico.EspecificarServicoUI;
+import eapli.base.app.user.console.presentation.especificarServico.EspecificarServicoUI;
 import eapli.base.app.user.console.presentation.removerColaborador.RemoverColaboradorUI;
 import eapli.base.equipa.application.RemoverColaboradorController;
 import eapli.base.usermanagement.domain.BaseRoles;
