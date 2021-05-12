@@ -55,6 +55,10 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
         this.catalogo=catalogo;
     }
 
+    public void addkeywords(Set<KeyWords> keys){
+        this.keywords.addAll(keys);
+    }
+
     public void setScript(ServicoScript script) {
         this.script = script;
     }
@@ -121,6 +125,14 @@ public class Servico implements AggregateRoot<ServicoID>, DTOable<ServicoDTO>{
 
     public void setTitle(TituloServico title) {
         this.title = title;
+    }
+
+    public Set<KeyWords> Keywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<KeyWords> keywords) {
+        this.keywords = keywords;
     }
 
     public void setTipo(TipoServico tipo) {

@@ -31,4 +31,13 @@ public class EquipaDTO {
         this.tipoEquipaDTO = tipoEquipaDTO;
         this.colaboradorDTO = colaboradorDTO;
     }
+
+    @Override
+    public String toString() {
+        return "EquipaDTO{" +
+                "descricao='" + descricao + '\'' +
+                ", acronimo='" + acronimo + '\'' +
+                ", equipaID='" + equipaID + '\'' +
+                '}';
+    }
 }

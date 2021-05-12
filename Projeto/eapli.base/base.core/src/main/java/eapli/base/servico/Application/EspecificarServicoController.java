@@ -84,6 +84,7 @@ public class EspecificarServicoController {
             servico.setIcon(IconServico.valueof(servicoDTO.icon));
             servico.setTitle(TituloServico.valueOf(servicoDTO.title));
             servico.setScript(ServicoScript.valueOf(servicoDTO.script));
+            servico.addkeywords(KeyWords.valueOf(servicoDTO.keywords));
             repo.save(servico);
         }
     }

@@ -67,14 +67,13 @@ public class CatalogoDTO {
 
     @Override
     public String toString() {
-        return "CatalogoDTO{" +
-                "identity='" + identity + '\'' +
-                ", catalogTitle='" + catalogTitle + '\'' +
-                ", icon='" + icon + '\'' +
-                ", briefDesc='" + briefDesc + '\'' +
-                ", completeDesc='" + completeDesc + '\'' +
-                ", accessCriteria=" + accessCriteria +
-                ", responsableCollabs=" + responsableCollabs +
+        return  "ID: = " + identity +
+                ", Title: " + catalogTitle +
+                ", Icon=" + icon +
+                ", Brief Description: " + briefDesc +
+                ", Complete Description: '" + completeDesc +
+                ", Access Criteria: " + accessCriteria +
+                ", Responsible Collaborator: " + responsableCollabs +
                 '}';
     }
 }

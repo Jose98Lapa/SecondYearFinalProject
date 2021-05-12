@@ -33,17 +33,15 @@ public class ServicoDTO {
 
     @Override
     public String toString() {
-        return "ServicoDTO{" +
-                "title='" + title + '\'' +
-                ", id='" + id + '\'' +
-                ", icon='" + icon + '\'' +
-                ", keywords=" + keywords +
-                ", status='" + status + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", briefDescription='" + briefDescription + '\'' +
-                ", completeDescription='" + completeDescription + '\'' +
-                ", script='" + script + '\'' +
-                ", catalogo=" + catalogo +
-                '}';
+        return "Servico \n" + title +
+                ",  \nID:" + id +
+                ",  \nicon:" + icon +
+                ",  \nkeywords:" + keywords +
+                ",  \nstatus:" + status  +
+                ",  \ntipo:" + tipo + '\'' +
+                ",  \nbriefDescription:" + briefDescription +
+                ",  \ncompleteDescription:" + completeDescription +
+                ",  \nscript:" + script +
+                ",  \ncatalogo:\n " + catalogo;
     }
 }
