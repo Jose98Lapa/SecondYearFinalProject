@@ -33,6 +33,9 @@ import eapli.base.app.user.console.presentation.specifyCollaborator.SpecifyColla
 import eapli.base.app.user.console.presentation.specifyCriticality.SpecifyCriticalityUI;
 import eapli.base.app.user.console.presentation.associateCollaborator.AssociateCollaboratorUI;
 import eapli.base.app.user.console.presentation.removeCollaborator.RemoveCollaboratorUI;
+import eapli.base.app.user.console.presentation.specifyService.CompleteServiceUI;
+import eapli.base.app.user.console.presentation.specifyService.SpecifyServiceUI;
+import eapli.base.app.user.console.presentation.specifyService.ToggleService;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -134,22 +137,22 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu buildServicoMenu() {
         final Menu servicoMenu = new Menu("Servico");
-        servicoMenu.addItem(1, "Especificar Servico", () -> new eapli.base.app.user.console.presentation.especificarServico.SpecifyServiceUI().show());
-        servicoMenu.addItem(2,"Alterar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.CompleteServiceUI().show());
-        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.ActivateDeactivateService().show());
+        servicoMenu.addItem(1, "Especificar Servico", ()-> new SpecifyServiceUI().show());
+        servicoMenu.addItem(2,"Alterar Servico",()->new CompleteServiceUI().show());
+        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new ToggleService().show());
         servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return servicoMenu;
     }
 
     private Menu buildEditarServico(){
         final Menu corMenu = new Menu("Alterar Servico");
-        corMenu.addItem(1,"Alterar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.CompleteServiceUI().show());
+        corMenu.addItem(1,"Alterar Servico",()->new CompleteServiceUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }
     private Menu buildAtivarDesativarServico(){
         final Menu corMenu = new Menu("Ativar/Desativar Servico");
-        corMenu.addItem(1,"Ativar/Desativar Servico",()->new eapli.base.app.user.console.presentation.especificarServico.ActivateDeactivateService().show());
+        corMenu.addItem(1,"Ativar/Desativar Servico",()->new ToggleService().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
     }

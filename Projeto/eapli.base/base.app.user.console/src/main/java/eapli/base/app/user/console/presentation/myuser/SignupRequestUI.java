@@ -10,7 +10,6 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 /**
- *
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @SuppressWarnings("squid:S106")
@@ -31,10 +30,8 @@ public class SignupRequestUI extends AbstractUI {
             this.theController.signup(userData.username(), userData.password(),
                     userData.firstName(), userData.lastName(), userData.email(),
                     mecanographicNumber);
-        } catch (final IntegrityViolationException | ConcurrencyException e) {
-            LOGGER.error("Error performing the operation", e);
-            System.out.println(
-                    "Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
+        } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
+            System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
         }
 
         return true;

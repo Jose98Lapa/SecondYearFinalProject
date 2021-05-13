@@ -19,13 +19,11 @@ public class CreateColourUI extends AbstractUI {
     protected boolean doShow() {
         String nome = Console.readLine("Insira o nome da cor");
         String hexadecimal = Console.readLine("Insira o hexadecimal");
-        ColourDTO colourDTO = new ColourDTO(hexadecimal,nome);
         try {
+        ColourDTO colourDTO = new ColourDTO(hexadecimal,nome);
             this.createColourController.registo(colourDTO);
-        }catch (final IntegrityViolationException | ConcurrencyException e){
-            LOGGER.error("Error performing the operation", e);
-            System.out.println("Erro inesperado na aplicação. " +
-                    "Por favor tentar novamente.");
+        } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
+            System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
         }
         return true;
     }
