@@ -5,6 +5,9 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.domain.Service;
+import eapli.base.service.domain.ServiceID;
+import eapli.base.service.domain.ServiceStatus;
+import eapli.base.service.domain.ServiceTitle;
 
 import java.util.ArrayList;
 
@@ -37,12 +40,35 @@ public class ServiceListService {
         return  serv;
     }
 
-    public List<ServiceDTO> getServicoDTOByCatalogo(Catalogue catalogue){
+    public List<ServiceDTO> getServiceDTOByCatalogueAndTitle(Catalogue catalogue,String query,String parameter){
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
-        for (Service service : repo.findAll()){
-            if (service.catalogo().identity().equals(catalogue.identity())){
-                serviceDTOList.add(service.toDTO());
-            }
+        for (Service service : repo.getServiceListByCatalogueAndTitle(catalogue,query, ServiceTitle.valueOf(parameter))){
+            serviceDTOList.add(service.toDTO());
+        }
+        return serviceDTOList;
+
+    }
+
+    public List<ServiceDTO> getServiceDTOByCatalogueAndID(Catalogue catalogue,String query,String parameter){
+        List<ServiceDTO> serviceDTOList = new ArrayList<>();
+        for (Service service : repo.getServiceListByCatalogueAndID(catalogue,query, ServiceID.valueOf(parameter))){
+            serviceDTOList.add(service.toDTO());
+        }
+        return serviceDTOList;
+    }
+
+    public List<ServiceDTO> getServiceDTOByCatalogueAndStatus(Catalogue catalogue,String query,String parameter){
+        List<ServiceDTO> serviceDTOList = new ArrayList<>();
+        for (Service service : repo.getServiceListByCatalogueAndStatus(catalogue,query, ServiceStatus.valueOf(parameter))){
+            serviceDTOList.add(service.toDTO());
+        }
+        return serviceDTOList;
+    }
+
+    public List<ServiceDTO> getServiceDTOByCatalogue(Catalogue catalogue,String query){
+        List<ServiceDTO> serviceDTOList = new ArrayList<>();
+        for (Service service : repo.getServiceListByCatalogue(catalogue,query)){
+           serviceDTOList.add(service.toDTO());
         }
         return serviceDTOList;
 

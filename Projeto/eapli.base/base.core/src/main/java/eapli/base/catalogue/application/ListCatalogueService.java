@@ -4,6 +4,7 @@ import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.team.domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,16 @@ public class ListCatalogueService {
         return catalogos;
     }
 
-    public List<CatalogueDTO> allCompatibleCatalogo(Set<String> equipaTeste){
-        ArrayList<CatalogueDTO>catalogos = new ArrayList<>();
+    public List<Catalogue> allCompatibleCatalogo(Set<Team> validTeams){
+        ArrayList<Catalogue>catalogos = new ArrayList<>();
         for (Catalogue catalogue : catalogoRepo.findAll()){
-            if (catalogue.isTipoEquipaValido(equipaTeste)){
-                catalogos.add(catalogue.toDTO());
+            if (catalogue.isTeamValid(validTeams)){
+                catalogos.add(catalogue);
             }
         }
         return catalogos;
     }
+
+
+
 }

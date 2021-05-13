@@ -6,6 +6,8 @@ import eapli.base.form.domain.FormID;
 import eapli.base.service.domain.Service;
 import eapli.base.service.domain.ServiceID;
 import eapli.base.service.Repository.ServiceRepository;
+import eapli.base.service.domain.ServiceStatus;
+import eapli.base.service.domain.ServiceTitle;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.List;
@@ -40,9 +42,25 @@ import java.util.Optional;
         }
 
         @Override
-        public List<Service> getServicoListByCatalogo(Catalogue catalogue) {
+        public List<Service> getServiceListByCatalogue(Catalogue catalogue, String query) {
             return null;
         }
+
+        @Override
+        public List<Service> getServiceListByCatalogueAndTitle(Catalogue catalogue, String query, ServiceTitle serviceTitle) {
+            return null;
+        }
+
+        @Override
+        public List<Service> getServiceListByCatalogueAndID(Catalogue catalogue, String query, ServiceID serviceID) {
+            return null;
+        }
+
+        @Override
+        public List<Service> getServiceListByCatalogueAndStatus(Catalogue catalogue, String query, ServiceStatus serviceStatus) {
+            return null;
+        }
+
 
         @Override
         public Optional<Form> getFormById(FormID formid) {

@@ -103,13 +103,13 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO> {
         this.responsableCollabs.addAll(responsableCollabs);
     }
 
-    public boolean isTipoEquipaValido(Set<String> equipaValidas){
-        for (Team e :accessCriteria){
-            if (equipaValidas.contains(e.identity().toString())){
-                return true;
-            }
-        }
-        return false;
+    public boolean isTeamValid(Set<Team> validTeams){
+       for (Team team:accessCriteria){
+           if (validTeams.contains(team)){
+               return true;
+           }
+       }
+       return false;
 
     }
 

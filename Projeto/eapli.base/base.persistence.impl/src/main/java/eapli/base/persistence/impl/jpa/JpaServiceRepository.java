@@ -7,6 +7,7 @@ import eapli.base.service.domain.Service;
 import eapli.base.service.domain.ServiceID;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.domain.ServiceStatus;
+import eapli.base.service.domain.ServiceTitle;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -59,11 +60,36 @@ public class JpaServiceRepository extends JpaAutoTxRepository<Service, ServiceID
     }
 
     @Override
-    public List<Service> getServicoListByCatalogo(Catalogue catalogue) {
-        final TypedQuery<Service> q = createQuery("Select e From eapli.base.service.domain.Service e where e.catalogue =: status ", Service.class);
-        q.setParameter("status", catalogue);
+    public List<Service> getServiceListByCatalogue(Catalogue catalogue, String query) {
+        final TypedQuery<Service> q = createQuery(query, Service.class);
+        q.setParameter("catalogue", catalogue);
         return q.getResultList();
     }
+
+    @Override
+    public List<Service> getServiceListByCatalogueAndTitle(Catalogue catalogue, String query, ServiceTitle serviceTitle) {
+        final TypedQuery<Service> q = createQuery(query, Service.class);
+        q.setParameter("catalogue", catalogue);
+        q.setParameter("parameter",serviceTitle);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Service> getServiceListByCatalogueAndID(Catalogue catalogue, String query, ServiceID serviceID) {
+        final TypedQuery<Service> q = createQuery(query, Service.class);
+        q.setParameter("catalogue", catalogue);
+        q.setParameter("parameter",serviceID);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Service> getServiceListByCatalogueAndStatus(Catalogue catalogue, String query, ServiceStatus serviceStatus) {
+        final TypedQuery<Service> q = createQuery(query, Service.class);
+        q.setParameter("catalogue", catalogue);
+        q.setParameter("parameter",serviceStatus);
+        return q.getResultList();
+    }
+
     @Override
     public Optional<Form> getFormById(FormID formId) {
         final TypedQuery<Form> q = createQuery("Select e From eapli.base.form.domain.Form e where e.FormID =: formId ", Form.class);

@@ -18,13 +18,13 @@ public class TeamListService {
         return equipas;
     }
 
-    public Set<TeamDTO> getEquipasDumColaborador(Collaborator collaborator){
-        Set<TeamDTO> teamDTOS = new HashSet<>();
+    public Set<Team> getACollaboratorTeams(Collaborator collaborator){
+        Set<Team> teamHashSet = new HashSet<>();
         for (Team team : teamRepo.findAll()){
             if (team.containsTeamMember(collaborator)){
-                teamDTOS.add(team.toDTO());
+                teamHashSet.add(team);
             }
         }
-        return teamDTOS;
+        return teamHashSet;
     }
 }

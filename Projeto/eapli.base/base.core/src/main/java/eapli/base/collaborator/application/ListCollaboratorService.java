@@ -1,12 +1,14 @@
 package eapli.base.collaborator.application;
 
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.team.domain.Team;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class ListCollaboratorService {
@@ -26,6 +28,14 @@ public class ListCollaboratorService {
             }
         }
         return collaboratorDTOS;
-
     }
+
+    public Collaborator getCollaboratorByEmail(String email){
+        Optional<Collaborator> optionalCollaborator = colaboratorRepo.getColaboradorByEmail(InstituionalEmail.valueOf(email));
+        if (optionalCollaborator.isPresent())
+            return optionalCollaborator.get();
+        else
+            throw new IllegalArgumentException("Não há nenhum colaborador com esse email no Sistema");
+    }
+
 }

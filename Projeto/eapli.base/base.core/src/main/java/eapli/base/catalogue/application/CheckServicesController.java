@@ -16,37 +16,30 @@ import java.util.*;
 
 public class CheckServicesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
-    public List<ServiceDTO> procuraServico(int parametro, String valor){
+    private final CheckServiceListService checkServiceListService = new CheckServiceListService();
+    public void getCollaboratorCatalogues(){
         String email = authz.session().get().authenticatedUser().email().toString();
-        Optional<Collaborator> optionalColaborador = collaboratorRepository.getColaboradorByEmail(InstituionalEmail.valueOf(email));
-        if (optionalColaborador.isPresent()){
-            Collaborator collaborator = optionalColaborador.get();
-            ListCatalogueService listCatalogueService = new ListCatalogueService();
-            TeamListService teamListService = new TeamListService();
-            ServiceListService serviceListService = new ServiceListService();
-            Set<String> equipaDTO = new HashSet<>();
-            teamListService.getEquipasDumColaborador(collaborator).forEach(equipaDTO1 -> equipaDTO.add(equipaDTO1.equipaID));
-            List<ServiceDTO> serviceDTOList = new ArrayList<>();
-            for (CatalogueDTO catalogueDTO : listCatalogueService.allCompatibleCatalogo(equipaDTO)){
-                serviceDTOList.addAll(serviceListService.getServicoDTOByCatalogo(new CatalogueDTOParser().valueOf(catalogueDTO)));
-            }
-            if (parametro!=4){
-                switch (parametro){
-                    case 1:
-                        serviceDTOList.removeIf(servicoDTO -> !servicoDTO.title.equals(valor));
-                        break;
-                    case 2:
-                        serviceDTOList.removeIf(servicoDTO -> !servicoDTO.id.equals(valor));
-                        break;
-                    default:
-                        serviceDTOList.removeIf(servicoDTO -> !servicoDTO.status.equals(valor));
-                }
-            }
-            return serviceDTOList;
-        }else{
-            throw new IllegalArgumentException("Colaborador Inválido");
-        }
+        checkServiceListService.getCompatibleCatalogueOfACollaborator(email);
+    }
+
+    public List<ServiceDTO> getServiceDTO(){
+        return checkServiceListService.getServicesDTO();
+    }
+
+    public List<ServiceDTO> getServiceDTOByTitle(String title){
+        return checkServiceListService.getServicesDTO(title,1);
+    }
+
+    public List<ServiceDTO> getServiceDTOById(String ID){
+        return checkServiceListService.getServicesDTO(ID,2);
+    }
+
+    public List<ServiceDTO> getServiceDTOByStatus(String status){
+        return checkServiceListService.getServicesDTO(status,3);
+    }
+
+    public List<ServiceDTO> getServiceDTOByKeywords(Set<String> keywords){
+        return checkServiceListService.getServicesDTO(keywords);
     }
 
 }
