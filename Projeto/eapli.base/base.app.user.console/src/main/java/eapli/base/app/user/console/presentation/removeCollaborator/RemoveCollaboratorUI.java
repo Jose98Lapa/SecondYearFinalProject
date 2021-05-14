@@ -3,7 +3,7 @@ package eapli.base.app.user.console.presentation.removeCollaborator;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.team.DTO.TeamDTO;
 import eapli.base.team.DTO.TeamDTOParser;
-import eapli.base.team.application.RemoverColaboradorController;
+import eapli.base.team.application.RemoveCollaboratorController;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RemoveCollaboratorUI extends AbstractUI {
 
-    private final RemoverColaboradorController removerColaboradorController = new RemoverColaboradorController();
+    private final RemoveCollaboratorController removeCollaboratorController = new RemoveCollaboratorController();
 
     @Override
     protected boolean doShow() {
@@ -23,7 +23,7 @@ public class RemoveCollaboratorUI extends AbstractUI {
         List<TeamDTO> equipas = new ArrayList<>();
         int opcaoEquipa, opcaoColaborador;
 
-        removerColaboradorController.getEquipas().forEach(equipas::add);
+        removeCollaboratorController.getEquipas().forEach(equipas::add);
 
         for (int i = 0; i < equipas.size(); i++) {
             TeamDTO atual = equipas.get(i);
@@ -34,7 +34,7 @@ public class RemoveCollaboratorUI extends AbstractUI {
         try {
             System.out.println("Escolha um colaborador\n");
             List<CollaboratorDTO> colaboradores = new ArrayList<>();
-            removerColaboradorController.getColaboradores(
+            removeCollaboratorController.getColaboradores(
                     new TeamDTOParser()
                             .valueOf(equipas.get(opcaoEquipa)))
                     .forEach(colaboradores::add);
@@ -49,7 +49,7 @@ public class RemoveCollaboratorUI extends AbstractUI {
             TeamDTO equipa = equipas.get(opcaoEquipa);
 
 
-            return removerColaboradorController.save(equipa.membrosDaEquipa.get(opcaoColaborador), equipa);
+            return removeCollaboratorController.save(equipa.membrosDaEquipa.get(opcaoColaborador), equipa);
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
             System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
         }

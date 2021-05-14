@@ -24,33 +24,33 @@ public class CreateTeamUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        String equipaID = Console.readLine("Insira o ID da equipa");
-        String acronimo = Console.readLine("Insira o Acrónimo da Equipa");
-        String descricao = Console.readLine("Insira a descricao");
-        List<TeamTypeDTO> equipaDTOList = new ArrayList<>(20);
-        for (TeamTypeDTO teamTypeDTO : createTeamController.getTipoEquipaDTO()) {
-            equipaDTOList.add(teamTypeDTO);
+        String teamID = Console.readLine("Insert team ID");
+        String acronym = Console.readLine("Insert Team Acronym");
+        String description = Console.readLine("Insert Description");
+        List<TeamTypeDTO> teamDTOList = new ArrayList<>(20);
+        for (TeamTypeDTO teamTypeDTO : createTeamController.getTeamTypeDTO()) {
+            teamDTOList.add(teamTypeDTO);
         }
         TeamTypeDTO teamTypeDTO = null;
         boolean continueLoop = true;
 
         try {
             while (continueLoop) {
-                for (int i = 0; i < equipaDTOList.size(); i++) {
-                    System.out.printf("%d %s \n", i + 1, equipaDTOList.get(i));
+                for (int i = 0; i < teamDTOList.size(); i++) {
+                    System.out.printf("%d %s \n", i + 1, teamDTOList.get(i));
                 }
-                int posicao = Console.readInteger("Insira uma posição válida");
-                if (posicao < 0 || posicao > equipaDTOList.size()) {
-                    System.out.println("A posição está errada por isso será necessário reintroduzir o valor da posição dentro dos limites");
+                int posicao = Console.readInteger("Insert a valid position");
+                if (posicao < 0 || posicao > teamDTOList.size()) {
+                    System.out.println("The inserted value is out of bounds. Please re-insert a valid position");
 
                 } else {
                     continueLoop = false;
-                    teamTypeDTO = equipaDTOList.get(posicao - 1);
+                    teamTypeDTO = teamDTOList.get(posicao - 1);
                 }
             }
             CollaboratorDTO collaboratorDTO = null;
             List<CollaboratorDTO> collaboratorDTOList = new ArrayList<>(20);
-            for (CollaboratorDTO collaboratorDTOl : createTeamController.getColaboradorDTO()) {
+            for (CollaboratorDTO collaboratorDTOl : createTeamController.getCollaboratorDTO()) {
                 collaboratorDTOList.add(collaboratorDTOl);
             }
             continueLoop = true;
@@ -60,9 +60,9 @@ public class CreateTeamUI extends AbstractUI {
                 for (int i = 0; i < collaboratorDTOList.size(); i++) {
                     System.out.printf("%d %s \n", i + 1, collaboratorDTOList.get(i));
                 }
-                int posicao = Console.readInteger("Insira uma posição válida");
+                int posicao = Console.readInteger("Insert a valid position");
                 if (posicao < 0 || posicao > collaboratorDTOList.size()) {
-                    System.out.println("A posição está errada por isso será necessário reintroduzir o valor da posição dentro dos limites");
+                    System.out.println("The inserted value is out of bounds. Please re-insert a valid position");
 
                 } else {
                     continueLoop = false;
@@ -71,11 +71,11 @@ public class CreateTeamUI extends AbstractUI {
             }
 
 
-            TeamDTO teamDTO = new TeamDTO(descricao, acronimo, equipaID, teamTypeDTO, collaboratorDTO);
+            TeamDTO teamDTO = new TeamDTO(description, acronym, teamID, teamTypeDTO, collaboratorDTO);
 
-            this.createTeamController.registo(teamDTO);
+            this.createTeamController.registerTeam(teamDTO);
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
-            System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
+            System.out.printf("Unfortunately there was an unexpected error in the application. %s%n", e.getMessage());
         }
 
         return false;
@@ -83,6 +83,6 @@ public class CreateTeamUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Criar Equipa";
+        return "Create Team";
     }
 }

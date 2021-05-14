@@ -13,7 +13,7 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.Optional;
 
-public class RemoverColaboradorController {
+public class RemoveCollaboratorController {
 
     private final TeamRepository teamRepository = PersistenceContext.repositories().teams();
     private final CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();

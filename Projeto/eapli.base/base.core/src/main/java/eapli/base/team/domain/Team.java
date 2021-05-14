@@ -19,35 +19,35 @@ public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO> {
 
     @EmbeddedId
     private TeamID teamID;
-    private String designacao;
+    private String designation;
     private Acronym acronym;
     @OneToOne
     private TeamType teamType;
 
     @OneToMany
     @JoinTable
-            (name="EQUIPA_RESPONSAVEIS",
+            (name="TEAM_RESPONSABLES",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
     private final Set<Collaborator> collaboratorResponsaveisSet = new HashSet<>();
 
     @OneToMany
     @JoinTable
-            (name="EQUIPA_TEAM_MEMBERS",
+            (name="TEAM_TEAM_MEMBERS",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
     private final Set<Collaborator> teamMembers = new HashSet<>();
 
-    public Team(String designacao, Acronym acronym, TeamID teamID, Collaborator collaborator, TeamType teamType) {
-        this.designacao = designacao;
+    public Team(String designation, Acronym acronym, TeamID teamID, Collaborator collaboratorResponsible, TeamType teamType) {
+        this.designation = designation;
         this.acronym = acronym;
         this.teamID = teamID;
-        this.collaboratorResponsaveisSet.add(collaborator);
+        this.collaboratorResponsaveisSet.add(collaboratorResponsible);
         this.teamType = teamType;
     }
 
-    public Team(String designacao, Acronym acronym, TeamID teamID, Set<Collaborator> colaboradores, TeamType teamType, List<Collaborator> responsaveis) {
-        this.designacao = designacao;
+    public Team(String designation, Acronym acronym, TeamID teamID, Set<Collaborator> colaboradores, TeamType teamType, List<Collaborator> responsaveis) {
+        this.designation = designation;
         this.acronym = acronym;
         this.teamID = teamID;
         this.teamMembers.addAll(colaboradores);
@@ -102,12 +102,12 @@ public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
-        return Objects.equals(designacao, team.designacao) && Objects.equals(acronym, team.acronym) && Objects.equals(teamID, team.teamID);
+        return Objects.equals(designation, team.designation) && Objects.equals(acronym, team.acronym) && Objects.equals(teamID, team.teamID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(designacao, acronym, teamID);
+        return Objects.hash(designation, acronym, teamID);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO> {
         collaboratorResponsaveisSet.forEach(collab -> responsaveis.add(collab.toDTO()));
         List<CollaboratorDTO> membros = new ArrayList<>();
         teamMembers.forEach(collab -> membros.add(collab.toDTO()));
-        return new TeamDTO(designacao, acronym.toString(), teamID.toString(), responsaveis, teamType.toDTO(),membros);
+        return new TeamDTO(designation, acronym.toString(), teamID.toString(), responsaveis, teamType.toDTO(),membros);
     }
 
     public void removeColaborador(Collaborator collaborator){
