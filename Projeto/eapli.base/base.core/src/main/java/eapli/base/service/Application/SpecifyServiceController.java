@@ -38,10 +38,10 @@ public class SpecifyServiceController {
 
     public void manual(String id) {
 
-        FormRepository repo = PersistenceContext.repositories().form();
-        final Form form2 = repo.ofIdentity(FormID.valueOf(id))
+        FormRepository formularyRepository = PersistenceContext.repositories().form();
+        final Form form2 = formularyRepository.ofIdentity(FormID.valueOf(id))
                 .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
-
+        formularyRepository.save(form2);
         service = builder.withForm(form2).buildManual();
     }
 
