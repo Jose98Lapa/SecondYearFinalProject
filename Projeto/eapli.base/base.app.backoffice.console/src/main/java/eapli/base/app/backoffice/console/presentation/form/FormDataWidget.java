@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.form;
+package eapli.base.app.backoffice.console.presentation.form;
 
 import eapli.framework.io.util.Console;
 

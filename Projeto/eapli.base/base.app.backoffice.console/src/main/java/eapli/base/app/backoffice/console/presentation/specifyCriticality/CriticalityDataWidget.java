@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.specifyCriticality;
+package eapli.base.app.backoffice.console.presentation.specifyCriticality;
 
 
 import eapli.framework.io.util.Console;

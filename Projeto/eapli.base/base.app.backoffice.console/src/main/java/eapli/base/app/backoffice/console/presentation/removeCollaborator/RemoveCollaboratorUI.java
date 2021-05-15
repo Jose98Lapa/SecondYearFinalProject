@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.removeCollaborator;
+package eapli.base.app.backoffice.console.presentation.removeCollaborator;
 
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.team.DTO.TeamDTO;

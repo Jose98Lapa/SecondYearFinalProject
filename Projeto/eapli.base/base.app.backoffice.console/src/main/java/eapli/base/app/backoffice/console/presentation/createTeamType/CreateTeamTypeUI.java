@@ -1,8 +1,8 @@
-package eapli.base.app.user.console.presentation.createTeamType;
+package eapli.base.app.backoffice.console.presentation.createTeamType;
 
 import eapli.base.teamType.Application.CreateTeamTypeController;
 import eapli.base.teamType.DTO.TeamTypeDTO;
-import eapli.base.app.user.console.presentation.createTeam.CreateTeamUI;
+import eapli.base.app.backoffice.console.presentation.createTeam.CreateTeamUI;
 import eapli.base.colour.DTO.ColourDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;

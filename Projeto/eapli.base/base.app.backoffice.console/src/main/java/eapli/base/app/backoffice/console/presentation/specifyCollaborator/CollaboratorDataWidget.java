@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.specifyCollaborator;
+package eapli.base.app.backoffice.console.presentation.specifyCollaborator;
 
 import eapli.framework.io.util.Console;
 

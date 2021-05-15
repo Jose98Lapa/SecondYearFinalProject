@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.createTeam;
+package eapli.base.app.backoffice.console.presentation.createTeam;
 
 import eapli.base.teamType.DTO.TeamTypeDTO;
 import eapli.base.collaborator.dto.CollaboratorDTO;

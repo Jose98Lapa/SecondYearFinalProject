@@ -1,6 +1,6 @@
-package eapli.base.app.user.console.presentation.specifyCriticality;
+package eapli.base.app.backoffice.console.presentation.specifyCriticality;
 
-import eapli.base.app.user.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
 import eapli.base.criticality.application.SpecifyCriticalityController;
 import eapli.base.criticality.dto.CriticalityDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;

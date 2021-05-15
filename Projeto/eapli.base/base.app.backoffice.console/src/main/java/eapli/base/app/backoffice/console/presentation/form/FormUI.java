@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.form;
+package eapli.base.app.backoffice.console.presentation.form;
 
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;

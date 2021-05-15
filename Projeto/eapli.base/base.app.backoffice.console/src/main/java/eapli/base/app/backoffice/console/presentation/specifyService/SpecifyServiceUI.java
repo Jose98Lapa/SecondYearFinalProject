@@ -1,6 +1,6 @@
-package eapli.base.app.user.console.presentation.specifyService;
+package eapli.base.app.backoffice.console.presentation.specifyService;
 
-import eapli.base.app.user.console.presentation.form.FormUI;
+import eapli.base.app.backoffice.console.presentation.form.FormUI;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.service.Application.SpecifyServiceController;
 import eapli.base.service.DTO.ServiceDTO;

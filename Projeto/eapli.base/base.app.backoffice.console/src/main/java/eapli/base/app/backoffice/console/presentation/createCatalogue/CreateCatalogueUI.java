@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.createCatalogue;
+package eapli.base.app.backoffice.console.presentation.createCatalogue;
 
 import eapli.base.catalogue.application.CreateCatalogueController;
 import eapli.base.catalogue.dto.CatalogueDTO;
@@ -123,7 +123,7 @@ public class CreateCatalogueUI extends AbstractUI {
         System.out.printf("%n%s%n","Lista Niveis criticidade:");
         while (index != 0) {
             for (CriticalityDTO dto : lstCriticidade)
-                System.out.printf("#%d %s - %s5n", index++,dto.label,dto.valorCriticidade);
+                System.out.printf("#%d %s - %s%n", index++,dto.label,dto.valorCriticidade);
             index = Console.readInteger("Escolha uma criticidade para o catalogo: ");
 
             if (index > 0 && index-1 < lstCriticidade.size()) {

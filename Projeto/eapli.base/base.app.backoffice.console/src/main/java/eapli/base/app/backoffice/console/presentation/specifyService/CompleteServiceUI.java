@@ -1,18 +1,16 @@
-package eapli.base.app.user.console.presentation.specifyService;
+package eapli.base.app.backoffice.console.presentation.specifyService;
 
-import eapli.base.app.user.console.presentation.form.FormUI;
+import eapli.base.app.backoffice.console.presentation.form.FormUI;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.service.Application.SpecifyServiceController;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class CompleteServiceUI extends AbstractUI {
     //private static final Logger LOGGER = LoggerFactory.getLogger(SpecifyServiceUI.class);

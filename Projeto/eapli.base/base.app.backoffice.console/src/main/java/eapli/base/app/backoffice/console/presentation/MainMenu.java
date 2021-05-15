@@ -23,6 +23,17 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.associateCollaborator.AssociateCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.createCatalogue.CreateCatalogueUI;
+import eapli.base.app.backoffice.console.presentation.createColour.CreateColourUI;
+import eapli.base.app.backoffice.console.presentation.createTeam.CreateTeamUI;
+import eapli.base.app.backoffice.console.presentation.createTeamType.CreateTeamTypeUI;
+import eapli.base.app.backoffice.console.presentation.removeCollaborator.RemoveCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
+import eapli.base.app.backoffice.console.presentation.specifyService.CompleteServiceUI;
+import eapli.base.app.backoffice.console.presentation.specifyService.SpecifyServiceUI;
+import eapli.base.app.backoffice.console.presentation.specifyService.ToggleService;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -54,6 +65,8 @@ public class MainMenu extends AbstractUI {
 
     private static final int EXIT_OPTION = 0;
 
+    private static final String RETURN = "Return ";
+
     // USERS
     private static final int ADD_USER_OPTION = 1;
     private static final int LIST_USERS_OPTION = 2;
@@ -61,47 +74,23 @@ public class MainMenu extends AbstractUI {
     private static final int ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION = 4;
 
     // SETTINGS
-    private static final int SET_KITCHEN_ALERT_LIMIT_OPTION = 1;
+    private static final int CRIAR_COR = 2;
 
-    // DISH TYPES
-    private static final int DISH_TYPE_REGISTER_OPTION = 1;
-    private static final int DISH_TYPE_LIST_OPTION = 2;
-    private static final int DISH_TYPE_CHANGE_OPTION = 3;
-    private static final int DISH_TYPE_ACTIVATE_DEACTIVATE_OPTION = 4;
+    //RRH
+    private static final int ESPECIFICAR_COLLABORADOR_OPTION = 2;
+    private static final int CRIAR_EQUIPA_OPTION = 3;
+    private static final int CRIAR_TIPO_EQUIPA_OPTION = 4;
 
-    // DISHES
-    private static final int DISH_REGISTER_OPTION = 5;
-    private static final int DISH_LIST_OPTION = 6;
-    private static final int DISH_REGISTER_DTO_OPTION = 7;
-    private static final int DISH_LIST_DTO_OPTION = 8;
-    private static final int DISH_ACTIVATE_DEACTIVATE_OPTION = 9;
-    private static final int DISH_CHANGE_OPTION = 10;
 
-    // DISH PROPERTIES
-    private static final int CHANGE_DISH_NUTRICIONAL_INFO_OPTION = 1;
-    private static final int CHANGE_DISH_PRICE_OPTION = 2;
-
-    // MATERIALS
-    private static final int MATERIAL_REGISTER_OPTION = 1;
-    private static final int MATERIAL_LIST_OPTION = 2;
-
-    // REPORTING
-    private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
-    private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
-    private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
-
-    // MEALS
-    private static final int LIST_MEALS_OPTION = 1;
-    private static final int MEAL_REGISTER_OPTION = 2;
+    //GSH
+    private static final int CRIAR_CATALOGO_OPTION = 2;
+    private static final int SERVICE_OPTION = 3;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 2;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
     private static final int SETTINGS_OPTION = 4;
-    private static final int DISH_OPTION = 5;
-    private static final int TRACEABILITY_OPTION = 6;
-    private static final int MEALS_OPTION = 7;
-    private static final int REPORTING_DISHES_OPTION = 8;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -150,6 +139,25 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
+            mainMenu.addSubMenu(CRIAR_COR,buildCorMenu());
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.RRH)) {
+            final Menu especificarColaboradorMenu = buildEspecificarColaboradorMenu();
+            mainMenu.addSubMenu(ESPECIFICAR_COLLABORADOR_OPTION,especificarColaboradorMenu);
+            final Menu criarequipaMenu = buildEquipaMenu();
+            mainMenu.addSubMenu(CRIAR_EQUIPA_OPTION,criarequipaMenu);
+            final Menu criarTipoEquipaMenu = buildTipoEquipaMenu();
+            mainMenu.addSubMenu(CRIAR_TIPO_EQUIPA_OPTION,criarTipoEquipaMenu);
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.GSH)) {
+            final Menu catalogoMenu = buildCatalogoMenu();
+            mainMenu.addSubMenu(CRIAR_CATALOGO_OPTION, catalogoMenu);
+            final Menu servicoMenu = buildServicoMenu();
+            mainMenu.addSubMenu(SERVICE_OPTION, servicoMenu);
+            final Menu especificarCriticidadeMenu = buildEspecificarCriticidadeMenu();
+            mainMenu.addSubMenu(ESPECIFICAR_CRITICIDADE_OPTION,especificarCriticidadeMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -164,8 +172,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildAdminSettingsMenu() {
         final Menu menu = new Menu("Settings >");
 
-        menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Set kitchen alert limit",
-                new ShowMessageAction("Not implemented yet"));
+        // menu.addItem(SET_KITCHEN_ALERT_LIMIT_OPTION, "Set kitchen alert limit", new ShowMessageAction("Not implemented yet"));
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -183,6 +190,73 @@ public class MainMenu extends AbstractUI {
 
         return menu;
     }
+
+    private Menu buildTipoEquipaMenu(){
+        final Menu tipoEquipaMenu = new Menu("Tipo Equipa");
+        tipoEquipaMenu.addItem(1,"Criar Tipo Equipa",()->new CreateTeamTypeUI().show());
+        tipoEquipaMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return tipoEquipaMenu;
+    }
+
+    private Menu buildEspecificarColaboradorMenu(){
+        final Menu colaboradorMenu = new Menu("Colaborador");
+        colaboradorMenu.addItem(1,"Especificar Colaborador",() -> new SpecifyCollaboratorUI().show());
+        colaboradorMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return colaboradorMenu;
+    }
+
+    private Menu buildEditarServico(){
+        final Menu corMenu = new Menu("Alterar Servico");
+        corMenu.addItem(1,"Alterar Servico",()->new CompleteServiceUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+    private Menu buildAtivarDesativarServico(){
+        final Menu corMenu = new Menu("Ativar/Desativar Servico");
+        corMenu.addItem(1,"Ativar/Desativar Servico",()->new ToggleService().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+
+    private Menu buildEquipaMenu() {
+        final Menu equipaMenu = new Menu("Equipa");
+        equipaMenu.addItem(1, "Criar Equipa", () -> new CreateTeamUI().show());
+        equipaMenu.addItem(2,"Associar Colaborador",()->new AssociateCollaboratorUI().show());
+        equipaMenu.addItem(3,"Remover Colaborador",()->new RemoveCollaboratorUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return equipaMenu;
+    }
+    private Menu buildServicoMenu() {
+        final Menu servicoMenu = new Menu("Servico");
+        servicoMenu.addItem(1, "Especificar Servico", ()-> new SpecifyServiceUI().show());
+        servicoMenu.addItem(2,"Alterar Servico",()->new CompleteServiceUI().show());
+        servicoMenu.addItem(3,"Ativar/Desativar Servico",()->new ToggleService().show());
+        servicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return servicoMenu;
+    }
+
+    private Menu buildCatalogoMenu() {
+        final Menu equipaMenu = new Menu("Catalogo");
+        equipaMenu.addItem(1, "Criar Catalogo", () -> new CreateCatalogueUI().show());
+        equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return equipaMenu;
+    }
+
+    private Menu buildEspecificarCriticidadeMenu(){
+        final Menu criticidadeMenu = new Menu("Criticidade");
+        criticidadeMenu.addItem(1,"Especificar Criticidade",() -> new SpecifyCriticalityUI().show());
+        criticidadeMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return criticidadeMenu;
+    }
+
+
+    private Menu buildCorMenu(){
+        final Menu corMenu = new Menu("Cor");
+        corMenu.addItem(1,"Adicionar Cor",()->new CreateColourUI().show());
+        corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return corMenu;
+    }
+
 
 
 
