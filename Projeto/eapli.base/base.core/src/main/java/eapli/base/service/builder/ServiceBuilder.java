@@ -6,12 +6,13 @@ import eapli.base.service.domain.*;
 import java.util.Set;
 
 public class ServiceBuilder {
+
     private ServiceTitle title;
     private ServiceID id;
     private IconServico icon ;
     private Set<KeyWords> keywords ;
     private ServiceStatus status  ;
-    private ServiceType tipo  ;
+    private ServiceType type;
     private ServiceScript script  ;
     private Form form  ;
     private CompleteDescription compDesc  ;
@@ -27,55 +28,55 @@ public class ServiceBuilder {
 
     }
 
-    public ServiceBuilder Title(String title) {
+    public ServiceBuilder withTitle(String title) {
         this.title = ServiceTitle.valueOf(title);
         return this;
     }
 
-    public ServiceBuilder briefDesc(String desc) {
+    public ServiceBuilder withBriefDescription(String desc) {
         this.briefDesc = BriefDescription.valueOf(desc);
         return this;
     }
 
-    public ServiceBuilder compDesc(String desc) {
+    public ServiceBuilder withCompleteDescription(String desc) {
         this.compDesc = CompleteDescription.valueOf(desc);
         return this;
     }
 
-    public ServiceBuilder Script(String script) {
+    public ServiceBuilder withScript(String script) {
         this.script = ServiceScript.valueOf(script);
         return this;
     }
 
-    public ServiceBuilder Id(String id) {
+    public ServiceBuilder withId(String id) {
         this.id = ServiceID.valueOf(id);
         return this;
     }
 
-    public ServiceBuilder Icon(String icon) {
+    public ServiceBuilder withIcon(String icon) {
         this.icon = IconServico.valueof(icon);
         return this;
     }
 
-    public ServiceBuilder Keywords(Set<String> keywords) {
+    public ServiceBuilder withKeywords(Set<String> keywords) {
         this.keywords = KeyWords.valueOf(keywords);
         return this;
     }
 
-    public ServiceBuilder Status(String status) {
+    public ServiceBuilder withStatus(String status) {
         this.status = ServiceStatus.valueOf(status);
         return this;
     }
 
-    public ServiceBuilder Tipo(String tipo) {
-        this.tipo = ServiceType.valueOf(tipo);
+    public ServiceBuilder withType(String tipo) {
+        this.type = ServiceType.valueOf(tipo);
         return this;
     }
-    public ServiceBuilder Form(Form form) {
+    public ServiceBuilder withForm(Form form) {
         this.form = form;
         return this;
     }
-    public ServiceBuilder Catalogo(Catalogue cat) {
+    public ServiceBuilder withCatalogue(Catalogue cat) {
         this.catalogue = cat;
         return this;
     }

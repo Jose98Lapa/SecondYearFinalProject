@@ -55,7 +55,7 @@ public class CompleteServiceUI extends AbstractUI {
 
                 }
                 case 2: {
-        /*            String opcao = scanner.nextLine();
+                /*  String opcao = scanner.nextLine();
                     toComplete.tipo=opcao;
                     if (toComplete.tipo.equalsIgnoreCase("MANUAL")&&opcao.equalsIgnoreCase("AUTOMATICO")){
                         System.out.println("O servico foi alterado de Manual para Automatico ");

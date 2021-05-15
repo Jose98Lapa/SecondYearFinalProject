@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CatalogosEServicosBootstrap {
-    private static final String FILENAME = "catalogosEServicos.xml";
+    private static final String FILENAME = "Projeto/eapli.base/catalogosEServicos.xml";
 
     public void initiate() {
 
@@ -103,7 +103,7 @@ public class CatalogosEServicosBootstrap {
                     final Set<String> lstkeyWords = new HashSet<>();
                     lstkeyWords.add(keyWords);
                     ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta,catalogos.get(Integer.parseInt(catalogoS)-1) , null);
-                    servicoController.registo(dto);
+                    servicoController.create(dto);
                     final Set<AttributeDTO> lstAtributos = new HashSet<>();
                     AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo,aID);
                     lstAtributos.add(at);

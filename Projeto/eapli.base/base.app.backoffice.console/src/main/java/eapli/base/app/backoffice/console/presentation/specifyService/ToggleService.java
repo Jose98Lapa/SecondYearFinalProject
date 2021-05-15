@@ -1,16 +1,13 @@
 package eapli.base.app.backoffice.console.presentation.specifyService;
 
 
-import eapli.base.form.presentation.FormUI;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.Application.SpecifyServiceController;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class ToggleService  extends AbstractUI {
     //private static final Logger LOGGER = LoggerFactory.getLogger(FormUI.class);
@@ -35,10 +32,10 @@ public class ToggleService  extends AbstractUI {
         String opt = Console.readLine("Insira 1 para Ativar e 0 para Desativar");
 
         if (Integer.parseInt(opt)==1){
-            theController.ativarServico(sservices.get(Integer.parseInt(index)));
+            theController.activateService(sservices.get(Integer.parseInt(index)));
 
         }else if (Integer.parseInt(opt)==0){
-            theController.desativarServico(sservices.get(Integer.parseInt(index)));
+            theController.deactivateService(sservices.get(Integer.parseInt(index)));
         }else {
             System.out.println("Error");
         }
