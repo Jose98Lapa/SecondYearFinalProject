@@ -13,12 +13,12 @@ public class ServiceDTOParser implements DTOParser<ServiceDTO, Service> {
     public Service valueOf(ServiceDTO dto) {
         ServiceBuilder svb = new ServiceBuilder();
 
-        return svb.Icon(dto.icon).Id(dto.id).Keywords(dto.keywords).Status(dto.status).Title(dto.title).buildManual();
+        return svb.withIcon(dto.icon).withId(dto.id).withKeywords(dto.keywords).withStatus(dto.status).withTitle(dto.title).buildManual();
     }
 
     public Service valueOfIncomplete(ServiceDTO dto) {
         ServiceBuilder svb = new ServiceBuilder();
-        return svb.Title(dto.title).Id(dto.id).buildManual();
+        return svb.withTitle(dto.title).withId(dto.id).buildManual();
     }
 
     public Service valueOfFormId(final ServiceDTO dto) {

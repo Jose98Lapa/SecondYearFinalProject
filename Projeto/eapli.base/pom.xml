@@ -96,8 +96,8 @@
 
     <repositories>
         <repository>
-            <id>bintray-pagsousa-eapli</id>
-            <url>http://dl.bintray.com/pagsousa/eapli</url>
+            <id>jfrog-pagsousa</id>
+            <url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
         </repository>
     </repositories>
 </project>

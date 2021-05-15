@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizacaoBootstrap {
-    private static final String FILENAME = "Organizacao.xml";
+    private static final String FILENAME = "Projeto/eapli.base/Organizacao.xml";
 
     public void initiate() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

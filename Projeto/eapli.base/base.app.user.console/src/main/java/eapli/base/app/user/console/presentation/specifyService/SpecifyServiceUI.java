@@ -65,7 +65,7 @@ public class SpecifyServiceUI extends AbstractUI {
             }else{
                 dto = new ServiceDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
             }
-            theController.registo(dto);
+            theController.create(dto);
         }
 
         if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {

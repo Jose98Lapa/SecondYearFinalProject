@@ -39,7 +39,9 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
     private Set<KeyWords> keywords;
 
 
-    public Service(ServiceTitle title, ServiceID id, IconServico icon, Set<KeyWords> keywords, ServiceStatus status, ServiceType tipo, CompleteDescription compDesc, BriefDescription briedDesc, ServiceScript script, Form form, Catalogue catalogue) {
+    public Service(ServiceTitle title, ServiceID id, IconServico icon, Set<KeyWords> keywords, ServiceStatus status,
+                   ServiceType tipo, CompleteDescription compDesc, BriefDescription briedDesc, ServiceScript script,
+                   Form form, Catalogue catalogue) {
 
         this.title = title;
         this.id = id;
@@ -108,7 +110,9 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
         }
         if (script==null)
             script = ServiceScript.valueOf(" ");
-        return new ServiceDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2, this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(), catalogue.toDTO(),script.toString());
+        return new ServiceDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2,
+                this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),
+                catalogue.toDTO(),script.toString());
     }
 
     public void activate(){
