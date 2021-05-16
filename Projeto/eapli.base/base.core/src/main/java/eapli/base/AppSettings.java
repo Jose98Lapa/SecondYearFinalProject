@@ -24,6 +24,7 @@ public class AppSettings {
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "javax.persistence.schema-generation.database.action";
     private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
+    private static final String HTTP_PORT = "HTTP_PORT";
 
     private final Properties applicationProperties = new Properties();
 

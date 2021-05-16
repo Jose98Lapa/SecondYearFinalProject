@@ -1,0 +1,53 @@
+body {
+    background-color: #30323c;
+}
+#title{
+    color: #dd2020;
+}
+
+.topnav {
+    background-color: #fdfdfd;
+    overflow: hidden;
+}
+
+.topnav span {
+    float: left;
+    color:  #212121;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav span:hover {
+    background-color: #fda700;
+    color: white;
+}
+
+.topnav span.active {
+    background-color: #fda700;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.mainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.5rem;
+    border-radius: 25px;
+
+}
+.item {
+    margin: 0.5rem;
+    background: #3b3d48;
+    border: 1px solid #000000;
+    padding: 3rem;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 9px;
+
+}
+.whiteText{
+    color: #ffffff;
+}
