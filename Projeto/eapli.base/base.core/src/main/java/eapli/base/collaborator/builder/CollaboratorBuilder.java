@@ -6,7 +6,7 @@ import eapli.base.function.builder.FunctionBuilder;
 import eapli.framework.domain.model.DomainFactory;
 
 public class CollaboratorBuilder implements DomainFactory<Collaborator> {
-    private Address address;
+    private PlaceOfResidence placeOfResidence;
     private Contact contact;
     private FullName fullName;
     private InstituionalEmail email;
@@ -17,13 +17,13 @@ public class CollaboratorBuilder implements DomainFactory<Collaborator> {
     private Function function;
     private Collaborator supervisor;
 
-    public CollaboratorBuilder withAddress(final Address address){
-        this.address = address;
+    public CollaboratorBuilder withPlaceOfResidence(final PlaceOfResidence placeOfResidence){
+        this.placeOfResidence = placeOfResidence;
         return this;
     }
 
-    public CollaboratorBuilder withAddress(final String street, final String doorNumber, final String floor, final String location, final String postalCode){
-        this.address =new Address(street, doorNumber, floor, location, postalCode);
+    public CollaboratorBuilder withPlaceOfResidence(final String placeOfResidence){
+        this.placeOfResidence =new PlaceOfResidence(placeOfResidence);
         return this;
     }
 
@@ -104,7 +104,7 @@ public class CollaboratorBuilder implements DomainFactory<Collaborator> {
 
     @Override
     public Collaborator build() {
-        return new Collaborator(address, contact, fullName,email,mNumber, nickname, birthDate, function,supervisor);
+        return new Collaborator(placeOfResidence, contact, fullName,email,mNumber, nickname, birthDate, function,supervisor);
     }
 
 }

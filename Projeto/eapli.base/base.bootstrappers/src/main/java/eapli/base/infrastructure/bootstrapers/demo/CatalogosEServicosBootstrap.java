@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CatalogosEServicosBootstrap {
-    private static final String FILENAME = "Projeto/eapli.base/catalogosEServicos.xml";
+    private static final String FILENAME = "catalogosEServicos.xml";
 
     public void initiate() {
 

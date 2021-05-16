@@ -7,11 +7,7 @@ import eapli.framework.representations.dto.DTO;
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class CollaboratorDTO {
-    public String rua;
-    public String numPorta;
-    public String andar;
-    public String localizacao;
-    public String codPostal;
+    public String placeOfResidence;
     public String contacto;
     public String nomeCompleto;
     public String email;
@@ -22,12 +18,8 @@ public class CollaboratorDTO {
     public String IDfuncao;
     public String mSupervisor;
 
-    public CollaboratorDTO(String rua, String numPorta, String andar, String localizacao, String codPostal, String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
-        this.rua = rua;
-        this.numPorta = numPorta;
-        this.andar = andar;
-        this.localizacao = localizacao;
-        this.codPostal = codPostal;
+    public CollaboratorDTO(String placeOfResidence,String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
+        this.placeOfResidence = placeOfResidence;
         this.contacto = contacto;
         this.nomeCompleto = nomeCompleto;
         this.email = email;
@@ -36,13 +28,8 @@ public class CollaboratorDTO {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public CollaboratorDTO(Address address, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function, Collaborator Supervisor){
-        AddressDTO addressDTO = address.toDTO();
-        this.rua= addressDTO.rua;
-        this.numPorta= addressDTO.numPorta;
-        this.andar= addressDTO.andar;
-        this.localizacao= addressDTO.localizacao;
-        this.codPostal= addressDTO.codPostal;
+    public CollaboratorDTO(PlaceOfResidence placeOfResidence, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function, Collaborator Supervisor){
+        this.placeOfResidence= placeOfResidence.toString();
         this.contacto= contact.toString();
         this.nomeCompleto= fullName.toString();
         this.email=email.toString();
@@ -54,13 +41,8 @@ public class CollaboratorDTO {
         this.mSupervisor=Supervisor.identity().toString();
     }
 
-    public CollaboratorDTO(Address address, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function){
-        AddressDTO addressDTO = address.toDTO();
-        this.rua= addressDTO.rua;
-        this.numPorta= addressDTO.numPorta;
-        this.andar= addressDTO.andar;
-        this.localizacao= addressDTO.localizacao;
-        this.codPostal= addressDTO.codPostal;
+    public CollaboratorDTO(PlaceOfResidence placeOfResidence, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function){
+        this.placeOfResidence=placeOfResidence.toString();
         this.contacto= contact.toString();
         this.nomeCompleto= fullName.toString();
         this.email=email.toString();

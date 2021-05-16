@@ -21,7 +21,7 @@ public class SpecifyCollaboratorController {
     private final CollaboratorDTOParser collaboratorDTOParser = new CollaboratorDTOParser();
 
     public void method(CollaboratorDTO collaboratorDTO){
-        colabBuilder.withAddress(collaboratorDTO.rua, collaboratorDTO.numPorta, collaboratorDTO.andar, collaboratorDTO.localizacao, collaboratorDTO.codPostal).withContact(collaboratorDTO.contacto).withFullName(collaboratorDTO.nomeCompleto)
+        colabBuilder.withPlaceOfResidence(collaboratorDTO.placeOfResidence).withContact(collaboratorDTO.contacto).withFullName(collaboratorDTO.nomeCompleto)
                 .withInstitutionalEmail(collaboratorDTO.email).withMecanoGraphicNumber(collaboratorDTO.mNumber).withNickname(collaboratorDTO.alcunha).withDateOfBirth(collaboratorDTO.dataDeNascimento);
     }
 

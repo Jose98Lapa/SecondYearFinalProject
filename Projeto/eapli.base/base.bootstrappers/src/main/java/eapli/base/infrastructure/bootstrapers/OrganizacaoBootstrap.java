@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizacaoBootstrap {
-    private static final String FILENAME = "Projeto/eapli.base/Organizacao.xml";
+    private static final String FILENAME = "Organizacao.xml";
 
     public void initiate() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -49,16 +49,12 @@ public class OrganizacaoBootstrap {
                 Node node = colabs.item(temp);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    String srua = element.getElementsByTagName("srua").item(0).getTextContent();
-                    String snumPorta = element.getElementsByTagName("snumPorta").item(0).getTextContent();
-                    String sandar = element.getElementsByTagName("sandar").item(0).getTextContent();
-                    String slocalizacao = element.getElementsByTagName("slocalizacao").item(0).getTextContent();
+                    String splaceOfResidence = element.getElementsByTagName("splaceOfResidence").item(0).getTextContent();
                     String snumeroMecanografico = element.getElementsByTagName("snumeroMecanografico").item(0).getTextContent();
                     String scontacto = element.getElementsByTagName("scontacto").item(0).getTextContent();
                     String snomeCompleto = element.getElementsByTagName("snomeCompleto").item(0).getTextContent();
                     String semailInstitucional = element.getElementsByTagName("semailInstitucional").item(0).getTextContent();
                     String salcunha = element.getElementsByTagName("salcunha").item(0).getTextContent();
-                    String scodPostal = element.getElementsByTagName("scodPostal").item(0).getTextContent();
                     String sdataDeNascimento = element.getElementsByTagName("sdataDeNascimento").item(0).getTextContent();
                     String Superdesignacao = element.getElementsByTagName("Superdesignacao").item(0).getTextContent();
                     String SuperidFunc = element.getElementsByTagName("SuperidFunc").item(0).getTextContent();
@@ -68,24 +64,20 @@ public class OrganizacaoBootstrap {
                     repo.save(functionSupe);
 
                     CollaboratorBuilder builder = new CollaboratorBuilder();
-                    Collaborator supervisor = builder.withAddress(srua, snumPorta, sandar, slocalizacao, scodPostal).withContact(scontacto)
-                            .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumPorta)
+                    Collaborator supervisor = builder.withPlaceOfResidence(splaceOfResidence).withContact(scontacto)
+                            .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumeroMecanografico)
                             .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(functionSupe).build();
                     String designacao = element.getElementsByTagName("designation").item(0).getTextContent();
                     String dataDeNascimento = element.getElementsByTagName("datanascimento").item(0).getTextContent();
-                    String rua = element.getElementsByTagName("rua").item(0).getTextContent();
-                    String numPorta = element.getElementsByTagName("numPorta").item(0).getTextContent();
-                    String andar = element.getElementsByTagName("andar").item(0).getTextContent();
-                    String localizacao = element.getElementsByTagName("localizacao").item(0).getTextContent();
+                    String placeOfResidence = element.getElementsByTagName("placeOfResidence").item(0).getTextContent();
                     String numeroMecanografico = element.getElementsByTagName("numeroMecanografico").item(0).getTextContent();
                     String contacto = element.getElementsByTagName("contact").item(0).getTextContent();
                     String nomeCompleto = element.getElementsByTagName("fullName").item(0).getTextContent();
                     String emailInstitucional = element.getElementsByTagName("emailInstitucional").item(0).getTextContent();
                     String alcunha = element.getElementsByTagName("nickname").item(0).getTextContent();
-                    String codPostal = element.getElementsByTagName("codPostal").item(0).getTextContent();
                     String idFunc = element.getElementsByTagName("idFunc").item(0).getTextContent();
 
-                    CollaboratorDTO colaDTO = new CollaboratorDTO(rua, numPorta, andar, localizacao, codPostal, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
+                    CollaboratorDTO colaDTO = new CollaboratorDTO(placeOfResidence, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
                     colabController.method(colaDTO);
                     Function func = new Function(IdFunction.valueOf(idFunc), Designation.valueOf(designacao));
                     repo.save(func);

@@ -26,8 +26,7 @@ public class SpecifyCollaboratorUI extends AbstractUI {
         System.out.println("Insira a informação necessária para o Colaborador");
         cdw.show();
         try {
-            CollaboratorDTO collaboratorDTO = new CollaboratorDTO(cdw.street(), cdw.doorNumber(), cdw.floor(), cdw.location(), cdw.postalCod(),
-                    cdw.contact(), cdw.fullName(), cdw.institutionalEmail(), cdw.mecanographicNumber(), cdw.nickname(), cdw.dateOfBirth());
+            CollaboratorDTO collaboratorDTO = new CollaboratorDTO(cdw.placeOfResidence(), cdw.contact(), cdw.fullName(), cdw.institutionalEmail(), cdw.mecanographicNumber(), cdw.nickname(), cdw.dateOfBirth());
             controller.method(collaboratorDTO);
 
 
