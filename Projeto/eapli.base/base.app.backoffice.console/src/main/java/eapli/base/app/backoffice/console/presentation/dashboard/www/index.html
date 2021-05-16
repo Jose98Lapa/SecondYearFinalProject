@@ -3,12 +3,12 @@
     <script src="rcomp-ajax.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body id="body" onload="refreshVotes()">
-<div class="topnav">
+<body id="body" onload="refreshColab();refreshVotes()">
+<div class="topnav" id="colabInfo">
     <span class="active">HelpDesk Collaborator Dashboard</span>
-    <span id="nome">Name: </span>
-    <span id="noddme">Id: </span>
-    <span id="nhhome">About</span>
+    <span id="colabName">Name:</span>
+    <span id="colabId">Id: </span>
+    <span id="colabEmail">Email:</span>
 </div>
 <br>
 <div class="mainContainer">

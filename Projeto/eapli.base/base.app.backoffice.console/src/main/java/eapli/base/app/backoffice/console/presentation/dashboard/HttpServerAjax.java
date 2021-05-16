@@ -5,6 +5,8 @@ import eapli.base.AppSettings;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**+
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
@@ -48,6 +50,12 @@ public class HttpServerAjax {
     private static final String[] candidateName = new String[candidatesNumber];
     private static final int[] candidateVotes = new int[candidatesNumber];
     private static int accessesCounter;
+    private static String name = "Manel";
+    private static String id = "38";
+    private static String email = "t@t.com";
+
+    private List<String> tasks = new ArrayList<>();
+
 
     private static synchronized void incAccessesCounter() {
         accessesCounter++;
@@ -62,6 +70,14 @@ public class HttpServerAjax {
         }
         textHtml = textHtml + "</ul><p class=\"whiteText\">HTTP server accesses counter: " + accessesCounter + "</p>";
         return textHtml;
+    }
+    public static synchronized String getColabInfoStandingInHTML() {
+        return " <div class=\"topnav\" id=\"colabInfo\">\n" +
+                "    <span class=\"active\">HelpDesk Collaborator Dashboard</span>\n" +
+                "    <span id=\"colabName\">Name: "+name+"</span>\n" +
+                "    <span id=\"colabId\">Id: "+id+"</span>\n" +
+                "    <span id=\"colabEmail\">Email: "+email+"</span>\n" +
+                "</div> ";
     }
 
     public static synchronized void castVote(String i) {

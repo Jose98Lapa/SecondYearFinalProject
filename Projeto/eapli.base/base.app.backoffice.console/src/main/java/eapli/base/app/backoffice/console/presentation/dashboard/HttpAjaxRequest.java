@@ -28,18 +28,20 @@ public class HttpAjaxRequest extends Thread {
         try {
             HTTPmessage request = new HTTPmessage(inS);
             HTTPmessage response = new HTTPmessage();
-             //System.out.println(request.getURI());
+            //System.out.println(request.getURI());
 
             if (request.getMethod().equals("GET")) {
-                if (request.getURI().equals("/votes")) {
-                    response.setContentFromString(
-                            HttpServerAjax.getVotesStandingInHTML(), "text/html");
+                if (request.getURI().equals("/colabInfo")) {
+                    response.setContentFromString(HttpServerAjax.getColabInfoStandingInHTML(), "text/html");
+                    response.setResponseStatus("200 Ok");
+                } else if (request.getURI().equals("/votes")) {
+                    response.setContentFromString(HttpServerAjax.getVotesStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else {
                     String fullname = baseFolder + "/";
                     if (request.getURI().equals("/")) {
                         fullname = fullname + "index.html";
-                    }else {
+                    } else {
                         fullname = fullname + request.getURI();
                     }
                     if (response.setContentFromFile(fullname)) {
@@ -53,7 +55,7 @@ public class HttpAjaxRequest extends Thread {
                 }
                 response.send(outS);
             } else { // NOT GET
-                if (request.getMethod().equals("PUT") && request.getURI().startsWith("/votes/")) {
+                if ((request.getMethod().equals("PUT") && request.getURI().startsWith("/votes/"))) {
                     HttpServerAjax.castVote(request.getURI().substring(7));
                     response.setResponseStatus("200 Ok");
                 } else {
