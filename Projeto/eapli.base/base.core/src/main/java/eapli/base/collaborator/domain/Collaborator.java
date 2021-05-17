@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable<CollaboratorDTO> {
 
-    private Address address;
+    private PlaceOfResidence placeOfResidence;
 
     private Contact contact;
 
@@ -34,8 +34,8 @@ public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable
     @ManyToOne
     private Function function;
 
-    public Collaborator(Address address, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function, Collaborator supervisor) {
-        this.address = address;
+    public Collaborator(PlaceOfResidence placeOfResidence, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function, Collaborator supervisor) {
+        this.placeOfResidence = placeOfResidence;
         this.contact = contact;
         this.fullName = fullName;
         this.email = email;
@@ -72,8 +72,8 @@ public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable
     @Override
     public CollaboratorDTO toDTO() {
         if (supervisor==null)
-            return new CollaboratorDTO(address, contact, fullName, email, mNumber, nickname, birthDate, function);
-        return new CollaboratorDTO(address, contact, fullName, email, mNumber, nickname, birthDate, function, supervisor);
+            return new CollaboratorDTO(placeOfResidence, contact, fullName, email, mNumber, nickname, birthDate, function);
+        return new CollaboratorDTO(placeOfResidence, contact, fullName, email, mNumber, nickname, birthDate, function, supervisor);
     }
 
     @Override
@@ -91,6 +91,6 @@ public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, contact, fullName, email, mNumber, nickname, birthDate, function);
+        return Objects.hash(placeOfResidence, contact, fullName, email, mNumber, nickname, birthDate, function);
     }
 }

@@ -5,37 +5,25 @@
             <designation>Gestor</designation>
             <idFunc>5</idFunc>
         </function>
-        <address>
-            <rua>Rua das Formigas</rua>
-            <numPorta>45</numPorta>
-            <andar>1</andar>
-            <localizacao>Porto</localizacao>
-        </address>
+        <placeOfResidence>Viana do Castelo</placeOfResidence>
         <numeroMecanografico>119654</numeroMecanografico>
         <datanascimento>05/06/1998</datanascimento>
         <contact>913586789</contact>
         <fullName>Rodrigo Alberto Figueira</fullName>
         <emailInstitucional>raf@isep.ipp.pt</emailInstitucional>
         <nickname>RAF</nickname>
-        <codPostal>4523-885</codPostal>
         <SUPERVISOR>
             <function>
                 <Superdesignacao>Administrador</Superdesignacao>
                 <SuperidFunc>6</SuperidFunc>
             </function>
-            <address>
-                <srua>Rua das Formigas</srua>
-                <snumPorta>45</snumPorta>
-                <sandar>1</sandar>
-                <slocalizacao>Porto</slocalizacao>
-            </address>
+            <splaceOfResidence>Porto</splaceOfResidence>
             <snumeroMecanografico>119643</snumeroMecanografico>
             <sdataDeNascimento>05/06/1998</sdataDeNascimento>
             <scontacto>913586789</scontacto>
             <snomeCompleto>Joao Alberto Santos</snomeCompleto>
             <semailInstitucional>raf@isep.ipp.pt</semailInstitucional>
             <salcunha>RAF</salcunha>
-            <scodPostal>4523-885</scodPostal>
         </SUPERVISOR>
     </collaborator>
 

@@ -4,11 +4,7 @@ import eapli.framework.io.util.Console;
 
 public class CollaboratorDataWidget {
 
-    private String rua;
-    private String numPorta;
-    private String andar;
-    private String localizacao;
-    private String codPostal;
+    private String placeOfResidence;
     private String contacto;
     private String nomeCompleto;
     private String emailInstitucional;
@@ -23,32 +19,12 @@ public class CollaboratorDataWidget {
         this.numeroMecanografico=Console.readLine("Numero mecanografico:");
         this.alcunha=Console.readLine("Alcunha:");
         this.dataDeNascimento=Console.readLine("Data de nascimento [DD/MM/AAAA]:");
-
-        this.rua=Console.readLine("Rua:");
-        this.numPorta=Console.readLine("Numero da Porta:");
-        this.andar=Console.readLine("Andar:");
-        this.localizacao=Console.readLine("Localizacao:");
-        this.codPostal=Console.readLine("Codigo Postal [XXXX-XXX]:");
+        this.placeOfResidence=Console.readLine("Local De Residência:");
     }
 
-    public String street() {
-        return rua;
-    }
 
-    public String doorNumber() {
-        return numPorta;
-    }
-
-    public String floor() {
-        return andar;
-    }
-
-    public String location() {
-        return localizacao;
-    }
-
-    public String postalCod() {
-        return codPostal;
+    public String placeOfResidence() {
+        return placeOfResidence;
     }
 
     public String contact() {
