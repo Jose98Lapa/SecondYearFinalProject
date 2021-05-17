@@ -21,7 +21,7 @@ public class JpaTeamTypeRepository extends JpaAutoTxRepository<TeamType, TeamTyp
 
     @Override
     public Optional<TeamType> ofIdentity(TeamTypeID id) {
-        final TypedQuery<TeamType> q = createQuery("SELECT e FROM eapli.base.TeamType.Domain.TeamType e WHERE e.teamTypeID = :id", TeamType.class);
+        final TypedQuery<TeamType> q = createQuery("SELECT e FROM eapli.base.teamType.Domain.TeamType e WHERE e.teamTypeID = :id", TeamType.class);
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }

@@ -24,28 +24,28 @@ public class CreateTeamUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        String teamID = Console.readLine("Insert team ID");
-        String acronym = Console.readLine("Insert Team Acronym");
-        String description = Console.readLine("Insert Description");
-        List<TeamTypeDTO> teamDTOList = new ArrayList<>(20);
+        String teamID = Console.readLine("Insira o ID da Equipa");
+        String acronym = Console.readLine("Insira o Acrónimo da Equipa");
+        String description = Console.readLine("Insira a descrição");
+        List<TeamTypeDTO> teamTypeDTOList = new ArrayList<>(20);
         for (TeamTypeDTO teamTypeDTO : createTeamController.getTeamTypeDTO()) {
-            teamDTOList.add(teamTypeDTO);
+            teamTypeDTOList.add(teamTypeDTO);
         }
         TeamTypeDTO teamTypeDTO = null;
         boolean continueLoop = true;
 
         try {
             while (continueLoop) {
-                for (int i = 0; i < teamDTOList.size(); i++) {
-                    System.out.printf("%d %s \n", i + 1, teamDTOList.get(i));
+                for (int i = 0; i < teamTypeDTOList.size(); i++) {
+                    System.out.printf("%d %s \n", i + 1, teamTypeDTOList.get(i));
                 }
-                int posicao = Console.readInteger("Insert a valid position");
-                if (posicao < 0 || posicao > teamDTOList.size()) {
-                    System.out.println("The inserted value is out of bounds. Please re-insert a valid position");
+                int posicao = Console.readInteger("Insira uma posição válida para escolher o tipo da equipa");
+                if (posicao < 0 || posicao > teamTypeDTOList.size()) {
+                    System.out.println("O valor inserido está fora dos limites.\nPor favor re insira uma posição válida");
 
                 } else {
                     continueLoop = false;
-                    teamTypeDTO = teamDTOList.get(posicao - 1);
+                    teamTypeDTO = teamTypeDTOList.get(posicao - 1);
                 }
             }
             CollaboratorDTO collaboratorDTO = null;
@@ -60,9 +60,9 @@ public class CreateTeamUI extends AbstractUI {
                 for (int i = 0; i < collaboratorDTOList.size(); i++) {
                     System.out.printf("%d %s \n", i + 1, collaboratorDTOList.get(i));
                 }
-                int posicao = Console.readInteger("Insert a valid position");
+                int posicao = Console.readInteger("Insira uma posição válida para escolher um colaborador gestor da equipa");
                 if (posicao < 0 || posicao > collaboratorDTOList.size()) {
-                    System.out.println("The inserted value is out of bounds. Please re-insert a valid position");
+                    System.out.println("O valor inserido está fora dos limites.\nPor favor re insira uma posição válida");
 
                 } else {
                     continueLoop = false;
@@ -75,7 +75,7 @@ public class CreateTeamUI extends AbstractUI {
 
             this.createTeamController.registerTeam(teamDTO);
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
-            System.out.printf("Unfortunately there was an unexpected error in the application. %s%n", e.getMessage());
+            System.out.printf("Infelizmente ocorreu um erro inesperado na aplicação. %s%n", e.getMessage());
         }
 
         return false;
@@ -83,6 +83,6 @@ public class CreateTeamUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Create Team";
+        return "Criar Equipa";
     }
 }

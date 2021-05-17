@@ -73,6 +73,7 @@ public class CheckServiceListService {
             }
             if (remove){
                 serviceDTOList.remove(serviceDTO);
+                if (serviceDTOList.size()==0) break;
             }
         }
         return serviceDTOList;

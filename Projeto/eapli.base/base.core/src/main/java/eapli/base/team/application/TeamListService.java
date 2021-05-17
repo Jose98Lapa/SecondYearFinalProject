@@ -29,11 +29,9 @@ public class TeamListService {
         return teamHashSet;
     }
 
-    public boolean canIAddTheCollaborator(Collaborator collaborator, TeamType teamType){
-        if (teamRepository.canIAddTheColaborador(collaborator, teamType)){
-            return true;
-        }else{
-            throw new IllegalArgumentException("This collaborator already manages a team of this type");
+    public void canIAddTheCollaborator(Collaborator collaborator, TeamType teamType){
+        if (!teamRepository.canIAddTheColaborador(collaborator, teamType)){
+            throw new IllegalArgumentException("Este colaborador já gere uma equipa deste tipo");
         }
 
     }

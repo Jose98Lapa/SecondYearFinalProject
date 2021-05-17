@@ -42,7 +42,7 @@ public class CheckServicesUI extends AbstractUI {
                 Set<String> keywordSet = new HashSet<>();
                 while (continueLooping){
                     keywordSet.add(Console.readLine("Insira a keyword a procurar"));
-                    continueLooping = Console.readBoolean("Deseja continuar a ler?(s/n)");
+                    continueLooping = Console.readBoolean("Deseja continuar a escrever?(s/n)");
                 }
                 serviceDTOList = checkServicesController.getServiceDTOByKeywords(keywordSet);
             }
