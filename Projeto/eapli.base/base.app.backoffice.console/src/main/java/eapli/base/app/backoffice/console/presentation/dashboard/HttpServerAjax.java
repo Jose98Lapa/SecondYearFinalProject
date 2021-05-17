@@ -72,8 +72,8 @@ public class HttpServerAjax {
         return textHtml;
     }
     public static synchronized String getColabInfoStandingInHTML() {
-        return " <div class=\"topnav\" id=\"colabInfo\">\n" +
-                "    <span class=\"active\">HelpDesk Collaborator Dashboard</span>\n" +
+        return " <div class=\"topnav whiteText\" id=\"colabInfo\">\n" +
+                "    <span class=\"active\">Dashboard</span>\n" +
                 "    <span id=\"colabName\">Name: "+name+"</span>\n" +
                 "    <span id=\"colabId\">Id: "+id+"</span>\n" +
                 "    <span id=\"colabEmail\">Email: "+email+"</span>\n" +
