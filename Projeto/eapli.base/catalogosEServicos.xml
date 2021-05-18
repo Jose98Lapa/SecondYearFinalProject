@@ -91,9 +91,34 @@
             <ServicoID>3</ServicoID>
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
-            <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+            <iconServico>C:/Joao/iconOS.png</iconServico>
             <tituloServico>Instalacaoo OS</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
+
+        <Servico>
+            <Formulario>
+                <fId>4</fId>
+                <fnome>Formulario Computador</fnome>
+                <fscript>C:/Joao/script</fscript>
+                <Atributo>
+                    <Alabel>Opcao</Alabel>
+                    <Adescricao>Qual o Computador</Adescricao>
+                    <Atipo>String</Atipo>
+                    <Aregex>[a-z]</Aregex>
+                    <Anome>tipoComputador</Anome>
+                    <aID>4</aID>
+                </Atributo>
+            </Formulario>
+            <descricaoBreve>Instalacaoo Computador</descricaoBreve>
+            <descricaoCompleta>Instalacao de um Computador mas mais completo</descricaoCompleta>
+            <ServicoID>4</ServicoID>
+            <keyWords>porta</keyWords>
+            <statusServico>INCOMPLETO</statusServico>
+            <iconServico>C:/Joao/iconComputador.png</iconServico>
+            <tituloServico>Instalacaoo Computador</tituloServico>
+            <catalogoS>2</catalogoS>
+        </Servico>
     </class1>
+
 </class>

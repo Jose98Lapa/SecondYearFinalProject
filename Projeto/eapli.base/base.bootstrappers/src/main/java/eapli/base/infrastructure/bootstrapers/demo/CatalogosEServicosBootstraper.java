@@ -15,6 +15,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import eapli.framework.actions.Action;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,10 +26,11 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class CatalogosEServicosBootstrap {
+public class CatalogosEServicosBootstraper implements Action {
     private static final String FILENAME = "catalogosEServicos.xml";
 
-    public void initiate() {
+    @Override
+    public boolean execute() {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         CreateCatalogueController catalogoController = new CreateCatalogueController();
@@ -82,6 +85,8 @@ public class CatalogosEServicosBootstrap {
 
                             CatalogueDTO catalogo = catalogoController.registerCatalog();
                             catalogoController.saveCatalog(catalogo);
+
+                            System.out.printf("%nCatalogo adicionado - %s%n",catalogo.catalogTitle);
                         }
                     }
 
@@ -121,6 +126,8 @@ public class CatalogosEServicosBootstrap {
                             //formController.registo(fdto);
                             servicoController.automatic(fId);
                             servicoController.confirms();
+
+                            System.out.printf("Servico adicionado - %s%n",dto.title);
                         }
 
                     }
@@ -129,7 +136,9 @@ public class CatalogosEServicosBootstrap {
             }
             } catch(ParserConfigurationException | IOException | SAXException e){
                 e.printStackTrace();
+                return false;
             }
+        return true;
         }
 
 
