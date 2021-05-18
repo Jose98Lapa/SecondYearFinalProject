@@ -25,6 +25,7 @@ package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
+import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -53,6 +54,7 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int CONSULTAR_SERVICO_OPTION = 2;
+    private static final int DASHBOARD = 3;
 
 
     private final AuthorizationService authz =
@@ -80,6 +82,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION,builderConsultarServicoMenu());
+        mainMenu.addSubMenu(DASHBOARD,builderDashboard());
 
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
@@ -95,4 +98,12 @@ class MainMenu extends ClientUserBaseUI {
         consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return consultarServicoMenu;
     }
+
+    private Menu builderDashboard(){
+        final Menu dashboard = new Menu("Dashboard Menu");
+        dashboard.addItem(1,"Iniciar Dashboard",()->new ShowDashboardUI().show());
+        dashboard.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return dashboard;
+    }
+
 }
