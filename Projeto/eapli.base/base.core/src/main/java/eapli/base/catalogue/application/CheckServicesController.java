@@ -17,28 +17,29 @@ import java.util.*;
 public class CheckServicesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final CheckServiceListService checkServiceListService = new CheckServiceListService();
-    public void getCollaboratorCatalogues(){
+
+    public void getCollaboratorCatalogues() {
         String email = authz.session().get().authenticatedUser().email().toString();
         checkServiceListService.getCompatibleCatalogueOfACollaborator(email);
     }
 
-    public List<ServiceDTO> getServiceDTO(){
+    public Map<CatalogueDTO, List<ServiceDTO>> getServiceDTO() {
         return checkServiceListService.getServicesDTO();
     }
 
-    public List<ServiceDTO> getServiceDTOByTitle(String title){
-        return checkServiceListService.getServicesDTO(title,1);
+    public Map<CatalogueDTO, List<ServiceDTO>> getServiceDTOByTitle(String title) {
+        return checkServiceListService.getServicesDTO(title, 1);
     }
 
-    public List<ServiceDTO> getServiceDTOById(String ID){
-        return checkServiceListService.getServicesDTO(ID,2);
+    public Map<CatalogueDTO, List<ServiceDTO>> getServiceDTOById(String ID) {
+        return checkServiceListService.getServicesDTO(ID, 2);
     }
 
-    public List<ServiceDTO> getServiceDTOByStatus(String status){
-        return checkServiceListService.getServicesDTO(status,3);
+    public Map<CatalogueDTO, List<ServiceDTO>> getServiceDTOByStatus(String status) {
+        return checkServiceListService.getServicesDTO(status, 3);
     }
 
-    public List<ServiceDTO> getServiceDTOByKeywords(Set<String> keywords){
+    public Map<CatalogueDTO, List<ServiceDTO>> getServiceDTOByKeywords(Set<String> keywords) {
         return checkServiceListService.getServicesDTO(keywords);
     }
 
