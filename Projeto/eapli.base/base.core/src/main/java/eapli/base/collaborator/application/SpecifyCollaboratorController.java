@@ -8,6 +8,9 @@ import eapli.base.function.DTO.FunctionDTO;
 import eapli.base.function.DTO.FunctionDTOParser;
 import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.usermanagement.application.AddUserController;
+import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +24,8 @@ public class SpecifyCollaboratorController {
     private final CollaboratorDTOParser collaboratorDTOParser = new CollaboratorDTOParser();
 
     public void method(CollaboratorDTO collaboratorDTO){
-        colabBuilder.withPlaceOfResidence(collaboratorDTO.placeOfResidence).withContact(collaboratorDTO.contacto).withFullName(collaboratorDTO.nomeCompleto)
-                .withInstitutionalEmail(collaboratorDTO.email).withMecanoGraphicNumber(collaboratorDTO.mNumber).withNickname(collaboratorDTO.alcunha).withDateOfBirth(collaboratorDTO.dataDeNascimento);
+        colabBuilder.withPlaceOfResidence(collaboratorDTO.placeOfResidence).withContact(collaboratorDTO.contact).withFullName(collaboratorDTO.fullName)
+                .withInstitutionalEmail(collaboratorDTO.email).withMecanoGraphicNumber(collaboratorDTO.mNumber).withNickname(collaboratorDTO.nickname).withDateOfBirth(collaboratorDTO.dateOfBirth);
     }
 
     public Iterable<FunctionDTO> getFunctionList(){
@@ -45,5 +48,15 @@ public class SpecifyCollaboratorController {
 
     public CollaboratorDTO registerCollaborator(){return colabBuilder.build().toDTO();}
 
-    public void saveCollaborator(CollaboratorDTO colaborador){collabRepo.save(collaboratorDTOParser.valueOf(colaborador));}
+    public void saveCollaborator(CollaboratorDTO colaborador){
+        AddUserController addUserController = new AddUserController();
+        PasswordGenerator pwrdGenerator = new PasswordGenerator();
+        String[] name = colaborador.fullName.split(" ");
+
+        collabRepo.save(collaboratorDTOParser.valueOf(colaborador));
+        Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.COLLABORATOR);
+        roles.add(BaseRoles.CLIENT_USER);
+        addUserController.addUser(colaborador.nickname,pwrdGenerator.getPassword(7), name[0], name[name.length - 1], colaborador.email,roles);
+    }
 }

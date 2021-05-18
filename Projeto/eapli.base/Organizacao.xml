@@ -10,8 +10,8 @@
         <datanascimento>05/06/1998</datanascimento>
         <contact>913586789</contact>
         <fullName>Rodrigo Alberto Figueira</fullName>
-        <emailInstitucional>raf@isep.ipp.pt</emailInstitucional>
-        <nickname>RAF</nickname>
+        <emailInstitucional>guilli@isep.ipp.pt</emailInstitucional>
+        <nickname>Guilli</nickname>
         <SUPERVISOR>
             <function>
                 <Superdesignacao>Administrador</Superdesignacao>
@@ -48,5 +48,14 @@
         <tempoMedioA>10:30</tempoMedioA>
         <tempoMaximoR>10:10</tempoMaximoR>
         <tempoMedioR>10:30</tempoMedioR>
+    </criticality>
+
+    <criticality>
+        <labelCriti>urgente</labelCriti>
+        <criticalityValue>1</criticalityValue>
+        <tempoMaximoA>00:20</tempoMaximoA>
+        <tempoMedioA>00:05</tempoMedioA>
+        <tempoMaximoR>01:00</tempoMaximoR>
+        <tempoMedioR>00:30</tempoMedioR>
     </criticality>
 </class>

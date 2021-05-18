@@ -19,7 +19,7 @@ public class CheckServicesUI extends AbstractUI {
 
 
         int type = Console.readInteger("Insira 1 para o titulo\nInsira 2 para o ID\nInsira 3 para procurar por status\nInsira 4 para procurar por keywords\nInsira 5 para mostrar todos");
-        while (type < 1 || type > 5) {
+        while (type<1||type>5){
             type = Console.readInteger("Insira 1 para o titulo\nInsira 2 para o ID\nInsira 3 para procurar por status\nInsira 4 para procurar por keywords\nInsira 5 para mostrar todos");
         }
         Map<CatalogueDTO, List<ServiceDTO>> catalogueDTOListHashMap;
@@ -39,7 +39,7 @@ public class CheckServicesUI extends AbstractUI {
             case 4 -> {
                 boolean continueLooping = true;
                 Set<String> keywordSet = new HashSet<>();
-                while (continueLooping) {
+                while (continueLooping){
                     keywordSet.add(Console.readLine("Insira a keyword a procurar"));
                     continueLooping = Console.readBoolean("Deseja continuar a escrever?(s/n)");
                 }

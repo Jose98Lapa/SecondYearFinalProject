@@ -6,21 +6,21 @@ import eapli.framework.representations.dto.DTO;
 
 @DTO
 public class FunctionDTO {
-    public String designacao;
-    public String IdFuncao;
+    public String designation;
+    public String idFunction;
 
-    public FunctionDTO(String idFuncao, String designacao) {
-        this.designacao = designacao;
-        this.IdFuncao = idFuncao;
+    public FunctionDTO(String idFunction, String designation) {
+        this.designation = designation;
+        this.idFunction = idFunction;
     }
 
     public FunctionDTO(IdFunction idFunction, Designation designation){
-        this.IdFuncao= idFunction.toString();
-        this.designacao= designation.toString();
+        this.idFunction= idFunction.toString();
+        this.designation= designation.toString();
     }
 
     @Override
     public String toString() {
-        return "Designacao: "+designacao;
+        return "designation: "+designation;
     }
 }

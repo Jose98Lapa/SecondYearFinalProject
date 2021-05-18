@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.assignCriticalityLevel.AssignCriticalityLevelUI;
 import eapli.base.app.backoffice.console.presentation.associateCollaborator.AssociateCollaboratorUI;
 import eapli.base.app.backoffice.console.presentation.createCatalogue.CreateCatalogueUI;
 import eapli.base.app.backoffice.console.presentation.createColour.CreateColourUI;
@@ -85,7 +86,7 @@ public class MainMenu extends AbstractUI {
     //GSH
     private static final int CRIAR_CATALOGO_OPTION = 2;
     private static final int SERVICE_OPTION = 3;
-    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 2;
+    private static final int ESPECIFICAR_CRITICIDADE_OPTION = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -238,6 +239,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildCatalogoMenu() {
         final Menu equipaMenu = new Menu("Catalogo");
         equipaMenu.addItem(1, "Criar Catalogo", () -> new CreateCatalogueUI().show());
+        equipaMenu.addItem(2, "Associar Nivel Criticidade", () -> new AssignCriticalityLevelUI().show());
         equipaMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return equipaMenu;
     }

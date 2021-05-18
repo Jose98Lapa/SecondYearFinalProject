@@ -1,6 +1,4 @@
-package eapli.base.app.backoffice.console.presentation.dashboard;
-
-import eapli.base.AppSettings;
+package eapli.base.app.user.console.presentation.dashboard;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,15 +6,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-/**+
+/**
+ * +
+ *
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HttpServerAjax {
-    static private final String BASE_FOLDER="base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/dashboard/www/";
+public class HttpServerAjax extends Thread {
+    static private final String BASE_FOLDER = "base.app.user.console/src/main/java/eapli/base/app/user/console/presentation/dashboard/www";
     static private ServerSocket sock;
 
-    public static void main(String args[]) throws Exception {
-        Socket cliSock;
+    public void run() {
+        Socket cliSock = null;
         /*
         if ( app.getHttpPort() == 0) {
             System.out.println("Local port number required at the command line.");
@@ -32,11 +32,16 @@ public class HttpServerAjax {
         try {
             sock = new ServerSocket(55127);
         } catch (IOException ex) {
-            System.out.println("Server failed to open local port " +  55127);
-            System.exit(1);
+            System.err.println("Server failed to open local port " + 55127);
+
         }
         while (true) {
-            cliSock = sock.accept();
+
+            try {
+                cliSock = sock.accept();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
             incAccessesCounter();
@@ -71,12 +76,13 @@ public class HttpServerAjax {
         textHtml = textHtml + "</ul><p class=\"whiteText\">HTTP server accesses counter: " + accessesCounter + "</p>";
         return textHtml;
     }
+
     public static synchronized String getColabInfoStandingInHTML() {
         return " <div class=\"topnav whiteText\" id=\"colabInfo\">\n" +
                 "    <span class=\"active\">Dashboard</span>\n" +
-                "    <span id=\"colabName\">Name: "+name+"</span>\n" +
-                "    <span id=\"colabId\">Id: "+id+"</span>\n" +
-                "    <span id=\"colabEmail\">Email: "+email+"</span>\n" +
+                "    <span id=\"colabName\">Name: " + name + "</span>\n" +
+                "    <span id=\"colabId\">Id: " + id + "</span>\n" +
+                "    <span id=\"colabEmail\">Email: " + email + "</span>\n" +
                 "</div> ";
     }
 

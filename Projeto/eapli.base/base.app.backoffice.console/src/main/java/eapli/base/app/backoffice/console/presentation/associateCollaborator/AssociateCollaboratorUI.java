@@ -37,7 +37,7 @@ public class AssociateCollaboratorUI extends AbstractUI {
 
         for (int i = 0; i < colaboradores.size(); i++) {
             CollaboratorDTO atual = colaboradores.get(i);
-            System.out.printf(" %d - %s | %s |%s\n", i, atual.mNumber, atual.nomeCompleto, atual.email);
+            System.out.printf(" %d - %s | %s |%s\n", i, atual.mNumber, atual.fullName, atual.email);
         }
 
         opcaoColaborador = Console.readOption(0, colaboradores.size() - 1, 0);

@@ -113,6 +113,10 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO> {
 
     }
 
+    public void changeCriticalityLevelTo(final Criticality newCriticality){
+        this.nivelCriticality = newCriticality;
+    }
+
     public Long identity() {
         return identity;
     }

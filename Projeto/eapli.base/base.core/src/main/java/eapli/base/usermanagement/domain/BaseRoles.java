@@ -35,7 +35,7 @@ public final class BaseRoles {
      */
     public static final Role POWER_USER = Role.valueOf("POWER_USER");
 
-    public static final Role COLABORATOR = Role.valueOf("COLABORATOR");
+    public static final Role COLLABORATOR = Role.valueOf("COLABORATOR");
     /**
      * Utente
      */
@@ -59,7 +59,7 @@ public final class BaseRoles {
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, GSH, RRH, COLABORATOR };
+        return new Role[] { ADMIN, GSH, RRH, COLLABORATOR };
     }
 
     public boolean isCollaborator(final Role role) {
