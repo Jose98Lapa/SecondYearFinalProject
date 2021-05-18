@@ -1,5 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.assignCriticalityLevel;
 
+import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
 import eapli.base.catalogue.application.AssignCriticalityLevelController;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.criticality.dto.CriticalityDTO;
@@ -77,11 +78,15 @@ public class AssignCriticalityLevelUI extends AbstractUI {
         while (index != 0) {
             for (CriticalityDTO dto : lstCriticidade)
                 System.out.printf("#%d %s - %s%n", index++,dto.label,dto.valorCriticidade);
-            index = Console.readInteger("Escolha uma criticidade para o catalogo: ");
+            index = Console.readInteger("Escolha uma criticidade para o catalogo (0 para criar): ");
 
             if (index > 0 && index-1 < lstCriticidade.size()) {
                 criticidade = lstCriticidade.get(index-1);
                 index = 0;
+            }else if (index == 0) {
+                SpecifyCriticalityUI specifyCriticalityUI= new SpecifyCriticalityUI();
+                specifyCriticalityUI.show();
+                criticidade = showCriticityAndChoose();
             }
         }
         return criticidade;
