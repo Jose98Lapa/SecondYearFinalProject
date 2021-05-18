@@ -1,38 +1,99 @@
 <?xml version="1.0"?>
 <class>
-<class1>
-    <catalogue>
-        <criteriosdeAcesso>1</criteriosdeAcesso>
-        <responsaveis>1</responsaveis>
-        <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
-        <tituloCatalogoC>Restauros</tituloCatalogoC>
-        <descricaoBreveC>descricao breve restauros</descricaoBreveC>
-        <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
-        <criticality>1</criticality>
-    </catalogue>
+    <class1>
+        <catalogue>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>C:/Joao/iconCatalogo.png</iconCatalogo>
+            <tituloCatalogoC>Restauros</tituloCatalogoC>
+            <descricaoBreveC>descricao breve restauros</descricaoBreveC>
+            <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
+            <criticality>1</criticality>
+        </catalogue>
 
-    <Servico>
-        <Formulario>
-            <fId>1</fId>
-            <fnome>Formulario</fnome>
-            <fscript>C:/Joao/script</fscript>
-            <Atributo>
-                <Alabel>Opcao</Alabel>
-                <Adescricao>Qual o tipo</Adescricao>
-                <Atipo>String</Atipo>
-                <Aregex>[a-z]</Aregex>
-                <Anome>tipoRestauro</Anome>
-                <aID>1</aID>
-            </Atributo>
-        </Formulario>
-        <descricaoBreve>Restauro de uma bicicleta</descricaoBreve>
-        <descricaoCompleta>Restauro de uma bicicleta mas mais completo</descricaoCompleta>
-        <ServicoID>1</ServicoID>
-        <keyWords>bicileta</keyWords>
-        <statusServico>INCOMPLETO</statusServico>
-        <iconServico>C:/Joao/iconCatalogo.png</iconServico>
-        <tituloServico>Restauro Bicileta</tituloServico>
-        <catalogoS>1</catalogoS>
-    </Servico>
-</class1>
+        <Servico>
+            <Formulario>
+                <fId>1</fId>
+                <fnome>Formulario Bicicleta</fnome>
+                <fscript>C:/Joao/script</fscript>
+                <Atributo>
+                    <Alabel>Opcao</Alabel>
+                    <Adescricao>Qual o tipo</Adescricao>
+                    <Atipo>String</Atipo>
+                    <Aregex>[a-z]</Aregex>
+                    <Anome>tipoRestauro</Anome>
+                    <aID>1</aID>
+                </Atributo>
+            </Formulario>
+            <descricaoBreve>Restauro de uma bicicleta</descricaoBreve>
+            <descricaoCompleta>Restauro de uma bicicleta mas mais completo</descricaoCompleta>
+            <ServicoID>1</ServicoID>
+            <keyWords>bicileta</keyWords>
+            <statusServico>INCOMPLETO</statusServico>
+            <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+            <tituloServico>Restauro Bicileta</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+
+        <Servico>
+            <Formulario>
+                <fId>2</fId>
+                <fnome>Formulario Porta</fnome>
+                <fscript>C:/Joao/script</fscript>
+                <Atributo>
+                    <Alabel>Opcao</Alabel>
+                    <Adescricao>Qual o tipo</Adescricao>
+                    <Atipo>String</Atipo>
+                    <Aregex>[a-z]</Aregex>
+                    <Anome>tipoRestauro</Anome>
+                    <aID>2</aID>
+                </Atributo>
+            </Formulario>
+            <descricaoBreve>Restauro de uma porta</descricaoBreve>
+            <descricaoCompleta>Restauro de uma porta mas mais completo</descricaoCompleta>
+            <ServicoID>2</ServicoID>
+            <keyWords>porta</keyWords>
+            <statusServico>INCOMPLETO</statusServico>
+            <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+            <tituloServico>Restauro Porta</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+
+
+    </class1>
+    <class1>
+        <catalogue>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>C:/Joao/iconInstalações.png</iconCatalogo>
+            <tituloCatalogoC>Instalações</tituloCatalogoC>
+            <descricaoBreveC>descricao breve instalações</descricaoBreveC>
+            <descricaoCompletaC>Catalogo de instalações</descricaoCompletaC>
+            <criticality>2</criticality>
+        </catalogue>
+
+        <Servico>
+            <Formulario>
+                <fId>3</fId>
+                <fnome>Formulario OS</fnome>
+                <fscript>C:/Joao/script</fscript>
+                <Atributo>
+                    <Alabel>Opcao</Alabel>
+                    <Adescricao>Qual o OS</Adescricao>
+                    <Atipo>String</Atipo>
+                    <Aregex>[a-z]</Aregex>
+                    <Anome>tipoRestauro</Anome>
+                    <aID>3</aID>
+                </Atributo>
+            </Formulario>
+            <descricaoBreve>Instalacaoo OS</descricaoBreve>
+            <descricaoCompleta>Instalacao de um OS mas mais completo</descricaoCompleta>
+            <ServicoID>3</ServicoID>
+            <keyWords>porta</keyWords>
+            <statusServico>INCOMPLETO</statusServico>
+            <iconServico>C:/Joao/iconCatalogo.png</iconServico>
+            <tituloServico>Instalacaoo OS</tituloServico>
+            <catalogoS>2</catalogoS>
+        </Servico>
+    </class1>
 </class>

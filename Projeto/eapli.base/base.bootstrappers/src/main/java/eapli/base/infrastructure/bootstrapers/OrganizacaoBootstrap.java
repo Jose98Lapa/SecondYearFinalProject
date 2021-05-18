@@ -39,99 +39,125 @@ public class OrganizacaoBootstrap {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
         SpecifyCollaboratorController colabController = new SpecifyCollaboratorController();
+        SpecifyCriticalityController criticidadeController = new SpecifyCriticalityController();
+        CreateTeamBootstrap equipaControllerBootstrap = new CreateTeamBootstrap();
+
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new File(FILENAME));
             doc.getDocumentElement().normalize();
-            NodeList colabs = doc.getElementsByTagName("class");
-            for (int temp = 0; temp < colabs.getLength(); temp++) {
-                Node node = colabs.item(temp);
+            NodeList elementos = doc.getElementsByTagName("class");
+            int size;
+            for (size = 0; size < elementos.getLength(); size++) {
+                Node node = elementos.item(size);
+
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    int sizeInside;
                     Element element = (Element) node;
-                    String splaceOfResidence = element.getElementsByTagName("splaceOfResidence").item(0).getTextContent();
-                    String snumeroMecanografico = element.getElementsByTagName("snumeroMecanografico").item(0).getTextContent();
-                    String scontacto = element.getElementsByTagName("scontacto").item(0).getTextContent();
-                    String snomeCompleto = element.getElementsByTagName("snomeCompleto").item(0).getTextContent();
-                    String semailInstitucional = element.getElementsByTagName("semailInstitucional").item(0).getTextContent();
-                    String salcunha = element.getElementsByTagName("salcunha").item(0).getTextContent();
-                    String sdataDeNascimento = element.getElementsByTagName("sdataDeNascimento").item(0).getTextContent();
-                    String Superdesignacao = element.getElementsByTagName("Superdesignacao").item(0).getTextContent();
-                    String SuperidFunc = element.getElementsByTagName("SuperidFunc").item(0).getTextContent();
+                    CollaboratorDTO collab = null;
+                    NodeList collaborators = element.getElementsByTagName("collaborator");
+                    for (sizeInside = 0; sizeInside < collaborators.getLength(); sizeInside++) {
+                        Node nodeCollab = collaborators.item(sizeInside);
+                        if (nodeCollab.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementCollab = (Element) nodeCollab;
+                            String splaceOfResidence = elementCollab.getElementsByTagName("splaceOfResidence").item(0).getTextContent();
+                            String snumeroMecanografico = elementCollab.getElementsByTagName("snumeroMecanografico").item(0).getTextContent();
+                            String scontacto = elementCollab.getElementsByTagName("scontacto").item(0).getTextContent();
+                            String snomeCompleto = elementCollab.getElementsByTagName("snomeCompleto").item(0).getTextContent();
+                            String semailInstitucional = elementCollab.getElementsByTagName("semailInstitucional").item(0).getTextContent();
+                            String salcunha = elementCollab.getElementsByTagName("salcunha").item(0).getTextContent();
+                            String sdataDeNascimento = elementCollab.getElementsByTagName("sdataDeNascimento").item(0).getTextContent();
+                            String Superdesignacao = elementCollab.getElementsByTagName("Superdesignacao").item(0).getTextContent();
+                            String SuperidFunc = elementCollab.getElementsByTagName("SuperidFunc").item(0).getTextContent();
 
-                    Function functionSupe = new Function(IdFunction.valueOf(SuperidFunc), Designation.valueOf(Superdesignacao));
-                    FunctionRepository repo = PersistenceContext.repositories().funcao();
-                    repo.save(functionSupe);
+                            Function functionSupe = new Function(IdFunction.valueOf(SuperidFunc), Designation.valueOf(Superdesignacao));
+                            FunctionRepository repo = PersistenceContext.repositories().funcao();
+                            repo.save(functionSupe);
 
-                    CollaboratorBuilder builder = new CollaboratorBuilder();
-                    Collaborator supervisor = builder.withPlaceOfResidence(splaceOfResidence).withContact(scontacto)
-                            .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumeroMecanografico)
-                            .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(functionSupe).build();
-                    String designacao = element.getElementsByTagName("designation").item(0).getTextContent();
-                    String dataDeNascimento = element.getElementsByTagName("datanascimento").item(0).getTextContent();
-                    String placeOfResidence = element.getElementsByTagName("placeOfResidence").item(0).getTextContent();
-                    String numeroMecanografico = element.getElementsByTagName("numeroMecanografico").item(0).getTextContent();
-                    String contacto = element.getElementsByTagName("contact").item(0).getTextContent();
-                    String nomeCompleto = element.getElementsByTagName("fullName").item(0).getTextContent();
-                    String emailInstitucional = element.getElementsByTagName("emailInstitucional").item(0).getTextContent();
-                    String alcunha = element.getElementsByTagName("nickname").item(0).getTextContent();
-                    String idFunc = element.getElementsByTagName("idFunc").item(0).getTextContent();
+                            CollaboratorBuilder builder = new CollaboratorBuilder();
+                            Collaborator supervisor = builder.withPlaceOfResidence(splaceOfResidence).withContact(scontacto)
+                                    .withFullName(snomeCompleto).withInstitutionalEmail(semailInstitucional).withMecanoGraphicNumber(snumeroMecanografico)
+                                    .withNickname(salcunha).withDateOfBirth(sdataDeNascimento).withMecanoGraphicNumber(snumeroMecanografico).withFunction(functionSupe).build();
+                            String designacao = elementCollab.getElementsByTagName("designation").item(0).getTextContent();
+                            String dataDeNascimento = elementCollab.getElementsByTagName("datanascimento").item(0).getTextContent();
+                            String placeOfResidence = elementCollab.getElementsByTagName("placeOfResidence").item(0).getTextContent();
+                            String numeroMecanografico = elementCollab.getElementsByTagName("numeroMecanografico").item(0).getTextContent();
+                            String contacto = elementCollab.getElementsByTagName("contact").item(0).getTextContent();
+                            String nomeCompleto = elementCollab.getElementsByTagName("fullName").item(0).getTextContent();
+                            String emailInstitucional = elementCollab.getElementsByTagName("emailInstitucional").item(0).getTextContent();
+                            String alcunha = elementCollab.getElementsByTagName("nickname").item(0).getTextContent();
+                            String idFunc = elementCollab.getElementsByTagName("idFunc").item(0).getTextContent();
 
-                    CollaboratorDTO colaDTO = new CollaboratorDTO(placeOfResidence, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
-                    colabController.method(colaDTO);
-                    Function func = new Function(IdFunction.valueOf(idFunc), Designation.valueOf(designacao));
-                    repo.save(func);
-                    colabController.defineFunction(func.toDTO());
-                    CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
-                    repo2.save(supervisor);
-                    colabController.defineSupervisor(supervisor.toDTO());
-                    CollaboratorDTO finale = colabController.registerCollaborator();
-                    colabController.saveCollaborator(finale);
+                            CollaboratorDTO colaDTO = new CollaboratorDTO(placeOfResidence, contacto, nomeCompleto, emailInstitucional, numeroMecanografico, alcunha, dataDeNascimento);
+                            colabController.method(colaDTO);
+                            Function func = new Function(IdFunction.valueOf(idFunc), Designation.valueOf(designacao));
+                            repo.save(func);
+                            colabController.defineFunction(func.toDTO());
+                            CollaboratorRepository repo2 = PersistenceContext.repositories().collaborators();
+                            repo2.save(supervisor);
+                            colabController.defineSupervisor(supervisor.toDTO());
+                            collab = colabController.registerCollaborator();
+                            colabController.saveCollaborator(collab);
+                        }
+                    }
 
-                    String descricao = element.getElementsByTagName("descricao").item(0).getTextContent();
-                    String tipoEquipaID = element.getElementsByTagName("teamTypeID").item(0).getTextContent();
-                    String equipaId = element.getElementsByTagName("equipaId").item(0).getTextContent();
-                    String acronimo = element.getElementsByTagName("acronym").item(0).getTextContent();
-                    String TEdesignacao = element.getElementsByTagName("TEdesignacao").item(0).getTextContent();
-                    String nome = element.getElementsByTagName("nome").item(0).getTextContent();
-                    String hexadecimal = element.getElementsByTagName("hexadecimal").item(0).getTextContent();
+                    NodeList teams = element.getElementsByTagName("team");
+                    for (sizeInside = 0; sizeInside < teams.getLength(); sizeInside++) {
+                        Node nodeTeam = teams.item(sizeInside);
+                        if (nodeTeam.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementTeam = (Element) nodeTeam;
+                            String descricao = elementTeam.getElementsByTagName("descricao").item(0).getTextContent();
+                            String tipoEquipaID = elementTeam.getElementsByTagName("teamTypeID").item(0).getTextContent();
+                            String equipaId = elementTeam.getElementsByTagName("equipaId").item(0).getTextContent();
+                            String acronimo = elementTeam.getElementsByTagName("acronym").item(0).getTextContent();
+                            String TEdesignacao = elementTeam.getElementsByTagName("TEdesignacao").item(0).getTextContent();
+                            String nome = elementTeam.getElementsByTagName("nome").item(0).getTextContent();
+                            String hexadecimal = elementTeam.getElementsByTagName("hexadecimal").item(0).getTextContent();
 
-                    CreateTeamTypeController controller = new CreateTeamTypeController();
-                    CreateColourController corController = new CreateColourController();
-                    ColourDTO cor = new ColourDTO(hexadecimal, nome);
-                    corController.registo(cor);
-                    TeamTypeDTO dto = new TeamTypeDTO(tipoEquipaID, TEdesignacao, cor);
-                    controller.registo(dto);
+                            CreateTeamTypeController controller = new CreateTeamTypeController();
+                            CreateColourController corController = new CreateColourController();
+                            ColourDTO cor = new ColourDTO(hexadecimal, nome);
+                            corController.registo(cor);
+                            TeamTypeDTO dto = new TeamTypeDTO(tipoEquipaID, TEdesignacao, cor);
+                            controller.registo(dto);
 
-                    CreateTeamController equipaController = new CreateTeamController();
-                    List<CollaboratorDTO> responsaveis = new ArrayList<>();
-                    CollaboratorDTO collaboratorDTO = finale;
-                    responsaveis.add(collaboratorDTO);
-                    List<CollaboratorDTO> members = new ArrayList<>();
-                    members.add(collaboratorDTO);
-                    TeamDTO teamDto1 = new TeamDTO(descricao,acronimo,equipaId,responsaveis,dto,members);
+                            CreateTeamController equipaController = new CreateTeamController();
+                            List<CollaboratorDTO> responsaveis = new ArrayList<>();
+                            CollaboratorDTO collaboratorDTO = collab;
+                            responsaveis.add(collaboratorDTO);
+                            List<CollaboratorDTO> members = new ArrayList<>();
+                            members.add(collaboratorDTO);
+                            TeamDTO teamDto1 = new TeamDTO(descricao, acronimo, equipaId, responsaveis, dto, members);
 
 
-                    CreateTeamBootstrap equipaControllerBootstrap = new CreateTeamBootstrap();
-                    equipaControllerBootstrap.registo(teamDto1);
+                            equipaControllerBootstrap.registo(teamDto1);
+                        }
+                    }
 
-                    SpecifyCriticalityController criticidadeController = new SpecifyCriticalityController();
-                    String labelCriti = element.getElementsByTagName("labelCriti").item(0).getTextContent();
-                    String valorCriticidade = element.getElementsByTagName("criticalityValue").item(0).getTextContent();
-                    String tempoMaximoA = element.getElementsByTagName("tempoMaximoA").item(0).getTextContent();
-                    String tempoMedioA = element.getElementsByTagName("tempoMedioA").item(0).getTextContent();
-                    String tempoMaximoR = element.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
-                    String tempoMedioR = element.getElementsByTagName("tempoMedioR").item(0).getTextContent();
+                    NodeList criticalities = element.getElementsByTagName("criticality");
+                    for (sizeInside = 0; sizeInside < criticalities.getLength(); sizeInside++) {
+                        Node nodeCriticality = criticalities.item(sizeInside);
+                        if (nodeCriticality.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementCriticality = (Element) nodeCriticality;
+                            String labelCriti = elementCriticality.getElementsByTagName("labelCriti").item(0).getTextContent();
+                            String valorCriticidade = elementCriticality.getElementsByTagName("criticalityValue").item(0).getTextContent();
+                            String tempoMaximoA = elementCriticality.getElementsByTagName("tempoMaximoA").item(0).getTextContent();
+                            String tempoMedioA = elementCriticality.getElementsByTagName("tempoMedioA").item(0).getTextContent();
+                            String tempoMaximoR = elementCriticality.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
+                            String tempoMedioR = elementCriticality.getElementsByTagName("tempoMedioR").item(0).getTextContent();
 
-                    CriticalityDTO criticalityDTO = new CriticalityDTO(labelCriti,valorCriticidade,tempoMaximoA,tempoMedioA,tempoMaximoR,tempoMedioR);
-                    CriticalityDTO criticidade =  criticidadeController.method(criticalityDTO);
-                    criticidadeController.save(criticidade);
+                            CriticalityDTO criticalityDTO = new CriticalityDTO(labelCriti, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR);
+                            CriticalityDTO criticidade = criticidadeController.method(criticalityDTO);
+                            criticidadeController.save(criticidade);
+                        }
+                    }
                 }
             }
-        } catch (ParserConfigurationException | IOException | org.xml.sax.SAXException e) {
-            e.printStackTrace();
+                } catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e){
+                    e.printStackTrace();
+                }
+            }
+
+
         }
-    }
-
-
-}
