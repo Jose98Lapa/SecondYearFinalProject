@@ -1,7 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.specifyCollaborator;
 
 import eapli.base.collaborator.application.SpecifyCollaboratorController;
-import eapli.base.collaborator.application.PasswordGenerator;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.function.DTO.FunctionDTO;
 import eapli.base.myclientuser.application.SignupController;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SpecifyCollaboratorUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpecifyCollaboratorUI.class);
     private final SpecifyCollaboratorController controller = new SpecifyCollaboratorController();
-    private final SignupController signupController = new SignupController();
 
     @Override
     protected boolean doShow() {
@@ -79,10 +77,9 @@ public class SpecifyCollaboratorUI extends AbstractUI {
             System.out.println(colaborador.toString());
             boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
             if (answer) {
-                controller.saveCollaborator(colaborador);
                 String[] name = cdw.fullName().split(" ");
-                PasswordGenerator pwrdGenerator = new PasswordGenerator();
-                signupController.signup(cdw.nickname(), pwrdGenerator.getPassword(7), name[0], name[name.length - 1], cdw.institutionalEmail(), cdw.mecanographicNumber());
+                controller.saveCollaborator(colaborador);
+
             } else
                 return false;
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {

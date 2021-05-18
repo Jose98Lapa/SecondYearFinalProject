@@ -44,11 +44,13 @@ public final class BaseBootstrap extends BaseApplication {
     protected void doMain(final String[] args) {
         handleArgs(args);
 
-        OrganizacaoBootstrap o = new OrganizacaoBootstrap();
-        o.initiate();
 
         System.out.println("\n\n------- MASTER DATA -------");
         new BaseBootstrapper().execute();
+
+        System.out.println("\n\n------- ORGANIZATION DATA -------");
+        OrganizacaoBootstrap o = new OrganizacaoBootstrap();
+        o.initiate();
 
         System.out.println("\n\n------- Catalog and Service DATA -------");
         new CatalogosEServicosBootstrap().initiate();
