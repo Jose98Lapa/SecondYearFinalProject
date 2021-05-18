@@ -42,7 +42,7 @@ public class AssignCriticalityLevelUI extends AbstractUI {
         System.out.println("Criterios de acesso:");
         dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n",eDto.acronimo));
         System.out.println("Colaboradores Responsaveis:");
-        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.alcunha,cDto.nomeCompleto));
+        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.nickname,cDto.fullName));
         System.out.println("Nivel de Criticidade:");
         System.out.printf("  -> %s - %s%n",dto.nivelCriticidade.label,dto.nivelCriticidade.valorCriticidade);
     }

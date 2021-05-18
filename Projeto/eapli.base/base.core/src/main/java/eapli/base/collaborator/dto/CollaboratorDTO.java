@@ -8,54 +8,54 @@ import eapli.framework.representations.dto.DTO;
 @DTO
 public class CollaboratorDTO {
     public String placeOfResidence;
-    public String contacto;
-    public String nomeCompleto;
+    public String contact;
+    public String fullName;
     public String email;
     public String mNumber;
-    public String alcunha;
-    public String dataDeNascimento;
-    public String designacao;
-    public String IDfuncao;
+    public String nickname;
+    public String dateOfBirth;
+    public String designation;
+    public String idFunction;
     public String mSupervisor;
 
-    public CollaboratorDTO(String placeOfResidence,String contacto, String nomeCompleto, String email, String mNumber, String alcunha, String dataDeNascimento) {
+    public CollaboratorDTO(String placeOfResidence,String contact, String fullName, String email, String mNumber, String nickname, String dateOfBirth) {
         this.placeOfResidence = placeOfResidence;
-        this.contacto = contacto;
-        this.nomeCompleto = nomeCompleto;
+        this.contact = contact;
+        this.fullName = fullName;
         this.email = email;
         this.mNumber = mNumber;
-        this.alcunha = alcunha;
-        this.dataDeNascimento = dataDeNascimento;
+        this.nickname = nickname;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public CollaboratorDTO(PlaceOfResidence placeOfResidence, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function, Collaborator Supervisor){
         this.placeOfResidence= placeOfResidence.toString();
-        this.contacto= contact.toString();
-        this.nomeCompleto= fullName.toString();
+        this.contact= contact.toString();
+        this.fullName= fullName.toString();
         this.email=email.toString();
         this.mNumber=mNumber.toString();
-        this.alcunha= nickname.toString();
-        this.dataDeNascimento= birthDate.toString();
-        this.designacao= function.toDTO().designacao;
-        this.IDfuncao= function.toDTO().IdFuncao;
+        this.nickname= nickname.toString();
+        this.dateOfBirth= birthDate.toString();
+        this.designation= function.toDTO().designation;
+        this.idFunction= function.toDTO().idFunction;
         this.mSupervisor=Supervisor.identity().toString();
     }
 
     public CollaboratorDTO(PlaceOfResidence placeOfResidence, Contact contact, FullName fullName, InstituionalEmail email, MecanographicNumber mNumber, Nickname nickname, BirthDate birthDate, Function function){
         this.placeOfResidence=placeOfResidence.toString();
-        this.contacto= contact.toString();
-        this.nomeCompleto= fullName.toString();
+        this.contact= contact.toString();
+        this.fullName= fullName.toString();
         this.email=email.toString();
         this.mNumber=mNumber.toString();
-        this.alcunha= nickname.toString();
-        this.dataDeNascimento= birthDate.toString();
-        this.designacao= function.toDTO().designacao;
-        this.IDfuncao= function.toDTO().IdFuncao;
+        this.nickname= nickname.toString();
+        this.dateOfBirth= birthDate.toString();
+        this.designation= function.toDTO().designation;
+        this.idFunction= function.toDTO().idFunction;
     }
 
     @Override
     public String toString() {
-        return "Nome: " + nomeCompleto + " ID: " + mNumber + "\n";
+        return "Nome: " + fullName + " ID: " + mNumber + "\n";
     }
 
 }

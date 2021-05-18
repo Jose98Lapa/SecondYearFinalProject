@@ -18,14 +18,14 @@ public class CollaboratorDTOParser implements DTOParser<CollaboratorDTO, Collabo
     public Collaborator valueOf(CollaboratorDTO dto) {
         CollaboratorBuilder collaboratorBuilder = new CollaboratorBuilder();
         if (dto.mSupervisor==null)
-            return collaboratorBuilder.withPlaceOfResidence(dto.placeOfResidence).withContact(dto.contacto).withFullName(dto.nomeCompleto)
-                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento).withFunction(dto.IDfuncao,dto.designacao).build();
+            return collaboratorBuilder.withPlaceOfResidence(dto.placeOfResidence).withContact(dto.contact).withFullName(dto.fullName)
+                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.nickname).withDateOfBirth(dto.dateOfBirth).withFunction(dto.idFunction,dto.designation).build();
 
         final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
         Optional<Collaborator> supervisor = collabRepo.ofIdentity(new MecanographicNumber(dto.mSupervisor));
-        return collaboratorBuilder.withPlaceOfResidence(dto.placeOfResidence).withContact(dto.contacto).withFullName(dto.nomeCompleto)
-                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.alcunha).withDateOfBirth(dto.dataDeNascimento)
-                .withFunction(dto.IDfuncao,dto.designacao).withSupervisor(supervisor.get()).build();
+        return collaboratorBuilder.withPlaceOfResidence(dto.placeOfResidence).withContact(dto.contact).withFullName(dto.fullName)
+                .withInstitutionalEmail(dto.email).withMecanoGraphicNumber(dto.mNumber).withNickname(dto.nickname).withDateOfBirth(dto.dateOfBirth)
+                .withFunction(dto.idFunction,dto.designation).withSupervisor(supervisor.get()).build();
     }
 
 

@@ -58,7 +58,7 @@ public class CreateCatalogueUI extends AbstractUI {
         System.out.println("Criterios de acesso:");
         dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n",eDto.acronimo));
         System.out.println("Colaboradores Responsaveis:");
-        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.alcunha,cDto.nomeCompleto));
+        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.nickname,cDto.fullName));
         System.out.println("Nivel de Criticidade:");
         System.out.printf("  -> %s - %s%n",dto.nivelCriticidade.label,dto.nivelCriticidade.valorCriticidade);
     }
@@ -98,7 +98,7 @@ public class CreateCatalogueUI extends AbstractUI {
         System.out.printf("%n%s%n","Lista Colaboradores:");
         while (index != 0) {
             for (CollaboratorDTO dto : lstColaboradores)
-                System.out.printf("#%d - %s - %s - %s%n",index++,dto.mNumber,dto.alcunha,dto.nomeCompleto);
+                System.out.printf("#%d - %s - %s - %s%n",index++,dto.mNumber,dto.nickname,dto.fullName);
             index = Console.readInteger("Escolha um colaborador responsavel pelo catalogo (0 - fim): ");
 
             if (index > 0 && index-1 < lstColaboradores.size()) {
