@@ -1,5 +1,6 @@
 package eapli.base.app.user.console.presentation.checkServicesUI;
 
+import eapli.base.app.user.console.presentation.dashboard.HttpServerAjax;
 import eapli.base.catalogue.application.CheckServicesController;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -17,14 +18,12 @@ public class CheckServicesUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         checkServicesController.getCollaboratorCatalogues();
-
-
         int type = Console.readInteger("Insira 1 para o titulo\nInsira 2 para o ID\nInsira 3 para procurar por status\nInsira 4 para procurar por keywords\nInsira 5 para mostrar todos");
-        while (type<1||type>5){
+        while (type < 1 || type > 5) {
             type = Console.readInteger("Insira 1 para o titulo\nInsira 2 para o ID\nInsira 3 para procurar por status\nInsira 4 para procurar por keywords\nInsira 5 para mostrar todos");
         }
         List<ServiceDTO> serviceDTOList;
-        switch (type){
+        switch (type) {
             case 1 -> {
                 String title = Console.readLine("Insira o título a procurar");
                 serviceDTOList = checkServicesController.getServiceDTOByTitle(title);
@@ -40,7 +39,7 @@ public class CheckServicesUI extends AbstractUI {
             case 4 -> {
                 boolean continueLooping = true;
                 Set<String> keywordSet = new HashSet<>();
-                while (continueLooping){
+                while (continueLooping) {
                     keywordSet.add(Console.readLine("Insira a keyword a procurar"));
                     continueLooping = Console.readBoolean("Deseja continuar a escrever?(s/n)");
                 }
