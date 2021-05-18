@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<class>
+    <criticality>
+        <labelCriti>urgente</labelCriti>
+        <criticalityValue>4</criticalityValue>
+        <tempoMaximoA>00:30</tempoMaximoA>
+        <tempoMedioA>00:20</tempoMedioA>
+        <tempoMaximoR>03:10</tempoMaximoR>
+        <tempoMedioR>02:30</tempoMedioR>
+    </criticality>
+
+    <criticality>
+        <labelCriti>medio</labelCriti>
+        <criticalityValue>3</criticalityValue>
+        <tempoMaximoA>00:30</tempoMaximoA>
+        <tempoMedioA>00:20</tempoMedioA>
+        <tempoMaximoR>03:10</tempoMaximoR>
+        <tempoMedioR>02:30</tempoMedioR>
+    </criticality>
+
+    <criticality>
+        <labelCriti>baixo</labelCriti>
+        <criticalityValue>1</criticalityValue>
+        <tempoMaximoA>01:30</tempoMaximoA>
+        <tempoMedioA>01:00</tempoMedioA>
+        <tempoMaximoR>01:00</tempoMaximoR>
+        <tempoMedioR>00:30</tempoMedioR>
+    </criticality>
+</class>

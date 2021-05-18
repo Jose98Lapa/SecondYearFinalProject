@@ -41,21 +41,4 @@
         </colour>
     </team>
 
-    <criticality>
-            <labelCriti>medio</labelCriti>
-            <criticalityValue>4</criticalityValue>
-        <tempoMaximoA>10:10</tempoMaximoA>
-        <tempoMedioA>10:30</tempoMedioA>
-        <tempoMaximoR>10:10</tempoMaximoR>
-        <tempoMedioR>10:30</tempoMedioR>
-    </criticality>
-
-    <criticality>
-        <labelCriti>urgente</labelCriti>
-        <criticalityValue>1</criticalityValue>
-        <tempoMaximoA>00:20</tempoMaximoA>
-        <tempoMedioA>00:05</tempoMedioA>
-        <tempoMaximoR>01:00</tempoMaximoR>
-        <tempoMedioR>00:30</tempoMedioR>
-    </criticality>
 </class>

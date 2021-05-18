@@ -10,7 +10,6 @@ import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.colour.Application.CreateColourController;
 import eapli.base.colour.DTO.ColourDTO;
 import eapli.base.criticality.application.SpecifyCriticalityController;
-import eapli.base.criticality.dto.CriticalityDTO;
 import eapli.base.function.domain.Designation;
 import eapli.base.function.domain.Function;
 import eapli.base.team.DTO.TeamDTO;
@@ -19,6 +18,7 @@ import eapli.base.team.application.CreateTeamBootstrap;
 import eapli.base.function.domain.IdFunction;
 import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.framework.actions.Action;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -32,14 +32,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizacaoBootstrap {
+public class OrganizacaoBootstraper implements Action {
     private static final String FILENAME = "Organizacao.xml";
 
-    public void initiate() {
+    @Override
+    public boolean execute() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
         SpecifyCollaboratorController colabController = new SpecifyCollaboratorController();
-        SpecifyCriticalityController criticidadeController = new SpecifyCriticalityController();
         CreateTeamBootstrap equipaControllerBootstrap = new CreateTeamBootstrap();
 
 
@@ -99,6 +99,7 @@ public class OrganizacaoBootstrap {
                             colabController.defineSupervisor(supervisor.toDTO());
                             collab = colabController.registerCollaborator();
                             colabController.saveCollaborator(collab);
+                            System.out.printf("Colaborador adicionado - %s%n",collab.nickname);
                         }
                     }
 
@@ -122,7 +123,6 @@ public class OrganizacaoBootstrap {
                             TeamTypeDTO dto = new TeamTypeDTO(tipoEquipaID, TEdesignacao, cor);
                             controller.registo(dto);
 
-                            CreateTeamController equipaController = new CreateTeamController();
                             List<CollaboratorDTO> responsaveis = new ArrayList<>();
                             CollaboratorDTO collaboratorDTO = collab;
                             responsaveis.add(collaboratorDTO);
@@ -130,34 +130,20 @@ public class OrganizacaoBootstrap {
                             members.add(collaboratorDTO);
                             TeamDTO teamDto1 = new TeamDTO(descricao, acronimo, equipaId, responsaveis, dto, members);
 
-
                             equipaControllerBootstrap.registo(teamDto1);
+
+                            System.out.printf("Equipa adicionada - %s%n",teamDto1.acronimo);
                         }
                     }
 
-                    NodeList criticalities = element.getElementsByTagName("criticality");
-                    for (sizeInside = 0; sizeInside < criticalities.getLength(); sizeInside++) {
-                        Node nodeCriticality = criticalities.item(sizeInside);
-                        if (nodeCriticality.getNodeType() == Node.ELEMENT_NODE) {
-                            Element elementCriticality = (Element) nodeCriticality;
-                            String labelCriti = elementCriticality.getElementsByTagName("labelCriti").item(0).getTextContent();
-                            String valorCriticidade = elementCriticality.getElementsByTagName("criticalityValue").item(0).getTextContent();
-                            String tempoMaximoA = elementCriticality.getElementsByTagName("tempoMaximoA").item(0).getTextContent();
-                            String tempoMedioA = elementCriticality.getElementsByTagName("tempoMedioA").item(0).getTextContent();
-                            String tempoMaximoR = elementCriticality.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
-                            String tempoMedioR = elementCriticality.getElementsByTagName("tempoMedioR").item(0).getTextContent();
-
-                            CriticalityDTO criticalityDTO = new CriticalityDTO(labelCriti, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR);
-                            CriticalityDTO criticidade = criticidadeController.method(criticalityDTO);
-                            criticidadeController.save(criticidade);
-                        }
-                    }
                 }
             }
-                } catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e){
-                    e.printStackTrace();
-                }
-            }
-
-
+        } catch (ParserConfigurationException | IOException | org.xml.sax.SAXException e) {
+            e.printStackTrace();
+            return false;
         }
+        return true;
+    }
+
+
+}

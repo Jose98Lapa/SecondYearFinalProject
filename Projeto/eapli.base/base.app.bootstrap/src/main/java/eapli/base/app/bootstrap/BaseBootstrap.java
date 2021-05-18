@@ -5,9 +5,10 @@ import eapli.base.clientusermanagement.application.eventhandlers.NewUserRegister
 import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
-import eapli.base.infrastructure.bootstrapers.OrganizacaoBootstrap;
+import eapli.base.infrastructure.bootstrapers.NiveisCriticidadeBootstraper;
+import eapli.base.infrastructure.bootstrapers.OrganizacaoBootstraper;
 import eapli.base.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
-import eapli.base.infrastructure.bootstrapers.demo.CatalogosEServicosBootstrap;
+import eapli.base.infrastructure.bootstrapers.demo.CatalogosEServicosBootstraper;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.smoketests.BaseDemoSmokeTester;
 import eapli.base.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
@@ -49,11 +50,13 @@ public final class BaseBootstrap extends BaseApplication {
         new BaseBootstrapper().execute();
 
         System.out.println("\n\n------- ORGANIZATION DATA -------");
-        OrganizacaoBootstrap o = new OrganizacaoBootstrap();
-        o.initiate();
+        new OrganizacaoBootstraper().execute();
 
-        System.out.println("\n\n------- Catalog and Service DATA -------");
-        new CatalogosEServicosBootstrap().initiate();
+        System.out.println("\n\n------- CRITICALITY LEVEL DATA -------");
+        new NiveisCriticidadeBootstraper().execute();
+
+        System.out.printf("%n%n------- CATALOGUE AND SERVICE DATA -------");
+        new CatalogosEServicosBootstraper().execute();
 
         if (isToBootstrapDemoData) {
             System.out.println("\n\n------- DEMO DATA -------");
