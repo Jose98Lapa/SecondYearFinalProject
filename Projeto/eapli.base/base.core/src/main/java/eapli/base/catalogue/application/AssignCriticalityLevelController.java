@@ -8,8 +8,11 @@ import eapli.base.criticality.application.CriticalityListService;
 import eapli.base.criticality.dto.CriticalityDTO;
 import eapli.base.criticality.dto.CriticalityDTOParser;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.service.domain.*;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
+import java.util.Optional;
 
 public class AssignCriticalityLevelController {
 
@@ -33,7 +36,13 @@ public class AssignCriticalityLevelController {
     }
 
     public void saveCatalog(CatalogueDTO dto){
-        catalogRepo.save(new CatalogueDTOParser().valueOf(dto));
+        Optional<Catalogue> catalogueOptional = catalogRepo.ofIdentity(dto.identity);
+
+        if (catalogueOptional.isPresent()) {
+            Catalogue catalogue = catalogueOptional.get();
+            catalogue.changeCriticalityLevelTo(new CriticalityDTOParser().valueOf(dto.nivelCriticidade));
+            catalogRepo.save(catalogue);
+        }
     }
 
 
