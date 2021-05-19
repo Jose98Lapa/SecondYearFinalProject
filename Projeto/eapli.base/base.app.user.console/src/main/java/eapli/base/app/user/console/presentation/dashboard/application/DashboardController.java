@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.dashboard;
+package eapli.base.app.user.console.presentation.dashboard.application;
 
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
