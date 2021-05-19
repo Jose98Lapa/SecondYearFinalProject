@@ -9,13 +9,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class ShowDashboardUI extends AbstractUI {
-    private final HttpServerAjax server = new HttpServerAjax();
     DashboardController theController = new DashboardController();
 
     @Override
     protected boolean doShow() {
-        server.setColab(theController.getAuthenticatedCollaborator());
-        server.start();
+        theController.showCollaborator();
         URI uri;
         try {
             uri = new URI("http://localhost:55128");
