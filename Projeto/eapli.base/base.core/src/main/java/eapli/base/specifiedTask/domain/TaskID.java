@@ -1,4 +1,4 @@
-package eapli.base.task.domain;
+package eapli.base.specifiedTask.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;

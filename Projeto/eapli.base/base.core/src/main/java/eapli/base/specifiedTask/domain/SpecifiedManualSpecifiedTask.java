@@ -1,30 +1,26 @@
-package eapli.base.task.domain;
+package eapli.base.specifiedTask.domain;
 
 
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
-import eapli.base.task.DTO.ManualTaskDTO;
+import eapli.base.specifiedTask.DTO.SpecifiedManualTaskDTO;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.OneToOne;
 
-public class ManualTask extends Task implements DTOable<ManualTaskDTO> {
+public class SpecifiedManualSpecifiedTask extends SpecifiedTask implements DTOable<SpecifiedManualTaskDTO> {
 
     @OneToOne
     private Form form;
 
-    @OneToOne
-    private Collaborator collaborator;
 
-    public ManualTask(TaskID taskID,TaskStatus taskStatus,Form form){
+    public SpecifiedManualSpecifiedTask(TaskID taskID, TaskStatus taskStatus, Form form){
         super(taskID,taskStatus);
         this.form = form;
     }
 
-    public void addCollaborator(Collaborator collaborator){
-        this.collaborator = collaborator;
-    }
+
 
     public Form form(){
         return form;
@@ -41,7 +37,7 @@ public class ManualTask extends Task implements DTOable<ManualTaskDTO> {
     }
 
     @Override
-    public ManualTaskDTO toDTO() {
-        return new ManualTaskDTO(super.taskID.toString(),super.taskStatus.toString(), form().toDTO());
+    public SpecifiedManualTaskDTO toDTO() {
+        return new SpecifiedManualTaskDTO(super.taskID.toString(),super.taskStatus.toString(), form().toDTO());
     }
 }
