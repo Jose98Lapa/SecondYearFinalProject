@@ -1,19 +1,19 @@
-package eapli.base.task.DTO;
+package eapli.base.specifiedTask.DTO;
 
 import eapli.framework.representations.dto.DTO;
 
 @DTO
-public class AutomaticTaskDTO {
+public class SpecifiedAutomaticTaskDTO {
     String taskID;
     String taskStatus;
     String script;
 
-    public AutomaticTaskDTO(String taskID, String taskStatus) {
+    public SpecifiedAutomaticTaskDTO(String taskID, String taskStatus) {
         this.taskID = taskID;
         this.taskStatus = taskStatus;
     }
 
-    public AutomaticTaskDTO(String taskID, String taskStatus, String script) {
+    public SpecifiedAutomaticTaskDTO(String taskID, String taskStatus, String script) {
         this.taskID = taskID;
         this.taskStatus = taskStatus;
         this.script = script;
