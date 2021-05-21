@@ -58,9 +58,8 @@
             <tituloServico>Restauro Porta</tituloServico>
             <catalogoS>1</catalogoS>
         </Servico>
-
-
     </class1>
+
     <class1>
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
@@ -92,7 +91,7 @@
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
             <iconServico>C:/Joao/iconOS.png</iconServico>
-            <tituloServico>Instalacaoo OS</tituloServico>
+            <tituloServico>Instalacao OS</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
 
@@ -116,7 +115,7 @@
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
             <iconServico>C:/Joao/iconComputador.png</iconServico>
-            <tituloServico>Instalacaoo Computador</tituloServico>
+            <tituloServico>Instalacao Computador</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
     </class1>

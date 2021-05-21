@@ -49,11 +49,11 @@ public final class BaseBootstrap extends BaseApplication {
         System.out.println("\n\n------- MASTER DATA -------");
         new BaseBootstrapper().execute();
 
-        System.out.println("\n\n------- ORGANIZATION DATA -------");
-        new OrganizacaoBootstraper().execute();
-
         System.out.println("\n\n------- CRITICALITY LEVEL DATA -------");
         new NiveisCriticidadeBootstraper().execute();
+
+        System.out.println("\n\n------- ORGANIZATION DATA -------");
+        new OrganizacaoBootstraper().execute();
 
         System.out.printf("%n%n------- CATALOGUE AND SERVICE DATA -------");
         new CatalogosEServicosBootstraper().execute();

@@ -35,8 +35,18 @@ public class CatalogosEServicosBootstraper implements Action {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         CreateCatalogueController catalogoController = new CreateCatalogueController();
         SpecifyServiceController servicoController = new SpecifyServiceController();
+        ArrayList<CatalogueDTO> catalogos = null;
 
         try {
+            List<CollaboratorDTO> lstColaboradores = new ArrayList<>();
+            catalogoController.getCollabs().forEach(lstColaboradores::add);
+
+            List<TeamDTO> lstEquipas = new ArrayList<>();
+            catalogoController.getTeams().forEach(lstEquipas::add);
+
+            List<CriticalityDTO> lstCriticidade = new ArrayList<>();
+            catalogoController.getCriticidades().forEach(lstCriticidade::add);
+
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new File(FILENAME));
             doc.getDocumentElement().normalize();
@@ -64,29 +74,24 @@ public class CatalogosEServicosBootstraper implements Action {
                             catalogoController.insertBasicData(tituloCatalogoC, iconCatalogo,
                                     descricaoBreveC, descricaoCompletaC);
 
-                            List<TeamDTO> lstEquipas = new ArrayList<>();
-                            catalogoController.getTeams().forEach(lstEquipas::add);
                             final Set<TeamDTO> accessCriteria = new HashSet<>();
                             accessCriteria.add(lstEquipas.get(Integer.parseInt(criteriosdeAcesso) - 1));
 
                             catalogoController.defineAccessCriteria(accessCriteria);
 
-                            List<CollaboratorDTO> lstColaboradores = new ArrayList<>();
-                            catalogoController.getCollabs().forEach(lstColaboradores::add);
                             final Set<CollaboratorDTO> lstResponsaveis = new HashSet<>();
                             lstResponsaveis.add(lstColaboradores.get(Integer.parseInt(responsaveis) - 1));
 
                             catalogoController.defineResponsibleCollaborator(lstResponsaveis);
 
-                            List<CriticalityDTO> lstCriticidade = new ArrayList<>();
-                            catalogoController.getCriticidades().forEach(lstCriticidade::add);
                             CriticalityDTO criticalityDTO = lstCriticidade.get(Integer.parseInt(criticidade) - 1);
                             catalogoController.defineCriticidade(criticalityDTO);
 
                             CatalogueDTO catalogo = catalogoController.registerCatalog();
                             catalogoController.saveCatalog(catalogo);
+                            catalogos = servicoController.catalogList();
 
-                            System.out.printf("%nCatalogo adicionado - %s%n",catalogo.catalogTitle);
+                            System.out.printf("%nCatalogo adicionado - %s%n", catalogo.catalogTitle);
                         }
                     }
 
@@ -112,9 +117,9 @@ public class CatalogosEServicosBootstraper implements Action {
                             String iconServico = elementService.getElementsByTagName("iconServico").item(0).getTextContent();
                             String tituloServico = elementService.getElementsByTagName("tituloServico").item(0).getTextContent();
                             String catalogoS = elementService.getElementsByTagName("catalogoS").item(0).getTextContent();
-                            FormController formController = new FormController();
+                            //FormController formController = new FormController();
 
-                            ArrayList<CatalogueDTO> catalogos = servicoController.catalogList();
+
                             final Set<String> lstkeyWords = new HashSet<>();
                             lstkeyWords.add(keyWords);
                             ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null);
@@ -127,19 +132,27 @@ public class CatalogosEServicosBootstraper implements Action {
                             servicoController.automatic(fId);
                             servicoController.confirms();
 
-                            System.out.printf("Servico adicionado - %s%n",dto.title);
+                            System.out.printf("Servico adicionado - %s%n", dto.title);
                         }
 
                     }
+                    NodeList esperar = element.getElementsByTagName("wait");
+                    for (sizeInside = 0; sizeInside < esperar.getLength(); sizeInside++) {
+                        Node nodeWait = esperar.item(sizeInside);
+                        if (nodeWait.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementWait = (Element) nodeWait;
+                            catalogos = servicoController.catalogList();
+                        }
+                    }
+
                 }
-
             }
-            } catch(ParserConfigurationException | IOException | SAXException e){
-                e.printStackTrace();
-                return false;
-            }
-        return true;
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            e.printStackTrace();
+            return false;
         }
-
-
+        return true;
     }
+
+
+}
