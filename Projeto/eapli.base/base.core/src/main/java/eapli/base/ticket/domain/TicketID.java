@@ -4,12 +4,14 @@ import eapli.base.service.domain.ServiceID;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TicketID implements ValueObject, Comparable<ServiceID> {
+@Embeddable
+public class TicketID implements ValueObject, Comparable<TicketID>{
     private String ticketID;
     @Transient
     private String regex = "^[0-9]{1,10}$";
@@ -57,9 +59,8 @@ public class TicketID implements ValueObject, Comparable<ServiceID> {
         return ticketID;
     }
 
-
     @Override
-    public int compareTo(ServiceID o) {
-        return 0;
+    public int compareTo(TicketID o) {
+        return ticketID.compareTo(o.toString());
     }
 }

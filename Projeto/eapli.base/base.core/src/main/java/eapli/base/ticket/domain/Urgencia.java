@@ -1,12 +1,12 @@
 package eapli.base.ticket.domain;
 
-import eapli.base.criticality.domain.CriticalityValue;
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.util.Objects;
-
-public class Urgencia  implements ValueObject, Comparable<CriticalityValue> {
+@Embeddable
+public class Urgencia  implements ValueObject{
     @Transient
     private static final long serialVersionUID = 1L;
 
@@ -42,8 +42,8 @@ public class Urgencia  implements ValueObject, Comparable<CriticalityValue> {
         return this.urgency;
     }
 
-    @Override
-    public int compareTo(CriticalityValue o) {
-        return 0;
+    public static Urgencia valueOf(String string) {
+        return new Urgencia(string);
     }
+
 }

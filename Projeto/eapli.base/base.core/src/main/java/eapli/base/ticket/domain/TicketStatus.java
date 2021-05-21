@@ -4,11 +4,12 @@ import eapli.base.service.domain.ServiceStatus;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Embeddable
 public class TicketStatus implements ValueObject {
     private String status;
     @Transient
