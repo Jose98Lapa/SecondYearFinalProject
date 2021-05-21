@@ -48,7 +48,8 @@ public class NiveisCriticidadeBootstraper implements Action {
                             String tempoMaximoR = elementCriticality.getElementsByTagName("tempoMaximoR").item(0).getTextContent();
                             String tempoMedioR = elementCriticality.getElementsByTagName("tempoMedioR").item(0).getTextContent();
 
-                            CriticalityDTO criticalityDTO = new CriticalityDTO(labelCriti, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR);
+                            Long fakeID = (long) 0;
+                            CriticalityDTO criticalityDTO = new CriticalityDTO(fakeID,labelCriti, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR,true);
                             CriticalityDTO criticidade = criticidadeController.method(criticalityDTO);
                             criticidadeController.save(criticidade);
 
