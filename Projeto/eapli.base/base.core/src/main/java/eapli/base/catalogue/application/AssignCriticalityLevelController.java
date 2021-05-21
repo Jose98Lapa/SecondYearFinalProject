@@ -48,7 +48,7 @@ public class AssignCriticalityLevelController {
         criticalityController.save(dto);
     }
 
-    public void saveCatalog(CatalogueDTO dto){
+    public void updateCatalogue(CatalogueDTO dto){
         Optional<Catalogue> catalogueOptional = catalogRepo.ofIdentity(dto.identity);
         SpecifyCriticalityController criticalityController = new SpecifyCriticalityController();
 

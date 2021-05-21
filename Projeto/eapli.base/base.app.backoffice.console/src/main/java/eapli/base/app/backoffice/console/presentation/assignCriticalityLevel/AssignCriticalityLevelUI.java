@@ -22,13 +22,13 @@ public class AssignCriticalityLevelUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         try {
-            CatalogueDTO oldCatalogue = showCatalogueAndChoose();
+            CatalogueDTO Catalogue = showCatalogueAndChoose();
             CriticalityDTO newCriticidade = showCriticityAndChoose();
-            CatalogueDTO newCatalogo = this.theController.changeCriticalityLevel(oldCatalogue,newCriticidade);
-            showCatalogDTO(newCatalogo);
+            CatalogueDTO updatedCatalogo = this.theController.changeCriticalityLevel(Catalogue,newCriticidade);
+            showCatalogDTO(updatedCatalogo);
 
             if (Console.readBoolean("Confirma (s/n)")) {
-                this.theController.saveCatalog(newCatalogo);
+                this.theController.updateCatalogue(updatedCatalogo);
             }
 
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
