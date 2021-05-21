@@ -1,8 +1,10 @@
 package eapli.base.app.backoffice.console.presentation.assignCriticalityLevel;
 
 import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
+import eapli.base.app.backoffice.console.presentation.specifyNonGlobalCriticality.SpecifyNonGlobalCriticalityUI;
 import eapli.base.catalogue.application.AssignCriticalityLevelController;
 import eapli.base.catalogue.dto.CatalogueDTO;
+import eapli.base.criticality.domain.Criticality;
 import eapli.base.criticality.dto.CriticalityDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -23,11 +25,14 @@ public class AssignCriticalityLevelUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         try {
-            CatalogueDTO catalogo = this.theController.changeCriticalityLevel(showCatalogueAndChoose(),showCriticityAndChoose());
-            showCatalogDTO(catalogo);
+            CatalogueDTO oldCatalogue = showCatalogueAndChoose();
+            CriticalityDTO newCriticidade = showCriticityAndChoose();
+            CatalogueDTO newCatalogo = this.theController.changeCriticalityLevel(oldCatalogue,newCriticidade);
+            showCatalogDTO(newCatalogo);
 
-            if(Console.readBoolean("Confirma (s/n)"))
-                this.theController.saveCatalog(catalogo);
+            if (Console.readBoolean("Confirma (s/n)")) {
+                this.theController.saveCatalog(newCatalogo);
+            }
 
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
             System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
@@ -36,15 +41,15 @@ public class AssignCriticalityLevelUI extends AbstractUI {
         return true;
     }
 
-    protected  void showCatalogDTO(CatalogueDTO dto){
+    protected void showCatalogDTO(CatalogueDTO dto) {
         System.out.println("Dados Catalogo:");
-        System.out.printf("Titulo: %s%nDescrição Breve: %s%nDescrição Completa: %s%n",dto.catalogTitle,dto.briefDesc,dto.completeDesc);
+        System.out.printf("Titulo: %s%nDescrição Breve: %s%nDescrição Completa: %s%n", dto.catalogTitle, dto.briefDesc, dto.completeDesc);
         System.out.println("Criterios de acesso:");
-        dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n",eDto.acronimo));
+        dto.accessCriteria.forEach(eDto -> System.out.printf("  -> %s%n", eDto.acronimo));
         System.out.println("Colaboradores Responsaveis:");
-        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n",cDto.nickname,cDto.fullName));
+        dto.responsableCollabs.forEach(cDto -> System.out.printf("  -> %s - %s%n", cDto.nickname, cDto.fullName));
         System.out.println("Nivel de Criticidade:");
-        System.out.printf("  -> %s - %s%n",dto.nivelCriticidade.label,dto.nivelCriticidade.valorCriticidade);
+        System.out.printf("  -> %s - %s%n", dto.nivelCriticidade.label, dto.nivelCriticidade.valorCriticidade);
     }
 
     protected CatalogueDTO showCatalogueAndChoose() {
@@ -53,14 +58,14 @@ public class AssignCriticalityLevelUI extends AbstractUI {
         CatalogueDTO criticidade = null;
         int index = 1;
 
-        System.out.printf("%n%s%n","Lista Catalogos:");
+        System.out.printf("%n%s%n", "Lista Catalogos:");
         while (index != 0) {
             for (CatalogueDTO dto : lstCatalogue)
-                System.out.printf("#%d %s - %s - nivel criticidade: %s%n", index++,dto.catalogTitle,dto.briefDesc,dto.nivelCriticidade.label);
+                System.out.printf("#%d %s - %s - nivel criticidade: %s%n", index++, dto.catalogTitle, dto.briefDesc, dto.nivelCriticidade.label);
             index = Console.readInteger("Escolha um catalogo: ");
 
-            if (index > 0 && index-1 < lstCatalogue.size()) {
-                criticidade = lstCatalogue.get(index-1);
+            if (index > 0 && index - 1 < lstCatalogue.size()) {
+                criticidade = lstCatalogue.get(index - 1);
                 index = 0;
             }
         }
@@ -74,22 +79,46 @@ public class AssignCriticalityLevelUI extends AbstractUI {
         CriticalityDTO criticidade = null;
         int index = 1;
 
-        System.out.printf("%n%s%n","Lista Niveis criticidade:");
+        System.out.printf("%n%s%n", "Lista Niveis criticidade:");
         while (index != 0) {
             for (CriticalityDTO dto : lstCriticidade)
-                System.out.printf("#%d %s - %s%n", index++,dto.label,dto.valorCriticidade);
+                System.out.printf("#%d %s - %s%n", index++, dto.label, dto.valorCriticidade);
             index = Console.readInteger("Escolha uma criticidade para o catalogo (0 para criar): ");
 
-            if (index > 0 && index-1 < lstCriticidade.size()) {
-                criticidade = lstCriticidade.get(index-1);
+            if (index > 0 && index - 1 < lstCriticidade.size()) {
+                criticidade = lstCriticidade.get(index - 1);
                 index = 0;
-            }else if (index == 0) {
-                SpecifyCriticalityUI specifyCriticalityUI= new SpecifyCriticalityUI();
-                specifyCriticalityUI.show();
-                criticidade = showCriticityAndChoose();
+            } else if (index == 0) {
+                criticidade = createNonGlobalCriticalityLevel();
             }
         }
         return criticidade;
+    }
+
+
+    protected CriticalityDTO createNonGlobalCriticalityLevel() {
+        System.out.println("\nInsira a informação necessária para a Criticidade");
+        String valorCriticidade = Console.readLine("ValorCriticidade:");
+        String label = Console.readLine("Label:");
+        System.out.println("\n--Objetivo de Aprovação [HH:MM]--");
+        String tempoMaximoA = Console.readLine("Tempo Maximo:");
+        String tempoMedioA = Console.readLine("Tempo Medio:");
+        System.out.println("\n--Objetivo de Resolção [HH:MM]--");
+        String tempoMaximoR = Console.readLine("Tempo Maximo:");
+        String tempoMedioR = Console.readLine("Tempo Maximo:");
+        try {
+            CriticalityDTO criticalityDTO = new CriticalityDTO((long) 0, label, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR,false);
+
+            CriticalityDTO criticidade = theController.createNonGlobalCriticalityLevel(criticalityDTO);
+
+            System.out.println(criticidade);
+            boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
+            if (answer)
+                return criticidade;
+        } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
+            System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
+        }
+        return null;
     }
 
 

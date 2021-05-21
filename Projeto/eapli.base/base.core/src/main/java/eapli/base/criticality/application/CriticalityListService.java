@@ -13,7 +13,7 @@ public class CriticalityListService {
 
     public Iterable<CriticalityDTO> criticidades(){
         Set<CriticalityDTO>  niveisCriticidade = new HashSet<>();
-        criticidadeRepo.findAll().forEach(nivel -> niveisCriticidade.add(nivel.toDTO()));
+        criticidadeRepo.findAllGlobal().forEach(nivel -> niveisCriticidade.add(nivel.toDTO()));
         return niveisCriticidade;
     }
 }

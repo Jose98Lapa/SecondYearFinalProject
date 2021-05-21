@@ -53,7 +53,8 @@ public class CatalogueDTOParser implements DTOParser<CatalogueDTO, Catalogue> {
 
         return builder.withTitle(dto.catalogTitle).withIcon(dto.icon)
                 .withBriefDesc(dto.briefDesc).withCompleteDesc(dto.completeDesc)
-                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria).withIdentity(dto.identity).withNivelCriticidade(new CriticalityDTOParser().valueOf(dto.nivelCriticidade)).build();
+                .withResponsableCollabs(lstResponsable).withAccessCriteria(accessCriteria)
+                .withIdentity(dto.identity).withNivelCriticidade(new CriticalityDTOParser().valueOf(dto.nivelCriticidade)).build();
     }
 
 }

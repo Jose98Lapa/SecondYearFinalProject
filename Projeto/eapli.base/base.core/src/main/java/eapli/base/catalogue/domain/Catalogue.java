@@ -33,11 +33,11 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO> {
     private Criticality nivelCriticality;
 
     @ManyToMany
-    @JoinTable(name="CATALOGO_RESPONSAVEIS", joinColumns = @JoinColumn(name="CATALOGO_ID"))
+    @JoinTable(name="CATALOGUE_RESPONSABLES", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Collaborator> responsableCollabs = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name="CATALOGO_ACESSO", joinColumns = @JoinColumn(name="CATALOGO_ID"))
+    @JoinTable(name="CATALOGUE_ACCESS", joinColumns = @JoinColumn(name="CATALOGO_ID"))
     private final Set<Team> accessCriteria = new HashSet<>();
 
     private boolean status;
