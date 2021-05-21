@@ -10,13 +10,6 @@ Critérios de Aceitação / Observações :
 
 - Deve contemplar os casos em que é necessário configurar objetivos/valores distintos dos definidos globalmente pela organização.
 
-Informação adicional que obtive do cliente:
-
-- [Identificador sequencial e gerado automaticamente.](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7400)
-
-- [Definir um ou mais colaboradores responsaveis pelo serviço.](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7019)
-  - [Com atribuição através de uma pesquisa](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=7623)
-
 
 # 2. Análise
 
@@ -44,10 +37,63 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 
 # 4. Implementação
 
+  No decorrer desta funcionalidade é mostrada ao user uma lista das criticidades existentes na organização. Aqui o user tem a opção de escolher uma, para que esta seja posteriormente atribuida ao catalogo de serviços, ou de configurar objetivos/valores distintos dos definidos globalmente. Este processo de criação é bastante similar ao da UC2010 - EspecificarCriticidade, sendo que a unica diferença é que esta é guardada como não global.
+
+  ```java
+protected CriticalityDTO showCriticityAndChoose() {
+        List<CriticalityDTO> lstCriticidade = new ArrayList<>();
+        this.theController.getCriticalityLst().forEach(lstCriticidade::add);
+        CriticalityDTO criticidade = null;
+        int index = 1;
+
+        System.out.printf("%n%s%n", "Lista Niveis criticidade:");
+        while (index != 0) {
+            for (CriticalityDTO dto : lstCriticidade)
+                System.out.printf("#%d %s - %s%n", index++, dto.label, dto.valorCriticidade);
+            index = Console.readInteger("Escolha uma criticidade para o catalogo (0 para criar): ");
+
+            if (index > 0 && index - 1 < lstCriticidade.size()) {
+                criticidade = lstCriticidade.get(index - 1);
+                index = 0;
+            } else if (index == 0) {
+                criticidade = createNonGlobalCriticalityLevel();
+            }
+        }
+        return criticidade;
+    }
+```
+```java
+    protected CriticalityDTO createNonGlobalCriticalityLevel() {
+        System.out.println("\nInsira a informação necessária para a Criticidade");
+        String valorCriticidade = Console.readLine("ValorCriticidade:");
+        String label = Console.readLine("Label:");
+        System.out.println("\n--Objetivo de Aprovação [HH:MM]--");
+        String tempoMaximoA = Console.readLine("Tempo Maximo:");
+        String tempoMedioA = Console.readLine("Tempo Medio:");
+        System.out.println("\n--Objetivo de Resolção [HH:MM]--");
+        String tempoMaximoR = Console.readLine("Tempo Maximo:");
+        String tempoMedioR = Console.readLine("Tempo Maximo:");
+        try {
+            CriticalityDTO criticalityDTO = new CriticalityDTO((long) 0, label, valorCriticidade, tempoMaximoA, tempoMedioA, tempoMaximoR, tempoMedioR,false);
+
+            CriticalityDTO criticidade = theController.createNonGlobalCriticalityLevel(criticalityDTO);
+
+            System.out.println(criticidade);
+            boolean answer = Console.readBoolean("A informacao esta correta?(s/n)");
+            if (answer)
+                return criticidade;
+        } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
+            System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());
+        }
+        return null;
+    }
+
+  ```
+
 # 5. Integração/Demonstração
 
-No decorrer da implementação desta funcionalidade encontrei algumas dependencias com outras user stories, visto que o catalogo possui relações com varios colabotradores, tipos de equipa e criticidades. Porém o trabalho foi sempre bastante fluido, pois trabalhando em grupo as dependencias iam desaparecendo. 
+Para a implementação desta funcionalidade foi necessário reorganizar os dados de um nivel de criticidade. Com isto foi possivel definir niveis de criticidade globalmente pela organização ou apenas para um catalogo, tal como o que foi pedido por parte do cliente.
 
 # 6. Observações
 
-Penso que esta funcionalidade esteja de acordo com os requerimentos do cliente. O forum demonstrou-se bastante util pois sempre que uma duvida me surgia, ou alguem já a tinha tido ou então facilmente a colocava ao cliente. Dito isto, penso que esta funcionalidade está de acordo com as informações relativas ao catalogo por parte do caderno de encargos e do o forum.
+Penso que esta funcionalidade esteja de acordo com os requerimentos do cliente. Com esta, passa a ser possivel atribuir um nivel de criticidade a um catalogo de serviços, sendo o nivel de criticidade um nivel definido globalmente pela organização ou não. Não foram sentidas nenhumas dependencias.
