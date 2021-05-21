@@ -2,11 +2,16 @@ package eapli.base.criticality.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.Objects;
 
-@Embeddable
+@Entity
 public class ResolutionObjective extends SLAObjective implements ValueObject {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
     private String tempoMaximoR;
     private String tempoMedioR;
 

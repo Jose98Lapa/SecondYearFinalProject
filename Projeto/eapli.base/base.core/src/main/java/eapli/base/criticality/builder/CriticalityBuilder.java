@@ -1,13 +1,21 @@
 package eapli.base.criticality.builder;
 
+import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.criticality.domain.*;
 import eapli.framework.domain.model.DomainFactory;
 
 public class CriticalityBuilder implements DomainFactory<Criticality> {
+    private Long identity;
     private CriticalityValue criticalityValue;
     private Label label;
+    private boolean isGlobal;
     private ResolutionObjective resolutionObjective;
     private ApprovalObjective approvalObjective;
+
+    public CriticalityBuilder withIdentity(final Long identity) {
+        this.identity = identity;
+        return this;
+    }
 
     public CriticalityBuilder withValorCriticidade(final CriticalityValue criticalityValue) {
         this.criticalityValue = criticalityValue;
@@ -16,6 +24,11 @@ public class CriticalityBuilder implements DomainFactory<Criticality> {
 
     public CriticalityBuilder withValorCriticidade(final String valorCriticidade) {
         this.criticalityValue = new CriticalityValue(valorCriticidade);
+        return this;
+    }
+
+    public CriticalityBuilder isGlobal(final boolean isGlobal) {
+        this.isGlobal = isGlobal;
         return this;
     }
 
@@ -51,6 +64,8 @@ public class CriticalityBuilder implements DomainFactory<Criticality> {
 
     @Override
     public Criticality build() {
-        return new Criticality(label, criticalityValue, approvalObjective, resolutionObjective);
+        if(identity == null)
+            return new Criticality(label, criticalityValue, approvalObjective, resolutionObjective,isGlobal);
+        return new Criticality(identity ,label, criticalityValue, approvalObjective, resolutionObjective,isGlobal);
     }
 }

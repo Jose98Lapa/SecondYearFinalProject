@@ -28,7 +28,7 @@ public class SpecifyCriticalityUI extends AbstractUI {
         System.out.println("\nInsira a informação necessária para a Criticidade");
         cdw.show();
         try {
-            CriticalityDTO criticalityDTO = new CriticalityDTO(cdw.label(), cdw.valorCriticidade(), cdw.tempoMaximoA(), cdw.tempoMedioA(), cdw.tempoMaximoR(), cdw.tempoMedioR());
+            CriticalityDTO criticalityDTO = new CriticalityDTO((long)0,cdw.label(), cdw.valorCriticidade(), cdw.tempoMaximoA(), cdw.tempoMedioA(), cdw.tempoMaximoR(), cdw.tempoMedioR(),false);
             CriticalityDTO criticidade = controller.method(criticalityDTO);
 
             System.out.println(criticidade);

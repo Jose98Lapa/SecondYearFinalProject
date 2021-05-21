@@ -38,6 +38,6 @@ public class CriticalityDTOParser implements DTOParser<CriticalityDTO, Criticali
     public Criticality valueOf(final CriticalityDTO dto) {
         CriticalityBuilder criticalityBuilder = new CriticalityBuilder();
         return criticalityBuilder.withLabel(dto.label).withValorCriticidade(dto.valorCriticidade).withObjetivoDeAprovacao(dto.tempoMaximoA,dto.tempoMedioA)
-                .withObjetivoDeResolucao(dto.tempoMaximoR,dto.tempoMedioR).build();
+                .withObjetivoDeResolucao(dto.tempoMaximoR,dto.tempoMedioR).withIdentity(dto.id).isGlobal(dto.isGlobal).build();
     }
 }

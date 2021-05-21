@@ -8,21 +8,39 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Criticality implements AggregateRoot<CriticalityValue>, DTOable<CriticalityDTO> {
+public class Criticality implements AggregateRoot<Long>, DTOable<CriticalityDTO> {
 
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column @JoinColumn
     private CriticalityValue criticalityValue;
     private Label label;
-    @Column @JoinColumn
+
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private ResolutionObjective objetivoRes;
-    @Column @JoinColumn
+
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private ApprovalObjective objetivoAprov;
 
-    public Criticality(Label label, CriticalityValue valor, ApprovalObjective objetivoAprov, ResolutionObjective objetivoRes) {
+    private boolean isGlobal;
+
+    public Criticality(Label label, CriticalityValue valor, ApprovalObjective objetivoAprov, ResolutionObjective objetivoRes, boolean isGlobal) {
         this.label = label;
         this.criticalityValue = valor;
         this.objetivoRes = objetivoRes;
         this.objetivoAprov = objetivoAprov;
+        this.isGlobal = isGlobal;
+    }
+
+    public Criticality(Long identity,Label label, CriticalityValue valor, ApprovalObjective objetivoAprov, ResolutionObjective objetivoRes, boolean isGlobal) {
+        this.id = identity;
+        this.label = label;
+        this.criticalityValue = valor;
+        this.objetivoRes = objetivoRes;
+        this.objetivoAprov = objetivoAprov;
+        this.isGlobal = isGlobal;
     }
 
     protected Criticality() {}
@@ -33,16 +51,16 @@ public class Criticality implements AggregateRoot<CriticalityValue>, DTOable<Cri
     }
 
     @Override
-    public CriticalityValue identity() {
-        return this.criticalityValue;
+    public Long identity() {
+        return this.id;
     }
 
     @Override
-    public boolean hasIdentity(CriticalityValue criticalityValue) {return AggregateRoot.super.hasIdentity(criticalityValue);}
+    public boolean hasIdentity(Long id) {return AggregateRoot.super.hasIdentity(id);}
 
     @Override
     public CriticalityDTO toDTO() {
-        return new CriticalityDTO(label.toString(), criticalityValue.toString(),objetivoAprov.tempoMaximo(),objetivoAprov.tempoMedio(),objetivoRes.tempoMaximo(),objetivoRes.tempoMedio());
+        return new CriticalityDTO(id ,label.toString(), criticalityValue.toString(),objetivoAprov.tempoMaximo(),objetivoAprov.tempoMedio(),objetivoRes.tempoMaximo(),objetivoRes.tempoMedio(),isGlobal);
     }
 
     @Override
@@ -62,5 +80,13 @@ public class Criticality implements AggregateRoot<CriticalityValue>, DTOable<Cri
     public String toString() {
         return "Valor da Criticidade: "+ criticalityValue +"\nLabel: "+label + "\nTempo Maximo de Aprovação: " + objetivoAprov.tempoMaximo() +
                 " Tempo Medio de Aprovação: " + objetivoAprov.tempoMedio() + "\nTempo Maximo de Resolução: " + objetivoAprov.tempoMaximo() + " Tempo Medio de Resolução: " + objetivoAprov.tempoMedio() +"\n";
+    }
+
+    public void changeApprovalObjectiveTo(final ApprovalObjective newObjective){
+        this.objetivoAprov = newObjective;
+    }
+
+    public void changeResolutionObjectiveTo(final ResolutionObjective newObjective){
+        this.objetivoRes = newObjective;
     }
 }
