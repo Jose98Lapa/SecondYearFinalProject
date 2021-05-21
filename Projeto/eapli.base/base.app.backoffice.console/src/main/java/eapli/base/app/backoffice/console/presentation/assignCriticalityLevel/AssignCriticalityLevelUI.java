@@ -1,10 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.assignCriticalityLevel;
 
-import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
-import eapli.base.app.backoffice.console.presentation.specifyNonGlobalCriticality.SpecifyNonGlobalCriticalityUI;
 import eapli.base.catalogue.application.AssignCriticalityLevelController;
 import eapli.base.catalogue.dto.CatalogueDTO;
-import eapli.base.criticality.domain.Criticality;
 import eapli.base.criticality.dto.CriticalityDTO;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
