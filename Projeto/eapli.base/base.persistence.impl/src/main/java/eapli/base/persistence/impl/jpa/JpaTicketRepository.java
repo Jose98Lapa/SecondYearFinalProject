@@ -1,8 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.teamType.Domain.TeamType;
-import eapli.base.teamType.Domain.TeamTypeID;
-import eapli.base.teamType.repository.TeamTypeRepository;
+
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;

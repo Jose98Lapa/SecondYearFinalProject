@@ -13,6 +13,7 @@ import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.service.Repository.ServiceRepository;
+import eapli.base.ticket.repository.TicketRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -158,6 +159,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormRepository form() {
 		return form(null);
+	}
+
+	@Override
+	public TicketRepository tickets(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public TicketRepository tickets() {
+		return null;
 	}
 
 	@Override

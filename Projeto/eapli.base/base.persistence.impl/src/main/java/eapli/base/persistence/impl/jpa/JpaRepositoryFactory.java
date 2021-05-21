@@ -11,6 +11,7 @@ import eapli.base.form.repository.FormRepository;
 import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.service.Repository.ServiceRepository;
+import eapli.base.ticket.repository.TicketRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -154,6 +155,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormRepository form() {
 		return new JpaFormRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TicketRepository tickets(final TransactionalContext autoTx) {
+		return new JpaTicketRepository(autoTx);
+	}
+
+	@Override
+	public TicketRepository tickets() {
+		return new JpaTicketRepository(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
