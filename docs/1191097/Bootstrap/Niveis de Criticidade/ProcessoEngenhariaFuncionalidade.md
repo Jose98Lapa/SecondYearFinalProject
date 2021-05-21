@@ -12,10 +12,16 @@ Como Gestor de Projeto, eu pretendo que, para efeitos de demonstração, o siste
 
 # 2. Análise
 
-O bootstrap dos niveis de criticidade será sempre injetado antes do bootstrap dos catalogos de serviço, pois um catalogo possui niveis de criticidade.
+O bootstrap dos niveis de criticidade será sempre injetado antes do bootstrap dos catalogos de serviço, pois um catalogo possui niveis de criticidade. A atribuição dos niveis ao catalogos é realizada durante o bootstrap dos catalogos de serviço e serviços.
 
 #### Tabela Niveis Criticidade
 ![tabelaNiveisCriticidade](tabelaNiveisCriticidade.png)
+
+#### Tabela Objetivos Aprovação
+![tabelaObjetivosAprovação](tabelaObjetivosAprovação.png)
+
+#### Tabela Objetivos Resolução
+![tabelaObjetivosResolução](tabelaObjetivosResolução.png)
 
 
 # 3. Implementação
@@ -60,6 +66,6 @@ Não tendo dependencias foi algo rapido de implementar. Porem, no sprint anterio
 
 # 4. Observações
 
-Para esta funcionalidade não foi encontrada nenhunha depenência, sendo assim facilmente implementada.
+Para esta funcionalidade não foi encontrada nenhunha depenência, sendo assim facilmente implementada. A injeção dos dados dos niveis de criticidade é executada antes dos catalogos de serviço e serviços e antes da estrutura orgânica da organização. Isto porque se esta se desse imediatamente antes do bootstrap dos catalogos, a base de dados sobrecarregava e recebia-mos o seguinte erro: ```HibernateException : The internal connection pool has reached its maximum size and no connection is currently available```
 
 
