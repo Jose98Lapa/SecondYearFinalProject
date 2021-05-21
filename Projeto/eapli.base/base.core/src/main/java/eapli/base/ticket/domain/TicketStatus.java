@@ -1,22 +1,22 @@
-package eapli.base.service.domain;
+package eapli.base.ticket.domain;
 
+import eapli.base.service.domain.ServiceStatus;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-@Embeddable
-public class ServiceStatus implements ValueObject {
+
+public class TicketStatus implements ValueObject {
     private String status;
     @Transient
-    private String regex = "ATIVO|INATIVO|INCOMPLETO";
+    private String regex = "ToDo";
 
-    public ServiceStatus(String status) {
+    public TicketStatus(String status) {
         if (StringPredicates.isNullOrEmpty(status)) {
-            throw new IllegalArgumentException("Service status should neither be null nor empty");
+            throw new IllegalArgumentException("Ticket Status should neither be null nor empty");
         }
 
         Pattern p = Pattern.compile(regex);
@@ -25,11 +25,11 @@ public class ServiceStatus implements ValueObject {
         if (m.matches()) {
             this.status = status;
         } else {
-            throw new IllegalArgumentException("Service status does not fit the criteria");
+            throw new IllegalArgumentException("Ticket Status does not fit the criteria");
         }
     }
 
-    protected ServiceStatus() {
+    protected TicketStatus() {
 
     }
 
@@ -38,16 +38,15 @@ public class ServiceStatus implements ValueObject {
         return status;
     }
 
-    public static ServiceStatus valueOf(String string) {
-        return new ServiceStatus(string);
+    public static TicketStatus valueOf(String string) {
+        return new TicketStatus(string);
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ServiceStatus that = (ServiceStatus) o;
+        TicketStatus that = (TicketStatus) o;
         return Objects.equals(status, that.status) && Objects.equals(regex, that.regex);
     }
 
