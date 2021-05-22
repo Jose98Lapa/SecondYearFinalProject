@@ -3,6 +3,7 @@ package eapli.base.service.domain;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.form.domain.Form;
 import eapli.base.service.DTO.ServiceDTO;
+import eapli.base.task.domain.Task;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;

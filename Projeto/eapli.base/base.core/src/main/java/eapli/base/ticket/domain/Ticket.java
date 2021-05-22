@@ -68,4 +68,6 @@ public class Ticket implements AggregateRoot<TicketID>, DTOable<ticketDTO> {
     public ticketDTO toDTO() {
         return new ticketDTO(solicitedOn.toString(),deadLine.toString(),id.toString(),status.toString(),ficheiro.toString(),urgencia.toString());
     }
+
+
 }

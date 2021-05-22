@@ -25,4 +25,13 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }
+    @Override
+    public Iterable<Ticket> getPendingTicket(){
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.TicketStatus = :id", Ticket.class);
+        //TODO
+        //update when status name is known
+        q.setParameter("id", "pending");
+        return q.getResultList();
+
+    }
 }
