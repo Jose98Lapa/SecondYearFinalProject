@@ -7,12 +7,15 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
     @Embedded
     private ScriptPath scriptPath;
+
+    private Date dateOfExecution;
 
     public AutomaticTask(TaskID taskID, TaskStatus taskStatus,ScriptPath scriptPath) {
         super(taskID,taskStatus);
@@ -21,6 +24,10 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
 
     protected AutomaticTask() {
         // For ORM
+    }
+
+    public void executeTask(){
+        this.dateOfExecution = new Date();
     }
 
     @Override
