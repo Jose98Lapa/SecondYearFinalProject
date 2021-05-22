@@ -15,8 +15,8 @@ public class SpecifiedManualSpecifiedTask extends SpecifiedTask implements DTOab
     private Form form;
 
 
-    public SpecifiedManualSpecifiedTask(TaskID taskID, TaskStatus taskStatus, Form form){
-        super(taskID,taskStatus);
+    public SpecifiedManualSpecifiedTask(TaskID taskID, Form form){
+        super(taskID);
         this.form = form;
     }
 
@@ -38,6 +38,6 @@ public class SpecifiedManualSpecifiedTask extends SpecifiedTask implements DTOab
 
     @Override
     public SpecifiedManualTaskDTO toDTO() {
-        return new SpecifiedManualTaskDTO(super.taskID.toString(),super.taskStatus.toString(), form().toDTO());
+        return new SpecifiedManualTaskDTO(super.taskID.toString(), form().toDTO());
     }
 }

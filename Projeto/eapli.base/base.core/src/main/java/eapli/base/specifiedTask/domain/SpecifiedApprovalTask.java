@@ -14,8 +14,8 @@ public class SpecifiedApprovalTask extends SpecifiedTask implements DTOable<Spec
     @OneToOne
     private Form form;
 
-    public SpecifiedApprovalTask(TaskID taskID, TaskStatus taskStatus, Form form) {
-        super(taskID, taskStatus);
+    public SpecifiedApprovalTask(TaskID taskID, Form form) {
+        super(taskID);
         this.form = form;
     }
 
@@ -39,6 +39,6 @@ public class SpecifiedApprovalTask extends SpecifiedTask implements DTOable<Spec
 
     @Override
     public SpecifiedApprovalTaskDTO toDTO() {
-        return new SpecifiedApprovalTaskDTO(super.taskID.toString(),super.taskStatus.toString(),form.toDTO());
+        return new SpecifiedApprovalTaskDTO(super.taskID.toString(),form.toDTO());
     }
 }

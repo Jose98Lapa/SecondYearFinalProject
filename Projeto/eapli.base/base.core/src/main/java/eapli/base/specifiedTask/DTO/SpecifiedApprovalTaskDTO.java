@@ -4,17 +4,16 @@ import eapli.base.form.DTO.FormDTO;
 
 public class SpecifiedApprovalTaskDTO {
     String taskID;
-    String taskStatus;
     FormDTO formDTO;
 
-    public SpecifiedApprovalTaskDTO(String taskID, String taskStatus) {
+    public SpecifiedApprovalTaskDTO(String taskID) {
         this.taskID = taskID;
-        this.taskStatus = taskStatus;
+
     }
 
-    public SpecifiedApprovalTaskDTO(String taskID, String taskStatus, FormDTO formDTO) {
+    public SpecifiedApprovalTaskDTO(String taskID, FormDTO formDTO) {
         this.taskID = taskID;
-        this.taskStatus = taskStatus;
+
         this.formDTO = formDTO;
     }
 }
