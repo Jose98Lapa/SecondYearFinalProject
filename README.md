@@ -2,11 +2,9 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Technical ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Technical details are [here](docs/1200619/technical.md).
 
 ### How do I get set up? ###
 
@@ -25,5 +23,4 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Sprint master: [José Miguel Lapa](1200619@isep.ipp.pt) 
