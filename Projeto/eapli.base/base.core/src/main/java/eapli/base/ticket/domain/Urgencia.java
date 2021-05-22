@@ -5,23 +5,25 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.util.Objects;
+
 @Embeddable
-public class Urgencia  implements ValueObject{
+public class Urgencia implements ValueObject {
     @Transient
     private static final long serialVersionUID = 1L;
 
     private String urgency;
 
-    public Urgencia(String urgency){
+    public Urgencia(String urgency) {
         if (urgency == null || urgency.isEmpty() || !urgency.matches("^\\d+$"))
             throw new IllegalArgumentException("Valor da urgencia nao cumpre os critérios");
         this.urgency = urgency;
     }
 
-    protected Urgencia(){}
+    protected Urgencia() {
+    }
 
-    public String urgency(){
-        return  this.urgency;
+    public String urgency() {
+        return this.urgency;
     }
 
     @Override
