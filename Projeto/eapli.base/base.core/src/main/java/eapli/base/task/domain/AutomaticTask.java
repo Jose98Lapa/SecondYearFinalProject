@@ -1,7 +1,7 @@
-package eapli.base.specifiedTask.domain;
+package eapli.base.task.domain;
 
 
-import eapli.base.specifiedTask.DTO.SpecifiedAutomaticTaskDTO;
+import eapli.base.task.DTO.AutomaticTaskDTO;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
@@ -10,16 +10,16 @@ import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
-public class SpecifiedAutomaticSpecifiedTask extends SpecifiedTask implements DTOable<SpecifiedAutomaticTaskDTO> {
+public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
     @Embedded
     private ScriptPath scriptPath;
 
-    public SpecifiedAutomaticSpecifiedTask(TaskID taskID, ScriptPath scriptPath) {
-        super(taskID);
+    public AutomaticTask(TaskID taskID, TaskStatus taskStatus,ScriptPath scriptPath) {
+        super(taskID,taskStatus);
         this.scriptPath = scriptPath;
     }
 
-    protected SpecifiedAutomaticSpecifiedTask() {
+    protected AutomaticTask() {
         // For ORM
     }
 
@@ -37,7 +37,7 @@ public class SpecifiedAutomaticSpecifiedTask extends SpecifiedTask implements DT
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SpecifiedAutomaticSpecifiedTask that = (SpecifiedAutomaticSpecifiedTask) o;
+        AutomaticTask that = (AutomaticTask) o;
         return Objects.equals(scriptPath, that.scriptPath);
     }
 
@@ -47,7 +47,7 @@ public class SpecifiedAutomaticSpecifiedTask extends SpecifiedTask implements DT
     }
 
     @Override
-    public SpecifiedAutomaticTaskDTO toDTO() {
-        return new SpecifiedAutomaticTaskDTO(super.taskID.toString(),scriptPath.toString());
+    public AutomaticTaskDTO toDTO() {
+        return new AutomaticTaskDTO(super.taskID.toString(),super.taskStatus.toString(),scriptPath.toString());
     }
 }
