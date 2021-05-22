@@ -1,25 +1,24 @@
-package eapli.base.specifiedTask.domain;
+package eapli.base.task.domain;
 
 import eapli.base.form.domain.Form;
-import eapli.base.specifiedTask.DTO.SpecifiedApprovalTaskDTO;
+import eapli.base.task.DTO.ApprovalTaskDTO;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class SpecifiedApprovalTask extends SpecifiedTask implements DTOable<SpecifiedApprovalTaskDTO> {
+public class ApprovalTask extends Task implements DTOable<ApprovalTaskDTO> {
     @OneToOne
     private Form form;
 
-    public SpecifiedApprovalTask(TaskID taskID, Form form) {
-        super(taskID);
+    public ApprovalTask(TaskID taskID,TaskStatus taskStatus, Form form) {
+        super(taskID,taskStatus);
         this.form = form;
     }
 
-    protected SpecifiedApprovalTask() {
+    protected ApprovalTask() {
         // For ORM
     }
 
@@ -38,7 +37,7 @@ public class SpecifiedApprovalTask extends SpecifiedTask implements DTOable<Spec
     }
 
     @Override
-    public SpecifiedApprovalTaskDTO toDTO() {
-        return new SpecifiedApprovalTaskDTO(super.taskID.toString(),form.toDTO());
+    public ApprovalTaskDTO toDTO() {
+        return new ApprovalTaskDTO(super.taskID.toString(),super.taskStatus.toString(),form.toDTO());
     }
 }

@@ -1,23 +1,24 @@
-package eapli.base.specifiedTask.domain;
+package eapli.base.task.domain;
 
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
 
 @Entity
-public abstract class SpecifiedTask implements DomainEntity<TaskID> {
+public abstract class Task implements DomainEntity<TaskID> {
     @EmbeddedId
     protected TaskID taskID;
 
     @Embedded
     protected TaskStatus taskStatus;
 
-    public SpecifiedTask(TaskID taskID){
+    public Task(TaskID taskID,TaskStatus taskStatus){
         this.taskID = taskID;
+        this.taskStatus = taskStatus;
 
     }
 
-    protected SpecifiedTask() {
+    protected Task() {
         // For ORM
     }
 }
