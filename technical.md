@@ -1,6 +1,7 @@
 # Technical details
 
-## Virtual Servers ( DEI Containers)
+## 1 Virtual Servers ( DEI Containers)
+<br>
 
 ***
 ### H2 Database
@@ -11,6 +12,8 @@ Docker container running H2.
  - Port: 10221
  - IPv6: fd1e:2bae:c6fd:1009:14dd
  - DNS domain: dei.isep.ipp.pt
+***
+Public database URL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados 
 ***
 <br>
 <br>
