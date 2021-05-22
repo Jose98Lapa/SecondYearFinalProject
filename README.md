@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Technical ###
 
-* Technical details are [here](docs/1200619/technical.md).
+* Technical details are [here](technical.md).
 
 ### How do I get set up? ###
 
