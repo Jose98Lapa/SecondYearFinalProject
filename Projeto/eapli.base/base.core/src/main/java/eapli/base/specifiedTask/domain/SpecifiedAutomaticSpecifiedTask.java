@@ -14,8 +14,8 @@ public class SpecifiedAutomaticSpecifiedTask extends SpecifiedTask implements DT
     @Embedded
     private ScriptPath scriptPath;
 
-    public SpecifiedAutomaticSpecifiedTask(TaskID taskID, TaskStatus taskStatus, ScriptPath scriptPath) {
-        super(taskID,taskStatus);
+    public SpecifiedAutomaticSpecifiedTask(TaskID taskID, ScriptPath scriptPath) {
+        super(taskID);
         this.scriptPath = scriptPath;
     }
 
@@ -48,6 +48,6 @@ public class SpecifiedAutomaticSpecifiedTask extends SpecifiedTask implements DT
 
     @Override
     public SpecifiedAutomaticTaskDTO toDTO() {
-        return new SpecifiedAutomaticTaskDTO(super.taskID.toString(),super.taskStatus.toString(),scriptPath.toString());
+        return new SpecifiedAutomaticTaskDTO(super.taskID.toString(),scriptPath.toString());
     }
 }
