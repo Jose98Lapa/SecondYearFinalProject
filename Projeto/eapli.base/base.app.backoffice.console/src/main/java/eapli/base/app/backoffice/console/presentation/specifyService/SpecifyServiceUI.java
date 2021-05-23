@@ -1,5 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.specifyService;
 
+import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.base.app.backoffice.console.presentation.form.FormUI;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.service.Application.SpecifyServiceController;
@@ -69,8 +70,9 @@ public class SpecifyServiceUI extends AbstractUI {
         }
 
         if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {
-            String script = Console.readLine("Script:");
-            theController.automatic(script);
+            System.out.println("Script");
+            SFTPClient sftp = new SFTPClient();
+            theController.automatic(sftp.choseAndUploadScript(ifo.id));
         } else if (ifo.type().equalsIgnoreCase("MANUAL")) {
             FormUI servicoUi = new FormUI();
             servicoUi.show();

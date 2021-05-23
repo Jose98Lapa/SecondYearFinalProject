@@ -1,5 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.specifyService;
 
+import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.framework.io.util.Console;
 
 public class ServiceDataWidget {
@@ -16,9 +17,11 @@ public class ServiceDataWidget {
         this.title = Console.readLine("Title");
         this.type = Console.readLine("Tipo - » AUTOMATICO / MANUAL");
         this.id = Console.readLine("ID");
-        this.icon = Console.readLine("ICON");
-        this.briefDesc = Console.readLine("BriefDescription");
-        this.compDesc = Console.readLine("completeDesc");
+        SFTPClient sftp = new SFTPClient();
+        System.out.println("ICON");
+        this.icon = sftp.choseAndUploadImage(id);
+        this.briefDesc = Console.readLine("Brief Description");
+        this.compDesc = Console.readLine("Complete Description");
     }
 
     public String title() {
