@@ -64,16 +64,19 @@ public class SFTPClient {
         JFileChooser chooser = new JFileChooser();
         switch (type) {
             case "image": {
-                chooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg"));
+                chooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files - .JPG", "jpg"));
                 chooser.setAcceptAllFileFilterUsed(false);
+                break;
             }
             case "file": {
                 chooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "png"));
                 chooser.setAcceptAllFileFilterUsed(false);
+                break;
             }
             case "script": {
                 chooser.addChoosableFileFilter(new FileNameExtensionFilter("Iage Files", "jpg", "png"));
                 chooser.setAcceptAllFileFilterUsed(false);
+                break;
             }
         }
         int result = chooser.showDialog(null, "Select File");
@@ -94,8 +97,9 @@ public class SFTPClient {
             String path = this.chooser("image");
             if (path != null) {
                 this.upload(path, filename);
+                return this.castLink(filename);
             }
-            return this.castLink(filename);
+            return null;
         } catch (JSchException | SftpException e) {
             e.printStackTrace();
             return null;
