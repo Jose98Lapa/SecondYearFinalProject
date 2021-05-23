@@ -61,7 +61,13 @@ public class SFTPClient {
     }
 
     public String chooser(String type) {
+
         JFileChooser chooser = new JFileChooser();
+
+        // swing on mac has some quirks
+        JDialog dialog = new JDialog();
+        chooser.showOpenDialog( dialog );
+
         switch (type) {
             case "image": {
                 chooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files - .JPG", "jpg"));
