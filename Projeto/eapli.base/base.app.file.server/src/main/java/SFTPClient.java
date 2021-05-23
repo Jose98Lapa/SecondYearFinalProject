@@ -1,5 +1,8 @@
 import com.jcraft.jsch.*;
 
+import javax.swing.*;
+import java.io.File;
+
 public class SFTPClient {
 
     private String host = "10.9.21.17";
@@ -53,5 +56,13 @@ public class SFTPClient {
         sftpChannel.get(source, destination);
         sftpChannel.exit();
         session.disconnect();
+    }
+    public void chooseFile(){
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showDialog(null, "Select File");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = chooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
     }
 }
