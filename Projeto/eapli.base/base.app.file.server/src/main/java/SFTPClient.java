@@ -66,7 +66,6 @@ public class SFTPClient {
 
         // swing on mac has some quirks
         JDialog dialog = new JDialog();
-        chooser.showOpenDialog( dialog );
 
         switch (type) {
             case "image": {
@@ -90,7 +89,7 @@ public class SFTPClient {
                 break;
             }
         }
-        int result = chooser.showDialog(null, "Select File");
+        int result = chooser.showOpenDialog( dialog );
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = chooser.getSelectedFile();
             return selectedFile.getAbsolutePath();
