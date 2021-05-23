@@ -2,12 +2,12 @@ import com.jcraft.jsch.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.image.ImageFilter;
 import java.io.File;
 
 public class SFTPClient {
 
     private String host = "10.9.21.17";
+    private String localServerFolder = "/var/www/html";
     private int port = 22;
     private Session session = null;
 
@@ -35,10 +35,10 @@ public class SFTPClient {
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
         try {
-            sftpChannel.cd("/var/www/html");
+            sftpChannel.cd(localServerFolder);
         } catch (SftpException e) {
-            sftpChannel.mkdir("/var/www/html");
-            sftpChannel.cd("/var/www/html");
+            sftpChannel.mkdir(localServerFolder);
+            sftpChannel.cd(localServerFolder);
         }
         sftpChannel.put(source, filename);
         sftpChannel.exit();
@@ -50,10 +50,10 @@ public class SFTPClient {
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
         try {
-            sftpChannel.cd("/var/www/html");
+            sftpChannel.cd(localServerFolder);
         } catch (SftpException e) {
-            sftpChannel.mkdir("/var/www/html");
-            sftpChannel.cd("/var/www/html");
+            sftpChannel.mkdir(localServerFolder);
+            sftpChannel.cd(localServerFolder);
         }
         sftpChannel.get(source, destination);
         sftpChannel.exit();
@@ -76,6 +76,11 @@ public class SFTPClient {
             case "script": {
                 chooser.addChoosableFileFilter(new FileNameExtensionFilter("Iage Files", "jpg", "png"));
                 chooser.setAcceptAllFileFilterUsed(false);
+                break;
+            }
+            default:{
+                System.err.println("Invalid file type");
+                System.exit(0);
                 break;
             }
         }
