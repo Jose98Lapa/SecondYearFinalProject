@@ -100,9 +100,12 @@ public class SpecifyServiceController {
             service.setTitle(ServiceTitle.valueOf(serviceDTO.title));
             service.setScript(ServiceScript.valueOf(serviceDTO.script));
             service.addkeywords(KeyWords.valueOf(serviceDTO.keywords));
+            if (service.isComplete())
+                service.deactivate();
             serviceRepository.save(service);
         }
     }
+
 
 
     public void updateForm( String formId, ServiceDTO serv ) {

@@ -1,5 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.specifyService;
 
+import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.base.app.backoffice.console.presentation.form.FormUI;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.service.Application.SpecifyServiceController;
@@ -39,15 +40,15 @@ public class CompleteServiceUI extends AbstractUI {
         toComplete = incomplete.get(Integer.parseInt(index));
         Scanner scanner = new Scanner(System.in);
         String s = "";
-        while (!(s.equalsIgnoreCase("Exit"))) {
             menu();
-            s = Console.readLine("O que deseja alterar? - Exit para sair");
+            s = Console.readLine("O que deseja alterar? - 0 para sair");
             switch (Integer.parseInt(s)) {
                 case 1: {
                     if (toComplete.tipo.equalsIgnoreCase("MANUAL")) {
                         System.out.println("Para introduzir o Script o servico tem de ser do tipo Automatico");
                     } else {
-                        toComplete.script = scanner.nextLine();
+                        SFTPClient server = new SFTPClient();
+                        toComplete.script = server.choseAndUploadScript(toComplete.id);
                         System.out.println("Alterado com sucesso");
                     }
                     theController.update(toComplete);
@@ -89,7 +90,8 @@ public class CompleteServiceUI extends AbstractUI {
                     break;
                 }
                 case 5: {
-                    toComplete.icon = scanner.nextLine();
+                    SFTPClient server = new SFTPClient();
+                    toComplete.icon = server.choseAndUploadImage(toComplete.id);
                     theController.update(toComplete);
 
                     break;
@@ -124,9 +126,11 @@ public class CompleteServiceUI extends AbstractUI {
                     theController.update(toComplete);
                     break;
                 }
+                case 0: {
+                    break;
+
             }
         }
-        theController.confirms();
         return true;
     }
 

@@ -21,7 +21,7 @@ public class ServiceListService {
         ArrayList<ServiceDTO> services = new ArrayList<>();
 
         for ( Service service : repo.incompleteServico() ) {
-            services.add( service.toDTO() );
+            services.add(service.toDTO());
         }
 
         return services;

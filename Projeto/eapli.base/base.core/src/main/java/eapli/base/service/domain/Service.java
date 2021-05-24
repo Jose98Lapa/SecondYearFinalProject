@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
+public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,11 +30,11 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
     private CompleteDescription compDesc;
     private BriefDescription briedDesc;
 
-    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Catalogue catalogue;
 
     @OneToOne
-    private Form form ;
+    private Form form;
 
     @ElementCollection
     private Set<KeyWords> keywords;
@@ -52,13 +52,13 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
         this.tipo = tipo;
         Preconditions.noneNull();
         this.form = form;
-        this.script=script;
+        this.script = script;
         this.compDesc = compDesc;
         this.briedDesc = briedDesc;
         this.catalogue = catalogue;
     }
 
-    public void addkeywords(Set<KeyWords> keys){
+    public void addkeywords(Set<KeyWords> keys) {
         this.keywords.addAll(keys);
     }
 
@@ -71,15 +71,15 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
     }
 
     public Service(ServiceTitle title, ServiceID id) {
-        this.title=title;
-        this.id=id;
+        this.title = title;
+        this.id = id;
         Preconditions.noneNull();
     }
 
     protected Service() {
     }
 
-    public Catalogue catalogo(){
+    public Catalogue catalogo() {
         return this.catalogue;
     }
 
@@ -106,21 +106,21 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
     @Override
     public ServiceDTO toDTO() {
         Set<String> key2 = new HashSet<>();
-        for (KeyWords key:keywords) {
+        for (KeyWords key : keywords) {
             key2.add(key.toString());
         }
-        if (script==null)
+        if (script == null)
             script = ServiceScript.valueOf(" ");
-        return new ServiceDTO(this.title.toString(),this.id.toString(), this.icon.toString(), key2,
-                this.status.toString(), this.tipo.toString(),briedDesc.toString(),compDesc.toString(),
-                catalogue.toDTO(),script.toString());
+        return new ServiceDTO(this.title.toString(), this.id.toString(), this.icon.toString(), key2,
+                this.status.toString(), this.tipo.toString(), briedDesc.toString(), compDesc.toString(),
+                catalogue.toDTO(), script.toString());
     }
 
-    public void activate(){
+    public void activate() {
         this.status = ServiceStatus.valueOf("ATIVO");
     }
 
-    public void deactivate(){
+    public void deactivate() {
         this.status = ServiceStatus.valueOf("INATIVO");
     }
 
@@ -150,6 +150,16 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>{
 
     public void setBriedDesc(BriefDescription briedDesc) {
         this.briedDesc = briedDesc;
+    }
+
+    public boolean isComplete() {
+        if (this.title == null || this.id == null || this.icon == null || this.keywords == null || this.status == null)
+            return false;
+        if (tipo.equals(ServiceType.valueOf("AUTOMATICO"))) {
+            return this.script != null;
+        } else {
+            return this.form != null;
+        }
     }
 
 }
