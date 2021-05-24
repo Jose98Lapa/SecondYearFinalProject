@@ -24,7 +24,9 @@ public class AppSettings {
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "javax.persistence.schema-generation.database.action";
     private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
-    private static final String HTTP_PORT = "HTTP_PORT";
+    private static final String DATABASE_IP = "DATABASE_IP";
+    private static final String IMAGE_SERVER_IP = "IMAGE_SERVER_IP";
+    private static final String WORKFLOW_SERVER = "WORKFLOW_SERVER";
 
     private final Properties applicationProperties = new Properties();
 
@@ -52,9 +54,11 @@ public class AppSettings {
         this.applicationProperties.setProperty(REPOSITORY_FACTORY_KEY,
                 "eapli.base.persistence.jpa.JpaRepositoryFactory");
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
-        this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"
-                + ".base");
+        this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"+ ".base");
         this.applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
+        this.applicationProperties.setProperty(DATABASE_IP, "localhost");
+        this.applicationProperties.setProperty(IMAGE_SERVER_IP, "localhost");
+        this.applicationProperties.setProperty(WORKFLOW_SERVER, "localhost");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -68,6 +72,15 @@ public class AppSettings {
 
     public String getRepositoryFactory() {
         return this.applicationProperties.getProperty(REPOSITORY_FACTORY_KEY);
+    }
+    public String getDatabaseIp() {
+        return this.applicationProperties.getProperty(DATABASE_IP);
+    }
+    public String getWorkflowServer() {
+        return this.applicationProperties.getProperty(WORKFLOW_SERVER);
+    }
+    public String getImageServerIp() {
+        return this.applicationProperties.getProperty(IMAGE_SERVER_IP);
     }
 
     public Integer getHighCaloriesDishLimit() {

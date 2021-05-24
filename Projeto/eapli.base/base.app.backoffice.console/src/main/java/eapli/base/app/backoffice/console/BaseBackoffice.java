@@ -64,6 +64,7 @@ public final class BaseBackoffice extends BaseApplication {
     @Override
     protected void doMain(final String[] args) {
         // login and go to main menu
+        new Utils().checkServers();
         if (new LoginUI().show()) {
             // go to main menu
             final MainMenu menu = new MainMenu();

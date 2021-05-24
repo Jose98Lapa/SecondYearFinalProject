@@ -33,7 +33,6 @@
         <module>base.core</module>
         <module>base.persistence.impl</module>
         <module>base.app.workflow.engine</module>
-        <module>base.app.file.server</module>
     </modules>
 
     <dependencies>
