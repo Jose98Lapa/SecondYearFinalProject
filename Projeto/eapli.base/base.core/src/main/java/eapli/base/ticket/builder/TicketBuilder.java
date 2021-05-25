@@ -11,7 +11,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 	private TicketID id;
 	private TicketStatus status;
 	private AttachedFile file;
-	private Urgencia urgency;
+	private Urgency urgency;
 
 	public TicketBuilder solicitedOn ( String solicitedOn ) {
 		this.solicitedOn = LocalDate.parse( solicitedOn );
@@ -39,7 +39,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 	}
 
 	public TicketBuilder withUrgency ( String urgencia ) {
-		this.urgency = Urgencia.valueOf( urgencia );
+		this.urgency = Urgency.valueOf( urgencia );
 		return this;
 	}
 
