@@ -15,59 +15,59 @@ import java.util.Objects;
  * @author 1190731
  */
 @Entity
-public class Ticket implements AggregateRoot<TicketID>, DTOable<ticketDTO> {
+public class Ticket implements AggregateRoot< TicketID >, DTOable< ticketDTO > {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Version
-    private Long version;
+	@Version
+	private Long version;
 
-    private LocalDate solicitedOn,deadLine;
-    @EmbeddedId
-    private TicketID id;
-    private TicketStatus status;
-    private FicheiroAnexado ficheiro;
-    private Urgencia urgencia;
+	private LocalDate solicitedOn, deadLine;
+	@EmbeddedId
+	private TicketID id;
+	private TicketStatus status;
+	private AttachedFile file;
+	private Urgency urgency;
 
-    public Ticket(LocalDate solicitedOn, LocalDate deadLine, TicketID id, TicketStatus status, FicheiroAnexado ficheiro, Urgencia urgencia) {
-        this.solicitedOn = solicitedOn;
-        this.deadLine = deadLine;
-        this.id = id;
-        this.status = status;
-        this.ficheiro = ficheiro;
-        this.urgencia = urgencia;
-    }
+	public Ticket ( LocalDate solicitedOn, LocalDate deadLine, TicketID id, TicketStatus status, AttachedFile file, Urgency urgency ) {
+		this.solicitedOn = solicitedOn;
+		this.deadLine = deadLine;
+		this.id = id;
+		this.status = status;
+		this.file = file;
+		this.urgency = urgency;
+	}
 
-    protected Ticket() {
-    }
+	protected Ticket ( ) {
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ticket ticket = (Ticket) o;
-        return Objects.equals(solicitedOn, ticket.solicitedOn) && Objects.equals(deadLine, ticket.deadLine) && Objects.equals(id, ticket.id) && Objects.equals(status, ticket.status) && Objects.equals(ficheiro, ticket.ficheiro) && Objects.equals(urgencia, ticket.urgencia);
-    }
+	@Override
+	public boolean equals ( Object o ) {
+		if ( this == o ) return true;
+		if ( o == null || getClass( ) != o.getClass( ) ) return false;
+		Ticket ticket = ( Ticket ) o;
+		return Objects.equals( solicitedOn, ticket.solicitedOn ) && Objects.equals( deadLine, ticket.deadLine ) && Objects.equals( id, ticket.id ) && Objects.equals( status, ticket.status ) && Objects.equals( file, ticket.file ) && Objects.equals( urgency, ticket.urgency );
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(solicitedOn, deadLine, id, status, ficheiro, urgencia);
-    }
+	@Override
+	public int hashCode ( ) {
+		return Objects.hash( solicitedOn, deadLine, id, status, file, urgency );
+	}
 
-    @Override
-    public boolean sameAs(Object other) {
-        return DomainEntities.areEqual(this, other);
-    }
+	@Override
+	public boolean sameAs ( Object other ) {
+		return DomainEntities.areEqual( this, other );
+	}
 
-    @Override
-    public TicketID identity() {
-        return id;
-    }
+	@Override
+	public TicketID identity ( ) {
+		return id;
+	}
 
-    @Override
-    public ticketDTO toDTO() {
-        return new ticketDTO(solicitedOn.toString(),deadLine.toString(),id.toString(),status.toString(),ficheiro.toString(),urgencia.toString());
-    }
+	@Override
+	public ticketDTO toDTO ( ) {
+		return new ticketDTO( solicitedOn.toString( ), deadLine.toString( ), id.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
+	}
 
 
 }
