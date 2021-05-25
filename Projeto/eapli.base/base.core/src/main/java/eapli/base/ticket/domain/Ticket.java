@@ -1,6 +1,6 @@
 package eapli.base.ticket.domain;
 
-import eapli.base.ticket.DTO.ticketDTO;
+import eapli.base.ticket.DTO.TicketDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author 1190731
  */
 @Entity
-public class Ticket implements AggregateRoot< TicketID >, DTOable< ticketDTO > {
+public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO > {
 
 	private static final long serialVersionUID = 1L;
 
@@ -65,8 +65,8 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< ticketDTO > {
 	}
 
 	@Override
-	public ticketDTO toDTO ( ) {
-		return new ticketDTO( solicitedOn.toString( ), deadLine.toString( ), id.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
+	public TicketDTO toDTO ( ) {
+		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), id.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
 	}
 
 

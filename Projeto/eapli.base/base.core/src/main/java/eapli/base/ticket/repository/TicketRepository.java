@@ -6,7 +6,10 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;
 
-public interface TicketRepository extends DomainRepository<TicketID, Ticket> {
-    Optional<Ticket> ofIdentity(TicketID number);
-    Iterable<Ticket> getPendingTicket();
+public interface TicketRepository extends DomainRepository< TicketID, Ticket > {
+
+	Optional< Ticket > ofIdentity ( TicketID number );
+
+	Iterable< Ticket > getPendingTicket ( );
+
 }
