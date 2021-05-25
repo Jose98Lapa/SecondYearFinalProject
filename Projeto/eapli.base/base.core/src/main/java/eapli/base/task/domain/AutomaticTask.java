@@ -15,7 +15,7 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
     @Embedded
     private ScriptPath scriptPath;
 
-    private Date dateOfExecution;
+
 
     public AutomaticTask(TaskID taskID,ScriptPath scriptPath) {
         super(taskID);
@@ -26,9 +26,6 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
         // For ORM
     }
 
-    public void executeTask(){
-        this.dateOfExecution = new Date();
-    }
 
     @Override
     public boolean sameAs(Object other) {
