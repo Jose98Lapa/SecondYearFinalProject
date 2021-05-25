@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -74,6 +75,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public ColourRepository cores(final TransactionalContext tx) {
 
 		return new InMemoryColourRepository();
+	}
+
+	@Override
+	public TaskRepository tasks() {
+		return null;
+	}
+
+	@Override
+	public TaskRepository tasks(TransactionalContext autoTx) {
+		return null;
 	}
 
 

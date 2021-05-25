@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -69,6 +70,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public ColourRepository cores(TransactionalContext autoTx) {
 		return new JpaColourRepository(autoTx);
+	}
+
+	@Override
+	public TaskRepository tasks() {
+		return new JpaTaskRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TaskRepository tasks(TransactionalContext autoTx) {
+		return new JpaTaskRepository(autoTx) ;
 	}
 
 	@Override

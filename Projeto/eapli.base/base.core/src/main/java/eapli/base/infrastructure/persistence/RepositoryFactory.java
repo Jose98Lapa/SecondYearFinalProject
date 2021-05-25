@@ -3,6 +3,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -149,6 +150,21 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	ColourRepository cores(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+	TaskRepository tasks();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	TaskRepository tasks(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
