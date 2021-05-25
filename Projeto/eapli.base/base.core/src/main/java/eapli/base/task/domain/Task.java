@@ -1,11 +1,12 @@
 package eapli.base.task.domain;
 
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
 
 @Entity
-public abstract class Task implements DomainEntity<TaskID> {
+public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID> {
     @EmbeddedId
     protected TaskID taskID;
 

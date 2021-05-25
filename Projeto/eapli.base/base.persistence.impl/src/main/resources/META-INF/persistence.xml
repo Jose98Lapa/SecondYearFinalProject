@@ -46,6 +46,11 @@
     <class>eapli.base.criticality.domain.ApprovalObjective</class>
     <class>eapli.base.criticality.domain.ResolutionObjective</class>
     <class>eapli.base.ticket.domain.Ticket</class>
+    <class>eapli.base.task.domain.Task</class>
+    <class>eapli.base.task.domain.ManualTask</class>
+    <class>eapli.base.task.domain.AutomaticTask</class>
+    <class>eapli.base.task.domain.ExecutionTask</class>
+    <class>eapli.base.task.domain.ApprovalTask</class>
 
     <properties>
       <!-- <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vs221.dei.isep.ipp.pt:1521/dados"/>-->
