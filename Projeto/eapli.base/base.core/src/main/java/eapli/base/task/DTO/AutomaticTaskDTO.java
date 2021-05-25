@@ -7,25 +7,18 @@ import java.util.Date;
 @DTO
 public class AutomaticTaskDTO {
     String taskID;
-    String taskStatus;
+
     String script;
-    Date dateOfExecution;
 
-    public AutomaticTaskDTO(String taskID,String taskStatus) {
+
+    public AutomaticTaskDTO(String taskID) {
         this.taskID = taskID;
-        this.taskStatus = taskStatus;
+
     }
 
-    public AutomaticTaskDTO(String taskID,String taskStatus, String script) {
+    public AutomaticTaskDTO(String taskID, String script) {
         this.taskID = taskID;
-        this.taskStatus = taskStatus;
         this.script = script;
     }
 
-    public AutomaticTaskDTO(String taskID, String taskStatus, String script, Date dateOfExecution) {
-        this.taskID = taskID;
-        this.taskStatus = taskStatus;
-        this.script = script;
-        this.dateOfExecution = dateOfExecution;
-    }
 }
