@@ -9,12 +9,11 @@ public abstract class Task implements DomainEntity<TaskID> {
     @EmbeddedId
     protected TaskID taskID;
 
-    @Embedded
-    protected TaskStatus taskStatus;
 
-    public Task(TaskID taskID,TaskStatus taskStatus){
+
+    public Task(TaskID taskID){
         this.taskID = taskID;
-        this.taskStatus = taskStatus;
+
 
     }
 

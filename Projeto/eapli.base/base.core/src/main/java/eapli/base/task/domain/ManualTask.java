@@ -1,30 +1,24 @@
 package eapli.base.task.domain;
 
 
-import eapli.base.collaborator.domain.Collaborator;
-import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.form.domain.Form;
-import eapli.base.task.DTO.ManualTaskDTO;
 import eapli.framework.domain.model.DomainEntities;
-import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import java.util.HashSet;
-import java.util.Set;
 
-public class ManualTask extends Task implements DTOable<ManualTaskDTO> {
+public abstract class ManualTask extends Task {
 
     @OneToOne
     private Form form;
 
-    @OneToMany
-    private Set<Collaborator> interveningCollaborators;
 
-
-    public ManualTask(TaskID taskID,TaskStatus taskStatus, Form form){
-        super(taskID,taskStatus);
+    public ManualTask(TaskID taskID, Form form){
+        super(taskID);
         this.form = form;
+    }
+
+    protected ManualTask(){
+        // For ORM
     }
 
 
@@ -33,9 +27,7 @@ public class ManualTask extends Task implements DTOable<ManualTaskDTO> {
         return form;
     }
 
-    public void addAnInterveningCollaborator(Collaborator interveningCollaborator){
-        this.interveningCollaborators.add(interveningCollaborator);
-    }
+
 
     @Override
     public boolean sameAs(Object other) {
@@ -47,13 +39,5 @@ public class ManualTask extends Task implements DTOable<ManualTaskDTO> {
         return super.taskID;
     }
 
-    @Override
-    public ManualTaskDTO toDTO() {
-        Set<CollaboratorDTO> interveningCollaboratorsDTO = new HashSet<>();
-        for (Collaborator collaborator:interveningCollaborators){
-            interveningCollaboratorsDTO.add(collaborator.toDTO());
-        }
 
-        return new ManualTaskDTO(super.taskID.toString(),super.taskStatus.toString(), form().toDTO(),interveningCollaboratorsDTO);
-    }
 }
