@@ -1,6 +1,5 @@
 package eapli.base.ticket.domain;
 
-import eapli.base.service.domain.ServiceID;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -11,56 +10,57 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Embeddable
-public class TicketID implements ValueObject, Comparable<TicketID>{
-    private String ticketID;
-    @Transient
-    private String regex = "^[0-9]{1,10}$";
+public class TicketID implements ValueObject, Comparable< TicketID > {
 
-    public TicketID(final String ID) {
-        if (StringPredicates.isNullOrEmpty(ID)) {
-            throw new IllegalArgumentException("Ticket ID should neither be null nor empty");
-        }
+	private String ticketID;
+	@Transient
+	private String regex = "^[0-9]{1,10}$";
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(ID);
+	public TicketID ( final String ID ) {
+		if ( StringPredicates.isNullOrEmpty( ID ) ) {
+			throw new IllegalArgumentException( "Ticket ID should neither be null nor empty" );
+		}
 
-        if (m.matches()) {
-            this.ticketID = ID;
-        } else {
-            throw new IllegalArgumentException("Ticket ID does not fit the criteria");
-        }
+		Pattern p = Pattern.compile( regex );
+		Matcher m = p.matcher( ID );
 
-        //check if already exists
-    }
+		if ( m.matches( ) ) {
+			this.ticketID = ID;
+		} else {
+			throw new IllegalArgumentException( "Ticket ID does not fit the criteria" );
+		}
 
-    protected TicketID() {
+	}
 
-    }
+	protected TicketID ( ) {
 
-    public static TicketID valueOf(String string) {
-        return new TicketID(string);
-    }
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TicketID ticketID1 = (TicketID) o;
-        return Objects.equals(ticketID, ticketID1.ticketID) && Objects.equals(regex, ticketID1.regex);
-    }
+	public static TicketID valueOf ( String string ) {
+		return new TicketID( string );
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ticketID, regex);
-    }
+	@Override
+	public boolean equals ( Object o ) {
+		if ( this == o ) return true;
+		if ( o == null || getClass( ) != o.getClass( ) ) return false;
+		TicketID ticketID1 = ( TicketID ) o;
+		return Objects.equals( ticketID, ticketID1.ticketID ) && Objects.equals( regex, ticketID1.regex );
+	}
 
-    @Override
-    public String toString() {
-        return ticketID;
-    }
+	@Override
+	public int hashCode ( ) {
+		return Objects.hash( ticketID, regex );
+	}
 
-    @Override
-    public int compareTo(TicketID o) {
-        return ticketID.compareTo(o.toString());
-    }
+	@Override
+	public String toString ( ) {
+		return ticketID;
+	}
+
+	@Override
+	public int compareTo ( TicketID o ) {
+		return ticketID.compareTo( o.toString( ) );
+	}
+
 }
