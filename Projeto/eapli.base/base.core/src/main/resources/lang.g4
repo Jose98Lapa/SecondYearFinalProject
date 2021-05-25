@@ -4,7 +4,27 @@ grammar lang;
  *   Lexico
  */
 
-gramm: TEXTO;
+gramm: expressao+;
+
+
+expressao:    TEXTO
+            | estrutura_condicional
+            | EOF;
+
+estrutura_condicional: if
+                       else?
+                       ;
+
+if                  : SE ( VARIAVEL | VALOR ) OPERADORCONDICIONAL ( VARIAVEL | VALOR )
+                      expressao+
+                      END_STATEMENT
+                      ;
+else                : ENTAO
+                      expressao+
+                      END_STATEMENT
+                      ;
+
+atribuir_a_variavel : VARIAVEL OPERADORATRIBUICAO VALOR;
 
 /*
  *  Sintaxe
