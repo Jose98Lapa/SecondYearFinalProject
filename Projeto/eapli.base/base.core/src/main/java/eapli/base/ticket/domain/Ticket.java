@@ -26,10 +26,10 @@ public class Ticket implements AggregateRoot<TicketID>, DTOable<ticketDTO> {
     @EmbeddedId
     private TicketID id;
     private TicketStatus status;
-    private FicheiroAnexado ficheiro;
+    private AttachedFile ficheiro;
     private Urgencia urgencia;
 
-    public Ticket(LocalDate solicitedOn, LocalDate deadLine, TicketID id, TicketStatus status, FicheiroAnexado ficheiro, Urgencia urgencia) {
+    public Ticket( LocalDate solicitedOn, LocalDate deadLine, TicketID id, TicketStatus status, AttachedFile ficheiro, Urgencia urgencia) {
         this.solicitedOn = solicitedOn;
         this.deadLine = deadLine;
         this.id = id;
