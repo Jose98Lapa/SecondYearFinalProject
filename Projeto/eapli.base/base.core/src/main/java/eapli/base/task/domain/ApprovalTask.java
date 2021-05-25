@@ -11,31 +11,24 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-public class ApprovalTask extends Task implements DTOable<ApprovalTaskDTO> {
-    @OneToOne
-    private Form form;
+public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO> {
 
-    private Date approvalDate;
 
-    @OneToOne
-    private Collaborator collaboratorThatApprovedTheTask;
 
-    public ApprovalTask(TaskID taskID,TaskStatus taskStatus, Form form) {
-        super(taskID,taskStatus);
-        this.form = form;
+
+    public ApprovalTask(TaskID taskID, Form form) {
+        super(taskID,form);
+
     }
 
     protected ApprovalTask() {
-        // For ORM
+       super();
+
     }
 
-    public void approveTask(Collaborator collaboratorThatApprovedTheTask){
-        this.approvalDate = new Date();
-        this.collaboratorThatApprovedTheTask = collaboratorThatApprovedTheTask;
-    }
 
     public Form form(){
-        return form;
+        return super.form();
     }
 
     @Override
@@ -50,6 +43,6 @@ public class ApprovalTask extends Task implements DTOable<ApprovalTaskDTO> {
 
     @Override
     public ApprovalTaskDTO toDTO() {
-        return new ApprovalTaskDTO(super.taskID.toString(),super.taskStatus.toString(),form.toDTO());
+        return new ApprovalTaskDTO(super.taskID.toString(),super.form().toDTO());
     }
 }

@@ -2,25 +2,25 @@ package eapli.base.task.DTO;
 
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.form.DTO.FormDTO;
+import eapli.framework.representations.dto.DTO;
 
-import java.util.Date;
+import java.util.Set;
 
-public class ApprovalTaskDTO {
+@DTO
+public class ExecutionTaskDTO {
     String taskID;
-
     FormDTO formDTO;
 
 
-    public ApprovalTaskDTO(String taskID) {
+    public ExecutionTaskDTO(String taskID) {
         this.taskID = taskID;
 
 
     }
 
-    public ApprovalTaskDTO(String taskID, FormDTO formDTO) {
+    public ExecutionTaskDTO(String taskID, FormDTO formDTO) {
         this.taskID = taskID;
         this.formDTO = formDTO;
+
     }
-
-
 }

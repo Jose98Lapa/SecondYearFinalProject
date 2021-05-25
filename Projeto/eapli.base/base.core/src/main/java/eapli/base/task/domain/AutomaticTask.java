@@ -17,8 +17,8 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
 
     private Date dateOfExecution;
 
-    public AutomaticTask(TaskID taskID, TaskStatus taskStatus,ScriptPath scriptPath) {
-        super(taskID,taskStatus);
+    public AutomaticTask(TaskID taskID,ScriptPath scriptPath) {
+        super(taskID);
         this.scriptPath = scriptPath;
     }
 
@@ -55,6 +55,6 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
 
     @Override
     public AutomaticTaskDTO toDTO() {
-        return new AutomaticTaskDTO(super.taskID.toString(),super.taskStatus.toString(),scriptPath.toString());
+        return new AutomaticTaskDTO(super.taskID.toString(),scriptPath.toString());
     }
 }
