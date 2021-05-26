@@ -4,22 +4,23 @@ grammar lang;
  *   Lexico
  */
 
-gramm: expressao+;
+gramm: expressao;
 
 
-expressao:    TEXTO
-            | estrutura_condicional
+expressao:   estrutura_condicional
+            |  atribuir_a_variavel
+            | TIPODADOS
             | EOF;
 
-estrutura_condicional: if
-                       else?
+estrutura_condicional: ife
+                       elsee?
                        ;
 
-if                  : SE ( VARIAVEL | VALOR ) OPERADORCONDICIONAL ( VARIAVEL | VALOR )
+ife               : SE ESPACO ( VARIAVEL | VALOR ) ESPACO OPERADORLOGICO ESPACO ( VARIAVEL | VALOR )
                       expressao+
                       END_STATEMENT
                       ;
-else                : ENTAO
+elsee               : ENTAO
                       expressao+
                       END_STATEMENT
                       ;
@@ -37,7 +38,7 @@ fragment UPPERCASE  : [A-Z];
 
 NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
-TEXTO               : ( UPPERCASE )?( LOWERCASE )+;
+TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 TIPODADOS           : NUMERO | REAL | TEXTO;
 
 OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
@@ -47,7 +48,7 @@ OPERADORATRIBUICAO  : '->';
 VARIAVEL            : '§' TEXTO | '§' ( TEXTO | NUMERO )+;
 VALOR               : '§' DIGITO | '§' NUMERO;
 
-ESPACO              : (' ' | '\t');
+ESPACO              : [ \t\r\n]+ -> skip ;
 NOVALINHA           : ('\r'? '\n' | '\r')+;
 
 
@@ -56,4 +57,3 @@ SE                  : 'se';
 ENTAO               : 'entao';
 SENAO               : 'senao';
 END_STATEMENT       : 'es';
-EOF                 : 'EOF';
