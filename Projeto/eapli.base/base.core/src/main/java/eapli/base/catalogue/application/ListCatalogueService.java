@@ -32,13 +32,23 @@ public class ListCatalogueService {
 		return catalogos;
 	}
 
-	public List< CatalogueDTO > requestableCatalogues ( Team team ) {
+	public List< CatalogueDTO > requestableCataloguesByTeam ( Team team ) {
 		ArrayList< CatalogueDTO > catalogues = new ArrayList<>( );
 
 		for ( Catalogue catalogue : catalogoRepo.findAll( ) ) {
 			if ( catalogue.accessibleBy( team ) ) {
 				catalogues.add( catalogue.toDTO( ) );
 			}
+		}
+
+		return catalogues;
+	}
+
+	public List< CatalogueDTO > requestableCataloguesByTeams ( Set< Team > teams ) {
+		ArrayList< CatalogueDTO > catalogues = new ArrayList<>( );
+
+		for ( Team team : teams ) {
+			catalogues.addAll( requestableCataloguesByTeam( team ) );
 		}
 
 		return catalogues;
