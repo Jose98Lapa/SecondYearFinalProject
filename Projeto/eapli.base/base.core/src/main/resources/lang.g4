@@ -8,6 +8,7 @@ gramm: expressao+;
 
 
 expressao:    TEXTO
+            | atribuir_a_variavel
             | estrutura_condicional
             | EOF;
 
@@ -15,7 +16,7 @@ estrutura_condicional: if
                        else?
                        ;
 
-if                  : SE ( VARIAVEL | VALOR ) OPERADORCONDICIONAL ( VARIAVEL | VALOR )
+if                  : SE ( VARIAVEL | VALOR ) OPERADORLOGICO ( VARIAVEL | VALOR )
                       expressao+
                       END_STATEMENT
                       ;
@@ -44,7 +45,7 @@ OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
 OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
 OPERADORATRIBUICAO  : '->';
 
-VARIAVEL            : '§' TEXTO | '§' ( TEXTO | NUMERO )+;
+VARIAVEL            : ('§' TEXTO) | ('§' ( TEXTO | NUMERO )+);
 VALOR               : '§' DIGITO | '§' NUMERO;
 
 ESPACO              : (' ' | '\t');
@@ -56,4 +57,3 @@ SE                  : 'se';
 ENTAO               : 'entao';
 SENAO               : 'senao';
 END_STATEMENT       : 'es';
-EOF                 : 'EOF';

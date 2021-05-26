@@ -1,13 +1,13 @@
 package eapli.base.ticket.domain;
 
+import eapli.base.form.domain.Form;
+import eapli.base.service.domain.Service;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -23,19 +23,35 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO > {
 	private Long version;
 
 	private LocalDate solicitedOn, deadLine;
+
 	@EmbeddedId
 	private TicketID id;
 	private TicketStatus status;
 	private AttachedFile file;
 	private Urgency urgency;
 
-	public Ticket ( LocalDate solicitedOn, LocalDate deadLine, TicketID id, TicketStatus status, AttachedFile file, Urgency urgency ) {
+	@OneToOne
+	private Service service;
+
+	@OneToOne
+	private Form ticketForm;
+
+	@OneToOne
+	private Form approvalForm;
+
+	@OneToOne
+	private Form executionForm;
+
+
+	public Ticket ( LocalDate solicitedOn, LocalDate deadLine,
+					TicketID id, TicketStatus status, AttachedFile file, Urgency urgency, Service service  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
 		this.id = id;
 		this.status = status;
 		this.file = file;
 		this.urgency = urgency;
+		this.service = service;
 	}
 
 	protected Ticket ( ) {

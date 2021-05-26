@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class IconServico implements ValueObject {
-    private String  icon;
+    private String icon;
 
     public IconServico(String temp) {
         this.icon = temp;
