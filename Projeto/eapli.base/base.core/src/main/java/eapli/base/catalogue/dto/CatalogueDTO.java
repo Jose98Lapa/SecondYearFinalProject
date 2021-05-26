@@ -37,6 +37,7 @@ import java.util.Set;
 @SuppressWarnings("squid:ClassVariableVisibilityCheck")
 @DTO
 public class CatalogueDTO {
+
     public Long identity;
     public String catalogTitle;
     public String icon;

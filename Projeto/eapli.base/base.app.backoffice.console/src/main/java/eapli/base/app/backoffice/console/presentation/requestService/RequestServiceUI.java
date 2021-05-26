@@ -1,9 +1,14 @@
 package eapli.base.app.backoffice.console.presentation.requestService;
 
+import eapli.base.app.backoffice.console.Utils;
 import eapli.base.catalogue.application.ListCatalogueService;
+import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
+import eapli.base.catalogue.dto.CatalogueDTOParser;
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.service.Application.ServiceListService;
+import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.team.application.TeamListService;
 import eapli.base.team.domain.Team;
 import eapli.base.ticket.application.CreateTicketController;
@@ -22,6 +27,13 @@ public class RequestServiceUI extends AbstractUI {
 	protected boolean doShow ( ) {
 
 		List< CatalogueDTO > availableCatalogues = requestableCatalogues();
+		int index = Utils.showAndSelectIndex( availableCatalogues,"Escolha o catalogo que deseja");
+		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( index );
+		Catalogue chosenCatalogue = new CatalogueDTOParser().valueOf( chosenCatalogueDTO );
+
+		ServiceListService servicesService = new ServiceListService();
+		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+
 
 
 		return false;
