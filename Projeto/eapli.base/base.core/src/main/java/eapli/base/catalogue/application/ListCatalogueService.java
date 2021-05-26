@@ -11,24 +11,37 @@ import java.util.List;
 import java.util.Set;
 
 public class ListCatalogueService {
-    private final CatalogueRepository catalogoRepo = PersistenceContext.repositories().catalogs();
 
-    public ArrayList<CatalogueDTO> allCatalogos(){
-        ArrayList<CatalogueDTO> catalogos = new ArrayList<>();
-        catalogoRepo.findAll().forEach(cat -> catalogos.add(cat.toDTO()));
-        return catalogos;
-    }
+	private final CatalogueRepository catalogoRepo = PersistenceContext.repositories( ).catalogs( );
 
-    public List<Catalogue> allCompatibleCatalogo(Set<Team> validTeams){
-        ArrayList<Catalogue>catalogos = new ArrayList<>();
-        for (Catalogue catalogue : catalogoRepo.findAll()){
-            if (catalogue.isTeamValid(validTeams)){
-                catalogos.add(catalogue);
-            }
-        }
-        return catalogos;
-    }
+	public ArrayList< CatalogueDTO > allCatalogos ( ) {
+		ArrayList< CatalogueDTO > catalogos = new ArrayList<>( );
 
+		catalogoRepo.findAll( ).forEach( cat -> catalogos.add( cat.toDTO( ) ) );
+		return catalogos;
+	}
 
+	public List< Catalogue > allCompatibleCatalogo ( Set< Team > validTeams ) {
+		ArrayList< Catalogue > catalogos = new ArrayList<>( );
+
+		for ( Catalogue catalogue : catalogoRepo.findAll( ) ) {
+			if ( catalogue.isTeamValid( validTeams ) ) {
+				catalogos.add( catalogue );
+			}
+		}
+		return catalogos;
+	}
+
+	public List< CatalogueDTO > requestableCatalogues ( Team team ) {
+		ArrayList< CatalogueDTO > catalogues = new ArrayList<>( );
+
+		for ( Catalogue catalogue : catalogoRepo.findAll( ) ) {
+			if ( catalogue.accessibleBy( team ) ) {
+				catalogues.add( catalogue.toDTO( ) );
+			}
+		}
+
+		return catalogues;
+	}
 
 }

@@ -45,7 +45,7 @@ OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
 OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
 OPERADORATRIBUICAO  : '->';
 
-VARIAVEL            : '§' TEXTO | '§' ( TEXTO | NUMERO )+;
+VARIAVEL            : ('§' TEXTO) | ('§' ( TEXTO | NUMERO )+);
 VALOR               : '§' DIGITO | '§' NUMERO;
 
 ESPACO              : [ \t\r\n]+ -> skip ;
