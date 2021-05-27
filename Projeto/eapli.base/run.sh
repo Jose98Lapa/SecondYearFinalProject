@@ -17,7 +17,8 @@ if [ $1 = "pull" ]
 then
 repo
 echo "Pulling from repo"
-git pull
+git fetch --all
+git clean 
 proj
 chmod +x run.sh
 cp -p run.sh /
