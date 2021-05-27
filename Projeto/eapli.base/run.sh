@@ -17,9 +17,10 @@ if [ $1 = "pull" ]
 then
 repo
 echo "Pulling from repo"
-git pull 
+git pull
+git update-index --chmod=+x run.sh
 proj
-mv run.sh /
+cp run.sh /
 fi
 
 persistance
