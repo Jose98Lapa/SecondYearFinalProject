@@ -113,6 +113,10 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO> {
 
     }
 
+    public boolean accessibleBy ( Team team ) {
+        return accessCriteria.contains( team );
+    }
+
     public void changeCriticalityLevelTo(final Criticality newCriticality){
         this.nivelCriticality = newCriticality;
     }

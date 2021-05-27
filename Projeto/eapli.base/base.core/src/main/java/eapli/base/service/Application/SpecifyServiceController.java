@@ -9,7 +9,6 @@ import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
-import eapli.base.service.DTO.ServiceDTOParser;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.builder.ServiceBuilder;
 import eapli.base.service.domain.*;
@@ -29,6 +28,7 @@ public class SpecifyServiceController {
         builder = new ServiceBuilder();
         final Catalogue catalogue = catalogueRepository.ofIdentity(dto.catalogo.identity).orElseThrow(() -> new IllegalArgumentException("Unknown catalog: " + dto.id));
         builder.withTitle(dto.title).withIcon(dto.icon).withKeywords(dto.keywords).withId(dto.id).withStatus(dto.status).withBriefDescription(dto.briefDescription).withCompleteDescription(dto.completeDescription).withCatalogue(catalogue);
+
     }
 
     public void automatic(String script) {
@@ -52,7 +52,6 @@ public class SpecifyServiceController {
     }
 
     public void confirms() {
-
         serviceRepository.save(service);
     }
 
