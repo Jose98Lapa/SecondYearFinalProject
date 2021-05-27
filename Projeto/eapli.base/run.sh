@@ -1,7 +1,10 @@
 #!/bin/sh
 echo "Usage:"
-echo "./run rebuild[y/n] module[user/bootstrap/backoffice]"
+echo " [REBUILD(y/n)|pull] module[user/bootstrap/backoffice]"
 alias proj="cd /REPO/lei20_21_s4_2dl_1/Projeto/eapli.base"
+alias repo="cd /REPO/lei20_21_s4_2dl_1"
+alias persistance="cd /REPO/lei20_21_s4_2dl_1/Projeto/eapli.base/base.persistence.impl/src/main/resources/META-INF"
+
 if [ $1 = "y" ]
 then
 echo "REBUILDING . . . . . ."
@@ -9,6 +12,19 @@ proj
 mvn clean dependency:copy-dependencies package
 echo "Rebuilt"
 fi
+
+if [ $1 = "pull" ]
+then
+repo
+echo "Pulling from repo"
+git pull 
+proj
+mv run.sh /
+fi
+
+persistance
+sed -i 's/vsgate-s2.dei.isep.ipp.pt:10221/10.9.20.221:2225/' persistence.xml
+
 
 case $2 in
     user )
