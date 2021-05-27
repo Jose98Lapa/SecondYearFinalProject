@@ -56,4 +56,9 @@ proj
 export BASE_CP=base.app.workflow.engine/target/base.app.workflow.engine-1.3.0-SNAPSHOT.jar:base.app.workflow.engine/target/dependency/*;
 java -cp $BASE_CP eapli.base.workflow.engine.TcpServer
     ;;
+    autotask)
+proj
+export BASE_CP=eapli.base.automatictask.executor/target/eapli.base.automatictask.executor-1.3.0-SNAPSHOT.jar:eapli.base.automatictask.executor/target/dependency/*;
+java -cp $BASE_CP eapli.base.automatictask.executor
+    ;;
 esac
