@@ -18,7 +18,7 @@ then
 repo
 echo "Pulling from repo"
 git fetch --all
-git clean 
+git reset --hard origin/master
 proj
 chmod +x run.sh
 cp -p run.sh /
