@@ -1,6 +1,8 @@
 package eapli.base.service.Application;
 
 import eapli.base.catalogue.domain.Catalogue;
+import eapli.base.form.DTO.FormDTO;
+import eapli.base.form.domain.Form;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.Repository.ServiceRepository;
@@ -12,15 +14,16 @@ import eapli.base.service.domain.ServiceTitle;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ServiceListService {
-    private final ServiceRepository repo = PersistenceContext.repositories().servico();
+    private final ServiceRepository serviceRepository = PersistenceContext.repositories().servico();
 
     public ArrayList<ServiceDTO> incompleteServices() {
 
         ArrayList<ServiceDTO> services = new ArrayList<>();
 
-        for ( Service service : repo.incompleteServico() ) {
+        for ( Service service : serviceRepository.incompleteServico() ) {
             services.add(service.toDTO());
         }
 
@@ -31,7 +34,7 @@ public class ServiceListService {
 
         ArrayList<ServiceDTO> services = new ArrayList<>();
 
-        for (Service service : repo.findAll() ) {
+        for (Service service : serviceRepository.findAll() ) {
             services.add( service.toDTO() );
         }
 
@@ -42,7 +45,7 @@ public class ServiceListService {
 
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-        for ( Service service : repo.getServiceListByCatalogueAndTitle( catalogue,query, ServiceTitle.valueOf( parameter ) ) ){
+        for ( Service service : serviceRepository.getServiceListByCatalogueAndTitle( catalogue,query, ServiceTitle.valueOf( parameter ) ) ){
             serviceDTOList.add( service.toDTO() );
         }
 
@@ -53,7 +56,7 @@ public class ServiceListService {
 
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-        for ( Service service : repo.getServiceListByCatalogueAndID( catalogue,query, ServiceID.valueOf( parameter ) ) ){
+        for ( Service service : serviceRepository.getServiceListByCatalogueAndID( catalogue,query, ServiceID.valueOf( parameter ) ) ){
             serviceDTOList.add( service.toDTO() );
         }
 
@@ -64,7 +67,7 @@ public class ServiceListService {
 
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-        for ( Service service : repo.getServiceListByCatalogueAndStatus(catalogue,query, ServiceStatus.valueOf(parameter)) ){
+        for ( Service service : serviceRepository.getServiceListByCatalogueAndStatus(catalogue,query, ServiceStatus.valueOf(parameter)) ){
             serviceDTOList.add(service.toDTO());
         }
 
@@ -75,7 +78,7 @@ public class ServiceListService {
 
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-        for (Service service : repo.getServiceListByCatalogue(catalogue,query)){
+        for (Service service : serviceRepository.getServiceListByCatalogue(catalogue,query)){
            serviceDTOList.add(service.toDTO());
         }
 
@@ -88,11 +91,29 @@ public class ServiceListService {
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
         String query = "Select e From eapli.base.service.domain.Service e where e.catalogue =: catalogue";
 
-        for (Service service : repo.getServiceListByCatalogue( catalogue, query ) ){
+        for (Service service : serviceRepository.getServiceListByCatalogue( catalogue, query ) ){
             serviceDTOList.add( service.toDTO() );
         }
 
         return serviceDTOList;
 
+    }
+
+    public Optional < FormDTO > retrieveServiceForm ( ServiceID serviceID ){
+
+        Optional< Service > serviceOptional = serviceRepository.findByServicoID( serviceID );
+        Optional < Form > formOptional;
+        FormDTO formDTO = null;
+
+        if ( serviceOptional.isPresent() ) {
+            Service service = serviceOptional.get();
+            formOptional = serviceRepository.getFormById( service.form( ).identity() );
+
+            if ( formOptional.isPresent() ) {
+                formDTO = ( formOptional.get() ).toDTO();
+            }
+        }
+
+        return Optional.ofNullable( formDTO );
     }
 }

@@ -4,6 +4,7 @@ import eapli.base.catalogue.application.ListCatalogueService;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.repositories.CatalogueRepository;
+import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
@@ -13,8 +14,10 @@ import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.builder.ServiceBuilder;
 import eapli.base.service.domain.*;
 
+import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collector;
 
 public class SpecifyServiceController {
 
@@ -121,4 +124,5 @@ public class SpecifyServiceController {
             }
         }
     }
+
 }

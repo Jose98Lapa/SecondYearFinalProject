@@ -153,13 +153,17 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO> {
     }
 
     public boolean isComplete() {
-        if (this.title == null || this.id == null || this.icon == null || this.keywords == null || this.status == null)
+        if ( this.title == null || this.id == null || this.icon == null || this.keywords == null || this.status == null )
             return false;
-        if (tipo.equals(ServiceType.valueOf("AUTOMATICO"))) {
+        if ( tipo.equals( ServiceType.valueOf( "AUTOMATICO" ) ) ) {
             return this.script != null;
         } else {
             return this.form != null;
         }
+    }
+
+    public Form form () {
+        return form;
     }
 
 }
