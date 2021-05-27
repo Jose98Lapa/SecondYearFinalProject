@@ -82,4 +82,17 @@ public class ServiceListService {
         return serviceDTOList;
 
     }
+
+    public List<ServiceDTO> getServiceDTOListByCatalogue ( Catalogue catalogue ){
+
+        List<ServiceDTO> serviceDTOList = new ArrayList<>();
+        String query = "Select e From eapli.base.service.domain.Service e where e.catalogue =: catalogue";
+
+        for (Service service : repo.getServiceListByCatalogue( catalogue, query ) ){
+            serviceDTOList.add( service.toDTO() );
+        }
+
+        return serviceDTOList;
+
+    }
 }
