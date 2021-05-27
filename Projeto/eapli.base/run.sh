@@ -18,9 +18,9 @@ then
 repo
 echo "Pulling from repo"
 git pull
-git update-index --chmod=+x run.sh
 proj
-cp run.sh /
+chmod +x run.sh
+cp -p run.sh /
 fi
 
 persistance
