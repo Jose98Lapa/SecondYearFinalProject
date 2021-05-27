@@ -34,7 +34,6 @@
         <module>base.persistence.impl</module>
         <module>base.app.workflow.engine</module>
         <module>base.app.automatictask.executor</module>
-        <module>base.app.automatictask.executor</module>
     </modules>
 
     <dependencies>
