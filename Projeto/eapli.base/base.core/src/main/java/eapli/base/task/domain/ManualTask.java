@@ -5,8 +5,9 @@ import eapli.base.form.domain.Form;
 import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
-public abstract class ManualTask extends Task {
+public abstract class ManualTask extends Task implements Serializable {
 
     @OneToOne
     private Form form;

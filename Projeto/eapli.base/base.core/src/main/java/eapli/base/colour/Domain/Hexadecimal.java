@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Hexadecimal implements ValueObject,Comparable<Hexadecimal> {
+public class Hexadecimal implements ValueObject,Comparable<Hexadecimal>, Serializable {
     private String valorHexadecimal;
 
     public Hexadecimal(String valorHexadecimal) {

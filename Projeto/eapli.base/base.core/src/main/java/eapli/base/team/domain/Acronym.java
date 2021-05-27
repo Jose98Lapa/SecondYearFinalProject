@@ -4,10 +4,11 @@ package eapli.base.team.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Acronym implements ValueObject  {
+public class Acronym implements ValueObject, Serializable {
     private String acronimo;
 
     public Acronym(String acronimo) {

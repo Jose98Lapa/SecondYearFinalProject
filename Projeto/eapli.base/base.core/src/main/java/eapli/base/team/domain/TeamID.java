@@ -3,11 +3,12 @@ package eapli.base.team.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 
 @Embeddable
-public class TeamID implements ValueObject, Comparable<TeamID> {
+public class TeamID implements ValueObject, Comparable<TeamID>, Serializable {
     private String ID;
     public TeamID(String ID){
         if (ID==null||ID.isEmpty()||!ID.matches("^[0-9]{1,5}$")){

@@ -1,4 +1,4 @@
-package client;
+package eapli.base.workflow.engine.client;
 
 import java.io.*;
 import java.net.InetAddress;

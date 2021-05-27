@@ -5,10 +5,11 @@ import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDTO> {
+public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDTO>, Serializable {
     private AtributteName nome;
     private AttributeLabel label;
     private AttributeDescription desc;

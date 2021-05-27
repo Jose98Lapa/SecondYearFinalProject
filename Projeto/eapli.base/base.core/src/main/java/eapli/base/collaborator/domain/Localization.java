@@ -3,10 +3,11 @@ package eapli.base.collaborator.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Localization implements ValueObject {
+public class Localization implements ValueObject, Serializable {
     private String localizacao;
 
     public Localization(String localizacao) {

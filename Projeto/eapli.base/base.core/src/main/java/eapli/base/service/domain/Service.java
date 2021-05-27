@@ -9,11 +9,12 @@ import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO> {
+public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 

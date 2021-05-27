@@ -5,9 +5,10 @@ import eapli.base.task.DTO.ExecutionTaskDTO;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Entity
-public class ExecutionTask extends ManualTask implements DTOable<ExecutionTaskDTO> {
+public class ExecutionTask extends ManualTask implements DTOable<ExecutionTaskDTO> , Serializable {
     public ExecutionTask(TaskID taskID, Form form) {
         super(taskID,form);
     }

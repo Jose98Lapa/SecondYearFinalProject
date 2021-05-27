@@ -4,9 +4,10 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class Icon implements ValueObject {
+public class Icon implements ValueObject, Serializable {
     String iconPath;
 
     public Icon(String icon) {

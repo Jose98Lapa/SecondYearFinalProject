@@ -6,9 +6,10 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Entity
-public class Function implements AggregateRoot<IdFunction>, DTOable<FunctionDTO> {
+public class Function implements AggregateRoot<IdFunction>, DTOable<FunctionDTO>, Serializable {
 
     @EmbeddedId
     private IdFunction idFunction;
