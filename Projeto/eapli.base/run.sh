@@ -30,7 +30,7 @@ then
 echo "Changing to local database ip . . . . . ."
 persistance
 sed -i 's/vsgate-s2.dei.isep.ipp.pt:10221/10.9.20.221:2225/' persistence.xml
-echo "Rebuilt"
+echo "Done"
 fi
 
 
@@ -50,5 +50,10 @@ java -cp $BASE_CP eapli.base.app.bootstrap.BaseBootstrap
 proj
 export BASE_CP=base.app.backoffice.console/target/base.app.backoffice.console-1.3.0-SNAPSHOT.jar:base.app.backoffice.console/target/dependency/*;
 java -cp $BASE_CP eapli.base.app.backoffice.console.BaseBackoffice  
+    ;;
+    workflow)
+proj
+export BASE_CP=base.app.workflow.engine/target/base.app.workflow.engine-1.3.0-SNAPSHOT.jar:base.app.workflow.engine/target/dependency/*;
+java -cp $BASE_CP eapli.base.workflow.engine.TcpServer
     ;;
 esac
