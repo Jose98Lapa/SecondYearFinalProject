@@ -1,6 +1,8 @@
 package eapli.base.catalogue.domain;
 
-public class AccessCriteriaEquipa implements AccessCriteria {
+import java.io.Serializable;
+
+public class AccessCriteriaEquipa implements AccessCriteria, Serializable {
 
     
 }

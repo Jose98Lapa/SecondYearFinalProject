@@ -10,10 +10,11 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO> {
+public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO>, Serializable {
 
 
 

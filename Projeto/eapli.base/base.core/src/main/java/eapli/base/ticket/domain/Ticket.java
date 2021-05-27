@@ -8,6 +8,7 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
  * @author 1190731
  */
 @Entity
-public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO > {
+public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,Serializable {
 
 	private static final long serialVersionUID = 1L;
 

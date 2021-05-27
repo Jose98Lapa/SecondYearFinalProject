@@ -9,10 +9,11 @@ import eapli.framework.representations.dto.DTOable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class TeamType implements AggregateRoot<TeamTypeID>, DTOable<TeamTypeDTO> {
+public class TeamType implements AggregateRoot<TeamTypeID>, DTOable<TeamTypeDTO>, Serializable {
     @EmbeddedId
     private TeamTypeID teamTypeID;
     private String descricao;

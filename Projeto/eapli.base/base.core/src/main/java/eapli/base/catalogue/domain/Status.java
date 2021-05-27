@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Calendar;
 
 @Embeddable
-public class Status implements ValueObject {
+public class Status implements ValueObject , Serializable {
     private Calendar dataDisponibilidade;
     private boolean status;
 

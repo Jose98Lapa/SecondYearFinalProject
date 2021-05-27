@@ -4,9 +4,10 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID> {
+public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID> , Serializable {
     @EmbeddedId
     protected TaskID taskID;
 

@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Urgency implements ValueObject {
+public class Urgency implements ValueObject, Serializable {
 
 	@Transient
 	private static final long serialVersionUID = 1L;
