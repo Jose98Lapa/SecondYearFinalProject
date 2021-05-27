@@ -46,19 +46,19 @@ proj
 export BASE_CP=base.app.bootstrap/target/base.app.bootstrap-1.3.0-SNAPSHOT.jar:base.app.bootstrap/target/dependency/*;
 java -cp $BASE_CP eapli.base.app.bootstrap.BaseBootstrap
     ;;
-    backoffice)
+    backoffice )
 proj
 export BASE_CP=base.app.backoffice.console/target/base.app.backoffice.console-1.3.0-SNAPSHOT.jar:base.app.backoffice.console/target/dependency/*;
 java -cp $BASE_CP eapli.base.app.backoffice.console.BaseBackoffice  
     ;;
-    workflow)
+    workflow )
 proj
 export BASE_CP=base.app.workflow.engine/target/base.app.workflow.engine-1.3.0-SNAPSHOT.jar:base.app.workflow.engine/target/dependency/*;
 java -cp $BASE_CP eapli.base.workflow.engine.TcpServer
     ;;
-    autotask)
+    autotask )
 proj
 export BASE_CP=eapli.base.automatictask.executor/target/eapli.base.automatictask.executor-1.3.0-SNAPSHOT.jar:eapli.base.automatictask.executor/target/dependency/*;
-java -cp $BASE_CP eapli.base.automatictask.executor
+java -cp $BASE_CP eapli.base.automatictask.executor.TcpServer
     ;;
 esac
