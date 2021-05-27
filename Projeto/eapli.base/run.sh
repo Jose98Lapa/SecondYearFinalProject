@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Usage:"
-echo " [REBUILD(y/n)|pull] module[user/bootstrap/backoffice]"
+echo " [REBUILD(y/n)|pull|private] module[user/bootstrap/backoffice]"
 alias proj="cd /REPO/lei20_21_s4_2dl_1/Projeto/eapli.base"
 alias repo="cd /REPO/lei20_21_s4_2dl_1"
 alias persistance="cd /REPO/lei20_21_s4_2dl_1/Projeto/eapli.base/base.persistence.impl/src/main/resources/META-INF"
@@ -24,8 +24,15 @@ chmod +x run.sh
 cp -p run.sh /
 fi
 
+
+if [ $1 = "private" ]
+then
+echo "Changing to local database ip . . . . . ."
 persistance
 sed -i 's/vsgate-s2.dei.isep.ipp.pt:10221/10.9.20.221:2225/' persistence.xml
+echo "Rebuilt"
+fi
+
 
 
 case $2 in
