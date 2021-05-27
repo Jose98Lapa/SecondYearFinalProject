@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class FormScript implements ValueObject {
+public class FormScript implements ValueObject, Serializable {
     private String script;
 
     public FormScript(String script) {

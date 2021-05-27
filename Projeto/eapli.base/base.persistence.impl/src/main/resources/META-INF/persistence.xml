@@ -34,7 +34,7 @@
     <class>eapli.base.collaborator.domain.FullName</class>
     <class>eapli.base.collaborator.domain.MecanographicNumber</class>
     <class>eapli.base.collaborator.domain.DoorNumber</class>
-    <class>eapli.base.collaborator.domain.Rua</class>
+    <class>eapli.base.collaborator.domain.Street</class>
     <class>eapli.base.catalogue.domain.Catalogue</class>
     <class>eapli.base.function.domain.Function</class>
     <class>eapli.base.function.domain.IdFunction</class>

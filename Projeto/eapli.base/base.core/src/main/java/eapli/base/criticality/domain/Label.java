@@ -3,10 +3,11 @@ package eapli.base.criticality.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Label implements ValueObject{
+public class Label implements ValueObject, Serializable {
     private String label;
 
     public Label(String label) {

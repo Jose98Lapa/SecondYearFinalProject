@@ -3,10 +3,11 @@ package eapli.base.criticality.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class ApprovalObjective extends SLAObjective implements ValueObject{
+public class ApprovalObjective extends SLAObjective implements ValueObject, Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

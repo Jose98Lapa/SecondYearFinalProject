@@ -5,10 +5,11 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Criticality implements AggregateRoot<Long>, DTOable<CriticalityDTO> {
+public class Criticality implements AggregateRoot<Long>, DTOable<CriticalityDTO> , Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

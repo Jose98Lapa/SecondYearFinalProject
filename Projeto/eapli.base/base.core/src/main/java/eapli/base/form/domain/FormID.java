@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
-public class FormID implements ValueObject,Comparable<FormID>, Serializable {
+public class FormID implements ValueObject,Comparable<FormID>, Serializable{
 
     private String FormularioID;
     @Transient

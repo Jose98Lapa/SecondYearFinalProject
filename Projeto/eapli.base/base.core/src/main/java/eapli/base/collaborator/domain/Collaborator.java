@@ -7,10 +7,11 @@ import eapli.framework.representations.dto.DTOable;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable<CollaboratorDTO> {
+public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable<CollaboratorDTO>, Serializable {
 
     private PlaceOfResidence placeOfResidence;
 

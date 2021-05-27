@@ -7,11 +7,12 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO> {
+public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO>, Serializable {
     @Embedded
     private ScriptPath scriptPath;
 

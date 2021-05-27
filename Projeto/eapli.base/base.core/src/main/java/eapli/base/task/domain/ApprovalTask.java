@@ -8,10 +8,11 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO> {
+public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO> , Serializable {
 
 
 

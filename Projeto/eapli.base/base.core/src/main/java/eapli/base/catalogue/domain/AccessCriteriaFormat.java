@@ -1,5 +1,7 @@
 package eapli.base.catalogue.domain;
 
-public enum AccessCriteriaFormat {
+import java.io.Serializable;
+
+public enum AccessCriteriaFormat implements Serializable {
     TEAM,
 }

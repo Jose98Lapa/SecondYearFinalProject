@@ -9,6 +9,7 @@ import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Objects;
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @Embeddable
-public class MecanographicNumber implements ValueObject, Comparable<MecanographicNumber> {
+public class MecanographicNumber implements ValueObject, Comparable<MecanographicNumber>, Serializable {
     @Transient
     private static final long serialVersionUID = 1L;
 

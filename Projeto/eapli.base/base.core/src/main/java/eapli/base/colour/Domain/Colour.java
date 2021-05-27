@@ -7,11 +7,12 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.Objects;
 
 
 @Entity
-public class Colour implements AggregateRoot<Hexadecimal>, DTOable<ColourDTO> {
+public class Colour implements AggregateRoot<Hexadecimal>, DTOable<ColourDTO>,Serializable {
     private String nome;
     @EmbeddedId
     private Hexadecimal hexadecimalValue;

@@ -3,10 +3,11 @@ package eapli.base.collaborator.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Contact implements ValueObject {
+public class Contact implements ValueObject , Serializable {
 
     private String contact;
 

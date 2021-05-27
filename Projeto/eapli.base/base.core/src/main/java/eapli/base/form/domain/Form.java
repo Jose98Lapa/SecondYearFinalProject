@@ -8,12 +8,13 @@ import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> {
+public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> , Serializable {
 
     @Version
     Long version ;
