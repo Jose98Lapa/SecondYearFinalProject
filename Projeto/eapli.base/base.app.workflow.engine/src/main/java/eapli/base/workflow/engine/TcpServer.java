@@ -1,74 +1,63 @@
 package eapli.base.workflow.engine;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-class TcpServer {
+public class TcpServer implements Runnable {
 
-	static ServerSocket sock;
+	private static ServerSocket serverSocket;
+	private Socket clientSocket;
+	//private DataOutputStream sOut;
+	//private DataInputStream sIn;
+	private PrintWriter sOut;
+	private BufferedReader sIn;
 
-	public static void main ( String[] args ) throws Exception {
-		Socket cliSock;
-
-		try {
-			sock = new ServerSocket( 9999 );
-		} catch ( IOException ex ) {
-			System.err.println( "Failed to open server socket" );
-			System.exit( 1 );
-		}
-
-		while ( true ) {
-			cliSock = sock.accept( );
-			new Thread( new TcpServerThread( cliSock ) ).start( );
-		}
+	public TcpServer (Socket cli_s) {
+		clientSocket = cli_s;
 	}
 
-}
+	public void run () {
+		InetAddress clientIP=clientSocket.getInetAddress();
+		System.out.println( "New client connection from " + clientIP.getHostAddress( ) + ", port number " + clientSocket.getPort( ) );
 
-
-class TcpServerThread implements Runnable {
-
-	private Socket s;
-	private DataOutputStream sOut;
-	private DataInputStream sIn;
-
-	public TcpServerThread ( Socket cli_s ) {
-		s = cli_s;
-	}
-
-	public void run ( ) {
-
-		long f, i, num, sum;
-		InetAddress clientIP;
-
-		clientIP = s.getInetAddress( );
-		System.out.println( "New client connection from " + clientIP.getHostAddress( ) +
-				", port number " + s.getPort( ) );
 		try {
-			
-			sOut = new DataOutputStream( s.getOutputStream( ) );
-			sIn = new DataInputStream( s.getInputStream( ) );
+			//sOut = new DataOutputStream( socket.getOutputStream( ) );
+			//sIn = new DataInputStream( socket.getInputStream( ) );
+			sOut = new PrintWriter( clientSocket.getOutputStream( ),true);
+			sIn = new BufferedReader( new InputStreamReader(clientSocket.getInputStream( )));
 
-			do {
-				sum = onMessage( );
+			String inputLine;
+			while ((inputLine = sIn.readLine()) != null) {
+				if (".".equals(inputLine)) {
+					System.out.println("bye, bye");
+					break;
+				}
 			}
-			while ( sum > 0 );
 
-			System.out.println( "Client " + clientIP.getHostAddress( ) + ", port number: " + s.getPort( ) +
-					" disconnected" );
-			s.close( );
+			System.out.println( "Client " + clientIP.getHostAddress( ) + ", port number: " + clientSocket.getPort() + " disconnected" );
+			clientSocket.close( );
 		} catch ( IOException ex ) {
 			System.out.println( "IOException" );
 		}
 	}
 
-	private long onMessage( ) throws IOException {
-		return 0L;
+	public static void main(String[] args) throws Exception {
+		Socket cliSock;
+		try {
+			serverSocket = new ServerSocket(9999);
+		} catch (IOException ex) {
+			System.err.println("Failed to open server socket");
+			System.exit(1);
+		}
+		while (true) {
+			cliSock = serverSocket.accept();
+			new Thread(new TcpServer(cliSock)).start();
+		}
 	}
+
+
 
 }
 
