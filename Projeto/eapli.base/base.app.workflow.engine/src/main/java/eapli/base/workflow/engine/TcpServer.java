@@ -30,6 +30,7 @@ public class TcpServer implements Runnable {
 
 			String inputLine;
 			while ((inputLine = sIn.readLine()) != null) {
+				System.out.println("mensagem recebida!");
 				if (".".equals(inputLine)) {
 					System.out.println("bye, bye");
 					break;
@@ -46,7 +47,7 @@ public class TcpServer implements Runnable {
 	public static void main(String[] args) throws Exception {
 		Socket cliSock;
 		try {
-			serverSocket = new ServerSocket(9999);
+			serverSocket = new ServerSocket(10020);
 		} catch (IOException ex) {
 			System.err.println("Failed to open server socket");
 			System.exit(1);

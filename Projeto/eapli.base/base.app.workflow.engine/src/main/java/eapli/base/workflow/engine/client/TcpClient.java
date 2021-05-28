@@ -17,7 +17,6 @@ public class TcpClient {
 	private PrintWriter sOut;
 	private BufferedReader sIn;
 
-	private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
 	public void startConnection(String ip) {
 		try {
@@ -28,7 +27,7 @@ public class TcpClient {
 		}
 
 		try {
-			clientSocket = new Socket( serverIP, 9999 );
+			clientSocket = new Socket( serverIP, 10020 );
 		} catch ( IOException ex ) {
 			System.out.println( "Failed to establish TCP connection" );
 			System.exit( 1 );
@@ -57,8 +56,13 @@ public class TcpClient {
 		}
 	}
 
-	public void serviceList(){
-		String email = authz.session().get().authenticatedUser().email().toString();
+	public void serviceList(String email){
 		sOut.write(email);
+	}
+
+	public static void main(String[] args) {
+		TcpClient tcpClient = new TcpClient();
+		tcpClient.startConnection("172.17.0.2");
+		tcpClient.serviceList("tomy@gmail.com");
 	}
 }
