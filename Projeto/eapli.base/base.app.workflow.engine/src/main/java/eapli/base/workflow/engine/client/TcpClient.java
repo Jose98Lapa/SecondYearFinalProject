@@ -1,83 +1,58 @@
 package eapli.base.workflow.engine.client;
 
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-class TcpClient {
+public class TcpClient {
 
-	static InetAddress serverIP;
-	static Socket sock;
+	private static InetAddress serverIP;
+	private static Socket clientSocket;
+	private DataOutputStream sOut;
+	private DataInputStream sIn;
+	private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
-	public static void main ( String[] args ) throws Exception {
-		if ( args.length != 1 ) {
-			System.out.println( "Server IPv4/IPv6 address or DNS name is required as argument" );
-			System.exit( 1 );
-		}
-
+	public void startConnection(String ip) {
 		try {
-			serverIP = InetAddress.getByName( args[0] );
+			serverIP = InetAddress.getByName(ip);
 		} catch ( UnknownHostException ex ) {
-			System.out.println( "Invalid server specified: " + args[0] );
+			System.out.println( "Invalid server specified: " + ip );
 			System.exit( 1 );
 		}
 
 		try {
-			sock = new Socket( serverIP, 9999 );
+			clientSocket = new Socket( serverIP, 9999 );
 		} catch ( IOException ex ) {
 			System.out.println( "Failed to establish TCP connection" );
 			System.exit( 1 );
 		}
 
-		BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
-		DataOutputStream sOut = new DataOutputStream( sock.getOutputStream( ) );
-		DataInputStream sIn = new DataInputStream( sock.getInputStream( ) );
-
-
-		String frase;
-		long f, i, n, num;
-		do {
-			num = onMessage( in, sOut, sIn );
+		//BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
+		try {
+			sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
+			sIn = new DataInputStream( clientSocket.getInputStream( ) );
+		} catch (IOException e) {
+			System.out.println( "Failed to establish DataOutputStream or DataInputStream" );
+			System.exit( 1 );
 		}
-		while ( num != 0 );
-		sock.close( );
 	}
 
-	private static long onMessage ( BufferedReader in, DataOutputStream sOut, DataInputStream sIn ) throws IOException {
-		String frase;
-		long i;
-		long num;
-		long f;
-		long n;
-		do {
-			num = -1;
-			while ( num < 0 ) {
-				System.out.print( "Enter a positive integer to SUM (zero to terminate): " );
-				frase = in.readLine( );
-				try {
-					num = Integer.parseInt( frase );
-				} catch ( NumberFormatException ex ) {
-					num = -1;
-				}
-				if ( num < 0 ) System.out.println( "Invalid number" );
-			}
-			n = num;
-			for ( i = 0; i < 4; i++ ) {
-				sOut.write( ( byte ) ( n % 256 ) );
-				n = n / 256;
-			}
+	public void stopConnection(){
+		try {
+			sIn.close();
+			sOut.close();
+			clientSocket.close();
+		} catch (IOException e) {
+			System.out.println( "Failed to close DataOutputStream, DataInputStream or client socket" );
+			System.exit( 1 );
 		}
-		while ( num != 0 );
-		num = 0;
-		f = 1;
-		for ( i = 0; i < 4; i++ ) {
-			num = num + f * sIn.read( );
-			f = f * 256;
-		}
-		System.out.println( "SUM RESULT = " + num );
-		return num;
 	}
 
+	public void serviceList(){
+
+	}
 }
-
