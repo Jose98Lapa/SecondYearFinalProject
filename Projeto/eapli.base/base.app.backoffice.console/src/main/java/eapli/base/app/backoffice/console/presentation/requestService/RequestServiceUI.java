@@ -9,6 +9,7 @@ import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
+import eapli.base.service.DTO.ServiceDTOParser;
 import eapli.base.team.application.TeamListService;
 import eapli.base.team.domain.Team;
 import eapli.base.ticket.application.CreateTicketController;
@@ -26,15 +27,18 @@ public class RequestServiceUI extends AbstractUI {
 	@Override
 	protected boolean doShow ( ) {
 
+		ServiceListService servicesService = new ServiceListService();
+		ServiceDTOParser dtoParser = new ServiceDTOParser();
+
 		List< CatalogueDTO > availableCatalogues = requestableCatalogues();
-		int index = Utils.showAndSelectIndex( availableCatalogues,"Escolha o catalogo que deseja");
-		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( index );
+		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o catalogo que deseja");
+		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( catalogueIndex );
 		Catalogue chosenCatalogue = new CatalogueDTOParser().valueOf( chosenCatalogueDTO );
 
-		ServiceListService servicesService = new ServiceListService();
 		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o serviço que deseja");
 
-
+		//servicesService.retrieveServiceForm(  );
 
 		return false;
 	}
@@ -65,4 +69,5 @@ public class RequestServiceUI extends AbstractUI {
 
 		return catalogues;
 	}
+
 }
