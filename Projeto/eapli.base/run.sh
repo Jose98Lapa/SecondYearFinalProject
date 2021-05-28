@@ -19,6 +19,7 @@ repo
 echo "Pulling from repo"
 git fetch --all
 git reset --hard origin/master
+git config --global credential.helper store
 proj
 chmod +x run.sh
 cp -p run.sh /
