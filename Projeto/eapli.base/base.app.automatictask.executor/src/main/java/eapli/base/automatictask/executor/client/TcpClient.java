@@ -5,43 +5,77 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class TcpClient {
+class TcpClient {
 
-	private static InetAddress serverIP;
-	private static Socket socket;
+	static InetAddress serverIP;
+	static Socket sock;
 
-	public static void main ( String[] args ) throws Exception {
-		if ( args.length != 1 ) {
-			System.out.println( "Server IPv4/IPv6 address or DNS name is required as argument" );
-			System.exit( 1 );
-		}
-
-		TcpClient tcpClient = new TcpClient();
-		tcpClient.startConnection(args[0]);
-
-	}
-
-	private void startConnection(String ip) throws IOException {
-		try {
-			serverIP = InetAddress.getByName(ip);
-		} catch ( UnknownHostException ex ) {
-			System.out.println( "Invalid server specified: " + ip );
-			System.exit( 1 );
+	public static void main(String[] args) throws Exception {
+		if (args.length != 1) {
+			System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
+			System.exit(1);
 		}
 
 		try {
-			socket = new Socket( serverIP, 9999 );
-		} catch ( IOException ex ) {
-			System.out.println( "Failed to establish TCP connection" );
-			System.exit( 1 );
+			serverIP = InetAddress.getByName(args[0]);
+		} catch (UnknownHostException ex) {
+			System.out.println("Invalid server specified: " + args[0]);
+			System.exit(1);
 		}
 
-		BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
-		DataOutputStream sOut = new DataOutputStream( socket.getOutputStream( ) );
-		DataInputStream sIn = new DataInputStream( socket.getInputStream( ) );
+		try {
+			sock = new Socket(serverIP, 9999);
+		} catch (IOException ex) {
+			System.out.println("Failed to establish TCP connection");
+			System.exit(1);
+		}
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
+		DataInputStream sIn = new DataInputStream(sock.getInputStream());
+
+
+		String frase;
+		long f, i, n, num;
+		do {
+			num = onMessage(in, sOut, sIn);
+		}
+		while (num != 0);
+		sock.close();
 	}
 
-	private void serviceList(){
-
+	private static long onMessage(BufferedReader in, DataOutputStream sOut, DataInputStream sIn) throws IOException {
+		String frase;
+		long i;
+		long num;
+		long f;
+		long n;
+		do {
+			num = -1;
+			while (num < 0) {
+				System.out.print("Enter a positive integer to SUM (zero to terminate): ");
+				frase = in.readLine();
+				try {
+					num = Integer.parseInt(frase);
+				} catch (NumberFormatException ex) {
+					num = -1;
+				}
+				if (num < 0) System.out.println("Invalid number");
+			}
+			n = num;
+			for (i = 0; i < 4; i++) {
+				sOut.write((byte) (n % 256));
+				n = n / 256;
+			}
+		}
+		while (num != 0);
+		num = 0;
+		f = 1;
+		for (i = 0; i < 4; i++) {
+			num = num + f * sIn.read();
+			f = f * 256;
+		}
+		System.out.println("SUM RESULT = " + num);
+		return num;
 	}
 }
