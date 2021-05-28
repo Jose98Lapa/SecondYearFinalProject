@@ -27,6 +27,9 @@ public class AppSettings {
     private static final String DATABASE_IP = "DATABASE_IP";
     private static final String IMAGE_SERVER_IP = "IMAGE_SERVER_IP";
     private static final String WORKFLOW_SERVER = "WORKFLOW_SERVER";
+    private static final String EXECUTOR_SERVER = "EXECUTOR_SERVER";
+    private static final String SSH_PASSWORD = "SSH_PASSWORD";
+    private static final String SSH_USER = "SSH_USER";
 
     private final Properties applicationProperties = new Properties();
 
@@ -59,6 +62,9 @@ public class AppSettings {
         this.applicationProperties.setProperty(DATABASE_IP, "localhost");
         this.applicationProperties.setProperty(IMAGE_SERVER_IP, "localhost");
         this.applicationProperties.setProperty(WORKFLOW_SERVER, "localhost");
+        this.applicationProperties.setProperty(EXECUTOR_SERVER, "localhost");
+        this.applicationProperties.setProperty(SSH_USER, "user");
+        this.applicationProperties.setProperty(SSH_PASSWORD, "password");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -79,6 +85,15 @@ public class AppSettings {
     public String getWorkflowServer() {
         return this.applicationProperties.getProperty(WORKFLOW_SERVER);
     }
+    public String getExecutorServer() {
+        return this.applicationProperties.getProperty(EXECUTOR_SERVER);
+    }
+    public String getSshUser() {
+        return this.applicationProperties.getProperty(SSH_USER);
+    }
+    public String getSshPassword() {
+        return this.applicationProperties.getProperty(SSH_PASSWORD);
+    }
     public String getImageServerIp() {
         return this.applicationProperties.getProperty(IMAGE_SERVER_IP);
     }
@@ -95,7 +110,9 @@ public class AppSettings {
         return ret;
     }
 
+
     public String getProperty(String prop) {
         return this.applicationProperties.getProperty(prop);
     }
+
 }

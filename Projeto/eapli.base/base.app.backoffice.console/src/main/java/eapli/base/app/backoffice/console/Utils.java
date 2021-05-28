@@ -1,5 +1,7 @@
 package eapli.base.app.backoffice.console;
 
+import eapli.base.Application;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -21,14 +23,13 @@ public class Utils {
 		}
 	}
 
+
 	public void checkServers ( ) {
 		System.out.println( "+= Testing Servers ======================================================================+\n" );
-        /*checkServer(Application.settings().getDatabaseIp(),"DATABASE");
+        checkServer(Application.settings().getDatabaseIp(),"DATABASE");
         checkServer(Application.settings().getImageServerIp(),"IMAGE SERVER");
-        checkServer(Application.settings().getWorkflowServer(),"WORKFLOW ENGINE");*/
-		checkServer( "10.9.20.221", "DATABASE" );
-		checkServer( "10.9.21.17", "IMAGE SERVER" );
-		checkServer( "10.9.21.27", "WORKFLOW ENGINE" );
+        checkServer(Application.settings().getWorkflowServer(),"WORKFLOW ENGINE");
+        checkServer(Application.settings().getExecutorServer(),"EXECUTOR ENGINE");
 	}
 
 	static public String readLineFromConsole ( String prompt ) {
