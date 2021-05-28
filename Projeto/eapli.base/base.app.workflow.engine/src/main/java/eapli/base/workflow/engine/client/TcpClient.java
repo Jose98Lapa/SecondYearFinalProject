@@ -12,9 +12,11 @@ public class TcpClient {
 
 	private static InetAddress serverIP;
 	private static Socket clientSocket;
-	private DataOutputStream sOut;
-	private DataInputStream sIn;
-	private final AuthorizationService authz = AuthzRegistry.authorizationService();
+	//private DataOutputStream sOut;
+	//private DataInputStream sIn;
+	private PrintWriter sOut;
+	private BufferedReader sIn;
+
 
 	public void startConnection(String ip) {
 		try {
@@ -25,7 +27,7 @@ public class TcpClient {
 		}
 
 		try {
-			clientSocket = new Socket( serverIP, 9999 );
+			clientSocket = new Socket( serverIP, 10020 );
 		} catch ( IOException ex ) {
 			System.out.println( "Failed to establish TCP connection" );
 			System.exit( 1 );
@@ -33,8 +35,10 @@ public class TcpClient {
 
 		//BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
 		try {
-			sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
-			sIn = new DataInputStream( clientSocket.getInputStream( ) );
+			//sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
+			//sIn = new DataInputStream( clientSocket.getInputStream( ) );
+			sOut = new PrintWriter( clientSocket.getOutputStream( ),true);
+			sIn = new BufferedReader( new InputStreamReader(clientSocket.getInputStream( )));
 		} catch (IOException e) {
 			System.out.println( "Failed to establish DataOutputStream or DataInputStream" );
 			System.exit( 1 );
@@ -52,7 +56,13 @@ public class TcpClient {
 		}
 	}
 
-	public void serviceList(){
+	public void serviceList(String email){
+		sOut.write(email);
+	}
 
+	public static void main(String[] args) {
+		TcpClient tcpClient = new TcpClient();
+		tcpClient.startConnection("172.17.0.2");
+		tcpClient.serviceList("tomy@gmail.com");
 	}
 }
