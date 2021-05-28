@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class BriefDescription implements ValueObject{
+public class BriefDescription implements ValueObject, Serializable {
     private String briefDescription;
 
     public BriefDescription(String briefDescription) {

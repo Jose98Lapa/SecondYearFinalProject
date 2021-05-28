@@ -5,10 +5,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class TeamTypeID implements ValueObject,Comparable<TeamTypeID> {
+public class TeamTypeID implements ValueObject,Comparable<TeamTypeID>, Serializable {
     private String tipoEquipaID;
 
     public TeamTypeID(String tipoEquipaID) {

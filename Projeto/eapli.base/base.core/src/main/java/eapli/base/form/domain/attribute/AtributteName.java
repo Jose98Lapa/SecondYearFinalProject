@@ -5,11 +5,12 @@ import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Embeddable
-public class AtributteName implements ValueObject, Comparable<AtributteName> {
+public class AtributteName implements ValueObject, Comparable<AtributteName> , Serializable {
     private String nome;
     @Transient
     private String regex = "^[a-zA-Z]{1,50}$";

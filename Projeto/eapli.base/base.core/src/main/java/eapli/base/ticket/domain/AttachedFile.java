@@ -4,10 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class AttachedFile implements ValueObject {
+public class AttachedFile implements ValueObject , Serializable {
 
 	private String file;
 

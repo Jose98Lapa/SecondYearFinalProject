@@ -3,9 +3,10 @@ package eapli.base.service.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class IconServico implements ValueObject {
+public class IconServico implements ValueObject, Serializable {
     private String icon;
 
     public IconServico(String temp) {
