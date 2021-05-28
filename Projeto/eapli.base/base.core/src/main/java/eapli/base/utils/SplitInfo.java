@@ -1,8 +1,6 @@
 package eapli.base.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,9 +31,29 @@ public class SplitInfo {
             e.printStackTrace();
         }
         return new byte[0][0];
+    }
 
+    public static Object joinSplitInfo(byte [][]info){
+        byte[] arr = new byte[info.length*info[0].length];
+        int byteCount = 0;
+        for (int i=0;i<arr.length;i++){
+            for (int j=0;j<info[i].length;j++){
+                arr[byteCount] = info[i][j];
+                byteCount++;
+            }
+        }
+        try{
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(arr);
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            Object object = objectInputStream.readObject();
+            byteArrayInputStream.close();
+            objectInputStream.close();
+            return object;
 
-
+        }catch (IOException|ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
 
     }
 
