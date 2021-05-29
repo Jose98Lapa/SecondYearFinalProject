@@ -1,18 +1,18 @@
 package eapli.base.workflow.engine;
 
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class TcpServer implements Runnable {
 
 	private static ServerSocket serverSocket;
 	private Socket clientSocket;
-	//private DataOutputStream sOut;
-	//private DataInputStream sIn;
-	private PrintWriter sOut;
-	private BufferedReader sIn;
+	private DataOutputStream sOut;
+	private DataInputStream sIn;
 
 	public TcpServer (Socket cli_s) {
 		clientSocket = cli_s;
@@ -23,28 +23,45 @@ public class TcpServer implements Runnable {
 		System.out.println( "New client connection from " + clientIP.getHostAddress( ) + ", port number " + clientSocket.getPort( ) );
 
 		try {
-			//sOut = new DataOutputStream( socket.getOutputStream( ) );
-			//sIn = new DataInputStream( socket.getInputStream( ) );
-			sOut = new PrintWriter( clientSocket.getOutputStream( ),true);
-			sIn = new BufferedReader( new InputStreamReader(clientSocket.getInputStream( )));
+			sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
+			sIn = new DataInputStream( clientSocket.getInputStream( ) );
 
-			String inputLine;
-			while ((inputLine = sIn.readLine()) != null) {
-				System.out.println("mensagem recebida!");
-				if (".".equals(inputLine)) {
-					System.out.println("bye, bye");
-					break;
+			boolean cycle = true;
+			while (cycle){
+				byte[] clientMsg = sIn.readAllBytes();
+				System.out.println(clientMsg[1]);
+				switch (clientMsg[1]){
+					case 1:
+						byte[] disconnectMsg= {(byte)0, (byte)2, (byte)0, (byte)0};
+						sOut.write(disconnectMsg);
+						cycle=false;
+						break;
+					case 3:
+						//byte[][] variable = new byte[(int)clientMsg[2]][255];
+						byte[] variable = new byte[(int)clientMsg[2]*255];
+						System.out.println("chegou 1");
+						for (int i = 0; i <(int) clientMsg[2] ; i++) {
+							System.out.println("chegou 2");
+							byte[] segmentPackage=sIn.readAllBytes();
+							System.out.println("chegou 3");
+							System.out.println(segmentPackage.length);
+							byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
+							System.out.println(Arrays.toString(variableSegment));
+						}
+						System.out.printf("%s\n", Arrays.toString(variable));
+						break;
 				}
+
 			}
 
 			System.out.println( "Client " + clientIP.getHostAddress( ) + ", port number: " + clientSocket.getPort() + " disconnected" );
 			clientSocket.close( );
 		} catch ( IOException ex ) {
-			System.out.println( "IOException" );
+			System.out.println( "Failed to close client socket" );
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Socket cliSock;
 		try {
 			serverSocket = new ServerSocket(10020);
@@ -53,14 +70,23 @@ public class TcpServer implements Runnable {
 			System.exit(1);
 		}
 		while (true) {
-			cliSock = serverSocket.accept();
-			new Thread(new TcpServer(cliSock)).start();
+			try {
+				cliSock = serverSocket.accept();
+				new Thread(new TcpServer(cliSock)).start();
+
+			} catch (IOException e) {
+				System.out.println("failed to accept client socket");
+			}
 		}
 	}
 
 
 
 }
+
+
+
+
 
 
 

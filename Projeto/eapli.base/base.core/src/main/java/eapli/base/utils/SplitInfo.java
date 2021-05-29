@@ -21,6 +21,8 @@ public class SplitInfo {
             int bytesCount = 0;
             for (int i=0;i< returnInfo.length;i++){
                 for (int j=0;j<SIZE_LIMIT;j++){
+                    if (j==bytes.length)
+                        break;
                     returnInfo[i][j] = bytes[bytesCount];
                     bytesCount++;
                 }
