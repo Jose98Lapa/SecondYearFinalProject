@@ -1,81 +1,105 @@
 package eapli.base.automatictask.executor.client;
 
+import eapli.base.Application;
+import eapli.framework.io.util.Console;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 class TcpClient {
 
-	static InetAddress serverIP;
-	static Socket sock;
+	private static InetAddress serverIP;
+	private static Socket socket;
+	private DataOutputStream sOut;
+	private DataInputStream sIn;
 
-	public static void main(String[] args) throws Exception {
-		if (args.length != 1) {
-			System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
-			System.exit(1);
-		}
 
+	public void startConnection(String ip) {
 		try {
-			serverIP = InetAddress.getByName(args[0]);
+			serverIP = InetAddress.getByName(ip);
 		} catch (UnknownHostException ex) {
-			System.out.println("Invalid server specified: " + args[0]);
+			System.out.println("Invalid server specified: " + ip);
 			System.exit(1);
 		}
 
 		try {
-			sock = new Socket(serverIP, 9999);
+			socket = new Socket(serverIP, 10030);
 		} catch (IOException ex) {
 			System.out.println("Failed to establish TCP connection");
 			System.exit(1);
 		}
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-		DataInputStream sIn = new DataInputStream(sock.getInputStream());
-
-
-		String frase;
-		long f, i, n, num;
-		do {
-			num = onMessage(in, sOut, sIn);
+		try {
+			sOut = new DataOutputStream(socket.getOutputStream());
+			sIn = new DataInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			System.out.println("Failed to establish DataOutputStream or DataInputStream");
+			System.exit(1);
 		}
-		while (num != 0);
-		sock.close();
+
+		System.out.println("Connection established with Automatic Task excecutor server\n");
 	}
 
-	private static long onMessage(BufferedReader in, DataOutputStream sOut, DataInputStream sIn) throws IOException {
-		String frase;
-		long i;
-		long num;
-		long f;
-		long n;
-		do {
-			num = -1;
-			while (num < 0) {
-				System.out.print("Enter a positive integer to SUM (zero to terminate): ");
-				frase = in.readLine();
-				try {
-					num = Integer.parseInt(frase);
-				} catch (NumberFormatException ex) {
-					num = -1;
-				}
-				if (num < 0) System.out.println("Invalid number");
-			}
-			n = num;
-			for (i = 0; i < 4; i++) {
-				sOut.write((byte) (n % 256));
-				n = n / 256;
+	public void stopConnection() {
+		try {
+			byte[] clientRequest = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+			sOut.write(clientRequest);
+			sOut.flush();
+			byte[] serverResponse=sIn.readNBytes(4);
+			if((int)serverResponse[1]==2)
+				System.out.println("Connection terminated with Automatic Task excecutor server");
+			sIn.close();
+			sOut.close();
+			socket.close();
+		} catch (IOException e) {
+			System.out.println("Failed to close DataOutputStream, DataInputStream or client socket");
+			System.exit(1);
+		}
+	}
+
+	public void TaskList(String email) throws IOException {
+		//send initial request
+		byte[] clientRequest = {(byte) 0, (byte) 3, (byte) 0, (byte) 0};
+		sOut.write(clientRequest);
+		sOut.flush();
+
+		//recives server's response
+		byte[] serverResponse = sIn.readNBytes(4);
+		if ((int)serverResponse[1]==2)
+			System.out.println("Resposta Recebida");
+
+
+		//send email
+		byte[] emailByteArray=email.getBytes(StandardCharsets.UTF_8);
+		byte[] emailInfo ={(byte) 0, (byte) 255, (byte) emailByteArray.length};
+		byte[] emailPackage = ArrayUtils.addAll(emailInfo,emailByteArray);
+		sOut.write(emailPackage);
+		sOut.flush();
+	}
+
+
+	public static void main(String[] args) throws IOException {
+		TcpClient tcpClient = new TcpClient();
+		tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
+
+		boolean cycle = true;
+		while (cycle) {
+			int i = Console.readInteger("Insira num (0 para sair)");
+			switch (i) {
+				case 0:
+					tcpClient.stopConnection();
+					cycle = false;
+					break;
+				case 1:
+					tcpClient.TaskList("tomy@gmail.com");
+					break;
+				default:
+					System.out.println("Invalid Option");
 			}
 		}
-		while (num != 0);
-		num = 0;
-		f = 1;
-		for (i = 0; i < 4; i++) {
-			num = num + f * sIn.read();
-			f = f * 256;
-		}
-		System.out.println("SUM RESULT = " + num);
-		return num;
 	}
 }

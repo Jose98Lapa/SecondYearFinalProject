@@ -2,7 +2,7 @@ package eapli.base.ticketTask.application;
 
 public class CreateTaskController {
 
-	public boolean createApprovalTask () {
+/*	public boolean createApprovalTask () {
 
 	}
 
@@ -12,6 +12,6 @@ public class CreateTaskController {
 
 	public boolean createAutomaticTask () {
 
-	}
+	}*/
 
 }
