@@ -58,7 +58,6 @@ public class RequestServiceUI extends AbstractUI {
 				AttributeDTO attribute = attributeIterator.next();
 
 				Utils.readLineFromConsole( attribute.label );
-
 				//show attrs
 
 			}
