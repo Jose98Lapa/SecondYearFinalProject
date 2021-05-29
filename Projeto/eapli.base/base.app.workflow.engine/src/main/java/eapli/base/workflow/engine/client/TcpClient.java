@@ -42,12 +42,15 @@ public class TcpClient {
 			System.out.println("Failed to establish DataOutputStream or DataInputStream");
 			System.exit(1);
 		}
+
+		System.out.println("Connection established with Worflow server\n");
 	}
 
 	public void stopConnection() {
 		try {
 			byte[] msg = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
 			sOut.write(msg);
+			System.out.println("");
 			sIn.close();
 			sOut.close();
 			clientSocket.close();

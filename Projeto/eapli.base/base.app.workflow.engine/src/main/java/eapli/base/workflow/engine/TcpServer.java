@@ -40,7 +40,7 @@ public class TcpServer implements Runnable {
 						for (int i = 0; i <(int) clientMsg[2] ; i++) {
 							byte[] msgs=sIn.readAllBytes();
 							byte[] variable = Arrays.copyOfRange(msgs, 3,msgs.length);
-							System.out.println();
+							System.out.printf("%s\n", Arrays.toString(variable));
 						}
 						break;
 				}
