@@ -1,7 +1,7 @@
 package eapli.base.automatictask.executor;
 
-import eapli.base.task.DTO.ExecutionTaskDTO;
-import eapli.base.task.application.CheckPendingAssignedTasksController;
+
+import eapli.base.Application;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,7 +10,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 class TcpServer {
 
@@ -20,7 +19,7 @@ class TcpServer {
         Socket cliSock;
 
         try {
-            sock = new ServerSocket(9999);
+            sock = new ServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
         } catch (IOException ex) {
             System.err.println("Failed to open server socket");
             System.exit(1);
@@ -69,13 +68,6 @@ class TcpServerThread implements Runnable {
             byte[] emailInfo = sIn.readNBytes(3);
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2]);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
-
-            //Get Pending Task List
-            CheckPendingAssignedTasksController pTasksController = new CheckPendingAssignedTasksController();
-            List<ExecutionTaskDTO> pTaskList = (List<ExecutionTaskDTO>) pTasksController.getPendingTasksByCollaborator(email);
-            for (ExecutionTaskDTO task : pTaskList){
-
-            }
 
         } catch (IOException ex) {
             System.out.println("An error ocurred");
