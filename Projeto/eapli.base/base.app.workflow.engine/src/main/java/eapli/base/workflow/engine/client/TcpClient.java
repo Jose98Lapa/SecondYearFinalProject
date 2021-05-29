@@ -48,9 +48,11 @@ public class TcpClient {
 
 	public void stopConnection() {
 		try {
-			byte[] msg = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-			sOut.write(msg);
-			System.out.println("");
+			byte[] clientRequest = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+			sOut.write(clientRequest);
+			byte[] serverResponse=sIn.readAllBytes();
+			if((int)serverResponse[1]==2)
+				System.out.println("Connection terminated with Worflow server");
 			sIn.close();
 			sOut.close();
 			clientSocket.close();
@@ -60,13 +62,16 @@ public class TcpClient {
 		}
 	}
 
-	public void serviceList(String email) throws IOException {
-		byte[][] splitObject=SplitInfo.splitObjectIntoByteArray(email);
-		for (byte[] bytes : splitObject) {
-			byte[] msg = {(byte) 0, (byte) 3, (byte) splitObject.length};
-			byte[] finalMsg = ArrayUtils.addAll(msg, bytes);
-			sOut.write(finalMsg);
-		}
+	public void TaskList(String email) throws IOException {
+		//send initial request
+		byte[] clientRequest = {(byte) 0, (byte) 3, (byte) 0, (byte) 0};
+		sOut.write(clientRequest);
+
+		//send email
+		byte[] emailByteArray=email.getBytes(StandardCharsets.UTF_8);
+		byte[] emailInfo ={(byte) 0, (byte) 255, (byte) emailByteArray.length};
+		byte[] emailPackage = ArrayUtils.addAll(emailInfo, emailByteArray);
+		sOut.write(emailPackage);
 	}
 
 
@@ -83,7 +88,7 @@ public class TcpClient {
 					cycle = false;
 					break;
 				case 1:
-					tcpClient.serviceList("tomy");
+					tcpClient.TaskList("tomy@gmail.com");
 					break;
 				default:
 					System.out.println("Invalid Option");
