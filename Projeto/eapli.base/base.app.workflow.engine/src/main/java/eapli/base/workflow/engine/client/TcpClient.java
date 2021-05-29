@@ -64,7 +64,7 @@ public class TcpClient {
 		byte[][] splitObject=SplitInfo.splitObjectIntoByteArray(email);
 		for (byte[] bytes : splitObject) {
 			byte[] msg = {(byte) 0, (byte) 3, (byte) splitObject.length};
-			byte[] finalMsg = ArrayUtils.addAll(bytes, msg);
+			byte[] finalMsg = ArrayUtils.addAll(msg, bytes);
 			sOut.write(finalMsg);
 		}
 	}

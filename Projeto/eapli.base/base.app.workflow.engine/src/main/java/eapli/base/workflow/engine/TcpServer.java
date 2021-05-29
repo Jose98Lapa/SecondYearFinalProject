@@ -29,6 +29,7 @@ public class TcpServer implements Runnable {
 			boolean cycle = true;
 			while (cycle){
 				byte[] clientMsg = sIn.readAllBytes();
+				System.out.println(clientMsg[1]);
 				switch (clientMsg[1]){
 					case 1:
 						byte[] disconnectMsg= {(byte)0, (byte)2, (byte)0, (byte)0};
@@ -38,8 +39,11 @@ public class TcpServer implements Runnable {
 					case 3:
 						//byte[][] variable = new byte[(int)clientMsg[2]][255];
 						byte[] variable = new byte[(int)clientMsg[2]*255];
+						System.out.println("chegou 1");
 						for (int i = 0; i <(int) clientMsg[2] ; i++) {
+							System.out.println("chegou 2");
 							byte[] segmentPackage=sIn.readAllBytes();
+							System.out.println("chegou 3");
 							System.out.println(segmentPackage.length);
 							byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
 							System.out.println(Arrays.toString(variableSegment));
