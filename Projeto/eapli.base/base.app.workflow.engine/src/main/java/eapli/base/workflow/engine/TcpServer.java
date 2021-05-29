@@ -25,6 +25,7 @@ public class TcpServer implements Runnable {
 		byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
 		try {
 			sOut.write(serverResponse);
+			sOut.flush();
 			System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
 			clientSocket.close();
 		}catch (IOException ex){
@@ -56,14 +57,13 @@ public class TcpServer implements Runnable {
 				byte[] clientRequest = sIn.readNBytes(4);
 				switch (clientRequest[1]){
 					case 1:
-						System.out.println("test");
 						stopConnection(clientIP);
 						cycle=false;
 						break;
 					case 3:
 						byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
 						sOut.write(serverResponse);
-						byte[] emailPackage = sIn.readAllBytes();
+						byte[] emailPackage = sIn.readNBytes(258);
 						byte[] emailByteArray = Arrays.copyOfRange(emailPackage, 3, emailPackage.length);
 						String email = new String(emailByteArray, StandardCharsets.UTF_8);
 						System.out.printf("Recived email is:%s\n",email);

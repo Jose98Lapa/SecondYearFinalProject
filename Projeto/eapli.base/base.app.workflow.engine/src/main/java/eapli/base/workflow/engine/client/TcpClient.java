@@ -67,6 +67,12 @@ public class TcpClient {
 		byte[] clientRequest = {(byte) 0, (byte) 3, (byte) 0, (byte) 0};
 		sOut.write(clientRequest);
 
+		//recives server's response
+		byte[] serverResponse = sIn.readNBytes(4);
+		if ((int)serverResponse[1]==2)
+			System.out.println("Resposta Recebida");
+
+
 		//send email
 		byte[] emailByteArray=email.getBytes(StandardCharsets.UTF_8);
 		byte[] emailInfo ={(byte) 0, (byte) 255, (byte) emailByteArray.length};
