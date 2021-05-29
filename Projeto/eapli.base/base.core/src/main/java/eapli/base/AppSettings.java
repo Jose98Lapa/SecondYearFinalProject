@@ -30,6 +30,8 @@ public class AppSettings {
     private static final String EXECUTOR_SERVER = "EXECUTOR_SERVER";
     private static final String SSH_PASSWORD = "SSH_PASSWORD";
     private static final String SSH_USER = "SSH_USER";
+    private static final String PORT_WORKFLOW = "PORT_WORKFLOW";
+    private static final String IP_WORKFLOW = "IP_WORKFLOW";
 
     private final Properties applicationProperties = new Properties();
 
@@ -65,6 +67,8 @@ public class AppSettings {
         this.applicationProperties.setProperty(EXECUTOR_SERVER, "localhost");
         this.applicationProperties.setProperty(SSH_USER, "user");
         this.applicationProperties.setProperty(SSH_PASSWORD, "password");
+        this.applicationProperties.setProperty(PORT_WORKFLOW, "10020");
+        this.applicationProperties.setProperty(IP_WORKFLOW, "172.17.0.2");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -96,6 +100,12 @@ public class AppSettings {
     }
     public String getImageServerIp() {
         return this.applicationProperties.getProperty(IMAGE_SERVER_IP);
+    }
+    public String getPortWorkflow() {
+        return this.applicationProperties.getProperty(PORT_WORKFLOW);
+    }
+    public String getIpWorkflow() {
+        return this.applicationProperties.getProperty(IP_WORKFLOW);
     }
 
     public Integer getHighCaloriesDishLimit() {

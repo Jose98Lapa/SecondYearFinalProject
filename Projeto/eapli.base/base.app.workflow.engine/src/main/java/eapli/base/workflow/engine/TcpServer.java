@@ -1,6 +1,7 @@
 package eapli.base.workflow.engine;
 
 
+import eapli.base.Application;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -79,7 +80,7 @@ public class TcpServer implements Runnable {
 	public static void main(String[] args) {
 		Socket cliSock;
 		try {
-			serverSocket = new ServerSocket(10020);
+			serverSocket = new ServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
 		} catch (IOException ex) {
 			System.err.println("Failed to open server socket");
 			System.exit(1);
