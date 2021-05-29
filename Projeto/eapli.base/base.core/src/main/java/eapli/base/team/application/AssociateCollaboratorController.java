@@ -48,7 +48,7 @@ public class AssociateCollaboratorController {
         }*/
 
         Optional<Collaborator> optionalColaborador = PersistenceContext.repositories().collaborators().ofIdentity(MecanographicNumber.valueOf(collaboratorDTO.mNumber));
-        Optional<Team> equipa = teamRepository.ofIdentity(TeamID.valueOf(teamDTO.equipaID));
+        Optional<Team> equipa = teamRepository.ofIdentity(TeamID.valueOf(teamDTO.teamID));
         if (optionalColaborador.isPresent()&&equipa.isPresent()){
             Collaborator collaborator = optionalColaborador.get();
             Team team1 = equipa.get();

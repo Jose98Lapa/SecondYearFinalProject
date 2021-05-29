@@ -9,11 +9,9 @@ import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.colour.Application.CreateColourController;
 import eapli.base.colour.DTO.ColourDTO;
-import eapli.base.criticality.application.SpecifyCriticalityController;
 import eapli.base.function.domain.Designation;
 import eapli.base.function.domain.Function;
 import eapli.base.team.DTO.TeamDTO;
-import eapli.base.team.application.CreateTeamController;
 import eapli.base.team.application.CreateTeamBootstrap;
 import eapli.base.function.domain.IdFunction;
 import eapli.base.function.repositories.FunctionRepository;
@@ -72,7 +70,7 @@ public class OrganizacaoBootstraper implements Action {
                             String SuperidFunc = elementCollab.getElementsByTagName("SuperidFunc").item(0).getTextContent();
 
                             Function functionSupe = new Function(IdFunction.valueOf(SuperidFunc), Designation.valueOf(Superdesignacao));
-                            FunctionRepository repo = PersistenceContext.repositories().funcao();
+                            FunctionRepository repo = PersistenceContext.repositories().function();
                             repo.save(functionSupe);
 
                             CollaboratorBuilder builder = new CollaboratorBuilder();

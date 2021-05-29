@@ -123,12 +123,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public FunctionRepository funcao(TransactionalContext autoTx) {
+	public FunctionRepository function(TransactionalContext autoTx) {
 		return new InMemoryFunctionRepository();
 	}
 
 	@Override
-	public FunctionRepository funcao() {return funcao(null);}
+	public FunctionRepository function() {return function(null);}
 
 	@Override
 	public CriticalityRepository criticidade(TransactionalContext autoTx) {

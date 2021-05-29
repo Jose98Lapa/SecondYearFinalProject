@@ -31,12 +31,21 @@ public class JpaFormRepository extends JpaAutoTxRepository<Form, FormID, FormID>
     }
 
     @Override
+    public Optional<Form> ofIdentity(FormID id) {
+        final TypedQuery< Form > query =
+                createQuery("Select e From eapli.base.form.domain.Form e where e.id =: id ",
+                        Form.class);
+        query.setParameter(  "id", id );
+        return query.getResultStream().findFirst();
+    }
+
+    @Override
     public Optional< FormDTO > findByFormID ( FormID formID ) {
 
         Optional< FormDTO > formDTO;
 
         final TypedQuery< Form > query =
-                createQuery("Select e From eapli.base.service.domain.Form f where f.id =: id ",
+                createQuery("Select e From eapli.base.form.domain.Form e where e.id =: id ",
                         Form.class);
         query.setParameter(  "id", formID );
         formDTO = Optional.of( query.getSingleResult().toDTO() );

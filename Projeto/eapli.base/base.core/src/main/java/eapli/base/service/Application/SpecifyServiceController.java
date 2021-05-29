@@ -13,9 +13,13 @@ import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.builder.ServiceBuilder;
 import eapli.base.service.domain.*;
+import eapli.base.task.application.TaskListService;
+import eapli.base.task.domain.Task;
 
 import java.io.OptionalDataException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
 
@@ -25,6 +29,7 @@ public class SpecifyServiceController {
     private final CatalogueRepository catalogueRepository = PersistenceContext.repositories().catalogs();
     private Service service;
     private ServiceBuilder builder;
+    private final ServiceListService serviceListService = new ServiceListService();
 
     public void create (ServiceDTO dto) {
 
@@ -123,6 +128,17 @@ public class SpecifyServiceController {
                 serviceRepository.save(service);
             }
         }
+    }
+
+    public void addWorkflowToService(String workflowID, List<String> tasksID,ServiceDTO serviceDTO){
+        TaskListService taskListService = new TaskListService();
+        Task starterTask= taskListService.getTaskByStringList(tasksID);
+        PersistenceContext.repositories().tasks().save(starterTask);
+        Workflow workflow = new Workflow(workflowID,new Date(),starterTask);
+        Service service = serviceListService.getServiceByID(serviceDTO.id);
+        service.workflow(workflow);
+        serviceRepository.save(service);
+
     }
 
 }

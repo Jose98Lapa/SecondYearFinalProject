@@ -2,16 +2,14 @@ package eapli.base.app.backoffice.console.presentation.specifyService;
 
 import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.base.app.backoffice.console.presentation.form.FormUI;
+import eapli.base.app.backoffice.console.presentation.task.TaskUI;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.service.Application.SpecifyServiceController;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class CompleteServiceUI extends AbstractUI {
     //private static final Logger LOGGER = LoggerFactory.getLogger(SpecifyServiceUI.class);
@@ -126,8 +124,28 @@ public class CompleteServiceUI extends AbstractUI {
                     theController.update(toComplete);
                     break;
                 }
+                case 8:{
+                    String workflowID = Console.readLine("Insira o id do workflow");
+                    List<String> stringList = new ArrayList<>();
+                    TaskUI taskUI = new TaskUI();
+
+                    if (Console.readBoolean("Esta atividade requer aprovação")){
+                        stringList.add(taskUI.createApprovalTask());
+                    }
+
+                    if (Console.readBoolean("A tarefa é manual")){
+                        stringList.add(taskUI.createExecutionTask());
+                    }else{
+                        stringList.add(taskUI.createAutomaticTask());
+                    }
+                    theController.addWorkflowToService(workflowID,stringList,toComplete);
+
+
+                }
+
                 case 0: {
                     break;
+
 
             }
         }
@@ -142,6 +160,7 @@ public class CompleteServiceUI extends AbstractUI {
         System.out.println("5 - Alterar o Icon");
         System.out.println("6 - Alterar o Catalogo");
         System.out.println("7 - Adicionar  Keywords");
+        System.out.println("8 - Adicionar Workflow");
     }
 
     @Override

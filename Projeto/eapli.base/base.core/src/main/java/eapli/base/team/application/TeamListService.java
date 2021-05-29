@@ -3,11 +3,13 @@ package eapli.base.team.application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.team.DTO.TeamDTO;
 import eapli.base.team.domain.Team;
+import eapli.base.team.domain.TeamID;
 import eapli.base.team.repositories.TeamRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.teamType.Domain.TeamType;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class TeamListService {
@@ -17,6 +19,13 @@ public class TeamListService {
         Set<TeamDTO> equipas = new HashSet<>();
         teamRepository.findAll().forEach(equipa -> equipas.add(equipa.toDTO()));
         return equipas;
+    }
+
+    public Team getTeam(String teamID){
+        Optional<Team> teamOptional = teamRepository.ofIdentity(TeamID.valueOf(teamID));
+        if (teamOptional.isEmpty())
+            throw new IllegalArgumentException("ID de equipa inválido");
+        return teamOptional.get();
     }
 
     public Set<Team> getACollaboratorTeams(Collaborator collaborator){
