@@ -63,8 +63,9 @@ public class TcpServer implements Runnable {
 					case 3:
 						byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
 						sOut.write(serverResponse);
-						byte[] emailPackage = sIn.readNBytes(258);
-						byte[] emailByteArray = Arrays.copyOfRange(emailPackage, 3, emailPackage.length);
+						sOut.flush();
+						byte[] emailInfo = sIn.readNBytes(3);
+						byte[] emailByteArray=sIn.readNBytes(emailInfo[2]);
 						String email = new String(emailByteArray, StandardCharsets.UTF_8);
 						System.out.printf("Recived email is:%s\n",email);
 						break;
