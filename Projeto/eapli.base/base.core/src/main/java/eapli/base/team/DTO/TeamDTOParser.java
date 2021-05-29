@@ -18,6 +18,6 @@ public class TeamDTOParser implements DTOParser<TeamDTO, Team> {
         List<Collaborator> membrosDeEquipa = new ArrayList<>();
         dto.membrosDaEquipa.forEach(dtoColab -> membrosDeEquipa.add(new CollaboratorDTOParser().valueOf(dtoColab)));
 
-        return teamBuilder.designacao(dto.descricao).acronimo(dto.acronimo).equipaID(dto.equipaID).colaboradores(membrosDeEquipa).tipoDeEquipa(new TeamTypeDTOParser().valueOf(dto.teamTypeDTO)).responsaveis(responsaveis).build();
+        return teamBuilder.designacao(dto.descricao).acronimo(dto.acronimo).equipaID(dto.teamID).colaboradores(membrosDeEquipa).tipoDeEquipa(new TeamTypeDTOParser().valueOf(dto.teamTypeDTO)).responsaveis(responsaveis).build();
     }
 }

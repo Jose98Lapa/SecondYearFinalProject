@@ -9,7 +9,7 @@ import java.util.List;
 public class TeamDTO {
     public String descricao;
     public String acronimo;
-    public String equipaID;
+    public String teamID;
     public List<CollaboratorDTO> responsaveis = new ArrayList<>();
     public TeamTypeDTO teamTypeDTO;
     public List<CollaboratorDTO> membrosDaEquipa= new ArrayList<>();
@@ -18,7 +18,7 @@ public class TeamDTO {
     public TeamDTO(String descricao, String acronimo, String equipaID, List<CollaboratorDTO> responsaveis, TeamTypeDTO teamTypeDTO, List<CollaboratorDTO> membrosDaEquipa) {
         this.descricao = descricao;
         this.acronimo = acronimo;
-        this.equipaID = equipaID;
+        this.teamID = equipaID;
         this.responsaveis.addAll(responsaveis);
         this.teamTypeDTO = teamTypeDTO;
         this.membrosDaEquipa.addAll(membrosDaEquipa);
@@ -27,7 +27,7 @@ public class TeamDTO {
     public TeamDTO(String descricao, String acronimo, String equipaID, TeamTypeDTO teamTypeDTO, CollaboratorDTO collaboratorDTO) {
         this.descricao = descricao;
         this.acronimo = acronimo;
-        this.equipaID = equipaID;
+        this.teamID = equipaID;
         this.teamTypeDTO = teamTypeDTO;
         this.collaboratorDTO = collaboratorDTO;
     }
@@ -37,7 +37,7 @@ public class TeamDTO {
         return "EquipaDTO{" +
                 "descricao='" + descricao + '\'' +
                 ", acronimo='" + acronimo + '\'' +
-                ", equipaID='" + equipaID + '\'' +
+                ", equipaID='" + teamID + '\'' +
                 '}';
     }
 }

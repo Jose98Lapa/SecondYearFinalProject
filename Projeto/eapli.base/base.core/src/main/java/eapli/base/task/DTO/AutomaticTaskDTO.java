@@ -6,9 +6,9 @@ import java.util.Date;
 
 @DTO
 public class AutomaticTaskDTO {
-    String taskID;
+    public String taskID;
 
-    String script;
+    public String script;
 
 
     public AutomaticTaskDTO(String taskID) {

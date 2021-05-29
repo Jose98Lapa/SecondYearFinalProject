@@ -2,6 +2,7 @@ package eapli.base.task.domain;
 
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
+import eapli.base.function.domain.Function;
 import eapli.base.task.DTO.ApprovalTaskDTO;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -14,11 +15,12 @@ import java.util.Date;
 @Entity
 public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO> , Serializable {
 
+    @OneToOne
+    private Function necessaryRoleForApproval;
 
-
-
-    public ApprovalTask(TaskID taskID, Form form) {
+    public ApprovalTask(TaskID taskID, Form form,Function necessaryRoleForApproval) {
         super(taskID,form);
+        this.necessaryRoleForApproval = necessaryRoleForApproval;
 
     }
 
@@ -30,16 +32,6 @@ public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO>
 
     public Form form(){
         return super.form();
-    }
-
-    @Override
-    public boolean sameAs(Object other) {
-        return DomainEntities.areEqual(this,other);
-    }
-
-    @Override
-    public TaskID identity() {
-        return super.taskID;
     }
 
     @Override

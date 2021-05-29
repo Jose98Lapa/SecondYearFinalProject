@@ -22,7 +22,7 @@ public class FormController {
     FormBuilder fmb = new FormBuilder();
 
     Form form;
-    public void registo(FormDTO dto){
+    public void registerForm(FormDTO dto){
         Set<Attribute> atr2 = new HashSet<>();
         for (AttributeDTO atr:dto.atrDTO) {
             atr2.add(new Attribute(AtributteName.valueOf(atr.nome), AttributeLabel.valueOf(atr.label), AttributeDescription.valueOf(atr.desc), AttributeRegex.valueOf(atr.regex), AttributeType.valueOf(atr.tipo), AttributeID.valueOf(atr.id)));
