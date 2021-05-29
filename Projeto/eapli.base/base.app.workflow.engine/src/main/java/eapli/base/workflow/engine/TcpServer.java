@@ -2,9 +2,16 @@ package eapli.base.workflow.engine;
 
 
 import eapli.base.Application;
-import eapli.base.task.DTO.ExecutionTaskDTO;
-import eapli.base.task.application.CheckPendingAssignedTasksController;
-import eapli.base.utils.SplitInfo;
+import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.domain.InstituionalEmail;
+import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.collaborator.dto.CollaboratorDTO;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.service.DTO.ServiceDTO;
+import eapli.base.ticket.DTO.TicketDTO;
+import eapli.base.ticket.domain.Ticket;
+import eapli.base.ticket.repository.TicketRepository;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -12,7 +19,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 public class TcpServer implements Runnable {
@@ -50,16 +56,38 @@ public class TcpServer implements Runnable {
 			byte[] emailByteArray = sIn.readNBytes(emailInfo[2]);
 			String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-			//Get Pending Task List
-			CheckPendingAssignedTasksController pTasksController = new CheckPendingAssignedTasksController();
-			List<ExecutionTaskDTO> pTaskList = (List<ExecutionTaskDTO>) pTasksController.getPendingTasksByCollaborator(email);
-			for (ExecutionTaskDTO task : pTaskList){
+			//Get Collaborator by email
+			CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
+			InstituionalEmail iEmail = new InstituionalEmail(email);
+			CollaboratorDTO collaboratorDTO =collaboratorRepository.getColaboradorByEmail(iEmail).get().toDTO();
 
+			//Get Ticket by collaborator ID
+			TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+			List<Ticket> lstTicket = (List<Ticket>) ticketRepository.getTicketsByCollaborator(new MecanographicNumber(collaboratorDTO.mNumber));
+
+			for (Ticket ticket:lstTicket){
+				TicketDTO ticketDTO =ticket.toDTO();
+				ServiceDTO serviceDTO = ticket.service().toDTO();
+				sendString(ticketDTO.urgency); //urgency
+				sendString(ticketDTO.deadLine); //deadline
+				sendString(serviceDTO.title); //title
+				sendString(serviceDTO.icon); //icon
+				sendString(serviceDTO.briefDescription); //briefDesc
+				sendString(ticket.service().catalogo().toDTO().nivelCriticidade.toString()); //criticityLvl
 			}
+			byte[] finalPackage ={(byte) 0, (byte) 254, (byte) 0, (byte) 0};
 
 		} catch (IOException ex) {
 			System.out.println("An error ocurred");
 		}
+	}
+
+	public void sendString(String s) throws IOException {
+		byte[] byteArray=s.getBytes(StandardCharsets.UTF_8);
+		byte[] info ={(byte) 0, (byte) 255, (byte) byteArray.length};
+		byte[] fullPackage = ArrayUtils.addAll(info,byteArray);
+		sOut.write(fullPackage);
+		sOut.flush();
 	}
 
 

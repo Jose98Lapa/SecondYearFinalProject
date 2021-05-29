@@ -2,6 +2,7 @@ package eapli.base.ticket.domain;
 
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
+import eapli.base.service.domain.Workflow;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.builder.TicketBuilder;
 import eapli.framework.domain.model.AggregateRoot;
@@ -70,6 +71,14 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		return Objects.equals( solicitedOn, ticket.solicitedOn ) && Objects.equals( deadLine, ticket.deadLine )
 				&& Objects.equals( id, ticket.id ) && Objects.equals( status, ticket.status )
 				&& Objects.equals( file, ticket.file ) && Objects.equals( urgency, ticket.urgency );
+	}
+
+	public TicketWorkflow workflow(){
+		return workflow;
+	}
+
+	public Service service(){
+		return service;
 	}
 
 	@Override

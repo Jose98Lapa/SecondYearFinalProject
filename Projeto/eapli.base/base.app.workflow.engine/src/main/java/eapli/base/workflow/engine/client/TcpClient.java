@@ -10,6 +10,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TcpClient {
 
@@ -63,7 +65,7 @@ public class TcpClient {
 		}
 	}
 
-	public void TaskList(String email) throws IOException {
+	public void TaskInfoList(String email) throws IOException {
 		//send initial request
 		byte[] clientRequest = {(byte) 0, (byte) 3, (byte) 0, (byte) 0};
 		sOut.write(clientRequest);
@@ -81,6 +83,31 @@ public class TcpClient {
 		byte[] emailPackage = ArrayUtils.addAll(emailInfo,emailByteArray);
 		sOut.write(emailPackage);
 		sOut.flush();
+
+		//receber os atributos
+		List<String> taskInfoList = new ArrayList<>();
+		int count=0;
+		String taskInfo;
+		while(true){
+			byte[] info = sIn.readNBytes(3);
+			if ((info[1]&0xff)==254)
+				break;
+			byte[] byteArray = sIn.readNBytes(info[2]);
+			String atribute = new String(byteArray, StandardCharsets.UTF_8);
+			StringBuilder taskInfobuilder = new StringBuilder();
+			taskInfo=taskInfobuilder.append(atribute).append("|").toString();
+			if (count==5){
+				taskInfoList.add(taskInfo);
+				taskInfo="";
+				count=0;
+			}
+			count++;
+		}
+
+		for (String task:taskInfoList){
+			System.out.println(task);
+		}
+
 	}
 
 
@@ -97,7 +124,7 @@ public class TcpClient {
 					cycle = false;
 					break;
 				case 1:
-					tcpClient.TaskList("tomy@gmail.com");
+					tcpClient.TaskInfoList("tomy@gmail.com");
 					break;
 				default:
 					System.out.println("Invalid Option");
