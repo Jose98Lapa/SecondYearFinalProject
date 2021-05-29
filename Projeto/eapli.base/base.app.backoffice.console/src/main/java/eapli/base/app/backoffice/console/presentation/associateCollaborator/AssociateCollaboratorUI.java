@@ -26,7 +26,7 @@ public class AssociateCollaboratorUI extends AbstractUI {
 
         for (int i = 0; i < equipas.size(); i++) {
             TeamDTO atual = equipas.get(i);
-            System.out.printf(" %d - %s | %s |%s\n", i, atual.acronimo, atual.equipaID, atual.descricao);
+            System.out.printf(" %d - %s | %s |%s\n", i, atual.acronimo, atual.teamID, atual.descricao);
         }
 
         opcaoEquipa = Console.readOption(0, equipas.size() - 1, -1);

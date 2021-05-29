@@ -49,7 +49,7 @@ public class RemoveCollaboratorController {
 //        }
 //
 //        return false;
-        Optional<Team> optionalEquipa = teamRepository.ofIdentity(TeamID.valueOf(teamDTO.equipaID));
+        Optional<Team> optionalEquipa = teamRepository.ofIdentity(TeamID.valueOf(teamDTO.teamID));
         if (optionalEquipa.isPresent()){
             Team team = optionalEquipa.get();
             team.removeColaborador(collaboratorRepository.ofIdentity(MecanographicNumber.valueOf(collaboratorDTO.mNumber)).get());

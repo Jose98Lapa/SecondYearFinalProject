@@ -116,4 +116,11 @@ public class ServiceListService {
 
         return Optional.ofNullable( formDTO );
     }
+
+    public Service getServiceByID(String id){
+        Optional<Service> optionalService = serviceRepository.ofIdentity(ServiceID.valueOf(id));
+        if (optionalService.isEmpty())
+            throw new IllegalArgumentException("Invalid Service");
+        return optionalService.get();
+    }
 }

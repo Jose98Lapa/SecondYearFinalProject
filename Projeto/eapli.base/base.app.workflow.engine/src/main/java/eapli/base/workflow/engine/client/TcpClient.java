@@ -77,8 +77,8 @@ public class TcpClient {
 		//send email
 		byte[] emailByteArray=email.getBytes(StandardCharsets.UTF_8);
 		byte[] emailInfo ={(byte) 0, (byte) 255, (byte) emailByteArray.length};
-		sOut.write(emailInfo);
-		sOut.write(emailByteArray);
+		byte[] emailPackage = ArrayUtils.addAll(emailInfo,emailByteArray);
+		sOut.write(emailPackage);
 		sOut.flush();
 	}
 

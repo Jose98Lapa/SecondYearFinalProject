@@ -1,13 +1,16 @@
 package eapli.base.service.domain;
 
+import eapli.base.task.domain.Task;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.DomainEntity;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
 public class Workflow implements DomainEntity< String >, Serializable {
 
 	@Id
@@ -16,12 +19,12 @@ public class Workflow implements DomainEntity< String >, Serializable {
 	private Date startingDate;
 
 	@OneToOne
-	private TicketTask starterTask;
+	private Task starterTask;
 
 	protected Workflow ( ) {
 	}
 
-	protected Workflow ( String workflowID, Date startingDate, TicketTask starter ) {
+	public Workflow ( String workflowID, Date startingDate, Task starter ) {
 		setWorkflowID( workflowID );
 		setStartingDate( startingDate );
 		setStarterTask( starter );
@@ -49,11 +52,11 @@ public class Workflow implements DomainEntity< String >, Serializable {
 		this.startingDate = startingDate;
 	}
 
-	public TicketTask starterTask ( ) {
+	public Task starterTask ( ) {
 		return starterTask;
 	}
 
-	public void setStarterTask ( TicketTask starterTask ) {
+	public void setStarterTask ( Task starterTask ) {
 		this.starterTask = starterTask;
 	}
 

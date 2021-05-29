@@ -197,14 +197,14 @@ public interface RepositoryFactory {
 	 *
 	 * @return
 	 */
-	FunctionRepository funcao(TransactionalContext autoTx);
+	FunctionRepository function(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
 	 * @return
 	 */
-	FunctionRepository funcao();
+	FunctionRepository function();
 
 	/**
 	 * repository will be created in auto transaction mode
