@@ -1,10 +1,13 @@
 package eapli.base.workflow.engine;
 
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class TcpServer implements Runnable {
@@ -14,8 +17,27 @@ public class TcpServer implements Runnable {
 	private DataOutputStream sOut;
 	private DataInputStream sIn;
 
-	public TcpServer (Socket cli_s) {
+	public TcpServer(Socket cli_s) {
 		clientSocket = cli_s;
+	}
+
+	public void stopConnection(InetAddress clientIP) throws IOException {
+		byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
+		sOut.write(serverResponse);
+		System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
+		clientSocket.close();
+		System.out.println("Failed to close client socket");
+	}
+
+	public byte[] getVariableInBytes(byte[] clientMsg) throws IOException {
+		byte[] objectInBytes=Arrays.copyOfRange(clientMsg, 3, clientMsg.length);
+		for (int i = 1; i <(int) clientMsg[2] ; i++) {
+			byte[] segmentPackage = sIn.readAllBytes();
+			byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
+			byte[] temp = objectInBytes;
+			objectInBytes=ArrayUtils.addAll(temp, variableSegment);
+		}
+		return objectInBytes;
 	}
 
 	public void run () {
@@ -25,30 +47,20 @@ public class TcpServer implements Runnable {
 		try {
 			sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
 			sIn = new DataInputStream( clientSocket.getInputStream( ) );
-
 			boolean cycle = true;
+
 			while (cycle){
-				byte[] clientMsg = sIn.readAllBytes();
-				System.out.println(clientMsg[1]);
-				switch (clientMsg[1]){
+				byte[] clientRequest = sIn.readAllBytes();
+				switch (clientRequest[1]){
 					case 1:
-						byte[] disconnectMsg= {(byte)0, (byte)2, (byte)0, (byte)0};
-						sOut.write(disconnectMsg);
+						stopConnection(clientIP);
 						cycle=false;
 						break;
 					case 3:
-						//byte[][] variable = new byte[(int)clientMsg[2]][255];
-						byte[] variable = new byte[(int)clientMsg[2]*255];
-						System.out.println("chegou 1");
-						for (int i = 0; i <(int) clientMsg[2] ; i++) {
-							System.out.println("chegou 2");
-							byte[] segmentPackage=sIn.readAllBytes();
-							System.out.println("chegou 3");
-							System.out.println(segmentPackage.length);
-							byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
-							System.out.println(Arrays.toString(variableSegment));
-						}
-						System.out.printf("%s\n", Arrays.toString(variable));
+						byte[] emailPackage = sIn.readAllBytes();
+						byte[] emailByteArray = Arrays.copyOfRange(emailPackage, 3, emailPackage.length);
+						String email = new String(emailByteArray, StandardCharsets.UTF_8);
+						System.out.printf("Recived email is:%s\n",email);
 						break;
 				}
 
