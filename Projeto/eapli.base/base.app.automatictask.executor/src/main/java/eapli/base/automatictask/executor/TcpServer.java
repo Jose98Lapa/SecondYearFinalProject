@@ -91,7 +91,7 @@ class TcpServerThread implements Runnable {
                         stopConnection(clientIP);
                         cycle=false;
                         break;
-                    case 3:
+                    case 20:
                         executeAutomaticTask();
                         break;
                 }
