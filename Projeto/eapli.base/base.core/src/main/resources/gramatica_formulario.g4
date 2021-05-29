@@ -89,4 +89,6 @@ NOVALINHA           : ('\r'? '\n' | '\r')+;
 SE                  : 'se';
 ENTAO               : 'entao';
 SENAO               : 'senao';
+NAO                 : 'nao' ;
+E                   : 'e'  ;
 END_STATEMENT       : 'es';
