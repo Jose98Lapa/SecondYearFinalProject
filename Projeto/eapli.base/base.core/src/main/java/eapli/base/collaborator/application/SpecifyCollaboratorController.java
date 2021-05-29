@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class SpecifyCollaboratorController {
 
-    private final FunctionRepository funcRepo = PersistenceContext.repositories().funcao();
+    private final FunctionRepository funcRepo = PersistenceContext.repositories().function();
     private final CollaboratorRepository collabRepo = PersistenceContext.repositories().collaborators();
     private final CollaboratorBuilder colabBuilder = new CollaboratorBuilder();
     private final CollaboratorDTOParser collaboratorDTOParser = new CollaboratorDTOParser();

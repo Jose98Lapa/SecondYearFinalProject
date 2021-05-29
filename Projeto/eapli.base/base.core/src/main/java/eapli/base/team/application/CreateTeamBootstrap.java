@@ -21,7 +21,7 @@ public class CreateTeamBootstrap {
         teamDTO.responsaveis.forEach(colaboradorDTO -> collaboratorList.add(new CollaboratorDTOParser().valueOf(colaboradorDTO)));
         List<Collaborator> membros = new ArrayList<>();
         teamDTO.membrosDaEquipa.forEach(colaboradorDTO -> membros.add(new CollaboratorDTOParser().valueOf(colaboradorDTO)));
-        Team team = teamBuilder.designacao(teamDTO.descricao).acronimo(teamDTO.acronimo).equipaID(teamDTO.equipaID).responsaveis(collaboratorList).tipoDeEquipa(new TeamTypeDTOParser().valueOf(teamDTO.teamTypeDTO)).colaboradores(membros).build();
+        Team team = teamBuilder.designacao(teamDTO.descricao).acronimo(teamDTO.acronimo).equipaID(teamDTO.teamID).responsaveis(collaboratorList).tipoDeEquipa(new TeamTypeDTOParser().valueOf(teamDTO.teamTypeDTO)).colaboradores(membros).build();
         teamRepository.save(team);
     }
 }

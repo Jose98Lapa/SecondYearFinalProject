@@ -18,13 +18,14 @@ public class ServiceBuilder {
     private CompleteDescription compDesc  ;
     private BriefDescription briefDesc ;
     private Catalogue catalogue;
+    private Workflow workflow;
 
     public Service buildManual() {
-        return new Service(title, id, icon, keywords, status, ServiceType.valueOf("MANUAL"),compDesc,briefDesc,script,form, catalogue);
+        return new Service(title, id, icon, keywords, status, ServiceType.valueOf("MANUAL"),compDesc,briefDesc,script,form, catalogue,workflow);
     }
 
     public Service buildAutomatic() {
-        return new Service(title, id, icon, keywords, status, ServiceType.valueOf("AUTOMATICO"),compDesc,briefDesc,script,form, catalogue);
+        return new Service(title, id, icon, keywords, status, ServiceType.valueOf("AUTOMATICO"),compDesc,briefDesc,script,form, catalogue,workflow);
 
     }
 
@@ -78,6 +79,11 @@ public class ServiceBuilder {
     }
     public ServiceBuilder withCatalogue(Catalogue cat) {
         this.catalogue = cat;
+        return this;
+    }
+
+    public ServiceBuilder withWorkflow(Workflow workflow){
+        this.workflow = workflow;
         return this;
     }
 

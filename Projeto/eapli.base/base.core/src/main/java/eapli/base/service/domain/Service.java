@@ -40,10 +40,13 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
     @ElementCollection
     private Set<KeyWords> keywords;
 
+    @OneToOne (cascade = CascadeType.ALL)
+    private Workflow workflow;
+
 
     public Service(ServiceTitle title, ServiceID id, IconServico icon, Set<KeyWords> keywords, ServiceStatus status,
                    ServiceType tipo, CompleteDescription compDesc, BriefDescription briedDesc, ServiceScript script,
-                   Form form, Catalogue catalogue) {
+                   Form form, Catalogue catalogue,Workflow workflow) {
 
         this.title = title;
         this.id = id;
@@ -57,6 +60,7 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
         this.compDesc = compDesc;
         this.briedDesc = briedDesc;
         this.catalogue = catalogue;
+        this.workflow = workflow;
     }
 
     public void addkeywords(Set<KeyWords> keys) {
@@ -165,6 +169,10 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
 
     public Form form () {
         return form;
+    }
+
+    public void workflow(Workflow workflow){
+        this.workflow = workflow;
     }
 
 }
