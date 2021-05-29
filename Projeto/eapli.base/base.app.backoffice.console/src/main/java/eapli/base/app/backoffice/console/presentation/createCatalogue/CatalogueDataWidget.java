@@ -1,6 +1,8 @@
 package eapli.base.app.backoffice.console.presentation.createCatalogue;
 
+import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.framework.io.util.Console;
+import java.util.UUID;
 
 /**
  * TODO move to console.common to allow reuse from both backoffice and UtenteApp
@@ -18,7 +20,9 @@ import eapli.framework.io.util.Console;
     public void show() {
         //this.identificadorUnico = Console.readLine("Identificador Unico");
         this.titulo = Console.readLine("Titulo");
-        this.icon = Console.readLine("Icon");
+        SFTPClient sftp = new SFTPClient();
+        System.out.println("Icon");
+        this.icon = sftp.choseAndUploadImage(UUID.randomUUID().toString());
         this.descBreve = Console.readLine("Descrição Breve");
         this.descCompleta = Console.readLine("Descrição Completa");
     }

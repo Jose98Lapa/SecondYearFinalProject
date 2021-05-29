@@ -31,7 +31,7 @@ public class SpecifyServiceUI extends AbstractUI {
         try {
             for (CatalogueDTO cat : theController.catalogList()) {
                 System.out.println("-------------------------------- | Index : " + i++ + " | -------------------------------------------");
-                System.out.println(cat);
+                System.out.printf("%s - %s - %s%n",cat.catalogTitle, cat.briefDesc , cat.nivelCriticidade.label);
             }
             String index = Console.readLine("Index");
             System.out.println("Insira a informação necessária para o servico");

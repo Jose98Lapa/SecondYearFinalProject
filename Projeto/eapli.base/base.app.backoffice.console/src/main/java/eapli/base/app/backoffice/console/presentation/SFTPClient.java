@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation;
 
 import com.jcraft.jsch.*;
+import eapli.base.Application;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -8,7 +9,6 @@ import java.io.File;
 
 public class SFTPClient {
 
-    private String host = "10.9.21.17";
     private String localServerFolder = "/var/www/html";
     private int port = 22;
     private Session session = null;
@@ -20,8 +20,8 @@ public class SFTPClient {
     public void connect() throws JSchException {
         JSch jsch = new JSch();
 
-        session = jsch.getSession("root", host, port);
-        session.setPassword("123Tiago123");
+        session = jsch.getSession(Application.settings().getSshUser(), Application.settings().getImageServerIp(), port);
+        session.setPassword(Application.settings().getSshPassword());
 
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
@@ -100,11 +100,11 @@ public class SFTPClient {
     }
 
     public String castLinkImage(String filename) {
-        return "http://"+host+"/"+filename+".jpg";
+        return "http://"+Application.settings().getImageServerIp()+"/"+filename+".jpg";
     }
 
     public String castLinkScript(String filename) {
-        return "http://"+host+"/"+filename+".txt";
+        return "http://"+Application.settings().getImageServerIp()+"/"+filename+".txt";
     }
 
     public String choseAndUploadImage(String filename) {
