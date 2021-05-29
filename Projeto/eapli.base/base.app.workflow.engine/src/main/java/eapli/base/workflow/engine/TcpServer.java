@@ -42,6 +42,7 @@ public class TcpServer implements Runnable {
 							byte[] segmentPackage=sIn.readAllBytes();
 							System.out.println(segmentPackage.length);
 							byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
+							System.out.println(Arrays.toString(variableSegment));
 						}
 						System.out.printf("%s\n", Arrays.toString(variable));
 						break;
