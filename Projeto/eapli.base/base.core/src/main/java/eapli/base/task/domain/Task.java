@@ -15,12 +15,12 @@ public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID
     @OneToOne
     private Task afterTask;
 
+    private String status;
 
 
     public Task(TaskID taskID){
         this.taskID = taskID;
-
-
+        this.status = "Pending";
     }
 
     protected Task() {
@@ -50,5 +50,7 @@ public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID
         }
 
     }
+
+
 
 }

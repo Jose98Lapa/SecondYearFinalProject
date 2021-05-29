@@ -8,9 +8,7 @@ import java.util.Collections;
 
 public class CheckPendingAssignedTasksController {
 
-    public Iterable<ExecutionTaskDTO> getPendingTasksByCollaborator(){
-        AuthorizationService authz = AuthzRegistry.authorizationService();
-        String email = authz.session().get().authenticatedUser().email().toString();
-        return Collections.emptyList();
+    public Iterable<ExecutionTaskDTO> getPendingTasksByCollaborator(String email){
+        return Collections.emptyList(); //TODO:
     }
 }

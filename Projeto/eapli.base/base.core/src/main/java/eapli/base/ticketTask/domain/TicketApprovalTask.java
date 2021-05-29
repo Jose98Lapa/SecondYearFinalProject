@@ -1,21 +1,27 @@
 package eapli.base.ticketTask.domain;
 
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 public class TicketApprovalTask extends TicketManualTask implements DTOable< TicketApprovalTaskDTO >, Serializable {
+
+	@OneToOne
+	private Collaborator approvedBy;
 
 	protected TicketApprovalTask () {
 
 	}
 
-	public TicketApprovalTask ( TicketTaskID ticketTaskID, Transition transition, Form form ) {
-		super( ticketTaskID, transition, form );
+	public TicketApprovalTask ( TicketTaskID ticketTaskID, Transition transition, Form form, LocalDateTime deadline ) {
+		super( ticketTaskID, transition, form, deadline );
 	}
 
 	public Form form(){
@@ -28,7 +34,8 @@ public class TicketApprovalTask extends TicketManualTask implements DTOable< Tic
 				this.ticketTaskID.toString(),
 				this.transition().previousTask().toString(),
 				this.transition().nextTask().toString(),
-				this.form()
+				this.form(),
+				approvedBy
 		);
 	}
 
