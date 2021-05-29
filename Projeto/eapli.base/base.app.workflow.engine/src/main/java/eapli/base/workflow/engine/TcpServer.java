@@ -1,6 +1,9 @@
 package eapli.base.workflow.engine;
 
 
+import eapli.base.task.DTO.ExecutionTaskDTO;
+import eapli.base.task.application.CheckPendingAssignedTasksController;
+import eapli.base.utils.SplitInfo;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -9,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 
 public class TcpServer implements Runnable {
 
@@ -33,16 +37,30 @@ public class TcpServer implements Runnable {
 		}
 		}
 
-	public byte[] getVariableInBytes(byte[] clientMsg) throws IOException {
-		byte[] objectInBytes=Arrays.copyOfRange(clientMsg, 3, clientMsg.length);
-		for (int i = 1; i <(int) clientMsg[2] ; i++) {
-			byte[] segmentPackage = sIn.readAllBytes();
-			byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
-			byte[] temp = objectInBytes;
-			objectInBytes=ArrayUtils.addAll(temp, variableSegment);
+	public void TaskList() {
+		try {
+			//Sends response to the client
+			byte[] serverResponse = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+			sOut.write(serverResponse);
+			sOut.flush();
+
+			//Recives email
+			byte[] emailInfo = sIn.readNBytes(3);
+			byte[] emailByteArray = sIn.readNBytes(emailInfo[2]);
+			String email = new String(emailByteArray, StandardCharsets.UTF_8);
+
+			//Get Pending Task List
+			CheckPendingAssignedTasksController pTasksController = new CheckPendingAssignedTasksController();
+			List<ExecutionTaskDTO> pTaskList = (List<ExecutionTaskDTO>) pTasksController.getPendingTasksByCollaborator(email);
+			for (ExecutionTaskDTO task : pTaskList){
+
+			}
+
+		} catch (IOException ex) {
+			System.out.println("An error ocurred");
 		}
-		return objectInBytes;
 	}
+
 
 	public void run () {
 		InetAddress clientIP=clientSocket.getInetAddress();
@@ -61,13 +79,7 @@ public class TcpServer implements Runnable {
 						cycle=false;
 						break;
 					case 3:
-						byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
-						sOut.write(serverResponse);
-						sOut.flush();
-						byte[] emailInfo = sIn.readNBytes(3);
-						byte[] emailByteArray=sIn.readNBytes(emailInfo[2]);
-						String email = new String(emailByteArray, StandardCharsets.UTF_8);
-						System.out.printf("Recived email is:%s\n",email);
+						TaskList();
 						break;
 				}
 
