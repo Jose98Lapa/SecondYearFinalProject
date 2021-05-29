@@ -4,6 +4,7 @@ package eapli.base.workflow.engine;
 import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
+import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -60,9 +61,9 @@ public class TcpServer implements Runnable {
 			InstituionalEmail iEmail = new InstituionalEmail(email);
 			CollaboratorDTO collaboratorDTO =collaboratorRepository.getColaboradorByEmail(iEmail).get().toDTO();
 
-			//Get Ticket by collaborator
+			//Get Ticket by collaborator ID
 			TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-			List<Ticket> lstTicket = (List<Ticket>) ticketRepository.getPendingTicket(); 
+			List<Ticket> lstTicket = (List<Ticket>) ticketRepository.getTicketsByCollaborator(new MecanographicNumber(collaboratorDTO.mNumber));
 
 			for (Ticket ticket:lstTicket){
 				TicketDTO ticketDTO =ticket.toDTO();
