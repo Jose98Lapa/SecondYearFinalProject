@@ -94,7 +94,7 @@ class TcpClient {
                     tcpClient.stopConnection();
                     cycle = false;
                     break;
-                case 1:
+                case 20:
                     tcpClient.executeAutomaticTask("scrip.txt");
                     break;
                 default:

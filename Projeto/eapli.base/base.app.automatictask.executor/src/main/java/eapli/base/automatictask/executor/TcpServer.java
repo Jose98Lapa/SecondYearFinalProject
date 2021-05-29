@@ -66,6 +66,7 @@ class TcpServerThread implements Runnable {
             byte[] scriptInfo = sIn.readNBytes(3);
             byte[] scriptByteArray = sIn.readNBytes(scriptInfo[2]);
             String script = new String(scriptByteArray, StandardCharsets.UTF_8);
+            System.out.println(script);
 
             Thread.sleep(5000);
         } catch (IOException | InterruptedException ex) {
