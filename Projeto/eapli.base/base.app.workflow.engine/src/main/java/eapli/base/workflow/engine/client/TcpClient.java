@@ -50,8 +50,7 @@ public class TcpClient {
 		try {
 			byte[] clientRequest = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
 			sOut.write(clientRequest);
-			System.out.println("waiting for server's response");
-			byte[] serverResponse=sIn.readAllBytes();
+			byte[] serverResponse=sIn.readNBytes(4);
 			if((int)serverResponse[1]==2)
 				System.out.println("Connection terminated with Worflow server");
 			sIn.close();

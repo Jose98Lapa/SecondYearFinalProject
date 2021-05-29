@@ -21,14 +21,16 @@ public class TcpServer implements Runnable {
 		clientSocket = cli_s;
 	}
 
-	public void stopConnection(InetAddress clientIP) throws IOException {
+	public void stopConnection(InetAddress clientIP) {
 		byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
-		System.out.println("writing response");
-		sOut.write(serverResponse);
-		System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
-		clientSocket.close();
-		System.out.println("Failed to close client socket");
-	}
+		try {
+			sOut.write(serverResponse);
+			System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
+			clientSocket.close();
+		}catch (IOException ex){
+			System.out.println("Falied to close client socket");
+		}
+		}
 
 	public byte[] getVariableInBytes(byte[] clientMsg) throws IOException {
 		byte[] objectInBytes=Arrays.copyOfRange(clientMsg, 3, clientMsg.length);
@@ -46,12 +48,12 @@ public class TcpServer implements Runnable {
 		System.out.println( "New client connection from " + clientIP.getHostAddress( ) + ", port number " + clientSocket.getPort( ) );
 
 		try {
-			this.sOut = new DataOutputStream( clientSocket.getOutputStream( ));
+			sOut = new DataOutputStream( clientSocket.getOutputStream( ));
 			sIn = new DataInputStream( clientSocket.getInputStream( ));
 			boolean cycle = true;
 
 			while (cycle){
-				byte[] clientRequest = sIn.readAllBytes();
+				byte[] clientRequest = sIn.readNBytes(4);
 				switch (clientRequest[1]){
 					case 1:
 						System.out.println("test");
@@ -69,11 +71,8 @@ public class TcpServer implements Runnable {
 				}
 
 			}
-
-			System.out.println( "Client " + clientIP.getHostAddress( ) + ", port number: " + clientSocket.getPort() + " disconnected" );
-			clientSocket.close( );
 		} catch ( IOException ex ) {
-			System.out.println( "Failed to close client socket" );
+			System.out.println( "An error ocurred" );
 		}
 	}
 
