@@ -65,7 +65,7 @@ public class TcpClient {
 		for (byte[] bytes : splitObject) {
 			byte[] msg = {(byte) 0, (byte) 3, (byte) splitObject.length};
 			byte[] finalMsg = ArrayUtils.addAll(bytes, msg);
-			sOut.write(msg);
+			sOut.write(finalMsg);
 		}
 	}
 

@@ -29,19 +29,21 @@ public class TcpServer implements Runnable {
 			boolean cycle = true;
 			while (cycle){
 				byte[] clientMsg = sIn.readAllBytes();
-				int code = clientMsg[1];
 				switch (clientMsg[1]){
 					case 1:
-						byte[] msg= {(byte)0, (byte)2, (byte)0, (byte)0};
-						sOut.write(msg);
+						byte[] disconnectMsg= {(byte)0, (byte)2, (byte)0, (byte)0};
+						sOut.write(disconnectMsg);
 						cycle=false;
 						break;
 					case 3:
+						//byte[][] variable = new byte[(int)clientMsg[2]][255];
+						byte[] variable = new byte[(int)clientMsg[2]*255];
 						for (int i = 0; i <(int) clientMsg[2] ; i++) {
-							byte[] msgs=sIn.readAllBytes();
-							byte[] variable = Arrays.copyOfRange(msgs, 3,msgs.length);
-							System.out.printf("%s\n", Arrays.toString(variable));
+							byte[] segmentPackage=sIn.readAllBytes();
+							System.out.println(segmentPackage.length);
+							byte[] variableSegment=Arrays.copyOfRange(segmentPackage, 3, segmentPackage.length);
 						}
+						System.out.printf("%s\n", Arrays.toString(variable));
 						break;
 				}
 
