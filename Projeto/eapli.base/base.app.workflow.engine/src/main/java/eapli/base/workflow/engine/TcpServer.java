@@ -23,6 +23,7 @@ public class TcpServer implements Runnable {
 
 	public void stopConnection(InetAddress clientIP) throws IOException {
 		byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
+		System.out.println("writing response");
 		sOut.write(serverResponse);
 		System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
 		clientSocket.close();
@@ -45,18 +46,21 @@ public class TcpServer implements Runnable {
 		System.out.println( "New client connection from " + clientIP.getHostAddress( ) + ", port number " + clientSocket.getPort( ) );
 
 		try {
-			sOut = new DataOutputStream( clientSocket.getOutputStream( ) );
-			sIn = new DataInputStream( clientSocket.getInputStream( ) );
+			this.sOut = new DataOutputStream( clientSocket.getOutputStream( ));
+			sIn = new DataInputStream( clientSocket.getInputStream( ));
 			boolean cycle = true;
 
 			while (cycle){
 				byte[] clientRequest = sIn.readAllBytes();
 				switch (clientRequest[1]){
 					case 1:
+						System.out.println("test");
 						stopConnection(clientIP);
 						cycle=false;
 						break;
 					case 3:
+						byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
+						sOut.write(serverResponse);
 						byte[] emailPackage = sIn.readAllBytes();
 						byte[] emailByteArray = Arrays.copyOfRange(emailPackage, 3, emailPackage.length);
 						String email = new String(emailByteArray, StandardCharsets.UTF_8);
@@ -91,9 +95,6 @@ public class TcpServer implements Runnable {
 			}
 		}
 	}
-
-
-
 }
 
 
