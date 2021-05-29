@@ -110,12 +110,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
-	public FunctionRepository funcao(TransactionalContext autoTx) {
+	public FunctionRepository function(TransactionalContext autoTx) {
 		return new JpaFunctionReposiory(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
-	public FunctionRepository funcao() {
+	public FunctionRepository function() {
 		return new JpaFunctionReposiory(Application.settings().getPersistenceUnitName());
 	}
 

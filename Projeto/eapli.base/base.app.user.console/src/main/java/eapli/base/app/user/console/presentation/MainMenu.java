@@ -54,7 +54,6 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int CONSULTAR_SERVICO_OPTION = 2;
-    private static final int DASHBOARD = 3;
 
 
     private final AuthorizationService authz =
@@ -72,6 +71,7 @@ class MainMenu extends ClientUserBaseUI {
     @Override
     public boolean doShow() {
         final Menu menu = buildMainMenu();
+        new ShowDashboardUI().show();
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
@@ -82,7 +82,6 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION,builderConsultarServicoMenu());
-        mainMenu.addSubMenu(DASHBOARD,builderDashboard());
 
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
@@ -97,13 +96,6 @@ class MainMenu extends ClientUserBaseUI {
         consultarServicoMenu.addItem(1,"Consultar Serviços",()->new CheckServicesUI().show());
         consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return consultarServicoMenu;
-    }
-
-    private Menu builderDashboard(){
-        final Menu dashboard = new Menu("Dashboard Menu");
-        dashboard.addItem(1,"Iniciar Dashboard",()->new ShowDashboardUI().show());
-        dashboard.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
-        return dashboard;
     }
 
 }

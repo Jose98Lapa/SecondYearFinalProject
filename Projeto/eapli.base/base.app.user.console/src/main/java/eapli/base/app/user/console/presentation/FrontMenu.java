@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.LoginUI;
+import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
 import eapli.base.app.user.console.presentation.myuser.SignupRequestAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.ChainedAction;
