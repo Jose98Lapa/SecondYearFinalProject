@@ -13,11 +13,15 @@ lista_linhas: lista_linhas expressao
 expressao: expressao_inicializacao
    | expr
    | estrutura_condicional
+   |expressao_atribuicao
    ;
 
 expressao_inicializacao: TIPODADOS ident
    | TIPODADOS ident OPERADORATRIBUICAO expr
    | TIPODADOS ident OPERADORATRIBUICAO tipo_dados
+   ;
+
+expressao_atribuicao: ident OPERADORATRIBUICAO tipo_dados
    ;
 
 expr: expr op tipo_dados
@@ -50,11 +54,11 @@ estrutura_condicional: ife
                        elsee?
                        ;
 
-ife               : SE ESPACO ( VARIAVEL | VALOR ) ESPACO OPERADORLOGICO ESPACO ( VARIAVEL | VALOR )
+ife               : SE ( VARIAVEL | VALOR ) OPERADORLOGICO ( VARIAVEL | VALOR ) ENTAO
                       expressao+
                       END_STATEMENT
                       ;
-elsee               : ENTAO
+elsee               : SENAO
                       expressao+
                       END_STATEMENT
                       ;
@@ -68,16 +72,6 @@ fragment DIGITO     : [0-9];
 fragment LOWERCASE  : [a-z];
 fragment UPPERCASE  : [A-Z];
 
-
-NUMERO              : DIGITO+;
-REAL                : DIGITO+ ( [.,] DIGITO+ )?;
-TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
-TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
-
-OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
-OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
-OPERADORATRIBUICAO  : '->';
-
 VARIAVEL            : ('$' TEXTO) | ('$' ( TEXTO | NUMERO )+);
 VALOR               : '$' DIGITO | '$' NUMERO;
 
@@ -89,6 +83,13 @@ NOVALINHA           : ('\r'? '\n' | '\r')+;
 SE                  : 'se';
 ENTAO               : 'entao';
 SENAO               : 'senao';
-NAO                 : 'nao' ;
-E                   : 'e'  ;
 END_STATEMENT       : 'es';
+
+NUMERO              : DIGITO+;
+REAL                : DIGITO+ ( [.,] DIGITO+ )?;
+TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
+TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
+
+OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
+OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
+OPERADORATRIBUICAO  : '->';
