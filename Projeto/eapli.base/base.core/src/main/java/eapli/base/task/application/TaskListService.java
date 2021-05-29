@@ -26,6 +26,7 @@ public class TaskListService {
         for (int i= 1;i<tasksIDList.size();i++){
             Task currentTask = getTaskByID(tasksIDList.get(i));
             currentTask.editBeforeTask(beforeTask);
+            beforeTask.editAfterTask(currentTask);
             beforeTask = currentTask;
         }
         return starterTask;

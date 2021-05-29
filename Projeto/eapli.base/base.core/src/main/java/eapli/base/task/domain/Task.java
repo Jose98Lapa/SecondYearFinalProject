@@ -7,20 +7,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID> , Serializable {
     @EmbeddedId
     protected TaskID taskID;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Task beforeTask;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Task afterTask;
 
-    private String status;
 
 
     public Task(TaskID taskID){
         this.taskID = taskID;
-        this.status = "Pending";
     }
 
     protected Task() {
