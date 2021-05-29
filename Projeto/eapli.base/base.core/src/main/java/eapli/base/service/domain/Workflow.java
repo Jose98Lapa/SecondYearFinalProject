@@ -1,4 +1,4 @@
-package eapli.base.ticket.domain;
+package eapli.base.service.domain;
 
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.DomainEntity;
