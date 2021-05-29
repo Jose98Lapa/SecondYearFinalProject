@@ -33,10 +33,8 @@ class TcpServer {
 
 }
 
-
 class TcpServerThread implements Runnable {
 
-    private static ServerSocket serverSocket;
     private Socket clientSocket;
     private DataOutputStream sOut;
     private DataInputStream sIn;
@@ -57,19 +55,20 @@ class TcpServerThread implements Runnable {
         }
     }
 
-    public void TaskList() {
+    public void executeAutomaticTask() {
         try {
             //Sends response to the client
             byte[] serverResponse = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
             sOut.write(serverResponse);
             sOut.flush();
 
-            //Recives email
-            byte[] emailInfo = sIn.readNBytes(3);
-            byte[] emailByteArray = sIn.readNBytes(emailInfo[2]);
-            String email = new String(emailByteArray, StandardCharsets.UTF_8);
+            //Recives script
+            byte[] scriptInfo = sIn.readNBytes(3);
+            byte[] scriptByteArray = sIn.readNBytes(scriptInfo[2]);
+            String script = new String(scriptByteArray, StandardCharsets.UTF_8);
 
-        } catch (IOException ex) {
+            Thread.sleep(5000);
+        } catch (IOException | InterruptedException ex) {
             System.out.println("An error ocurred");
         }
     }
@@ -92,7 +91,7 @@ class TcpServerThread implements Runnable {
                         cycle=false;
                         break;
                     case 3:
-                        TaskList();
+                        executeAutomaticTask();
                         break;
                 }
 
