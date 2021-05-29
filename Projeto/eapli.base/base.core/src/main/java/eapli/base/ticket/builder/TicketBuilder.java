@@ -14,6 +14,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 	private AttachedFile file;
 	private Urgency urgency;
 	private Service service;
+	private TicketWorkflow workflow;
 
 	public TicketBuilder solicitedOn ( String solicitedOn ) {
 		this.solicitedOn = LocalDate.parse( solicitedOn );
@@ -50,9 +51,14 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 		return this;
 	}
 
+	public TicketBuilder withWorkFlow ( TicketWorkflow workflow ) {
+		this.workflow = workflow;
+		return this;
+	}
+
 	@Override
 	public Ticket build ( ) {
-		return new Ticket( solicitedOn, deadLine, id, status, file, urgency, service );
+		return new Ticket( solicitedOn, deadLine, id, status, file, urgency, service, workflow );
 	}
 
 }

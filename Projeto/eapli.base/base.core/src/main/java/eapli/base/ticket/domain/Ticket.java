@@ -3,6 +3,7 @@ package eapli.base.ticket.domain;
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.ticket.DTO.TicketDTO;
+import eapli.base.ticket.builder.TicketBuilder;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -37,15 +38,16 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	@OneToOne
 	private Form ticketForm;
 
-	@OneToOne
-	private Form approvalForm;
+	private TicketWorkflow workflow;
 
-	@OneToOne
-	private Form executionForm;
+	@Transient
+	private TicketBuilder builder;
+
 
 
 	public Ticket ( LocalDate solicitedOn, LocalDate deadLine,
-					TicketID id, TicketStatus status, AttachedFile file, Urgency urgency, Service service  ) {
+					TicketID id, TicketStatus status, AttachedFile file,
+					Urgency urgency, Service service, TicketWorkflow workflow  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
 		this.id = id;
@@ -53,6 +55,8 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		this.file = file;
 		this.urgency = urgency;
 		this.service = service;
+		this.workflow = workflow;
+		this.builder = new TicketBuilder();
 	}
 
 	protected Ticket ( ) {
@@ -63,7 +67,9 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		if ( this == o ) return true;
 		if ( o == null || getClass( ) != o.getClass( ) ) return false;
 		Ticket ticket = ( Ticket ) o;
-		return Objects.equals( solicitedOn, ticket.solicitedOn ) && Objects.equals( deadLine, ticket.deadLine ) && Objects.equals( id, ticket.id ) && Objects.equals( status, ticket.status ) && Objects.equals( file, ticket.file ) && Objects.equals( urgency, ticket.urgency );
+		return Objects.equals( solicitedOn, ticket.solicitedOn ) && Objects.equals( deadLine, ticket.deadLine )
+				&& Objects.equals( id, ticket.id ) && Objects.equals( status, ticket.status )
+				&& Objects.equals( file, ticket.file ) && Objects.equals( urgency, ticket.urgency );
 	}
 
 	@Override

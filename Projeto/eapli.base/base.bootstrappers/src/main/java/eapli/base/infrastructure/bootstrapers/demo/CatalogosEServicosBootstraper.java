@@ -122,7 +122,7 @@ public class CatalogosEServicosBootstraper implements Action {
 
                             final Set<String> lstkeyWords = new HashSet<>();
                             lstkeyWords.add(keyWords);
-                            ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null);
+                            ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null );
                             servicoController.create(dto);
                             final Set<AttributeDTO> lstAtributos = new HashSet<>();
                             AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID);
