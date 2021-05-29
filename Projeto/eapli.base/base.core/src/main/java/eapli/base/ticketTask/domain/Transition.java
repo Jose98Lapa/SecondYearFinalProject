@@ -1,6 +1,7 @@
 package eapli.base.ticketTask.domain;
 
 import eapli.base.task.domain.Task;
+import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
@@ -11,15 +12,15 @@ import java.io.Serializable;
 public class Transition implements ValueObject, Comparable< Transition >, Serializable {
 
 	@OneToOne
-	private Task previousTask;
+	private TicketTask previousTask;
 
 	@OneToOne
-	private Task nextTask;
+	private TicketTask nextTask;
 
 	protected Transition ( ) {
 	}
 
-	public Transition ( Task previousTask, Task nextTask ) {
+	public Transition ( TicketTask previousTask, TicketTask nextTask ) {
 		this.previousTask = previousTask;
 		this.nextTask = nextTask;
 	}
@@ -29,7 +30,7 @@ public class Transition implements ValueObject, Comparable< Transition >, Serial
 		return 0;
 	}
 
-	public Task previousTask ( ) {
+	public TicketTask previousTask ( ) {
 		return previousTask;
 	}
 
@@ -38,7 +39,7 @@ public class Transition implements ValueObject, Comparable< Transition >, Serial
 
 	}
 
-	public Task nextTask ( ) {
+	public TicketTask nextTask ( ) {
 		return nextTask;
 	}
 

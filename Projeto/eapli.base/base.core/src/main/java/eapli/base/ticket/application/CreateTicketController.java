@@ -10,4 +10,7 @@ public class CreateTicketController {
 	}
 
 
+	public void createTicket () {
+
+	}
 }

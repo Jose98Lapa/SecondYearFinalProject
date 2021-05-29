@@ -7,6 +7,10 @@ import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.dto.CatalogueDTOParser;
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.form.DTO.FormDTO;
+import eapli.base.form.DTO.attribute.AttributeDTO;
+import eapli.base.form.application.FormService;
+import eapli.base.form.domain.FormID;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.DTO.ServiceDTOParser;
@@ -17,7 +21,9 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class RequestServiceUI extends AbstractUI {
@@ -29,6 +35,7 @@ public class RequestServiceUI extends AbstractUI {
 
 		ServiceListService servicesService = new ServiceListService();
 		ServiceDTOParser dtoParser = new ServiceDTOParser();
+		FormService formService = new FormService();
 
 		List< CatalogueDTO > availableCatalogues = requestableCatalogues();
 		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o catalogo que deseja");
@@ -38,7 +45,21 @@ public class RequestServiceUI extends AbstractUI {
 		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
 		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o serviço que deseja");
 
-		//servicesService.retrieveServiceForm(  );
+		FormID formID = new ServiceDTOParser().valueOf( availableServices.get( serviceIndex ) ).form().identity();
+		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( formID );
+		FormDTO form;
+
+		if ( serviceFormDTO.isPresent() ) {
+			form = serviceFormDTO.get();
+			Iterator< AttributeDTO > attributeIterator = form.atrDTO.iterator();
+
+
+			while ( attributeIterator.hasNext() ) {
+				AttributeDTO attribute = attributeIterator.next();
+				//show attrs
+			}
+
+		}
 
 		return false;
 	}

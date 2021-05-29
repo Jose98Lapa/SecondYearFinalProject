@@ -3,7 +3,7 @@ package eapli.base.service.domain;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.form.domain.Form;
 import eapli.base.service.DTO.ServiceDTO;
-import eapli.base.task.domain.Task;
+import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
@@ -114,7 +114,7 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
             script = ServiceScript.valueOf(" ");
         return new ServiceDTO(this.title.toString(), this.id.toString(), this.icon.toString(), key2,
                 this.status.toString(), this.tipo.toString(), briedDesc.toString(), compDesc.toString(),
-                catalogue.toDTO(), script.toString());
+                catalogue.toDTO(), script.toString(), this.form );
     }
 
     public void activate() {
