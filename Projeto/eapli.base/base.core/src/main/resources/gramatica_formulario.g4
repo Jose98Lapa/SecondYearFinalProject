@@ -13,7 +13,7 @@ lista_linhas: lista_linhas expressao
 expressao: expressao_inicializacao
    | expr
    | estrutura_condicional
-   |expressao_atribuicao
+   | expressao_atribuicao
    ;
 
 expressao_inicializacao: TIPODADOS ident
@@ -52,15 +52,14 @@ op
 
 estrutura_condicional: ife
                        elsee?
+                       END_STATEMENT
                        ;
 
 ife               : SE ( VARIAVEL | VALOR ) OPERADORLOGICO ( VARIAVEL | VALOR ) ENTAO
                       expressao+
-                      END_STATEMENT
                       ;
 elsee               : SENAO
                       expressao+
-                      END_STATEMENT
                       ;
 
 
@@ -77,7 +76,6 @@ VALOR               : '$' DIGITO | '$' NUMERO;
 
 ESPACO              : [ \t\r\n]+ -> skip ;
 NOVALINHA           : ('\r'? '\n' | '\r')+;
-
 
 // RESERVED KEYWORDS
 SE                  : 'se';
