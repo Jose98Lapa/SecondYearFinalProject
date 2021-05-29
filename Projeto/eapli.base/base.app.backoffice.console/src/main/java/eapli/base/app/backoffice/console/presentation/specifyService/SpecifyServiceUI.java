@@ -65,11 +65,11 @@ public class SpecifyServiceUI extends AbstractUI {
                     incomplete = true;
                 }
                 if (incomplete) {
-                    dto = new ServiceDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INCOMPLETO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
+                   // dto = new ServiceDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INCOMPLETO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
                 } else {
-                    dto = new ServiceDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
+                //    dto = new ServiceDTO(ifo.title(), ifo.id(), ifo.icon(), keys, "INATIVO", ifo.type(), ifo.briefDesc(), ifo.compDesc(), catalogos.get(Integer.parseInt(index)), null);
                 }
-                theController.create(dto);
+               // theController.create(dto);
             }
 
             if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {
