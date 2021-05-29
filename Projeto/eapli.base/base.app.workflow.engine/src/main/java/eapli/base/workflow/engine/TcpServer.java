@@ -2,7 +2,6 @@ package eapli.base.workflow.engine;
 
 
 import eapli.base.Application;
-import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.dto.CollaboratorDTO;
@@ -121,7 +120,7 @@ public class TcpServer implements Runnable {
 	public static void main(String[] args) {
 		Socket cliSock;
 		try {
-			serverSocket = new ServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
+			serverSocket = new ServerSocket(Integer.parseInt("10020"/*Application.settings().getPortWorkflow())*/));
 		} catch (IOException ex) {
 			System.err.println("Failed to open server socket");
 			System.exit(1);

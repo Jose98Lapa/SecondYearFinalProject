@@ -113,7 +113,7 @@ public class TcpClient {
 
 	public static void main(String[] args) throws IOException {
 		TcpClient tcpClient = new TcpClient();
-		tcpClient.startConnection(Application.settings().getIpWorkflow());
+		tcpClient.startConnection("172.17.0.2"/*Application.settings().getIpWorkflow()*/);
 
 		boolean cycle = true;
 		while (cycle) {
