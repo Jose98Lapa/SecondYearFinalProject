@@ -1,16 +1,50 @@
-grammar lang;
+grammar gramatica_formulario;
 
 /*
  *   Lexico
  */
 
-gramm: expressao;
+gramatica: 'BEGIN' lista_linhas 'END';
 
+lista_linhas: lista_linhas expressao
+   | expressao
+   ;
 
-expressao:   estrutura_condicional
-            |  atribuir_a_variavel
-            | TIPODADOS
-            | EOF;
+expressao: expressao_inicializacao
+   | expr
+   | estrutura_condicional
+   ;
+
+expressao_inicializacao: TIPODADOS ident
+   | TIPODADOS ident OPERADORATRIBUICAO expr
+   | TIPODADOS ident OPERADORATRIBUICAO tipo_dados
+   ;
+
+expr: expr op tipo_dados
+   | ident OPERADORATRIBUICAO expr
+   ;
+
+tipo_dados: ident
+   | integer
+   | float
+   ;
+
+integer
+   : '-'? NUMERO
+   ;
+
+float
+   : '-'? REAL
+   ;
+
+ident: TEXTO
+   ;
+
+op
+   : OPERADORLOGICO
+   | OPERADORMATEMATICO
+   ;
+
 
 estrutura_condicional: ife
                        elsee?
@@ -25,7 +59,6 @@ elsee               : ENTAO
                       END_STATEMENT
                       ;
 
-atribuir_a_variavel : VARIAVEL OPERADORATRIBUICAO VALOR;
 
 /*
  *  Sintaxe
@@ -39,14 +72,14 @@ fragment UPPERCASE  : [A-Z];
 NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
-TIPODADOS           : NUMERO | REAL | TEXTO;
+TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
 
 OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
 OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
 OPERADORATRIBUICAO  : '->';
 
-VARIAVEL            : ('§' TEXTO) | ('§' ( TEXTO | NUMERO )+);
-VALOR               : '§' DIGITO | '§' NUMERO;
+VARIAVEL            : ('$' TEXTO) | ('$' ( TEXTO | NUMERO )+);
+VALOR               : '$' DIGITO | '$' NUMERO;
 
 ESPACO              : [ \t\r\n]+ -> skip ;
 NOVALINHA           : ('\r'? '\n' | '\r')+;
