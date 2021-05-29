@@ -8,6 +8,7 @@ import eapli.framework.representations.dto.DTOable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 public class TicketExecutionTask extends TicketManualTask implements DTOable< TicketExecutionTaskDTO >, Serializable {
@@ -19,8 +20,9 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 
 	}
 
-	public TicketExecutionTask ( TicketTaskID ticketTaskID, Transition transition, Form form, Collaborator executedBy ) {
-		super( ticketTaskID, transition, form );
+	public TicketExecutionTask ( TicketTaskID ticketTaskID, Transition transition,
+								 Form form, Collaborator executedBy, LocalDateTime deadline ) {
+		super( ticketTaskID, transition, form, deadline );
 		this.executedBy = executedBy;
 	}
 
