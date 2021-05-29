@@ -31,7 +31,9 @@ public class AppSettings {
     private static final String SSH_PASSWORD = "SSH_PASSWORD";
     private static final String SSH_USER = "SSH_USER";
     private static final String PORT_WORKFLOW = "PORT_WORKFLOW";
+    private static final String PORT_AUTOMATICTASK_EXECUTOR = "PORT_AUTOMATICTASK_EXECUTOR";
     private static final String IP_WORKFLOW = "IP_WORKFLOW";
+    private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
 
     private final Properties applicationProperties = new Properties();
 
@@ -69,6 +71,8 @@ public class AppSettings {
         this.applicationProperties.setProperty(SSH_PASSWORD, "password");
         this.applicationProperties.setProperty(PORT_WORKFLOW, "10020");
         this.applicationProperties.setProperty(IP_WORKFLOW, "172.17.0.2");
+        this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
+        this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -106,6 +110,12 @@ public class AppSettings {
     }
     public String getIpWorkflow() {
         return this.applicationProperties.getProperty(IP_WORKFLOW);
+    }
+    public String getPortAutomatictaskExecutor() {
+        return this.applicationProperties.getProperty(PORT_AUTOMATICTASK_EXECUTOR);
+    }
+    public String getIpAutomatictaskExecutor() {
+        return this.applicationProperties.getProperty(IP_AUTOMATICTASK_EXECUTOR);
     }
 
     public Integer getHighCaloriesDishLimit() {
