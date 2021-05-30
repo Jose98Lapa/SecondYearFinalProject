@@ -171,8 +171,12 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
         return form;
     }
 
-    public void workflow(Workflow workflow){
+    public void setWorkflow ( Workflow workflow){
         this.workflow = workflow;
+    }
+
+    public Workflow workflow () {
+        return this.workflow;
     }
 
 }

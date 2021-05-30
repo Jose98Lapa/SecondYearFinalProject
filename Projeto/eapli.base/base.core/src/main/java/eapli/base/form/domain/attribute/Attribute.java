@@ -10,18 +10,20 @@ import java.util.Objects;
 
 @Entity
 public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDTO>, Serializable {
+
+    @EmbeddedId
+    private AttributeID AttributeID;
     private AtributteName nome;
     private AttributeLabel label;
     private AttributeDescription desc;
     private AttributeRegex regex;
     private AttributeType tipo;
-    @EmbeddedId
-    private AttributeID AttributeID;
+    private int number;
 
     @Version
     Long version ;
 
-    public Attribute(AtributteName nome, AttributeLabel label, AttributeDescription desc, AttributeRegex regex, AttributeType tipo, AttributeID id) {
+    public Attribute(AtributteName nome, AttributeLabel label, AttributeDescription desc, AttributeRegex regex, AttributeType tipo, AttributeID id, int number ) {
         this.nome = nome;
         this.label = label;
         this.desc = desc;
@@ -29,6 +31,8 @@ public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDT
         this.tipo = tipo;
         this.AttributeID = id;
         //Preconditions.noneNull();
+        this.number = number;
+
     }
 
     protected Attribute() {
@@ -65,7 +69,7 @@ public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDT
 
     @Override
     public AttributeDTO toDTO() {
-        return new AttributeDTO(nome.toString(), label.toString(), desc.toString(), regex.toString(), tipo.toString(), AttributeID.toString());
+        return new AttributeDTO(nome.toString(), label.toString(), desc.toString(), regex.toString(), tipo.toString(), AttributeID.toString(), number);
     }
 
     @Override

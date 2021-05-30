@@ -10,7 +10,11 @@ import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;
 import eapli.base.form.application.FormService;
+import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
+import eapli.base.form.domain.FormName;
+import eapli.base.form.domain.FormScript;
+import eapli.base.form.domain.attribute.*;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.DTO.ServiceDTOParser;
@@ -21,10 +25,7 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class RequestServiceUI extends AbstractUI {
 
@@ -33,35 +34,52 @@ public class RequestServiceUI extends AbstractUI {
 	@Override
 	protected boolean doShow ( ) {
 
-		ServiceListService servicesService = new ServiceListService();
-		ServiceDTOParser dtoParser = new ServiceDTOParser();
-		FormService formService = new FormService();
+		ServiceListService servicesService = new ServiceListService( );
+		FormService formService = new FormService( );
 
-		List< CatalogueDTO > availableCatalogues = requestableCatalogues();
-		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o catalogo que deseja");
+		List< CatalogueDTO > availableCatalogues = requestableCatalogues( );
+		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o catalogo que deseja" );
 		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( catalogueIndex );
-		Catalogue chosenCatalogue = new CatalogueDTOParser().valueOf( chosenCatalogueDTO );
+		Catalogue chosenCatalogue = new CatalogueDTOParser( ).valueOf( chosenCatalogueDTO );
 
 		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
-		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues,"Escolha o serviço que deseja");
+		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o serviço que deseja" );
 
-		FormID formID = new ServiceDTOParser().valueOf( availableServices.get( serviceIndex ) ).form().identity();
+		FormID formID = new ServiceDTOParser( ).valueOf( availableServices.get( serviceIndex ) ).form( ).identity( );
 		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( formID );
 		FormDTO form;
 
-		if ( serviceFormDTO.isPresent() ) {
-			form = serviceFormDTO.get();
-			Iterator< AttributeDTO > attributeIterator = form.atrDTO.iterator();
+		if ( serviceFormDTO.isPresent( ) ) {
+			form = serviceFormDTO.get( );
+			Set< Attribute > attributes = new HashSet<>( );
 
+			int number = 0;
 
-			while ( attributeIterator.hasNext() ) {
-				AttributeDTO attribute = attributeIterator.next();
-
+			for ( AttributeDTO attribute : form.atrDTO ) {
 				Utils.readLineFromConsole( attribute.label );
-				//show attrs
 
+				Attribute answerAttribute = new Attribute(
+						new AtributteName( "Resposta" ),
+						new AttributeLabel( Utils.readLineFromConsole( "Resposta a pergunta: " ) ),
+						new AttributeDescription( Utils.readLineFromConsole( "Resposta completa: " ) ),
+						new AttributeRegex( attribute.regex ),
+						new AttributeType( attribute.tipo ),
+						new AttributeID( UUID.randomUUID( ).toString( ) ),
+						++number
+				);
 			}
 
+			Form answerForm = new Form(
+					new FormScript( form.script ),
+					new FormID( Utils.readLineFromConsole( "Introduza o id do formulario: " ) ),
+					new FormName( "TicketAnswer" ),
+					attributes );
+
+			/**ticketController.createTicket(
+					Utils.readLineFromConsole( "DeadLine" ),
+					,
+					availableServices.get( serviceIndex ).id,
+					);**/
 		}
 
 		return false;
@@ -73,19 +91,19 @@ public class RequestServiceUI extends AbstractUI {
 	}
 
 
-	public List<CatalogueDTO> requestableCatalogues () {
+	public List< CatalogueDTO > requestableCatalogues ( ) {
 
-		ListCatalogueService catalogueService = new ListCatalogueService();
-		ListCollaboratorService listCollaboratorService = new ListCollaboratorService();
-		TeamListService teamListService = new TeamListService();
+		ListCatalogueService catalogueService = new ListCatalogueService( );
+		ListCollaboratorService listCollaboratorService = new ListCollaboratorService( );
+		TeamListService teamListService = new TeamListService( );
 		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
 
 		String email = authorizationService
-				.session()
-				.get()
-				.authenticatedUser()
-				.email()
-				.toString();
+				.session( )
+				.get( )
+				.authenticatedUser( )
+				.email( )
+				.toString( );
 
 		Collaborator currentColaborator = listCollaboratorService.getCollaboratorByEmail( email );
 		Set< Team > teams = teamListService.getACollaboratorTeams( currentColaborator );

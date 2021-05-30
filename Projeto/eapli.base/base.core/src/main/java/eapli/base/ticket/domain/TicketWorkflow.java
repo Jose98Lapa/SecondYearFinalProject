@@ -6,6 +6,7 @@ import eapli.framework.domain.model.DomainEntity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TicketWorkflow implements DomainEntity< String >, Serializable {
@@ -13,7 +14,7 @@ public class TicketWorkflow implements DomainEntity< String >, Serializable {
 	@Id
 	private String workflowID;
 
-	private Date startingDate;
+	private LocalDate startingDate;
 
 	@OneToOne
 	private TicketTask starterTask;
@@ -21,7 +22,7 @@ public class TicketWorkflow implements DomainEntity< String >, Serializable {
 	protected TicketWorkflow ( ) {
 	}
 
-	protected TicketWorkflow ( String workflowID, Date startingDate, TicketTask starter ) {
+	protected TicketWorkflow ( String workflowID, LocalDate startingDate, TicketTask starter ) {
 		setWorkflowID( workflowID );
 		setStartingDate( startingDate );
 		setStarterTask( starter );
@@ -41,11 +42,11 @@ public class TicketWorkflow implements DomainEntity< String >, Serializable {
 		this.workflowID = workflowID;
 	}
 
-	public Date startingDate ( ) {
+	public LocalDate startingDate ( ) {
 		return startingDate;
 	}
 
-	public void setStartingDate ( Date startingDate ) {
+	public void setStartingDate ( LocalDate startingDate ) {
 		this.startingDate = startingDate;
 	}
 

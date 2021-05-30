@@ -50,6 +50,20 @@ public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID
 
     }
 
+    public boolean hasAfterTask () {
+        return this.afterTask != null;
+    }
+    public Task afterTask () {
+        return this.afterTask;
+    }
+
+    public boolean hasPreviousTask () {
+        return this.beforeTask != null;
+    }
+
+    public Task previousTask () {
+        return this.beforeTask;
+    }
 
 
 }

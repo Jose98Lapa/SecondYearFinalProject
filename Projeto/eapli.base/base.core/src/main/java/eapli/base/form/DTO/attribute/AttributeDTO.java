@@ -7,13 +7,15 @@ public class AttributeDTO {
     public String regex;
     public String tipo;
     public String id;
+    public int number;
 
-    public AttributeDTO(String nome, String label, String desc, String regex, String tipo, String id) {
+    public AttributeDTO(String nome, String label, String desc, String regex, String tipo, String id, int number ) {
         this.nome = nome;
         this.label = label;
         this.desc = desc;
         this.regex = regex;
         this.tipo = tipo;
         this.id = id;
+        this.number = number;
     }
 }

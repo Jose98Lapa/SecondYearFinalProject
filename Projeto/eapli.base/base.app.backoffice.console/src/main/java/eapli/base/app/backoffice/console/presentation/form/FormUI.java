@@ -31,8 +31,8 @@ public class FormUI extends AbstractUI {
             opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair )");
             while (!opt.equalsIgnoreCase("Exit")) {
                 atrib.show();
-                AttributeDTO dto = new AttributeDTO(atrib.getNome(), atrib.getLabel(), atrib.getDesc(), atrib.getRegex(), atrib.getTipo(), atrib.getId());
-                atr.add(dto);
+                //TODO:WIDGET PRECISA LEVAR NUMERO AttributeDTO dto = new AttributeDTO(atrib.getNome(), atrib.getLabel(), atrib.getDesc(), atrib.getRegex(), atrib.getTipo(), atrib.getId(), atrib.);
+               //atr.add(dto);
                 opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair )");
             }
             FormDTO dto = new FormDTO(ifo.script(), ifo.id(), ifo.nome(), atr);
