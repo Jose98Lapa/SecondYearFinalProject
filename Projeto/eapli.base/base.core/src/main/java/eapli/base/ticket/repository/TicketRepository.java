@@ -13,6 +13,6 @@ public interface TicketRepository extends DomainRepository< TicketID, Ticket > {
 
 	Optional<Ticket> ofIdentity(TicketID number);
 
-	Iterable<Ticket> getPendingTicket();
+	List<Ticket> getPendingTicket();
 
 }
