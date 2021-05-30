@@ -50,6 +50,8 @@ public class Engine {
 								}
 						)
 		);
+
+		currentState.forEach( ticketRepository::save );
 	}
 
 	private static void moveStateFlow ( Ticket currentStateTicket ) {
