@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.jpa;
 
 
 import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
@@ -33,18 +34,8 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
         final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.TicketStatus = :id", Ticket.class);
         //TODO
         //update when status name is known
-        q.setParameter("id", "pending");
+        q.setParameter("id", "PENDING");
         return q.getResultList();
 
     }
-
-    /*public List<Ticket> getTicketsByCollaborator(MecanographicNumber id){
-        ArrayList<Ticket> tickets = new ArrayList<>();
-        TypedQuery<Object[]> query = createQuery("select p from eapli.base.ticket p where p.publisher.pubId= :id ",Object[].class);
-        query.setParameter("ID", id);
-        for (Object result : query.getResultList()) {
-            tickets.add((Ticket) result);
-        }
-        return tickets;
-    }*/
 }

@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 @Entity
 public class TicketApprovalTask extends TicketManualTask implements DTOable< TicketApprovalTaskDTO >, Serializable {
 
+	public void setApprovedBy(Collaborator approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	@OneToOne
 	private Collaborator approvedBy;
 

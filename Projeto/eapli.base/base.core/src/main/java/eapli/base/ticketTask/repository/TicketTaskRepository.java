@@ -11,7 +11,4 @@ public interface TicketTaskRepository extends DomainRepository< TicketTaskID, Ti
 
     List<TicketTask> getTicketsByCollaborator(Collaborator collab);
 
-    @Override
-    Iterable< TicketTask > findAll ( );
-
 }

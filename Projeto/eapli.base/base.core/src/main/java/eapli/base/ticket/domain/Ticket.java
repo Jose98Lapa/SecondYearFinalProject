@@ -29,6 +29,11 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 	@EmbeddedId
 	private TicketID id;
+
+	public void setStatus(TicketStatus status) {
+		this.status = status;
+	}
+
 	private TicketStatus status;
 	private AttachedFile file;
 	private Urgency urgency;
