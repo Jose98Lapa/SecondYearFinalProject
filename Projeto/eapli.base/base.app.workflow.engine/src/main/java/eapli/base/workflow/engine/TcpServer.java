@@ -1,4 +1,4 @@
-package eapli.base.workflow.engine.client;
+package eapli.base.workflow.engine;
 
 
 import eapli.base.Application;
