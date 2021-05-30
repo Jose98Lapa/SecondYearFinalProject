@@ -5,7 +5,10 @@ import eapli.base.Application;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 public class SFTPClient {
 
@@ -60,6 +63,39 @@ public class SFTPClient {
         sftpChannel.get(source, destination);
         sftpChannel.exit();
         session.disconnect();
+    }
+
+    public String getScriptToString(String source) throws JSchException, SftpException {
+        System.out.println(2);
+        int i = source.lastIndexOf('/');
+        System.out.println(3);
+        String filename=source;
+        if (i > 0)
+            filename += source.substring(i + 1);
+
+        System.out.println(1);
+        this.connect();
+        Channel channel = session.openChannel("sftp");
+        channel.connect();
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+        try {
+            sftpChannel.cd(localServerFolder);
+        } catch (SftpException e) {
+            sftpChannel.mkdir(localServerFolder);
+            sftpChannel.cd(localServerFolder);
+        }
+        System.out.println(1);
+
+        System.out.println(1);
+        sftpChannel.get(source, filename);
+        System.out.println(4);
+        String output =new BufferedReader(new InputStreamReader(sftpChannel.get(filename))).lines().collect(Collectors.joining("\n"));
+        System.out.println(output);
+        sftpChannel.exit();
+        session.disconnect();
+        File temp = new File(filename);
+        temp.delete();
+        return output;
     }
 
     public String chooser(String type) {

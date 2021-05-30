@@ -126,19 +126,19 @@ public class CompleteServiceUI extends AbstractUI {
                 }
                 case 8:{
                     String workflowID = Console.readLine("Insira o id do workflow");
-                    List<String> stringList = new ArrayList<>();
+                    List<String> taskIDList = new ArrayList<>();
                     TaskUI taskUI = new TaskUI();
 
                     if (Console.readBoolean("Esta atividade requer aprovação")){
-                        stringList.add(taskUI.createApprovalTask());
+                        taskIDList.add(taskUI.createApprovalTask());
                     }
 
                     if (Console.readBoolean("A tarefa é manual")){
-                        stringList.add(taskUI.createExecutionTask());
+                        taskIDList.add(taskUI.createExecutionTask());
                     }else{
-                        stringList.add(taskUI.createAutomaticTask());
+                        taskIDList.add(taskUI.createAutomaticTask());
                     }
-                    theController.addWorkflowToService(workflowID,stringList,toComplete);
+                    theController.addWorkflowToService(workflowID,taskIDList,toComplete);
 
 
                 }

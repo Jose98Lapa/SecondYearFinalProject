@@ -75,11 +75,13 @@ public class RequestServiceUI extends AbstractUI {
 					new FormName( "TicketAnswer" ),
 					attributes );
 
-			/**ticketController.createTicket(
+			ticketController.createTicket(
 					Utils.readLineFromConsole( "DeadLine" ),
-					,
-					availableServices.get( serviceIndex ).id,
-					);**/
+					UUID.randomUUID().toString(),
+					Utils.readLineFromConsole( "File Path: " ),
+					new ServiceDTOParser().valueOf( availableServices.get( serviceIndex ) ),
+					Utils.readLineFromConsole( "Urgency: " )
+					);
 		}
 
 		return false;

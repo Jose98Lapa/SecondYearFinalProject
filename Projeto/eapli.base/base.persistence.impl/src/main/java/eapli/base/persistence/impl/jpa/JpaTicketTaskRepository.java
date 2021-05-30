@@ -8,6 +8,8 @@ import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Iterator;

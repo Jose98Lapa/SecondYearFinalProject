@@ -1,14 +1,18 @@
-package eapli.base.app.user.console.presentation.dashboard.application;
+package eapli.base.dasboard.application;
 
-import eapli.base.app.user.console.presentation.dashboard.HttpServerAjax;
+import eapli.base.Application;
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.util.LinkedList;
+
 public class DashboardController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final HttpServerAjax server = new HttpServerAjax();
+    LinkedList<DashboardInfoDTO> dashboardInfo = new LinkedList<>();
+    DashboardService service = new DashboardService();
 
     public void showCollaborator() {
         String email = authz.session().get().authenticatedUser().email().toString();
@@ -16,5 +20,20 @@ public class DashboardController {
         Collaborator colab = listCollaboratorService.getCollaboratorByEmail(email);
         server.setColab(colab.toDTO());
         server.start();
+    }
+
+    public void receiveInfoFromServer(String email) {
+        TcpClient tcpClient = new TcpClient();
+        tcpClient.startConnection(Application.settings().getIpWorkflow());
+        dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
+        //tcpClient.stopConnection();
+    }
+
+    public LinkedList<DashboardInfoDTO> infoByUrgency() {
+        return service.sortDashboardInfoByUrgency(dashboardInfo);
+    }
+
+    public LinkedList<DashboardInfoDTO> infoByCriticality() {
+        return service.sortDashboardInfoByCriticality(dashboardInfo);
     }
 }

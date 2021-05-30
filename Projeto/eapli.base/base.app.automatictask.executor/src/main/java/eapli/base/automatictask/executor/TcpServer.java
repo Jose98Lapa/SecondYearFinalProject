@@ -1,7 +1,12 @@
 package eapli.base.automatictask.executor;
 
 
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 import eapli.base.Application;
+import eapli.base.app.backoffice.console.presentation.SFTPClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,7 +14,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.channels.Channel;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 
 class TcpServer {
 
@@ -27,7 +34,7 @@ class TcpServer {
 
         while (true) {
             cliSock = sock.accept();
-            new Thread(new TcpServerThread(cliSock)).start();
+            new TcpServerThread(cliSock).run();
         }
     }
 
@@ -80,11 +87,18 @@ class TcpServerThread implements Runnable {
             //Recives script
             byte[] scriptInfo = sIn.readNBytes(3);
             byte[] scriptByteArray = sIn.readNBytes(scriptInfo[2]);
-            String script = new String(scriptByteArray, StandardCharsets.UTF_8);
-            System.out.println(script);
+            String scriptName = new String(scriptByteArray, StandardCharsets.UTF_8);
+            SFTPClient scriptClient = new SFTPClient();
+            String script = scriptClient.getScriptToString(scriptName);
+            String[] data = script.split("\n");
 
+            Calendar calendar = Calendar.getInstance();
+            System.out.printf("[%s] - Executing %s...%n",calendar.getTime(), scriptName);
+            for (String line : data) System.out.println(line);
             Thread.sleep(5000);
-        } catch (IOException | InterruptedException ex) {
+            System.out.printf("[%s] - %s executed.%n",calendar.getTime(), scriptName);
+
+        } catch (IOException | InterruptedException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
         }
         return true;

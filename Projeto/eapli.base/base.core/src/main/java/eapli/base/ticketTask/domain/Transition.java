@@ -47,4 +47,12 @@ public class Transition implements ValueObject, Comparable< Transition >, Serial
 		return this.nextTask != null;
 	}
 
+	public void setPreviousTask ( TicketTask previousTask ) {
+		this.previousTask = previousTask;
+	}
+
+	public void setNextTask ( TicketTask nextTask ) {
+		this.nextTask = nextTask;
+	}
+
 }
