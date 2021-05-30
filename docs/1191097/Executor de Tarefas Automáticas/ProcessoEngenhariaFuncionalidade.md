@@ -19,7 +19,23 @@ Para análise, o modelo de domínio dá resposta ao requisito, não sendo assim 
 
 # 3. Design
 
+## 3.1. Realização da Funcionalidade
 Para este requisito foi usado o protocolo de aplicação fornecido ([SDP2001](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/Servidor(es)%20Aplicacional(ais)/Executor%20de%20Tarefas%20Autom%C3%A1ticas/file.md)). Para a que se possa suportar o processamento simultaneo de pedidos para execução de tarefas automáticas foram utilizadas threads, um pequeno programa que trabalha como um subsistema, sendo uma forma de um processo se autodividir em duas ou mais tarefas. A ligação TCP deve persiste apenas durante a execução de cada tarefa automática. Uma vez terminada a execução da tarefa, o server envia feedback ao cliente do sucesso ou insucesso da execução da tarefa automática e ai o cliente solicita o fim da ligação.
+
+## 3.2. Testes 
+Para assegurar que a serialização e a desserialização estão funcionais foi necessário a criação de um teste. Neste caso foi feito com uma String com mais de 255 carateres.
+
+```java
+    @Test
+    public void ensureObjectStaysTheSame() throws IOException {
+        String expected = "ESTEmedotoéusadoParaquandoUmObjetoÉDemasiadoGrandeParaSerEnviadouiehfuiehfuiheiufheifiuwehfiuhiufehwliurfhuiwgfuiwehfuioewhiofehwioufhifehwfhewiofheiowhfioewfhioewfioewhfiowehiofeiofewhiofehwiofewoifhewiofheiwofioewfhiowehfioefhioehfioehfioehiofheiofehwiofhewiofheiofheiofhioehfio";
+        byte[][] temp = SplitInfo.splitObjectIntoByteArray(expected);
+        byte[] actualArray = SplitInfo.serializeObject(SplitInfo.joinSplitInfo(temp));
+        String actual = new String(actualArray, StandardCharsets.UTF_8);
+        actual = actual.substring(7);
+        assertEquals(expected,actual);
+    }
+```
 
 # 4. Implementação
 
@@ -90,9 +106,78 @@ public void executeAutomaticTask(String script) throws IOException {
 	}
 ```
 
+## Split info
+Para quando o objeto possuia mais de 255 bytes foram usadas os seguintes metodos
+
+```java
+public static <V> byte[][] splitObjectIntoByteArray (V object){
+        try{
+            byte[] bytes;
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream);
+            outputStream.writeObject(object);
+            outputStream.flush();
+            bytes = byteArrayOutputStream.toByteArray();
+            outputStream.close();
+            byteArrayOutputStream.close();
+            byte[][] returnInfo = new byte[bytes.length/SIZE_LIMIT+1][SIZE_LIMIT];
+            int bytesCount = 0;
+            for (int i=0;i< returnInfo.length;i++){
+                for (int j=0;j<SIZE_LIMIT;j++){
+                    if (bytesCount==bytes.length)
+                        break;
+                    returnInfo[i][j] = bytes[bytesCount];
+                    bytesCount++;
+                }
+            }
+            return returnInfo;
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return new byte[0][0];
+    }
+
+    public static Object joinSplitInfo(byte [][]info){
+        byte[] arr = new byte[info.length*info[0].length];
+        int byteCount = 0;
+        for (int i=0;i<info.length;i++){
+            for (int j=0;j<info[i].length;j++){
+                arr[byteCount] = info[i][j];
+                byteCount++;
+            }
+        }
+        try{
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(arr);
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            Object object = objectInputStream.readObject();
+            byteArrayInputStream.close();
+            objectInputStream.close();
+            return object;
+
+        }catch (IOException|ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static byte[] serializeObject(Object obj) throws IOException {
+        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bytesOut);
+        oos.writeObject(obj);
+        oos.flush();
+        byte[] bytes = bytesOut.toByteArray();
+        bytesOut.close();
+        oos.close();
+        return bytes;
+    }
+```
+
+
 # 5. Integração/Demonstração
 
-Para a implementação desta funcionalidade foi necessário um bocado mais tempo do que o habitual pois é algo novo. Todavia, o trabalho foi sempre bastante fluido. Para efeitos de demonstração, a execução das tarefas automáticas foi apenas simulada. A execução desta funcionalidade é desencandeada pelo motor de fluxos de atividade, onde este exerce o papel de cliente SDP2021
+Para a implementação desta funcionalidade foi necessário um bocado mais tempo do que o habitual pois é algo novo. Todavia, o trabalho foi sempre bastante fluido. Para efeitos de demonstração, a execução das tarefas automáticas foi apenas simulada. A execução desta funcionalidade é desencandeada pelo motor de fluxos de atividade, onde este exerce o papel de cliente SDP2021.
 
 # 6. Observações
 
