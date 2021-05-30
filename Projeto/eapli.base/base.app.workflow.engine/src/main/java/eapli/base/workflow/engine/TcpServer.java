@@ -2,6 +2,7 @@ package eapli.base.workflow.engine;
 
 
 import eapli.base.Application;
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.dto.CollaboratorDTO;
@@ -10,7 +11,12 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
+import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.domain.TicketTask;
+import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -18,7 +24,9 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TcpServer implements Runnable {
 
@@ -58,13 +66,26 @@ public class TcpServer implements Runnable {
 			//Get Collaborator by email
 			CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
 			InstituionalEmail iEmail = new InstituionalEmail(email);
-			CollaboratorDTO collaboratorDTO =collaboratorRepository.getColaboradorByEmail(iEmail).get().toDTO();
+			Optional<Collaborator> collabOp =collaboratorRepository.getColaboradorByEmail(iEmail);
+			CollaboratorDTO collaboratorDTO;
+			if (collabOp.isPresent())
+				collaboratorDTO= collabOp.get().toDTO();
 
 			//Get Ticket by collaborator ID
-			TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-			List<Ticket> lstTicket = (List<Ticket>) ticketRepository.getTicketsByCollaborator(new MecanographicNumber(collaboratorDTO.mNumber));
+			List<TicketTask>lstTicketTask = new ArrayList<>();
 
-			for (Ticket ticket:lstTicket){
+			TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+			int finalCode=254;
+			for (TicketTask ticketTask:lstTicketTask){
+				Optional<Ticket> ticketOp = ticketRepository.ofIdentity(new TicketID(ticketTask.identity().toString()));
+				Ticket ticket;
+				if (ticketOp.isPresent())
+					ticket=ticketOp.get();
+				else{
+					System.err.println("No tickets associated with this ticketTast");
+					finalCode=253;
+					break;
+				}
 				TicketDTO ticketDTO =ticket.toDTO();
 				ServiceDTO serviceDTO = ticket.service().toDTO();
 				sendString(ticketDTO.urgency); //urgency
@@ -75,6 +96,7 @@ public class TcpServer implements Runnable {
 				sendString(ticket.service().catalogo().toDTO().nivelCriticidade.toString()); //criticityLvl
 			}
 			byte[] finalPackage ={(byte) 0, (byte) 254, (byte) 0, (byte) 0};
+			sOut.write(finalPackage);
 
 		} catch (IOException ex) {
 			System.out.println("An error ocurred");
@@ -119,8 +141,9 @@ public class TcpServer implements Runnable {
 
 	public static void main(String[] args) {
 		Socket cliSock;
+		AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
 		try {
-			serverSocket = new ServerSocket(Integer.parseInt("10020"/*Application.settings().getPortWorkflow())*/));
+			serverSocket = new ServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
 		} catch (IOException ex) {
 			System.err.println("Failed to open server socket");
 			System.exit(1);

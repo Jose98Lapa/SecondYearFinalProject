@@ -37,13 +37,14 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
         return q.getResultList();
 
     }
-    public List<Ticket> getTicketsByCollaborator(MecanographicNumber id){
+
+    /*public List<Ticket> getTicketsByCollaborator(MecanographicNumber id){
         ArrayList<Ticket> tickets = new ArrayList<>();
-        TypedQuery<Object[]> query = createQuery("select p from Post p where p.publisher.pubId= :id ",Object[].class);
+        TypedQuery<Object[]> query = createQuery("select p from eapli.base.ticket p where p.publisher.pubId= :id ",Object[].class);
         query.setParameter("ID", id);
         for (Object result : query.getResultList()) {
             tickets.add((Ticket) result);
         }
         return tickets;
-    }
+    }*/
 }
