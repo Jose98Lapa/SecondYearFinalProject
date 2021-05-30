@@ -1,25 +1,23 @@
 package eapli.base.ticketTask.application;
-
-import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.ticket.DTO.TicketDTO;
-import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.repository.TicketRepository;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RedeemTaskController {
-    private final TicketRepository ticketRepository =PersistenceContext.repositories().tickets();
+    private final TicketTaskService ticketTaskService = new TicketTaskService();
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public List<TicketDTO> getPendingTasks(){
-        List<Ticket> ticketList = (List<Ticket>) ticketRepository.getPendingTicket();
-        List<TicketDTO> ticketDTOList = new ArrayList<>();
-        for (Ticket ticket: ticketList)
-            ticketDTOList.add(ticket.toDTO());
-        return ticketDTOList;
+        return ticketTaskService.getPendingTasks();
     }
 
     public boolean redeemTask(TicketDTO ticketDTO){
-        return true;
+        String email = authz.session().get().authenticatedUser().email().toString();
+        Optional<Collaborator> Ocollaborator = ticketTaskService.getCollaborator(email);
+        return Ocollaborator.filter(collaborator -> ticketTaskService.redeemTask(ticketDTO, collaborator)).isPresent();
     }
 }

@@ -1,6 +1,7 @@
 package eapli.base.ticketTask.repository;
 
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.domain.TicketTaskID;
 import eapli.framework.domain.repositories.DomainRepository;

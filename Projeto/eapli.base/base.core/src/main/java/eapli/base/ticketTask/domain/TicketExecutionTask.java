@@ -37,4 +37,7 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 		);
 	}
 
+	public void setExecutedBy(Collaborator executedBy) {
+		this.executedBy = executedBy;
+	}
 }
