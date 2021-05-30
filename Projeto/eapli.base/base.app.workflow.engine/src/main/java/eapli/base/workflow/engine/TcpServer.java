@@ -1,4 +1,4 @@
-package eapli.base.workflow.engine.client;
+package eapli.base.workflow.engine;
 
 
 import eapli.base.Application;
@@ -61,6 +61,9 @@ public class TcpServer implements Runnable {
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2]&0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
+            boolean mock=false;
+            if (!mock) {
+
             //Get Collaborator by email
             CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
             InstituionalEmail iEmail = new InstituionalEmail(email);
@@ -73,35 +76,47 @@ public class TcpServer implements Runnable {
                 System.exit(1);
             }
 
-            TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
-            List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
+                TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
+                List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
 
-            TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-            int finalCode = 254;
-            for (TicketTask ticketTask : lstTicketTask) {
+                TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+                int finalCode = 254;
+                for (TicketTask ticketTask : lstTicketTask) {
 
-                Optional<Ticket> ticketOp = ticketRepository.ofIdentity(new TicketID(ticketTask.identity().toString()));
-                Ticket ticket;
-                if (ticketOp.isPresent())
-                    ticket = ticketOp.get();
-                else {
-                    System.err.println("No tickets associated with this ticketTast");
-                    finalCode = 253;
-                    break;
+                    Optional<Ticket> ticketOp = ticketRepository.ofIdentity(new TicketID(ticketTask.identity().toString()));
+                    Ticket ticket;
+                    if (ticketOp.isPresent())
+                        ticket = ticketOp.get();
+                    else {
+                        System.err.println("No tickets associated with this ticketTast");
+                        finalCode = 253;
+                        break;
+                    }
+
+                    TicketDTO ticketDTO = ticket.toDTO();
+                    ServiceDTO serviceDTO = ticket.service().toDTO();
+                    sendString(ticketDTO.urgency); //urgency
+                    sendString(ticketDTO.deadLine); //deadline
+                    sendString(serviceDTO.title); //title
+                    sendString(serviceDTO.icon); //icon
+                    sendString(serviceDTO.briefDescription); //briefDesc
+                    sendString(ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
                 }
 
-                TicketDTO ticketDTO = ticket.toDTO();
-                ServiceDTO serviceDTO = ticket.service().toDTO();
-                sendString(ticketDTO.urgency); //urgency
-                sendString(ticketDTO.deadLine); //deadline
-                sendString(serviceDTO.title); //title
-                sendString(serviceDTO.icon); //icon
-                sendString(serviceDTO.briefDescription); //briefDesc
-                sendString(ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
+                byte[] finalPackage = {(byte) 0, (byte) finalCode, (byte) 0, (byte) 0};
+                sOut.write(finalPackage);
+                sOut.flush();
+            }else{
+                    sendString("5");
+                    sendString("30/6/2021");
+                    sendString("Lavar janelas");
+                    sendString("http://192.168.1.92/bootstrap.jpg");
+                    sendString("tens de lavar janelas");
+                    sendString("4");
+                    byte[] finalPackage = {(byte) 0, (byte) 254, (byte) 0, (byte) 0};
+                    sOut.write(finalPackage);
+                    sOut.flush();
             }
-            byte[] finalPackage = {(byte) 0, (byte) finalCode, (byte) 0, (byte) 0};
-            sOut.write(finalPackage);
-            sOut.flush();
         } catch (IOException ex) {
             System.out.println("An error ocurred");
         }
