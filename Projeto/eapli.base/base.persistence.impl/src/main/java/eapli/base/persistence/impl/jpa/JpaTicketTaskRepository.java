@@ -37,7 +37,7 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 		}
 
 		final TypedQuery<TicketTask> p = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE e.executedBy=:executedBy", TicketTask.class);
-		q.setParameter("executedBy", collab);
+		p.setParameter("executedBy", collab);
 
 		for (Iterator<TicketTask> it = p.getResultStream().iterator(); it.hasNext(); ) {
 			TicketTask ticketTask = it.next();

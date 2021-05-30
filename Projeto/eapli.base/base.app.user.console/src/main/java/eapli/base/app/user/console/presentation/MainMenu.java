@@ -57,6 +57,7 @@ class MainMenu extends ClientUserBaseUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int CONSULTAR_SERVICO_OPTION = 2;
+    private static final int REIVINDICAR_TAREFA = 3;
 
 
     private final AuthorizationService authz =
@@ -88,7 +89,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION, builderConsultarServicoMenu());
-
+        mainMenu.addSubMenu(REIVINDICAR_TAREFA,builderRedeemTaskMenu());
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
