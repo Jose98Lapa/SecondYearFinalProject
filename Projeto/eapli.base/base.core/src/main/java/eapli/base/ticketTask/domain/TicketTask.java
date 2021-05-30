@@ -7,6 +7,7 @@ import eapli.framework.domain.model.DomainEntity;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 public abstract class TicketTask  implements DomainEntity< TicketTaskID >, AggregateRoot< TicketTaskID >, Serializable {

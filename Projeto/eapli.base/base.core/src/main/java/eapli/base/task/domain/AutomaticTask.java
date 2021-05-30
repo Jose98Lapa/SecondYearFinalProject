@@ -55,4 +55,9 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO>, Se
     public AutomaticTaskDTO toDTO() {
         return new AutomaticTaskDTO(super.taskID.toString(),scriptPath.toString());
     }
+
+    public ScriptPath scriptPath ( ) {
+        return scriptPath;
+    }
+
 }
