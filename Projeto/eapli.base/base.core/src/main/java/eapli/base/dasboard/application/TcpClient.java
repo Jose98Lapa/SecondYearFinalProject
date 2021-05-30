@@ -27,14 +27,14 @@ public class TcpClient {
 			serverIP = InetAddress.getByName(ip);
 		} catch (UnknownHostException ex) {
 			System.out.println("Invalid server specified: " + ip);
-			System.exit(1);
+			//System.exit(1);
 		}
 
 		try {
 			socket = new Socket(serverIP, Integer.parseInt(Application.settings().getPortWorkflow()));
 		} catch (IOException ex) {
 			System.out.println("Failed to establish TCP connection");
-			System.exit(1);
+			//System.exit(1);
 		}
 
 
@@ -43,7 +43,7 @@ public class TcpClient {
 			sIn = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			System.out.println("Failed to establish DataOutputStream or DataInputStream");
-			System.exit(1);
+			//System.exit(1);
 		}
 
 		System.out.println("Connection established with Worflow server\n");
