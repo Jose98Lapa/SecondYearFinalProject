@@ -32,7 +32,7 @@ public class AppSettings {
     private static final String SSH_USER = "SSH_USER";
     private static final String PORT_WORKFLOW = "PORT_WORKFLOW";
     private static final String PORT_AUTOMATICTASK_EXECUTOR = "PORT_AUTOMATICTASK_EXECUTOR";
-    private static final String IP_WORKFLOW = "IP_WORKFLOW";
+    private static final String IP_WORKFLOW = "WORKFLOW_SERVER";
     private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
 
     private final Properties applicationProperties = new Properties();

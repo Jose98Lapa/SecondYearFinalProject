@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.dashboard;
+package eapli.base.dasboard.application;
 
 import java.io.*;
 

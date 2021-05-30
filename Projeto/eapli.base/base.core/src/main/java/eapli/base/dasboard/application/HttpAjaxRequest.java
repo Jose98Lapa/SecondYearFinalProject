@@ -1,4 +1,4 @@
-package eapli.base.app.user.console.presentation.dashboard;
+package eapli.base.dasboard.application;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,7 +17,6 @@ public class HttpAjaxRequest extends Thread {
         sock = s;
     }
 
-
     public void run() {
         try {
             outS = new DataOutputStream(sock.getOutputStream());
@@ -29,13 +28,15 @@ public class HttpAjaxRequest extends Thread {
             HTTPmessage request = new HTTPmessage(inS);
             HTTPmessage response = new HTTPmessage();
             //System.out.println(request.getURI());
-
             if (request.getMethod().equals("GET")) {
                 if (request.getURI().equals("/colabInfo")) {
                     response.setContentFromString(HttpServerAjax.getColabInfoStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
-                } else if (request.getURI().equals("/votes")) {
-                    response.setContentFromString(HttpServerAjax.getVotesStandingInHTML(), "text/html");
+                } else if (request.getURI().equals("/criticality")) {
+                    response.setContentFromString(HttpServerAjax.getInfoCriticalityStandingInHTML(), "text/html");
+                    response.setResponseStatus("200 Ok");
+                } else if (request.getURI().equals("/urgency")){
+                    response.setContentFromString(HttpServerAjax.getInfoUrgencyStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else {
                     String fullname = baseFolder + "/";
@@ -54,7 +55,7 @@ public class HttpAjaxRequest extends Thread {
                     }
                 }
                 response.send(outS);
-            } else { // NOT GET
+            }/* else { // NOT GET
                 if ((request.getMethod().equals("PUT") && request.getURI().startsWith("/votes/"))) {
                     HttpServerAjax.castVote(request.getURI().substring(7));
                     response.setResponseStatus("200 Ok");
@@ -65,7 +66,7 @@ public class HttpAjaxRequest extends Thread {
                     response.setResponseStatus("405 Method Not Allowed");
                 }
                 response.send(outS);
-            }
+            }*/
         } catch (IOException ex) {
             System.out.println("Thread error when reading request");
         }
