@@ -61,7 +61,7 @@ public class TcpServer implements Runnable {
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2]&0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-            boolean mock=false;
+            boolean mock=true;
             if (!mock) {
 
             //Get Collaborator by email
@@ -108,7 +108,7 @@ public class TcpServer implements Runnable {
                 sOut.flush();
             }else{
                     sendString("5");
-                    sendString("30-6-2021");
+                    sendString("30/06/2021 23:34");
                     sendString("Lavar janelas");
                     sendString("http://192.168.1.92/bootstrap.jpg");
                     sendString("tens de lavar janelas");

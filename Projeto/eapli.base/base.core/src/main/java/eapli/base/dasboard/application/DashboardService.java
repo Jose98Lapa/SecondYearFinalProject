@@ -12,8 +12,8 @@ public class DashboardService {
         LinkedList toReturn = new LinkedList<DashboardInfoDTO>();
         for (String line:input) {
             String [] segments= line.split("\\|");
-            String[] aux = getRemainingTime(segments[3]);
-            toReturn.add(new DashboardInfoDTO(segments[0],segments[1],segments[2],segments[3],segments[4],segments[5],aux[0],aux[1]));
+            String[] aux = getRemainingTime(segments[1]);
+            toReturn.add(new DashboardInfoDTO(segments[3],segments[1],segments[1],segments[2],segments[4],segments[0],aux[0],aux[1]));
         }
         return toReturn;
     }
@@ -21,10 +21,10 @@ public class DashboardService {
         String[] toReturn = new String[2];
         long hours = ChronoUnit.HOURS.between(getDateFromString(segment), LocalDateTime.now());
         if(hours<0){
-            toReturn[2]="2";
+            toReturn[1]="2";
         }
         if (hours<2)
-            toReturn[2]="2";
+            toReturn[1]="2";
 
         long duration  =LocalDateTime.now().getNano()- getDateFromString(segment).getNano();
 
@@ -38,7 +38,7 @@ public class DashboardService {
 
 
     private LocalDateTime getDateFromString(String str){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
         return dateTime;
     }
