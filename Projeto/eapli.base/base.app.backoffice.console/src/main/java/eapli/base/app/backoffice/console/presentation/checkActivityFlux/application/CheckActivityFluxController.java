@@ -18,7 +18,7 @@ public class CheckActivityFluxController {
     }
 
     public void setStatus(){
-        server.setStatus(checkServer(Application.settings().getExecutorServer()));
+        server.setStatus(checkServer(Application.settings().getWorkflowServer()));
     }
 
     public String checkServer ( String ipAddress ) {
