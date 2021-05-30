@@ -60,6 +60,7 @@
     <class>eapli.base.ticketTask.domain.TicketApprovalTask</class>
     <class>eapli.base.ticketTask.domain.TicketAutomaticTask</class>
     <class>eapli.base.ticketTask.domain.TicketManualTask</class>
+    <class>eapli.base.ticketTask.domain.TicketExecutionTask</class>
 
 
     <properties>
