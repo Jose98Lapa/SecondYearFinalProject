@@ -1,8 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
 
-import eapli.base.collaborator.domain.MecanographicNumber;
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
@@ -11,6 +9,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +29,24 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
         return q.getResultStream().findFirst();
     }
     @Override
-    public Iterable<Ticket> getPendingTicket(){
+    public List<Ticket> getPendingTicket(){
         final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.TicketStatus = :id", Ticket.class);
-        //TODO
-        //update when status name is known
         q.setParameter("id", "PENDING");
-        return q.getResultList();
+
+        List<Ticket> ticketList = new ArrayList<>();
+        for (Iterator<Ticket> it = q.getResultStream().iterator(); it.hasNext(); ) {
+            Ticket ticket = it.next();
+            ticketList.add(ticket);
+        }
+
+        final TypedQuery<Ticket> p = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.TicketStatus = :id", Ticket.class);
+        q.setParameter("id", "PENDING_EXECUTION");
+        for (Iterator<Ticket> it = p.getResultStream().iterator(); it.hasNext(); ) {
+            Ticket ticket = it.next();
+            ticketList.add(ticket);
+        }
+
+        return ticketList;
 
     }
 }

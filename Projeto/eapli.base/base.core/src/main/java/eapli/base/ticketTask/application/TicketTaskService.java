@@ -27,7 +27,7 @@ public class TicketTaskService {
     }
 
     public List<TicketDTO> getPendingTasks(){
-        List<Ticket> ticketList = (List<Ticket>) ticketRepository.getPendingTicket();
+        List<Ticket> ticketList = ticketRepository.getPendingTicket();
         List<TicketDTO> ticketDTOList = new ArrayList<>();
         for (Ticket ticket: ticketList)
             ticketDTOList.add(ticket.toDTO());
