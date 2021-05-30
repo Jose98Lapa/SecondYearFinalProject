@@ -15,7 +15,7 @@ public class FormDTOParser implements DTOParser<FormDTO, Form> {
         FormBuilder svb = new FormBuilder();
         Set<Attribute> atr = new HashSet<>();
         for (AttributeDTO atributo:dto.atrDTO) {
-            atr.add(new Attribute(AtributteName.valueOf(atributo.nome), AttributeLabel.valueOf(atributo.label), AttributeDescription.valueOf(atributo.desc), AttributeRegex.valueOf(atributo.regex), AttributeType.valueOf(atributo.tipo), AttributeID.valueOf(atributo.id)));
+            atr.add(new Attribute(AtributteName.valueOf(atributo.nome), AttributeLabel.valueOf(atributo.label), AttributeDescription.valueOf(atributo.desc), AttributeRegex.valueOf(atributo.regex), AttributeType.valueOf(atributo.tipo), AttributeID.valueOf(atributo.id), atributo.number));
         }
         return svb.setAtr(atr).setId(dto.id).setNome(dto.nome).setScript(dto.script).build();
     }

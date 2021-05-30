@@ -1,17 +1,23 @@
 package eapli.base.ticketTask.application;
 
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ticketTask.domain.*;
+import eapli.base.ticketTask.repository.TicketTaskRepository;
+
 public class CreateTaskController {
 
-/*	public boolean createApprovalTask () {
+	private final TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
 
+	public void registerApprovalTask( TicketApprovalTask ticketApprovalTask ){
+		this.ticketTaskRepository.save( ticketApprovalTask );
 	}
 
-	public boolean createExecutionTask () {
-
+	public void registerExecutionTask( TicketExecutionTask ticketExecutionTask ){
+		this.ticketTaskRepository.save( ticketExecutionTask );
 	}
 
-	public boolean createAutomaticTask () {
-
-	}*/
+	public void registerAutomaticTask( TicketAutomaticTask ticketAutomaticTask) {
+		this.ticketTaskRepository.save( ticketAutomaticTask );
+	}
 
 }

@@ -9,9 +9,10 @@ public class AttributeBuilder {
     private AttributeRegex regex;
     private AttributeType tipo;
     private AttributeID id;
+    private int number;
 
     public Attribute build(){
-        return new Attribute(nome,label,desc,regex,tipo,id);
+        return new Attribute(nome,label,desc,regex,tipo,id, number);
     }
 
     public AttributeBuilder withNome(String nome) {
@@ -40,6 +41,11 @@ public class AttributeBuilder {
     }
     public AttributeBuilder withId(String id) {
         this.id = AttributeID.valueOf(id);
+        return this;
+    }
+
+    public AttributeBuilder withNumber ( int number ) {
+        this.number = number;
         return this;
     }
 }

@@ -4,7 +4,6 @@ import eapli.base.catalogue.application.ListCatalogueService;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.repositories.CatalogueRepository;
-import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
@@ -16,12 +15,10 @@ import eapli.base.service.domain.*;
 import eapli.base.task.application.TaskListService;
 import eapli.base.task.domain.Task;
 
-import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 
 public class SpecifyServiceController {
 
@@ -136,7 +133,7 @@ public class SpecifyServiceController {
         PersistenceContext.repositories().tasks().save(starterTask);
         Workflow workflow = new Workflow(workflowID,new Date(),starterTask);
         Service service = serviceListService.getServiceByID(serviceDTO.id);
-        service.workflow(workflow);
+        service.setWorkflow(workflow);
         serviceRepository.save(service);
 
     }

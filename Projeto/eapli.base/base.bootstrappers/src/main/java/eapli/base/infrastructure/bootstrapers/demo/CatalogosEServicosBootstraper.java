@@ -125,7 +125,8 @@ public class CatalogosEServicosBootstraper implements Action {
                             ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null );
                             servicoController.create(dto);
                             final Set<AttributeDTO> lstAtributos = new HashSet<>();
-                            AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID);
+                            int number = 0;
+                            AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID, number);
                             lstAtributos.add(at);
                             FormDTO fdto = new FormDTO(fscript, fId, fnome, lstAtributos);
                             //formController.registo(fdto);

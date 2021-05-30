@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.presentation.assignCriticalityLevel.AssignCriticalityLevelUI;
 import eapli.base.app.backoffice.console.presentation.associateCollaborator.AssociateCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.checkActivityFlux.CheckActivityFluxUI;
 import eapli.base.app.backoffice.console.presentation.createCatalogue.CreateCatalogueUI;
 import eapli.base.app.backoffice.console.presentation.createColour.CreateColourUI;
 import eapli.base.app.backoffice.console.presentation.createTeam.CreateTeamUI;
@@ -87,6 +88,7 @@ public class MainMenu extends AbstractUI {
     private static final int CRIAR_CATALOGO_OPTION = 2;
     private static final int SERVICE_OPTION = 3;
     private static final int ESPECIFICAR_CRITICIDADE_OPTION = 4;
+    private static final int VERIFICAR_ESTADO_OPTION = 5;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -159,6 +161,8 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(SERVICE_OPTION, servicoMenu);
             final Menu especificarCriticidadeMenu = buildEspecificarCriticidadeMenu();
             mainMenu.addSubMenu(ESPECIFICAR_CRITICIDADE_OPTION,especificarCriticidadeMenu);
+            final Menu checkActivityFluxMenu = buildCheckActivityFluxMenu();
+            mainMenu.addSubMenu(VERIFICAR_ESTADO_OPTION,checkActivityFluxMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -257,6 +261,13 @@ public class MainMenu extends AbstractUI {
         corMenu.addItem(1,"Adicionar Cor",()->new CreateColourUI().show());
         corMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return corMenu;
+    }
+
+    private Menu buildCheckActivityFluxMenu(){
+        final Menu checkActivityFluxMenu = new Menu("Motor de execução de atividade");
+        checkActivityFluxMenu.addItem(1,"Verificar Estado de motor de execução",()->new CheckActivityFluxUI().show());
+        checkActivityFluxMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return checkActivityFluxMenu;
     }
 
 

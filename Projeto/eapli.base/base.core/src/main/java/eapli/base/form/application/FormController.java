@@ -24,8 +24,9 @@ public class FormController {
     Form form;
     public void registerForm(FormDTO dto){
         Set<Attribute> atr2 = new HashSet<>();
+        int number = 0;
         for (AttributeDTO atr:dto.atrDTO) {
-            atr2.add(new Attribute(AtributteName.valueOf(atr.nome), AttributeLabel.valueOf(atr.label), AttributeDescription.valueOf(atr.desc), AttributeRegex.valueOf(atr.regex), AttributeType.valueOf(atr.tipo), AttributeID.valueOf(atr.id)));
+            atr2.add(new Attribute(AtributteName.valueOf(atr.nome), AttributeLabel.valueOf(atr.label), AttributeDescription.valueOf(atr.desc), AttributeRegex.valueOf(atr.regex), AttributeType.valueOf(atr.tipo), AttributeID.valueOf(atr.id), ++number ));
         }
         fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
     }

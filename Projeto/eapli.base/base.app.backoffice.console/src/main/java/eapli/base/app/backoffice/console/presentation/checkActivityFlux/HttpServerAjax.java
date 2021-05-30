@@ -12,7 +12,7 @@ import java.net.Socket;
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
 public class HttpServerAjax extends Thread {
-    static private final String BASE_FOLDER = "eapli.base.app.backoffice.console.presentation.checkActivityFlux/www";
+    static private final String BASE_FOLDER = "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/checkActivityFlux/www";
     static private ServerSocket sock;
 
     public void setStatus(String status) {
@@ -45,10 +45,6 @@ public class HttpServerAjax extends Thread {
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
 
     private static String status;
-
-
-
-
 
 
     public static synchronized String getStatusInfoStandingInHTML() {

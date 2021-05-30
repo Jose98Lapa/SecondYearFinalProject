@@ -101,7 +101,7 @@ class TcpClient {
                     cycle = false;
                     break;
                 case 20:
-                    tcpClient.executeAutomaticTask("scrip.txt");
+                    tcpClient.executeAutomaticTask("script.txt");
                     break;
                 default:
                     System.out.println("Invalid Option");

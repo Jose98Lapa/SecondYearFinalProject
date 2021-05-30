@@ -17,6 +17,7 @@ import eapli.base.function.repositories.FunctionRepository;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -165,6 +166,22 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	TaskRepository tasks(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+
+	TicketTaskRepository ticketTasks();
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	TicketTaskRepository ticketTasks( TransactionalContext autoTx);
+
 
 	/**
 	 * repository will be created in auto transaction mode

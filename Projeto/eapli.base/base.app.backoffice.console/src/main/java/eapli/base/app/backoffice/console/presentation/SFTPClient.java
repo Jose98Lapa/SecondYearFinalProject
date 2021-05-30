@@ -5,7 +5,10 @@ import eapli.base.Application;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 public class SFTPClient {
 
@@ -60,6 +63,31 @@ public class SFTPClient {
         sftpChannel.get(source, destination);
         sftpChannel.exit();
         session.disconnect();
+    }
+
+    public String getScriptToString(String source) throws JSchException, SftpException {
+        Channel channel = session.openChannel("sftp");
+        channel.connect();
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+        try {
+            sftpChannel.cd(localServerFolder);
+        } catch (SftpException e) {
+            sftpChannel.mkdir(localServerFolder);
+            sftpChannel.cd(localServerFolder);
+        }
+        sftpChannel.get(source, "eapli.base");
+        int i = source.lastIndexOf('/');
+        String filename=null;
+        if (i > 0) {
+            filename += source.substring(i + 1);
+        }
+        String output =new BufferedReader(new InputStreamReader(sftpChannel.get("eapli.base/"+filename))).lines().collect(Collectors.joining("\n"));
+        sftpChannel.exit();
+        session.disconnect();
+        File temp = new File("eapli.base/"+filename);
+        temp.delete();
+        System.out.println(output);
+        return output;
     }
 
     public String chooser(String type) {
