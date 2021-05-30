@@ -13,22 +13,11 @@ import java.util.regex.Pattern;
 public class AttributeID implements ValueObject, Comparable<AttributeID>, Serializable {
 
     private String id;
-    @Transient
-    private String regex = "^[0-9]{1,10}$";
 
     public AttributeID(final String ID) {
-        if (StringPredicates.isNullOrEmpty(ID)) {
+        if (StringPredicates.isNullOrEmpty(ID))
             throw new IllegalArgumentException("AtributoID should neither be null nor empty");
-        }
-
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(ID);
-
-        if (m.matches()) {
-            this.id = ID;
-        } else {
-            throw new IllegalArgumentException("AtributoID does not fit the criteria");
-        }
+        this.id = ID;
     }
 
     protected AttributeID() {
@@ -49,12 +38,12 @@ public class AttributeID implements ValueObject, Comparable<AttributeID>, Serial
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AttributeID that = (AttributeID) o;
-        return Objects.equals(id, that.id) && Objects.equals(regex, that.regex);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, regex);
+        return Objects.hash(id);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class CreateTicketController {
 	public void createTicket ( String deadline, String id, String file, Service service, String urgency ) {
 
 		this.ticketTaskController = new CreateTaskController( );
-		if ( service.workflow().starterTask() != null ) {
+		if ( service.workflow()!=null && service.workflow().starterTask() != null ) {
 
 		Task starter = service.workflow( ).starterTask( );
 
