@@ -75,14 +75,20 @@ public class Engine {
 			case Constants.EXECUTING:
 				if ( currentStateTicket.workflow().starterTask() instanceof TicketAutomaticTask ) {
 					try {
-						TcpExecuterClient.main( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString()  );
+						TcpExecuterClient client = new TcpExecuterClient();
+						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
+						client.stopConnection();
+						//TcpExecuterClient.main( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString()  );
 					} catch ( IOException e ) {
 						e.printStackTrace( );
 					}
 				} else if ( currentStateTicket.workflow().starterTask().transition().hasNextTask()
 						&& currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask ) {
 					try {
-						TcpExecuterClient.main( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString()  );
+						TcpExecuterClient client = new TcpExecuterClient();
+						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
+						client.stopConnection();
+						//TcpExecuterClient.main( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString()  );
 					} catch ( IOException e ) {
 						e.printStackTrace( );
 					}

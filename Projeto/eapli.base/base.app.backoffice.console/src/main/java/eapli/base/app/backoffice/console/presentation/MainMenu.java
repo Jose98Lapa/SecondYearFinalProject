@@ -31,7 +31,6 @@ import eapli.base.app.backoffice.console.presentation.createColour.CreateColourU
 import eapli.base.app.backoffice.console.presentation.createTeam.CreateTeamUI;
 import eapli.base.app.backoffice.console.presentation.createTeamType.CreateTeamTypeUI;
 import eapli.base.app.backoffice.console.presentation.removeCollaborator.RemoveCollaboratorUI;
-import eapli.base.app.backoffice.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.backoffice.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
 import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
 import eapli.base.app.backoffice.console.presentation.specifyService.CompleteServiceUI;
@@ -51,7 +50,6 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
-import eapli.framework.presentation.console.ShowMessageAction;
 import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
