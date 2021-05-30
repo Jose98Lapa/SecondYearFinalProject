@@ -1,6 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.checkActivityFlux;
 
-import eapli.base.app.backoffice.console.presentation.checkActivityFlux.application.DashboardController;
+import eapli.base.app.backoffice.console.presentation.checkActivityFlux.application.CheckActivityFluxController;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.awt.*;
@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class ShowDashboardUI extends AbstractUI {
-    DashboardController theController = new DashboardController();
+public class CheckActivityFluxUI extends AbstractUI {
+    CheckActivityFluxController theController = new CheckActivityFluxController();
 
     @Override
     protected boolean doShow() {

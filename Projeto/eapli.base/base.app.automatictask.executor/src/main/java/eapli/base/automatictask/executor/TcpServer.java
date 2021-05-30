@@ -44,18 +44,33 @@ class TcpServerThread implements Runnable {
     }
 
     public void stopConnection(InetAddress clientIP) {
-        byte[] serverResponse= {(byte)0, (byte)2, (byte)0, (byte)0};
+        byte[] serverResponse = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
         try {
             sOut.write(serverResponse);
             sOut.flush();
             System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
             clientSocket.close();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Falied to close client socket");
         }
     }
 
-    public void executeAutomaticTask() {
+    public void wasExecutionSuccessfull(InetAddress clientIP, boolean wasIt) {
+        int code = 21;
+        if (!wasIt)
+            code = 253;
+        byte[] serverResponse = {(byte) 0, (byte) code, (byte) 0, (byte) 0};
+        try {
+            sOut.write(serverResponse);
+            sOut.flush();
+            System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
+            clientSocket.close();
+        } catch (IOException ex) {
+            System.out.println("Falied to close client socket");
+        }
+    }
+
+    public boolean executeAutomaticTask() {
         try {
             //Sends response to the client
             byte[] serverResponse = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
@@ -72,33 +87,34 @@ class TcpServerThread implements Runnable {
         } catch (IOException | InterruptedException ex) {
             System.out.println("An error ocurred");
         }
+        return true;
     }
 
 
-    public void run () {
-        InetAddress clientIP=clientSocket.getInetAddress();
-        System.out.println( "New client connection from " + clientIP.getHostAddress( ) + ", port number " + clientSocket.getPort( ) );
+    public void run() {
+        InetAddress clientIP = clientSocket.getInetAddress();
+        System.out.println("New client connection from " + clientIP.getHostAddress() + ", port number " + clientSocket.getPort());
 
         try {
-            sOut = new DataOutputStream( clientSocket.getOutputStream( ));
-            sIn = new DataInputStream( clientSocket.getInputStream( ));
+            sOut = new DataOutputStream(clientSocket.getOutputStream());
+            sIn = new DataInputStream(clientSocket.getInputStream());
             boolean cycle = true;
 
-            while (cycle){
+            while (cycle) {
                 byte[] clientRequest = sIn.readNBytes(4);
-                switch (clientRequest[1]){
+                switch (clientRequest[1]) {
                     case 1:
                         stopConnection(clientIP);
-                        cycle=false;
+                        cycle = false;
                         break;
                     case 20:
-                        executeAutomaticTask();
+                        wasExecutionSuccessfull(clientIP,executeAutomaticTask());
                         break;
                 }
 
             }
-        } catch ( IOException ex ) {
-            System.out.println( "An error ocurred" );
+        } catch (IOException ex) {
+            System.out.println("An error ocurred");
         }
     }
 

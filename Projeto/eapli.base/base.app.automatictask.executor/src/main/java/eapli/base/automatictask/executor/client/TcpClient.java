@@ -72,13 +72,19 @@ class TcpClient {
         if ((int) serverResponse[1] == 2)
             System.out.println("Resposta Recebida");
 
-
-        //send email
+        //send script
         byte[] scriptByteArray = script.getBytes(StandardCharsets.UTF_8);
         byte[] scriptInfo = {(byte) 0, (byte) 255, (byte) scriptByteArray.length};
         byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, scriptByteArray);
         sOut.write(scriptPackage);
         sOut.flush();
+
+        //recives server's response
+        serverResponse = sIn.readNBytes(4);
+        if ((int) serverResponse[1] == 21)
+            System.out.println("Script de atividade automática executado com sucesso.");
+        else
+            System.out.println("Não foi possivel executar o script de atividade automática com sucesso.");
     }
 
 

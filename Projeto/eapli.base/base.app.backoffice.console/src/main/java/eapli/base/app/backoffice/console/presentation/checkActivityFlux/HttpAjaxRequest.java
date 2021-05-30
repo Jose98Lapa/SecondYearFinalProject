@@ -31,7 +31,7 @@ public class HttpAjaxRequest extends Thread {
             //System.out.println(request.getURI());
 
             if (request.getMethod().equals("GET")) {
-                if (request.getURI().equals("/refreshStatus")) {
+                if (request.getURI().equals("/stateDiv")) {
                     response.setContentFromString(HttpServerAjax.getStatusInfoStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else {
