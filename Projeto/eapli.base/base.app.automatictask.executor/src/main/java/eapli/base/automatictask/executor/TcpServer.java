@@ -16,6 +16,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.channels.Channel;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 
 class TcpServer {
 
@@ -33,7 +34,7 @@ class TcpServer {
 
         while (true) {
             cliSock = sock.accept();
-            new Thread(new TcpServerThread(cliSock)).start();
+            new TcpServerThread(cliSock).run();
         }
     }
 
@@ -91,11 +92,12 @@ class TcpServerThread implements Runnable {
             String script = scriptClient.getScriptToString(scriptName);
             String[] data = script.split("\n");
 
+            Calendar calendar = Calendar.getInstance();
+            System.out.printf("[%s] - Executing %s...%n",calendar.getTime(), scriptName);
             for (String line : data) System.out.println(line);
-
-            System.out.printf("Executing %s ...%n",scriptName);
-
             Thread.sleep(5000);
+            System.out.printf("[%s] - %s executed.%n",calendar.getTime(), scriptName);
+
         } catch (IOException | InterruptedException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
         }

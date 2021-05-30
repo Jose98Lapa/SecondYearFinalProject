@@ -9,6 +9,7 @@ import eapli.base.infrastructure.bootstrapers.NiveisCriticidadeBootstraper;
 import eapli.base.infrastructure.bootstrapers.OrganizacaoBootstraper;
 import eapli.base.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
 import eapli.base.infrastructure.bootstrapers.demo.CatalogosEServicosBootstraper;
+import eapli.base.infrastructure.bootstrapers.demo.TicketRequestBoostrapper;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.smoketests.BaseDemoSmokeTester;
 import eapli.base.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
@@ -58,6 +59,9 @@ public final class BaseBootstrap extends BaseApplication {
         System.out.printf("%n%n------- CATALOGUE AND SERVICE DATA -------");
         new CatalogosEServicosBootstraper().execute();
 
+        System.out.println("\n\n------- Ticket Tasks -------");
+        new TicketRequestBoostrapper().execute();
+
         if (isToBootstrapDemoData) {
             System.out.println("\n\n------- DEMO DATA -------");
             new BaseDemoBootstrapper().execute();
@@ -66,6 +70,7 @@ public final class BaseBootstrap extends BaseApplication {
             System.out.println("\n\n------- BASIC SCENARIO -------");
             new BaseDemoSmokeTester().execute();
         }
+
     }
 
     private void handleArgs(final String[] args) {

@@ -22,7 +22,7 @@ public class TicketWorkflow implements DomainEntity< String >, Serializable {
 	protected TicketWorkflow ( ) {
 	}
 
-	protected TicketWorkflow ( String workflowID, LocalDate startingDate, TicketTask starter ) {
+	public TicketWorkflow ( String workflowID, LocalDate startingDate, TicketTask starter ) {
 		setWorkflowID( workflowID );
 		setStartingDate( startingDate );
 		setStarterTask( starter );
