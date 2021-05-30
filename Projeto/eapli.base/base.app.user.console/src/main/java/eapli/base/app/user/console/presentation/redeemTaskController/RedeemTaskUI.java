@@ -16,8 +16,16 @@ public class RedeemTaskUI extends AbstractUI {
     protected boolean doShow() {
         //Apresenta os tickets
         List<TicketDTO> ticketDTOList = redeemTaskController.getPendingTasks();
-        for (TicketDTO ticketDTO: ticketDTOList)
-            System.out.println(ticketDTO.toString());
+        for (TicketDTO ticketDTO: ticketDTOList){
+            System.out.println("Tarefas de Aprovação:\n");
+            if (ticketDTO.status.equals("Pending"))
+                System.out.println(ticketDTO.toString());
+        }
+        for (TicketDTO ticketDTO: ticketDTOList){
+            System.out.println("Tarefas de Execuçao:\n");
+            if (ticketDTO.status.equals("Pending"))
+                System.out.println(ticketDTO.toString());
+        }
 
         //Escolhe o ticket que deseja reivindicar
         TicketDTO choosenTicketDTO=null;
