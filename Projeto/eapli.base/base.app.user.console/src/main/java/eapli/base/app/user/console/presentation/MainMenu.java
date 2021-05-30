@@ -27,6 +27,7 @@ import eapli.base.app.backoffice.console.presentation.requestService.RequestServ
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
 import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
+import eapli.base.app.user.console.presentation.redeemTaskController.RedeemTaskUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -100,6 +101,13 @@ class MainMenu extends ClientUserBaseUI {
         consultarServicoMenu.addItem( 2, "Pedir serviço",() -> new RequestServiceUI().show() );
         consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return consultarServicoMenu;
+    }
+
+    private Menu builderRedeemTaskMenu(){
+        final Menu redeemTaskMenu = new Menu("Reivindicar Tarefa");
+        redeemTaskMenu.addItem(2,"Reivindicar Tarefa",()->new RedeemTaskUI().show());
+        redeemTaskMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return redeemTaskMenu;
     }
 
 }
