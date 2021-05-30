@@ -1,12 +1,9 @@
 package eapli.base.persistence.impl.jpa;
 
 
-import eapli.base.collaborator.domain.MecanographicNumber;
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
-import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
