@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class FormName implements ValueObject, Serializable {
     private String nome;
     @Transient
-    private String regex = "^[a-zA-Z]{1,50}$";
+    private String regex = "^[a-zA-Z ]{1,50}$";
 
     public FormName(String nome) {
         if (StringPredicates.isNullOrEmpty(nome)) {

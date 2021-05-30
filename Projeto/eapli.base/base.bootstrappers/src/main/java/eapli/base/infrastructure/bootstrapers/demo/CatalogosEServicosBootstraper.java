@@ -117,7 +117,7 @@ public class CatalogosEServicosBootstraper implements Action {
                             String iconServico = elementService.getElementsByTagName("iconServico").item(0).getTextContent();
                             String tituloServico = elementService.getElementsByTagName("tituloServico").item(0).getTextContent();
                             String catalogoS = elementService.getElementsByTagName("catalogoS").item(0).getTextContent();
-                            //FormController formController = new FormController();
+                            FormController formController = new FormController();
 
 
                             final Set<String> lstkeyWords = new HashSet<>();
@@ -129,8 +129,10 @@ public class CatalogosEServicosBootstraper implements Action {
                             AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID, number);
                             lstAtributos.add(at);
                             FormDTO fdto = new FormDTO(fscript, fId, fnome, lstAtributos);
-                            //formController.registo(fdto);
-                            servicoController.automatic(fId);
+                            formController.registerForm(fdto);
+                            formController.save();
+                            servicoController.manual(fId);
+                            servicoController.updateStatus();
                             servicoController.confirms();
 
                             System.out.printf("Servico adicionado - %s%n", dto.title);

@@ -31,6 +31,7 @@ import eapli.base.app.backoffice.console.presentation.createColour.CreateColourU
 import eapli.base.app.backoffice.console.presentation.createTeam.CreateTeamUI;
 import eapli.base.app.backoffice.console.presentation.createTeamType.CreateTeamTypeUI;
 import eapli.base.app.backoffice.console.presentation.removeCollaborator.RemoveCollaboratorUI;
+import eapli.base.app.backoffice.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.backoffice.console.presentation.specifyCollaborator.SpecifyCollaboratorUI;
 import eapli.base.app.backoffice.console.presentation.specifyCriticality.SpecifyCriticalityUI;
 import eapli.base.app.backoffice.console.presentation.specifyService.CompleteServiceUI;
@@ -74,6 +75,7 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_USERS_OPTION = 2;
     private static final int DEACTIVATE_USER_OPTION = 3;
     private static final int ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION = 4;
+    private static final int REQUEST_SERVICE = 5;
 
     // SETTINGS
     private static final int CRIAR_COR = 2;
@@ -192,7 +194,6 @@ public class MainMenu extends AbstractUI {
         menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request",
                 new AcceptRefuseSignupRequestAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
         return menu;
     }
 
@@ -269,10 +270,5 @@ public class MainMenu extends AbstractUI {
         checkActivityFluxMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return checkActivityFluxMenu;
     }
-
-
-
-
-
 
 }

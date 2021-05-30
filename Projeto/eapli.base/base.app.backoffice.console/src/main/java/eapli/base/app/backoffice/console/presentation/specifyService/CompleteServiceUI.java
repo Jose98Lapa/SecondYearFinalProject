@@ -34,7 +34,6 @@ public class CompleteServiceUI extends AbstractUI {
             i++;
         }
         String index = Console.readLine("Index");
-
         toComplete = incomplete.get(Integer.parseInt(index));
         Scanner scanner = new Scanner(System.in);
         String s = "";
@@ -51,7 +50,6 @@ public class CompleteServiceUI extends AbstractUI {
                     }
                     theController.update(toComplete);
                     break;
-
                 }
                 case 2: {
                 /*  String opcao = scanner.nextLine();
@@ -68,7 +66,6 @@ public class CompleteServiceUI extends AbstractUI {
                     theController.confirms();
                     break;
                     }*/
-
                 }
                 case 3: {
                     toComplete.title = scanner.nextLine();
@@ -91,7 +88,6 @@ public class CompleteServiceUI extends AbstractUI {
                     SFTPClient server = new SFTPClient();
                     toComplete.icon = server.choseAndUploadImage(toComplete.id);
                     theController.update(toComplete);
-
                     break;
                 }
                 case 6: {
