@@ -96,7 +96,7 @@ public class TcpClient {
 				System.out.println("A error occurred");
 				break;
 			}
-			byte[] byteArray = sIn.readNBytes(info[2]);
+			byte[] byteArray = sIn.readNBytes(info[2]&0xff);
 			String atribute = new String(byteArray, StandardCharsets.UTF_8);
 			StringBuilder taskInfobuilder = new StringBuilder();
 			taskInfo=taskInfobuilder.append(atribute).append("|").toString();
