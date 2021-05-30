@@ -75,7 +75,7 @@ public class RequestServiceUI extends AbstractUI {
 					attributes );
 
 			ticketController.createTicket(
-					Utils.readLineFromConsole( "DeadLine (AAAA-MM-DD)" ),
+					Utils.readLineFromConsole( "DeadLine (AAAA-MM-DDTHH:mm:ss)" ),
 					UUID.randomUUID().toString().substring(0,4),
 					Utils.readLineFromConsole( "File Path: " ),
 					new ServiceListService().getServiceByID(availableServices.get(serviceIndex).id),
