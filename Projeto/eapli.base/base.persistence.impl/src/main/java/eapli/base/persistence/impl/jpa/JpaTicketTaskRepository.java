@@ -13,7 +13,6 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, TicketTaskID, TicketTaskID > implements TicketTaskRepository {
 
@@ -39,4 +38,5 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 
 		return ticketTaskList;
 	}
+
 }

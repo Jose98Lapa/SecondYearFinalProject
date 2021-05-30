@@ -10,4 +10,8 @@ import java.util.List;
 public interface TicketTaskRepository extends DomainRepository< TicketTaskID, TicketTask > {
 
     List<TicketTask> getTicketsByCollaborator(Collaborator collab);
+
+    @Override
+    Iterable< TicketTask > findAll ( );
+
 }
