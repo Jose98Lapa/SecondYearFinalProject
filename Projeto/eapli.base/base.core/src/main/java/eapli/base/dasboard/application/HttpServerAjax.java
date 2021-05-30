@@ -22,13 +22,6 @@ public class HttpServerAjax extends Thread {
     @Override
     public void run() {
         Socket cliSock = null;
-
-        accessesCounter = 0;
-        for (int i = 0; i < candidatesNumber; i++) {
-            candidateName[i] = "Candidate " + i;
-            candidateVotes[i] = 0;
-        }
-
         try {
             sock = new ServerSocket(55128);
         } catch (IOException ex) {
@@ -44,24 +37,15 @@ public class HttpServerAjax extends Thread {
             }
             HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
-            incAccessesCounter();
         }
     }
 
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
 
-    private static final int candidatesNumber = 4;
-    private static final String[] candidateName = new String[candidatesNumber];
-    private static final int[] candidateVotes = new int[candidatesNumber];
-    private static int accessesCounter;
     private static CollaboratorDTO colab;
 
     public void setColab(CollaboratorDTO colab) {
         HttpServerAjax.colab = colab;
-    }
-
-    private static synchronized void incAccessesCounter() {
-        accessesCounter++;
     }
 
     public static synchronized String getInfoUrgencyStandingInHTML() {
@@ -105,7 +89,6 @@ public class HttpServerAjax extends Thread {
                     "                            <td>"+dto.criticidade+"</td>\n" +
                     "                            <td>"+dto.urgency+"</td>\n" +
                     "                        </tr>");
-
         }
         return string.toString();
     }
@@ -127,8 +110,5 @@ public class HttpServerAjax extends Thread {
             return "ended.png";
         }
         return "default.png";
-
     }
-
-
 }

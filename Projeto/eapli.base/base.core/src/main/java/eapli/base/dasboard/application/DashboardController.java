@@ -30,8 +30,8 @@ public class DashboardController {
             dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
         } catch (IOException e) {
             e.printStackTrace();
+            tcpClient.stopConnection();
         }
-        //tcpClient.stopConnection();
     }
 
     public LinkedList<DashboardInfoDTO> infoByUrgency() {
