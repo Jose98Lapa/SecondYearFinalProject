@@ -28,7 +28,7 @@ function refreshColab() {
 }
 function refreshUrgency() {
     var request = new XMLHttpRequest();
-    var vBoard = document.getElementById("urgency");
+    var vBoard = document.getElementById("urgencyTable");
     request.onload = function () {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
@@ -53,7 +53,7 @@ function refreshUrgency() {
 }
 function refreshCriticality() {
     var request = new XMLHttpRequest();
-    var vBoard = document.getElementById("criticality");
+    var vBoard = document.getElementById("criticalityTable");
     request.onload = function () {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
