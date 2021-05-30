@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-class TcpExecuterClient {
+class TcpClient {
 
     private static InetAddress serverIP;
     private static Socket socket;
@@ -103,7 +103,7 @@ class TcpExecuterClient {
 
 
     public static void main(String[] args) throws IOException {
-        TcpExecuterClient tcpExecuterClient = new TcpExecuterClient();
+        TcpClient tcpExecuterClient = new TcpClient();
         tcpExecuterClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
 
         boolean cycle = true;

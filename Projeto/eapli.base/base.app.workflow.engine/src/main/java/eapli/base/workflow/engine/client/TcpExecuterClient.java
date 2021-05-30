@@ -102,25 +102,8 @@ public class TcpExecuterClient {
 	}
 
 
-	public static void main( String arg ) throws IOException {
-
+	public static void main(String[] args) throws IOException {
 		TcpExecuterClient tcpClient = new TcpExecuterClient();
 		tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
-
-		boolean cycle = true;
-		while (cycle) {
-			int i = Console.readInteger("Insira num (0 para sair)");
-			switch (i) {
-				case 0:
-					tcpClient.stopConnection();
-					cycle = false;
-					break;
-				case 20:
-					tcpClient.executeAutomaticTask( arg );
-					break;
-				default:
-					System.out.println("Invalid Option");
-			}
-		}
 	}
 }
