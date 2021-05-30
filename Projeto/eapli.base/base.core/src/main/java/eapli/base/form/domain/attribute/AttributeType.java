@@ -54,9 +54,6 @@ public class AttributeType implements ValueObject, Serializable {
 
     @Override
     public String toString() {
-        return "AtributoTipo{" +
-                "tipo='" + tipo + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return tipo;
     }
 }
