@@ -1,4 +1,4 @@
-grammar gramatica_formulario;
+grammar gramatica_atividade_automatica;
 
 /*
  *   Lexico
@@ -74,7 +74,7 @@ fragment UPPERCASE  : [A-Z];
 VARIAVEL            : ('$' TEXTO) | ('$' ( TEXTO | NUMERO )+);
 VALOR               : '$' DIGITO | '$' NUMERO;
 
-ESPACO              : [ \t\r\n]+ -> skip ;
+WS                  : [ \t\r\n]+ -> skip ;
 NOVALINHA           : ('\r'? '\n' | '\r')+;
 
 // RESERVED KEYWORDS
