@@ -36,3 +36,7 @@ A distribuição de requisitos/funcionalidades ao longo do período de desenvolv
 | | [UC2053](/docs/1200619)|[UC3021](/docs/1200619)| |
 | | |[UC4001](/docs/1200619)| |
 | | || |
+
+
+# 3. Informação tecnica #
+[Ver Aqui](technical.md)
