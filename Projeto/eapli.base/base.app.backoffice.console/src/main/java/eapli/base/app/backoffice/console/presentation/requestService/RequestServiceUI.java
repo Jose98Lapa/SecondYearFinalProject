@@ -29,7 +29,7 @@ import java.util.*;
 
 public class RequestServiceUI extends AbstractUI {
 
-	private CreateTicketController ticketController;
+	private final CreateTicketController ticketController=new CreateTicketController();
 
 	@Override
 	protected boolean doShow ( ) {
