@@ -1,10 +1,8 @@
-package eapli.base.app.backoffice.console.presentation.requestService;
+package eapli.base.app.user.console.presentation.requestService;
 
 import eapli.base.app.backoffice.console.Utils;
 import eapli.base.catalogue.application.ListCatalogueService;
-import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
-import eapli.base.catalogue.dto.CatalogueDTOParser;
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.DTO.FormDTO;
@@ -42,7 +40,7 @@ public class RequestServiceUI extends AbstractUI {
 		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( catalogueIndex );
 
 		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity) );
-		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o serviço que deseja" );
+		int serviceIndex = Utils.showAndSelectIndex( availableServices, "Escolha o serviço que deseja" );
 
 
 		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( availableServices.get(serviceIndex).form.identity() );
@@ -57,7 +55,7 @@ public class RequestServiceUI extends AbstractUI {
 			for ( AttributeDTO attribute : form.atrDTO ) {
 				Utils.readLineFromConsole( attribute.label );
 
-				System.out.println(attribute.tipo );
+				//System.out.println(attribute.tipo );
 
 				Attribute answerAttribute = new Attribute(
 						new AtributteName( "Resposta" ),
@@ -77,10 +75,10 @@ public class RequestServiceUI extends AbstractUI {
 					attributes );
 
 			ticketController.createTicket(
-					Utils.readLineFromConsole( "DeadLine" ),
-					UUID.randomUUID().toString(),
+					Utils.readLineFromConsole( "DeadLine (AAAA-MM-DD)" ),
+					UUID.randomUUID().toString().substring(0,4),
 					Utils.readLineFromConsole( "File Path: " ),
-					new ServiceDTOParser().valueOf( availableServices.get( serviceIndex ) ),
+					new ServiceListService().getServiceByID(availableServices.get(serviceIndex).id),
 					Utils.readLineFromConsole( "Urgency: " )
 					);
 		}
