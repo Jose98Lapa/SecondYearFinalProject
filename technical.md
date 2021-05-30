@@ -17,39 +17,28 @@ Public database URL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ***
 <br>
 <br>
+Utilizaçao de servidores:
+
+server0 -» 192.168.1.92  -» Maquina linux - responsável por armazenar os ficheiros (sftp) e ser host dos restantes servers.
+
+server workflow -» 172.17.0.2 -» docker container - responsável pelo servidor do Motor de Fluxos
+
+server executor -» 172.17.0.3 -» docker container - responsável pelo servidor do Executor de Tarefas Automáticas
+
+Base de Dados - » cloud isep 
+
+Nota: os servidores, excepto o da base de dados, foram implementados pelo grupo e por isso nao utilizam a rede do isep. A equipa utilizou um servidor OpenVpn para trabalhar remotamente.
 
 ***
-### Workflow engine
-***
-Docker container running the LAMP stack on Ubuntu 20.04LTS.
 
- - IPv4: 10.9.21.27
- - Port: 10283
- - IPv6: fd1e:2bae:c6fd:1009::151b
- - DNS domain: dei.isep.ipp.pt
-***
-SSH credentials
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-root@dei.isep.ipp.pt
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-123Tiago123
-***
-<br>
-<br>
+
+Portas Utilizadas:
+
+
 
 ***
-### Automatic Task Runner
-***
-Docker container running the LAMP stack on Ubuntu 20.04LTS.
+Codigos para transação de dados segundo o SDP 2021
 
- - IPv4: 10.9.21.17
- - Port: 10273
- - IPv6: fd1e:2bae:c6fd:1009:1511
- - DNS domain: dei.isep.ipp.pt
-***
-SSH credentials
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-root@dei.isep.ipp.pt 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-123Tiago123
-***
+
+
+

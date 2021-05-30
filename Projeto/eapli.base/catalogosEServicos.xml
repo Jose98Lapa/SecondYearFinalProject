@@ -60,7 +60,7 @@
         </Servico>
     </class1>
 
-    <class1>
+<!--    <class1>
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
@@ -118,6 +118,6 @@
             <tituloServico>Instalacao Computador</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
-    </class1>
+    </class1>-->
 
 </class>
