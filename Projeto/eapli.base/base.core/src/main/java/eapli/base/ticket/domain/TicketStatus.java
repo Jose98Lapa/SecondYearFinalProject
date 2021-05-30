@@ -16,7 +16,7 @@ public class TicketStatus implements ValueObject, Serializable {
 	private String status;
 
 	@Transient
-	private String regex = "[a-zA-Z]+";
+	private String regex = "[a-zA-Z_]+";
 
     protected TicketStatus ( ) {
 

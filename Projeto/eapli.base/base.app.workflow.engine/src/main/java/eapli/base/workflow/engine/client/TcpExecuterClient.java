@@ -2,7 +2,6 @@ package eapli.base.workflow.engine.client;
 
 import eapli.base.Application;
 import eapli.base.utils.SplitInfo;
-import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -103,7 +102,5 @@ public class TcpExecuterClient {
 
 
 	public static void main(String[] args) throws IOException {
-		TcpExecuterClient tcpClient = new TcpExecuterClient();
-		tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
 	}
 }
