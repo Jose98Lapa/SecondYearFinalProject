@@ -32,6 +32,8 @@ public class CreateTicketController {
 	public void createTicket ( String deadline, String id, String file, Service service, String urgency ) {
 
 		this.ticketTaskController = new CreateTaskController( );
+		if ( service.workflow().starterTask() != null ) {
+
 		Task starter = service.workflow( ).starterTask( );
 
 		TicketTask starterTicketTask = createTicketTask( deadline, starter );
@@ -58,6 +60,7 @@ public class CreateTicketController {
 				.build( );
 
 		ticketRepository.save( ticket );
+		}
 	}
 
 	private TicketTask createTicketTask ( String deadline, Task starter ) {
