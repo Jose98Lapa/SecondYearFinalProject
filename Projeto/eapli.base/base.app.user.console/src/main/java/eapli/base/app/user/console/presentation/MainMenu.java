@@ -48,6 +48,8 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final String RETURN = "Return ";
 
+    private static boolean firstTime = true;
+
     private static final String NOT_IMPLEMENTED_YET = "Not implemented yet";
 
     private static final int EXIT_OPTION = 0;
@@ -72,8 +74,11 @@ class MainMenu extends ClientUserBaseUI {
      */
     @Override
     public boolean doShow() {
+        if (firstTime) {
+            new ShowDashboardUI().show();
+            firstTime = false;
+        }
         final Menu menu = buildMainMenu();
-        new ShowDashboardUI().show();
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
@@ -83,9 +88,7 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-        mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION,builderConsultarServicoMenu());
-
-
+        mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION, builderConsultarServicoMenu());
 
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
@@ -95,18 +98,18 @@ class MainMenu extends ClientUserBaseUI {
         return mainMenu;
     }
 
-    private Menu builderConsultarServicoMenu(){
+    private Menu builderConsultarServicoMenu() {
         final Menu consultarServicoMenu = new Menu("Consultar Serviços");
-        consultarServicoMenu.addItem(1,"Consultar Serviços",()->new CheckServicesUI().show());
-        consultarServicoMenu.addItem( 2, "Pedir serviço",() -> new RequestServiceUI().show() );
-        consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        consultarServicoMenu.addItem(1, "Consultar Serviços", () -> new CheckServicesUI().show());
+        consultarServicoMenu.addItem(2, "Pedir serviço", () -> new RequestServiceUI().show());
+        consultarServicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return consultarServicoMenu;
     }
 
-    private Menu builderRedeemTaskMenu(){
+    private Menu builderRedeemTaskMenu() {
         final Menu redeemTaskMenu = new Menu("Reivindicar Tarefa");
-        redeemTaskMenu.addItem(2,"Reivindicar Tarefa",()->new RedeemTaskUI().show());
-        redeemTaskMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        redeemTaskMenu.addItem(2, "Reivindicar Tarefa", () -> new RedeemTaskUI().show());
+        redeemTaskMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return redeemTaskMenu;
     }
 

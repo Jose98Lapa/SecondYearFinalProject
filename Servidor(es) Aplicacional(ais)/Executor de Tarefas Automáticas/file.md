@@ -1,4 +1,9 @@
 # RCOMP - SPRINT D - 1191097 - Tiago Machado
+
+## Dados do Servidor
+ - Os dados do servidor, ip e porta utilizada, encontram-se no ficheiro **application.properties** da aplicação **base.app.automatictask.executor**.
+ - **IP:** 172.17.0.3
+ - **SERVER PORT:** 10030
  
 ## Protocolo de comunicação de controlo (TCP2021) - v0
 <br>
@@ -50,4 +55,7 @@ enviada em resposta a pedidos com código 0 e código 1.
 ### - 1191097
 
 Cliente TCP presente no <b>Motor de Fluxos de Atividades</b> que comunica com o Servidor TCP presente no <b>Executor de Tarefas Automáticas</b>.
-Cada conexão nova que seja necessário de estabelecer, será criada em uma Thread nova. Será necessário que o client envie primeiro um pedido de execução [20], onde o server irá responder com um entendido [2]. De seguida, será necessário que o cliente envie os dados necessários para a execução da tarefa manual, estes serão enviados com codigo [21] se os dados forem mais pequenos 255 bytes, se não, os dados serão divididos e enviados com codigo [255] e [254], sendo o ultimo pacote enviado com o codigo [254]. Se a execução se der com sucesso é enviada ao cliente por parte do servidor uma mensagem com o codigo [22], se esta der erro na execução será enviada uma mensagem com o codigo [253].
+Cada conexão nova que seja necessário de estabelecer, será criada em uma Thread nova. 
+
+**Fluxo:**
+Será necessário que o client envie primeiro um pedido de execução [20], onde o server irá responder com um entendido [2]. De seguida, será necessário que o cliente envie os dados necessários para a execução da tarefa automática, estes serão enviados com codigo [21] se os dados forem mais pequenos 255 bytes, se não, os dados serão divididos e enviados com codigo [255] e [254], sendo o ultimo pacote enviado com o codigo [254]. Se a execução se der com sucesso é enviada ao cliente por parte do servidor uma mensagem com o codigo [22], se esta der erro na execução será enviada uma mensagem com o codigo [253]. Por fim é enviada uma mensagem ao server com codigo [1], este depois manda ao cliente uma mensagem com codigo [2] e a ligação chega ao fim.
