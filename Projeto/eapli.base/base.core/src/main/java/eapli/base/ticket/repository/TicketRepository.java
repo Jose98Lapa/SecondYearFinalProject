@@ -15,4 +15,10 @@ public interface TicketRepository extends DomainRepository< TicketID, Ticket > {
 
 	List<Ticket> getPendingTicket();
 
+<<<<<<< HEAD
+	Iterable< Ticket > findAll();
+
+	//List<Ticket> getTicketsByCollaborator(MecanographicNumber id);
+=======
+>>>>>>> 54daa085598de1750342db4240075612710929c3
 }

@@ -1,7 +1,6 @@
 package eapli.base.automatictask.executor.client;
 
 import eapli.base.Application;
-import eapli.base.app.backoffice.console.Utils;
 import eapli.base.utils.SplitInfo;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,7 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-class TcpClient {
+class TcpExecuterClient {
 
     private static InetAddress serverIP;
     private static Socket socket;
@@ -104,19 +103,19 @@ class TcpClient {
 
 
     public static void main(String[] args) throws IOException {
-        TcpClient tcpClient = new TcpClient();
-        tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
+        TcpExecuterClient tcpExecuterClient = new TcpExecuterClient();
+        tcpExecuterClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
 
         boolean cycle = true;
         while (cycle) {
             int i = Console.readInteger("Insira num (0 para sair)");
             switch (i) {
                 case 0:
-                    tcpClient.stopConnection();
+                    tcpExecuterClient.stopConnection();
                     cycle = false;
                     break;
                 case 20:
-                    tcpClient.executeAutomaticTask("script.txt");
+                    tcpExecuterClient.executeAutomaticTask("");
                     break;
                 default:
                     System.out.println("Invalid Option");

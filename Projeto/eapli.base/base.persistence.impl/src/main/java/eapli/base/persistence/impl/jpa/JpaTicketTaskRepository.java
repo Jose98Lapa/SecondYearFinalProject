@@ -2,7 +2,6 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.domain.TicketTaskID;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
@@ -34,14 +33,6 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 
 		List<TicketTask> ticketTaskList = new ArrayList<>();
 		for (Iterator<TicketTask> it = q.getResultStream().iterator(); it.hasNext(); ) {
-			TicketTask ticketTask = it.next();
-			ticketTaskList.add(ticketTask);
-		}
-
-		final TypedQuery<TicketTask> p = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE e.executedBy=:executedBy", TicketTask.class);
-		q.setParameter("executedBy", collab);
-
-		for (Iterator<TicketTask> it = p.getResultStream().iterator(); it.hasNext(); ) {
 			TicketTask ticketTask = it.next();
 			ticketTaskList.add(ticketTask);
 		}
