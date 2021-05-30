@@ -1,11 +1,12 @@
-package eapli.base.workflow.engine.client;
+package eapli.base.dasboard.application;
 
 import eapli.base.Application;
-import eapli.base.utils.SplitInfo;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;

@@ -93,7 +93,7 @@ public class TcpServer implements Runnable {
 				sendString(serviceDTO.title); //title
 				sendString(serviceDTO.icon); //icon
 				sendString(serviceDTO.briefDescription); //briefDesc
-				sendString(ticket.service().catalogo().toDTO().nivelCriticidade.toString()); //criticityLvl
+				sendString(ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
 			}
 			byte[] finalPackage ={(byte) 0, (byte) 254, (byte) 0, (byte) 0};
 			sOut.write(finalPackage);
