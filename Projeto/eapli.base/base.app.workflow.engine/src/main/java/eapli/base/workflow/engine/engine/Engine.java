@@ -1,5 +1,6 @@
 package eapli.base.workflow.engine.engine;
 
+import eapli.base.Application;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
@@ -31,15 +32,15 @@ public class Engine {
 		List< Ticket > previousState = new ArrayList<>( );
 		ticketRepository.findAll( ).forEach( previousState::add );
 
-		while ( true ) {
+
 			timer.scheduleAtFixedRate( new TimerTask( ) {
 
 				@Override
 				public void run ( ) {
 					engine( ticketRepository, previousState );
 				}
-			}, 0, 40000 );
-		}
+			}, 0, 1000 );
+
 	}
 
 	private static void engine ( TicketRepository ticketRepository, List< Ticket > previousState ) {
@@ -49,9 +50,6 @@ public class Engine {
 		List< Ticket > lambdaPreviousState = previousState;
 		ticketRepository.findAll( ).forEach( currentState::add );
 		AtomicInteger modCount = new AtomicInteger( );
-
-		previousState.forEach( x-> System.out.println(x.status().toString() ) );
-		currentState.forEach( x-> System.out.println(x.status().toString() ) );
 
 		currentState.forEach( currentStateTicket ->
 						lambdaPreviousState.forEach(
@@ -76,24 +74,32 @@ public class Engine {
 
 		switch ( currentStateTicket.status().toString() ) {
 			case Constants.PENDING:
+				System.out.println( "Pending->WAITING" );
 				currentStateTicket.setStatus( new TicketStatus( Constants.WAITING_APPROVAL ) );
 				break;
 
 			case Constants.APPROVED:
+				System.out.println( "Approved->PENDINGEX" );
+
 				currentStateTicket.setStatus( new TicketStatus( Constants.PENDING_EXECUTION ) );
 				break;
 
 			case Constants.NOT_APPROVED:
+				System.out.println( "NOT_APPROVED" );
+
 				currentStateTicket.setStatus( new TicketStatus( Constants.FAILED ) );
 				break;
 
 			case Constants.PENDING_EXECUTION:
+				System.out.println("pendeexe" );
 				currentStateTicket.setStatus( new TicketStatus( Constants.EXECUTING ) );
 				break;
 			case Constants.EXECUTING:
+				System.out.println("exe" );
 				if ( currentStateTicket.workflow().starterTask() instanceof TicketAutomaticTask ) {
 					try {
 						TcpExecuterClient client = new TcpExecuterClient();
+						client.startConnection( Application.settings().getIpAutomatictaskExecutor() );
 						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
 						client.stopConnection();
 
@@ -104,6 +110,7 @@ public class Engine {
 						&& currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask ) {
 					try {
 						TcpExecuterClient client = new TcpExecuterClient();
+						client.startConnection( Application.settings().getIpAutomatictaskExecutor() );
 						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
 						client.stopConnection();
 

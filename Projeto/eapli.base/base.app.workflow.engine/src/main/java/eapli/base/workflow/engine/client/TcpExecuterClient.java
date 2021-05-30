@@ -102,7 +102,5 @@ public class TcpExecuterClient {
 
 
 	public static void main(String[] args) throws IOException {
-		TcpExecuterClient tcpClient = new TcpExecuterClient();
-		tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
 	}
 }
