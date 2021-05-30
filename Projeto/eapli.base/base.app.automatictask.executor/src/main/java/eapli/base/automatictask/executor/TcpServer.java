@@ -1,12 +1,12 @@
 package eapli.base.automatictask.executor;
 
 
-import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.SFTPClient;
+import eapli.base.utils.SplitInfo;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.Channel;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
@@ -34,7 +33,7 @@ class TcpServer {
 
         while (true) {
             cliSock = sock.accept();
-            new TcpServerThread(cliSock).run();
+            new Thread(new TcpServerThread(cliSock)).start();
         }
     }
 
@@ -62,18 +61,16 @@ class TcpServerThread implements Runnable {
         }
     }
 
-    public void wasExecutionSuccessfull(InetAddress clientIP, boolean wasIt) {
-        int code = 21;
+    public void wasExecutionSuccessfull(boolean wasIt) {
+        int code = 22;
         if (!wasIt)
             code = 253;
         byte[] serverResponse = {(byte) 0, (byte) code, (byte) 0, (byte) 0};
         try {
             sOut.write(serverResponse);
             sOut.flush();
-            System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + clientSocket.getPort() + " disconnected");
-            clientSocket.close();
         } catch (IOException ex) {
-            System.out.println("Falied to close client socket");
+            System.out.println("Falied to communicate with client");
         }
     }
 
@@ -85,21 +82,45 @@ class TcpServerThread implements Runnable {
             sOut.flush();
 
             //Recives script
+            byte[] scriptByteArray = null;
             byte[] scriptInfo = sIn.readNBytes(3);
-            byte[] scriptByteArray = sIn.readNBytes(scriptInfo[2]);
+            int code = (scriptInfo[1] & 0xff);
+            if (code == 21)
+                scriptByteArray = sIn.readNBytes(scriptInfo[2] & 0xff);
+            else if (code == 255) {
+                byte[][] splitScript = new byte[10][250];
+                int index = 0;
+                while (code != 254) {
+                    code = scriptInfo[1] & 0xff;
+                    splitScript[index] = sIn.readNBytes(scriptInfo[2] & 0xff);
+                    if (code != 254)
+                        scriptInfo = sIn.readNBytes(3);
+                    index++;
+                }
+                scriptByteArray = SplitInfo.serializeObject(SplitInfo.joinSplitInfo(splitScript));
+            }
+            if (scriptByteArray == null)
+                return false;
             String scriptName = new String(scriptByteArray, StandardCharsets.UTF_8);
+            if (code != 21)
+                scriptName = scriptName.substring(7);
             SFTPClient scriptClient = new SFTPClient();
             String script = scriptClient.getScriptToString(scriptName);
             String[] data = script.split("\n");
 
             Calendar calendar = Calendar.getInstance();
-            System.out.printf("[%s] - Executing %s...%n",calendar.getTime(), scriptName);
-            for (String line : data) System.out.println(line);
-            Thread.sleep(5000);
-            System.out.printf("[%s] - %s executed.%n",calendar.getTime(), scriptName);
+            System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), scriptName);
+
+            for (String line : data) {
+                System.out.println(line);
+                Thread.sleep(1000);
+            }
+            calendar = Calendar.getInstance();
+            System.out.printf("[%s] - %s executed.%n", calendar.getTime(), scriptName);
 
         } catch (IOException | InterruptedException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
+            return false;
         }
         return true;
     }
@@ -122,7 +143,7 @@ class TcpServerThread implements Runnable {
                         cycle = false;
                         break;
                     case 20:
-                        wasExecutionSuccessfull(clientIP,executeAutomaticTask());
+                        wasExecutionSuccessfull(executeAutomaticTask());
                         break;
                 }
 

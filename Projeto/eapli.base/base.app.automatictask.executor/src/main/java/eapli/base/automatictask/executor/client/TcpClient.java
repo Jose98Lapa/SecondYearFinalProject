@@ -1,6 +1,8 @@
 package eapli.base.automatictask.executor.client;
 
 import eapli.base.Application;
+import eapli.base.app.backoffice.console.Utils;
+import eapli.base.utils.SplitInfo;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -74,16 +76,29 @@ class TcpClient {
 
         //send script
         byte[] scriptByteArray = script.getBytes(StandardCharsets.UTF_8);
-        byte[] scriptInfo = {(byte) 0, (byte) 255, (byte) scriptByteArray.length};
-        byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, scriptByteArray);
-        sOut.write(scriptPackage);
-        sOut.flush();
+        if (scriptByteArray.length <= 255) {
+            byte[] scriptInfo = {(byte) 0, (byte) 21, (byte) scriptByteArray.length};
+            byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, scriptByteArray);
+            sOut.write(scriptPackage);
+            sOut.flush();
+        } else {
+            byte[][] splitScript = SplitInfo.splitObjectIntoByteArray(script);
+            int code = 255;
+            for (int i = 0; i < splitScript.length; i++) {
+                if (i == splitScript.length - 1)
+                    code = 254;
+                byte[] scriptInfo = {(byte) 0, (byte) code, (byte) splitScript[i].length};
+                byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, splitScript[i]);
+                sOut.write(scriptPackage);
+                sOut.flush();
+            }
+        }
 
         //recives server's response
         serverResponse = sIn.readNBytes(4);
-        if ((int) serverResponse[1] == 21)
+        if ((serverResponse[1] & 0xff) == 22)
             System.out.println("Script de atividade automática executado com sucesso.");
-        else
+        if ((serverResponse[1] & 0xff) == 253)
             System.out.println("Não foi possivel executar o script de atividade automática com sucesso.");
     }
 
