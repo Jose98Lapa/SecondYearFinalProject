@@ -109,6 +109,11 @@ public class TcpClient {
 			count++;
 		}
 
+		if (taskInfoList.isEmpty()){
+			System.out.println("Não existem tarefas associadas a este colaborador");
+			return null;
+		}
+
 		return taskInfoList;
 
 	}
