@@ -67,7 +67,7 @@ public class CreateTicketController {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
                     new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null), ((ApprovalTask) starter).form(),
-                    LocalDateTime.parse(deadline));
+                    LocalDate.parse(deadline));
 
             this.ticketTaskController.registerApprovalTask(approvalTask);
             return approvalTask;
@@ -79,7 +79,7 @@ public class CreateTicketController {
                     new Transition(null, null),
                     ((ExecutionTask) starter).form(),
                     null,
-                    LocalDateTime.parse(deadline));
+                    LocalDate.parse(deadline));
 
             this.ticketTaskController.registerExecutionTask(executionTask);
             return executionTask;
@@ -104,7 +104,7 @@ public class CreateTicketController {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
                     new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null), ((TicketApprovalTask) starter).form(),
-                    LocalDateTime.parse(deadline));
+                    LocalDate.parse(deadline));
 
             this.ticketTaskController.registerApprovalTask(approvalTask);
             return approvalTask;
@@ -116,7 +116,7 @@ public class CreateTicketController {
                     new Transition(null, null),
                     ((TicketExecutionTask) starter).form(),
                     null,
-                    LocalDateTime.parse(deadline));
+                    LocalDate.parse(deadline));
 
             this.ticketTaskController.registerExecutionTask(executionTask);
             return executionTask;

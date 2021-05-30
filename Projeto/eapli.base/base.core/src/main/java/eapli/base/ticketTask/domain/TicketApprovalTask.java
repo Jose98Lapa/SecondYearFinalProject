@@ -8,6 +8,7 @@ import eapli.framework.representations.dto.DTOable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +25,7 @@ public class TicketApprovalTask extends TicketManualTask implements DTOable< Tic
 
 	}
 
-	public TicketApprovalTask ( TicketTaskID ticketTaskID, Transition transition, Form form, LocalDateTime deadline ) {
+	public TicketApprovalTask ( TicketTaskID ticketTaskID, Transition transition, Form form, LocalDate deadline ) {
 		super( ticketTaskID, transition, form, deadline );
 	}
 
