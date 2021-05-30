@@ -23,6 +23,7 @@
  */
 package eapli.base.app.user.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
 import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
@@ -84,6 +85,8 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION,builderConsultarServicoMenu());
 
 
+
+
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
@@ -94,6 +97,7 @@ class MainMenu extends ClientUserBaseUI {
     private Menu builderConsultarServicoMenu(){
         final Menu consultarServicoMenu = new Menu("Consultar Serviços");
         consultarServicoMenu.addItem(1,"Consultar Serviços",()->new CheckServicesUI().show());
+        consultarServicoMenu.addItem( 2, "Pedir serviço",() -> new RequestServiceUI().show() );
         consultarServicoMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return consultarServicoMenu;
     }
