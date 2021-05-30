@@ -75,7 +75,6 @@ public class TcpServer implements Runnable {
                 System.exit(1);
             }
 
-            //Get Ticket by collaborator TODO: Por implementar
             TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
             List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
 

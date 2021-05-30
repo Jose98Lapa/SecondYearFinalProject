@@ -3,12 +3,14 @@ package eapli.base.ticket.domain;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.DomainEntity;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
+@Entity
 public class TicketWorkflow implements DomainEntity< String >, Serializable {
 
 	@Id
