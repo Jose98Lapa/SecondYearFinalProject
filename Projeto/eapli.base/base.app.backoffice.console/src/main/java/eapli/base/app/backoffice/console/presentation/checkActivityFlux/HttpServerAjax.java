@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.checkActivityFlux;
 
 import eapli.base.app.backoffice.console.presentation.checkActivityFlux.HttpAjaxRequest;
+import eapli.base.app.backoffice.console.presentation.checkActivityFlux.application.CheckActivityFluxController;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.net.Socket;
 public class HttpServerAjax extends Thread {
     static private final String BASE_FOLDER = "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/checkActivityFlux/www";
     static private ServerSocket sock;
+    static CheckActivityFluxController theController = new CheckActivityFluxController();
 
     public void setStatus(String status) {
         HttpServerAjax.status = status;
@@ -48,6 +50,7 @@ public class HttpServerAjax extends Thread {
 
 
     public static synchronized String getStatusInfoStandingInHTML() {
+        theController.checkServer("192.168.1.92");
         return "<span id=\"state\">Estado:" + status + "</span>";
     }
 

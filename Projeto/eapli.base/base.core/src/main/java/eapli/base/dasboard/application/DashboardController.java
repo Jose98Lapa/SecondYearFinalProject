@@ -26,7 +26,7 @@ public class DashboardController {
         TcpClient tcpClient = new TcpClient();
         tcpClient.startConnection(Application.settings().getIpWorkflow());
         dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
-        tcpClient.stopConnection();
+        //tcpClient.stopConnection();
     }
 
     public LinkedList<DashboardInfoDTO> infoByUrgency() {
