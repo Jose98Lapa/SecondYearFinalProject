@@ -14,8 +14,9 @@ import java.util.regex.Pattern;
 public class TicketStatus implements ValueObject, Serializable {
 
 	private String status;
+
 	@Transient
-	private String regex = "ToDo";
+	private String regex = "[a-zA-Z]+";
 
     protected TicketStatus ( ) {
 
@@ -50,7 +51,7 @@ public class TicketStatus implements ValueObject, Serializable {
 		if ( this == o ) return true;
 		if ( o == null || getClass( ) != o.getClass( ) ) return false;
 		TicketStatus that = ( TicketStatus ) o;
-		return Objects.equals( status, that.status ) && Objects.equals( regex, that.regex );
+		return Objects.equals( status, that.status );
 	}
 
 	@Override

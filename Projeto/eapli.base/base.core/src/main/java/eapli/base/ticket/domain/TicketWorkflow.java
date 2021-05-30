@@ -2,7 +2,9 @@ package eapli.base.ticket.domain;
 
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.DomainEntity;
+import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -10,8 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity
-public class TicketWorkflow implements DomainEntity< String >, Serializable {
+public class TicketWorkflow implements ValueObject, Serializable {
 
 	@Id
 	private String workflowID;
@@ -30,14 +31,8 @@ public class TicketWorkflow implements DomainEntity< String >, Serializable {
 		setStarterTask( starter );
 	}
 
-	@Override
-	public boolean sameAs ( Object other ) {
-		return false;
-	}
-
-	@Override
-	public String identity ( ) {
-		return workflowID;
+	public TicketWorkflow valueOf ( String workflowID, LocalDate startingDate, TicketTask starter ) {
+		return new TicketWorkflow( workflowID, startingDate, starter );
 	}
 
 	public void setWorkflowID ( String workflowID ) {

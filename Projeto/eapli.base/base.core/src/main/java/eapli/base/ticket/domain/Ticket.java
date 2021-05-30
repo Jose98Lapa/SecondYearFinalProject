@@ -30,9 +30,6 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	@EmbeddedId
 	private TicketID id;
 
-	public void setStatus(TicketStatus status) {
-		this.status = status;
-	}
 
 	private TicketStatus status;
 	private AttachedFile file;
@@ -104,6 +101,14 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	@Override
 	public TicketDTO toDTO ( ) {
 		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), id.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
+	}
+
+	public TicketStatus status () {
+		return this.status;
+	}
+
+	public void setStatus(TicketStatus status) {
+		this.status = status;
 	}
 
 

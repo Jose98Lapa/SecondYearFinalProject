@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-class TcpExecuterClient {
+public class TcpExecuterClient {
 
 	private static InetAddress serverIP;
 	private static Socket socket;
@@ -102,7 +102,7 @@ class TcpExecuterClient {
 	}
 
 
-	public static void main(String[] args) throws IOException {
+	public static void main( String arg ) throws IOException {
 
 		TcpExecuterClient tcpClient = new TcpExecuterClient();
 		tcpClient.startConnection(Application.settings().getIpAutomatictaskExecutor());
@@ -116,7 +116,7 @@ class TcpExecuterClient {
 					cycle = false;
 					break;
 				case 20:
-					tcpClient.executeAutomaticTask("");
+					tcpClient.executeAutomaticTask( arg );
 					break;
 				default:
 					System.out.println("Invalid Option");

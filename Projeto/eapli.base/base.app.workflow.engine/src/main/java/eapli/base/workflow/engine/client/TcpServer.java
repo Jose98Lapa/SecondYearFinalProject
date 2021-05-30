@@ -1,10 +1,9 @@
-package eapli.base.workflow.engine;
+package eapli.base.workflow.engine.client;
 
 
 import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
-import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
@@ -24,7 +23,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
