@@ -38,6 +38,7 @@ public class HttpServerAjax extends Thread {
             HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
         }
+
     }
 
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
