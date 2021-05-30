@@ -1,7 +1,6 @@
 package eapli.base.workflow.engine.client;
 
 import eapli.base.Application;
-import eapli.base.utils.SplitInfo;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
