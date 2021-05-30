@@ -55,9 +55,8 @@ public class HttpAjaxRequest extends Thread {
                     }
                 }
                 response.send(outS);
-            }/* else { // NOT GET
+            } else { // NOT GET
                 if ((request.getMethod().equals("PUT") && request.getURI().startsWith("/votes/"))) {
-                    HttpServerAjax.castVote(request.getURI().substring(7));
                     response.setResponseStatus("200 Ok");
                 } else {
                     response.setContentFromString(
@@ -66,7 +65,7 @@ public class HttpAjaxRequest extends Thread {
                     response.setResponseStatus("405 Method Not Allowed");
                 }
                 response.send(outS);
-            }*/
+            }
         } catch (IOException ex) {
             System.out.println("Thread error when reading request");
         }
