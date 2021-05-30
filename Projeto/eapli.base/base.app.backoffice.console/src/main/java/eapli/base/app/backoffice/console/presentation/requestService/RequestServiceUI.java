@@ -57,6 +57,8 @@ public class RequestServiceUI extends AbstractUI {
 			for ( AttributeDTO attribute : form.atrDTO ) {
 				Utils.readLineFromConsole( attribute.label );
 
+				System.out.println(attribute.tipo );
+
 				Attribute answerAttribute = new Attribute(
 						new AtributteName( "Resposta" ),
 						new AttributeLabel( Utils.readLineFromConsole( "Resposta a pergunta: " ) ),

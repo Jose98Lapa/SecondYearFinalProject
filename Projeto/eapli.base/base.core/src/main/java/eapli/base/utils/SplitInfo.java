@@ -21,7 +21,7 @@ public class SplitInfo {
             int bytesCount = 0;
             for (int i=0;i< returnInfo.length;i++){
                 for (int j=0;j<SIZE_LIMIT;j++){
-                    if (j==bytes.length)
+                    if (bytesCount==bytes.length)
                         break;
                     returnInfo[i][j] = bytes[bytesCount];
                     bytesCount++;
@@ -38,7 +38,7 @@ public class SplitInfo {
     public static Object joinSplitInfo(byte [][]info){
         byte[] arr = new byte[info.length*info[0].length];
         int byteCount = 0;
-        for (int i=0;i<arr.length;i++){
+        for (int i=0;i<info.length;i++){
             for (int j=0;j<info[i].length;j++){
                 arr[byteCount] = info[i][j];
                 byteCount++;
@@ -57,6 +57,17 @@ public class SplitInfo {
         }
         return null;
 
+    }
+
+    public static byte[] serializeObject(Object obj) throws IOException {
+        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bytesOut);
+        oos.writeObject(obj);
+        oos.flush();
+        byte[] bytes = bytesOut.toByteArray();
+        bytesOut.close();
+        oos.close();
+        return bytes;
     }
 
 }
