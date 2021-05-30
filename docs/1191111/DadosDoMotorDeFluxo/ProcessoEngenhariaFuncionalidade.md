@@ -104,8 +104,8 @@ public List<String> TaskInfoList(String email) throws IOException {
 ```
 
 # 5. Integração/Demonstração
-Este implementação consumiu bastante tempo e requeriu pesquisa, devido ao facto de ter sido algo com que não tinha experiencia.  Para efeitos de demonstração, são disponibilados os dados necessários para o Portal dos Utilizadores. A execução desta funcionalidade é desencandeada pelo motor de fluxos de atividade, onde este exerce o papel de cliente SDP2021
+Este implementação consumiu bastante tempo e requeriu pesquisa, devido ao facto de ter sido algo com que não tinha experiencia.  Para efeitos de demonstração, são disponibilados os dados necessários para o Portal dos Utilizadores, mas estes nao sao obtidos através da base de dados, sao simulados. Opera como aplicação servidora SDP2021 permitindo às aplicações Aplicação de Serviços e RH e Aplicação Portal dos Utilizadores obterem os dados necessários.
 
 # 6. Observações
-Penso que todos os critetios foram cumpridos, o protocologo da aplicação foi seguido. São suportados pedidos simultaneos ao servidor, através da adoção do mecanismo de Threads. 
+Penso que todos os critetios foram cumpridos, o protocologo da aplicação foi seguido. São suportados pedidos simultaneos ao servidor, através da adoção do mecanismo de Threads. A unica coisa a apontar é que, devido a restrições de tempo,as querys criadas para obter os dados necessarios da base de dados não poderam ser testados, logo os dados que deveriam ser obtidos pela base de dados são simulados.
 

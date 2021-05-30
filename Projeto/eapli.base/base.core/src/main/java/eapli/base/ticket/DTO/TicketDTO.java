@@ -24,7 +24,7 @@ public class TicketDTO {
 
 	@Override
 	public String toString() {
-		return "TicketDTO:\nID-> "+id+"\nDeadLine-> "+deadLine+"\nSolicitatedOn-> "+solicitedOn
+		return "Ticket:\nID-> "+id+"\nDeadLine-> "+deadLine+"\nSolicitatedOn-> "+solicitedOn
 				+"\nStatus-> "+status+"\nFile-> "+file+"Urgency-> "+urgency;
 	}
 }
