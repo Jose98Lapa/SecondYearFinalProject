@@ -66,6 +66,13 @@ public class SFTPClient {
     }
 
     public String getScriptToString(String source) throws JSchException, SftpException {
+        System.out.println(2);
+        int i = source.lastIndexOf('/');
+        System.out.println(3);
+        String filename=null;
+        if (i > 0)
+            filename += source.substring(i + 1);
+
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
@@ -75,17 +82,11 @@ public class SFTPClient {
             sftpChannel.mkdir(localServerFolder);
             sftpChannel.cd(localServerFolder);
         }
+
         System.out.println(1);
         sftpChannel.get(source, "eapli.base");
-        System.out.println(2);
-        int i = source.lastIndexOf('/');
-        System.out.println(3);
-        String filename=null;
-        if (i > 0) {
-            filename += source.substring(i + 1);
-        }
         System.out.println(4);
-        String output =new BufferedReader(new InputStreamReader(sftpChannel.get("eapli.base/"+filename))).lines().collect(Collectors.joining("\n"));
+        String output =new BufferedReader(new InputStreamReader(sftpChannel.get("eapli.base/"+ filename))).lines().collect(Collectors.joining("\n"));
         System.out.println(output);
         sftpChannel.exit();
         session.disconnect();
