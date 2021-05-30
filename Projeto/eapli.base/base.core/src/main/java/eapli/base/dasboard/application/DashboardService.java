@@ -11,7 +11,7 @@ public class DashboardService {
     public LinkedList<DashboardInfoDTO> prepareInformation(List<String> input){
         LinkedList toReturn = new LinkedList<DashboardInfoDTO>();
         for (String line:input) {
-            String [] segments= line.split("|");
+            String [] segments= line.split("\\|");
             String[] aux = getRemainingTime(segments[3]);
             toReturn.add(new DashboardInfoDTO(segments[0],segments[1],segments[2],segments[3],segments[4],segments[5],aux[0],aux[1]));
         }
@@ -38,7 +38,7 @@ public class DashboardService {
 
 
     private LocalDateTime getDateFromString(String str){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
         return dateTime;
     }

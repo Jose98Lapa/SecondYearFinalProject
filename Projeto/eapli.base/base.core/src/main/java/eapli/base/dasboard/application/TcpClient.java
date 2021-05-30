@@ -4,9 +4,7 @@ import eapli.base.Application;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -27,14 +25,14 @@ public class TcpClient {
 			serverIP = InetAddress.getByName(ip);
 		} catch (UnknownHostException ex) {
 			System.out.println("Invalid server specified: " + ip);
-			//System.exit(1);
+			System.exit(1);
 		}
 
 		try {
 			socket = new Socket(serverIP, Integer.parseInt(Application.settings().getPortWorkflow()));
 		} catch (IOException ex) {
 			System.out.println("Failed to establish TCP connection");
-			//System.exit(1);
+			System.exit(1);
 		}
 
 
@@ -43,7 +41,7 @@ public class TcpClient {
 			sIn = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			System.out.println("Failed to establish DataOutputStream or DataInputStream");
-			//System.exit(1);
+			System.exit(1);
 		}
 
 		System.out.println("Connection established with Worflow server\n");
@@ -90,6 +88,7 @@ public class TcpClient {
 		List<String> taskInfoList = new ArrayList<>();
 		int count=0;
 		String taskInfo;
+		StringBuilder taskInfobuilder = new StringBuilder();
 		while(true){
 			byte[] info = sIn.readNBytes(3);
 			if ((info[1]&0xff)==254)
@@ -98,11 +97,12 @@ public class TcpClient {
 				System.out.println("A error occurred");
 				break;
 			}
-			byte[] byteArray = sIn.readNBytes(info[2]);
+			byte[] byteArray = sIn.readNBytes(info[2]&0xff);
 			String atribute = new String(byteArray, StandardCharsets.UTF_8);
-			StringBuilder taskInfobuilder = new StringBuilder();
-			taskInfo=taskInfobuilder.append(atribute).append("|").toString();
+			taskInfobuilder.append(atribute).append("|");
 			if (count==5){
+				taskInfo=taskInfobuilder.toString();
+				taskInfobuilder.setLength(0);
 				taskInfoList.add(taskInfo);
 				taskInfo="";
 				count=0;
@@ -141,3 +141,4 @@ public class TcpClient {
 		}
 	}
 }
+

@@ -108,7 +108,7 @@ public class TcpServer implements Runnable {
                 sOut.flush();
             }else{
                     sendString("5");
-                    sendString("30/6/2021");
+                    sendString("30-6-2021");
                     sendString("Lavar janelas");
                     sendString("http://192.168.1.92/bootstrap.jpg");
                     sendString("tens de lavar janelas");
@@ -119,6 +119,7 @@ public class TcpServer implements Runnable {
             }
         } catch (IOException ex) {
             System.out.println("An error ocurred");
+            stopConnection(clientSocket.getInetAddress());
         }
     }
 
