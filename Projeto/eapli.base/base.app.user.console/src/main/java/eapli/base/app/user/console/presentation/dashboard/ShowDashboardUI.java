@@ -1,6 +1,6 @@
 package eapli.base.app.user.console.presentation.dashboard;
 
-import eapli.base.app.user.console.presentation.dashboard.application.DashboardController;
+import eapli.base.dasboard.application.DashboardController;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.awt.*;
