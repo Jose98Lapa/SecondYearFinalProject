@@ -6,6 +6,7 @@ import eapli.base.collaborator.domain.Collaborator;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class DashboardController {
@@ -25,7 +26,11 @@ public class DashboardController {
     public void receiveInfoFromServer(String email) {
         TcpClient tcpClient = new TcpClient();
         tcpClient.startConnection(Application.settings().getIpWorkflow());
-        dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
+        try {
+            dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //tcpClient.stopConnection();
     }
 

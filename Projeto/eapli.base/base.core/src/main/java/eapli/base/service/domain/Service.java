@@ -167,6 +167,12 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
         }
     }
 
+    public void updateStatus(){
+        if (isComplete()){
+            this.status = new ServiceStatus("INATIVO");
+        }
+    }
+
     public Form form () {
         return form;
     }

@@ -70,6 +70,10 @@ public class SpecifyServiceController {
         return new ServiceListService().allServices();
     }
 
+    public void updateStatus(){
+        this.service.updateStatus();
+    }
+
     public void activateService(ServiceDTO serviceDTO) {
 
         Optional<Service> serviceOptional = serviceRepository.ofIdentity(ServiceID.valueOf(serviceDTO.id));
