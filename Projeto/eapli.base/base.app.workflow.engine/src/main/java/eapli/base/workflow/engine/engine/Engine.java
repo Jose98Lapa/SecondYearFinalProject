@@ -20,8 +20,8 @@ public class Engine {
 
 		TicketRepository ticketRepository = PersistenceContext.repositories( ).tickets( );
 		Timer timer = new Timer( );
-		List< Ticket > previousState = null;
-
+		List< Ticket > previousState = new ArrayList<>( );
+		ticketRepository.findAll( ).forEach( previousState::add );
 
 		timer.scheduleAtFixedRate( new TimerTask( ) {
 
@@ -83,7 +83,8 @@ public class Engine {
 						TcpExecuterClient.main( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString()  );
 					} catch ( IOException e ) {
 						e.printStackTrace( );
-					}				}
+					}
+				}
 				break;
 		}
 	}
