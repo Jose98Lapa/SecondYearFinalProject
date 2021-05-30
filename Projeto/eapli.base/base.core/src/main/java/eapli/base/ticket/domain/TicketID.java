@@ -14,22 +14,13 @@ import java.util.regex.Pattern;
 public class TicketID implements ValueObject, Comparable< TicketID >, Serializable {
 
 	private String ticketID;
-	@Transient
-	private String regex = "^[0-9]{1,10}$";
+
 
 	public TicketID ( final String ID ) {
 		if ( StringPredicates.isNullOrEmpty( ID ) ) {
 			throw new IllegalArgumentException( "Ticket ID should neither be null nor empty" );
 		}
-
-		Pattern p = Pattern.compile( regex );
-		Matcher m = p.matcher( ID );
-
-		if ( m.matches( ) ) {
-			this.ticketID = ID;
-		} else {
-			throw new IllegalArgumentException( "Ticket ID does not fit the criteria" );
-		}
+		this.ticketID = ID;
 
 	}
 
@@ -46,12 +37,12 @@ public class TicketID implements ValueObject, Comparable< TicketID >, Serializab
 		if ( this == o ) return true;
 		if ( o == null || getClass( ) != o.getClass( ) ) return false;
 		TicketID ticketID1 = ( TicketID ) o;
-		return Objects.equals( ticketID, ticketID1.ticketID ) && Objects.equals( regex, ticketID1.regex );
+		return Objects.equals( ticketID, ticketID1.ticketID );
 	}
 
 	@Override
 	public int hashCode ( ) {
-		return Objects.hash( ticketID, regex );
+		return Objects.hash( ticketID);
 	}
 
 	@Override

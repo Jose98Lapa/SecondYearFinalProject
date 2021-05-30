@@ -21,120 +21,119 @@ import java.time.LocalDateTime;
 
 public class CreateTicketController {
 
-	private TicketBuilder builder;
-	private CreateTaskController ticketTaskController;
-	private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+    private final TicketBuilder builder = new TicketBuilder();
+    private CreateTaskController ticketTaskController;
+    private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
 
-	public CreateTicketController ( ) {
-	}
-
-
-	public void createTicket ( String deadline, String id, String file, Service service, String urgency ) {
-
-		this.ticketTaskController = new CreateTaskController( );
-		if ( service.workflow()!=null && service.workflow().starterTask() != null ) {
-
-		Task starter = service.workflow( ).starterTask( );
-
-		TicketTask starterTicketTask = createTicketTask( deadline, starter );
-
-		if ( starterTicketTask.transition().hasNextTask() ) {
-			createTicketTask( deadline, starterTicketTask );
-		}
-
-		TicketWorkflow workflow = new TicketWorkflow(
-				service.workflow( ).identity( ),
-				LocalDate.now( ),
-				starterTicketTask
-				);
+    public CreateTicketController() {
+    }
 
 
-		Ticket ticket = builder.solicitedOn( LocalDate.now( ).toString( ) )
-				.withDeadLine( deadline )
-				.withId( id )
-				.withPossibleFile( file )
-				.withService( service )
-				.withStatus( "Pending" )
-				.withUrgency( urgency )
-				.withWorkFlow( workflow )
-				.build( );
+    public void createTicket(String deadline, String id, String file, Service service, String urgency) {
 
-		ticketRepository.save( ticket );
-		}
-	}
+        this.ticketTaskController = new CreateTaskController();
+        if (service.workflow() != null && service.workflow().starterTask() != null) {
 
-	private TicketTask createTicketTask ( String deadline, Task starter ) {
-		if ( starter instanceof ApprovalTask ) {
-			TicketApprovalTask approvalTask = new TicketApprovalTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ), ( ( ApprovalTask ) starter ).form( ),
-					LocalDateTime.parse( deadline ) );
+            Task starter = service.workflow().starterTask();
 
-			this.ticketTaskController.registerApprovalTask( approvalTask );
-			return approvalTask;
-		}
+            TicketTask starterTicketTask = createTicketTask(deadline, starter);
 
-		if ( starter instanceof ExecutionTask ) {
-			TicketExecutionTask executionTask = new TicketExecutionTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ),
-					( ( ExecutionTask ) starter ).form( ),
-					null,
-					LocalDateTime.parse( deadline ) );
+            if (starterTicketTask.transition().hasNextTask()) {
+                createTicketTask(deadline, starterTicketTask);
+            }
 
-			this.ticketTaskController.registerExecutionTask( executionTask );
-			return executionTask;
-		}
+            TicketWorkflow workflow = new TicketWorkflow(
+                    LocalDate.now(),
+                    starterTicketTask
+            );
 
-		if ( starter instanceof AutomaticTask ) {
-			TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ),
-					( ( AutomaticTask ) starter ).scriptPath( )
-			);
 
-			this.ticketTaskController.registerAutomaticTask( automaticTask );
-			return automaticTask;
-		}
+            Ticket ticket = builder.solicitedOn(LocalDate.now().toString())
+                    .withDeadLine(deadline)
+                    .withId(id)
+                    .withPossibleFile(file)
+                    .withService(service)
+                    .withStatus("Pending")
+                    .withUrgency(urgency)
+                    .withWorkFlow(workflow)
+                    .build();
 
-		return null;
-	}
+            ticketRepository.save(ticket);
+        }
+    }
 
-	private TicketTask createTicketTask ( String deadline, TicketTask starter ) {
-		if ( starter instanceof TicketApprovalTask ) {
-			TicketApprovalTask approvalTask = new TicketApprovalTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ), ( ( TicketApprovalTask ) starter ).form( ),
-					LocalDateTime.parse( deadline ) );
+    private TicketTask createTicketTask(String deadline, Task starter) {
+        if (starter instanceof ApprovalTask) {
+            TicketApprovalTask approvalTask = new TicketApprovalTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null), ((ApprovalTask) starter).form(),
+                    LocalDateTime.parse(deadline));
 
-			this.ticketTaskController.registerApprovalTask( approvalTask );
-			return approvalTask;
-		}
+            this.ticketTaskController.registerApprovalTask(approvalTask);
+            return approvalTask;
+        }
 
-		if ( starter instanceof TicketExecutionTask ) {
-			TicketExecutionTask executionTask = new TicketExecutionTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ),
-					( ( TicketExecutionTask ) starter ).form( ),
-					null,
-					LocalDateTime.parse( deadline ) );
+        if (starter instanceof ExecutionTask) {
+            TicketExecutionTask executionTask = new TicketExecutionTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null),
+                    ((ExecutionTask) starter).form(),
+                    null,
+                    LocalDateTime.parse(deadline));
 
-			this.ticketTaskController.registerExecutionTask( executionTask );
-			return executionTask;
-		}
+            this.ticketTaskController.registerExecutionTask(executionTask);
+            return executionTask;
+        }
 
-		if ( starter instanceof TicketAutomaticTask ) {
-			TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-					new TicketTaskID( starter.identity( ).toString( ) ),
-					new Transition( null, null ),
-					( ( TicketAutomaticTask ) starter ).scriptPath( )
-			);
+        if (starter instanceof AutomaticTask) {
+            TicketAutomaticTask automaticTask = new TicketAutomaticTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null),
+                    ((AutomaticTask) starter).scriptPath()
+            );
 
-			this.ticketTaskController.registerAutomaticTask( automaticTask );
-			return automaticTask;
-		}
+            this.ticketTaskController.registerAutomaticTask(automaticTask);
+            return automaticTask;
+        }
 
-		return null;
-	}
+        return null;
+    }
+
+    private TicketTask createTicketTask(String deadline, TicketTask starter) {
+        if (starter instanceof TicketApprovalTask) {
+            TicketApprovalTask approvalTask = new TicketApprovalTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null), ((TicketApprovalTask) starter).form(),
+                    LocalDateTime.parse(deadline));
+
+            this.ticketTaskController.registerApprovalTask(approvalTask);
+            return approvalTask;
+        }
+
+        if (starter instanceof TicketExecutionTask) {
+            TicketExecutionTask executionTask = new TicketExecutionTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null),
+                    ((TicketExecutionTask) starter).form(),
+                    null,
+                    LocalDateTime.parse(deadline));
+
+            this.ticketTaskController.registerExecutionTask(executionTask);
+            return executionTask;
+        }
+
+        if (starter instanceof TicketAutomaticTask) {
+            TicketAutomaticTask automaticTask = new TicketAutomaticTask(
+                    new TicketTaskID(starter.identity().toString()),
+                    new Transition(null, null),
+                    ((TicketAutomaticTask) starter).scriptPath()
+            );
+
+            this.ticketTaskController.registerAutomaticTask(automaticTask);
+            return automaticTask;
+        }
+
+        return null;
+    }
 
 }
