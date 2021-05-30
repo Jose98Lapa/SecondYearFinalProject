@@ -1,6 +1,7 @@
 package eapli.base.catalogue.application;
 
 import eapli.base.catalogue.domain.Catalogue;
+import eapli.base.catalogue.domain.CatalogueID;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -8,6 +9,7 @@ import eapli.base.team.domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class ListCatalogueService {
@@ -30,6 +32,13 @@ public class ListCatalogueService {
 			}
 		}
 		return catalogos;
+	}
+	public Catalogue getCatalogueByID(Long catalogueID){
+		Optional<Catalogue> optionalCatalogue = catalogoRepo.ofIdentity(catalogueID);
+		if (optionalCatalogue.isEmpty())
+			throw new IllegalArgumentException("ID invalido");
+		return optionalCatalogue.get();
+
 	}
 
 	public List< CatalogueDTO > requestableCataloguesByTeam ( Team team ) {

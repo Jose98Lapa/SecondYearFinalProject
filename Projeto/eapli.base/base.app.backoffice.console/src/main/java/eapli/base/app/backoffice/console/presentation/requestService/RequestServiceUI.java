@@ -40,13 +40,12 @@ public class RequestServiceUI extends AbstractUI {
 		List< CatalogueDTO > availableCatalogues = requestableCatalogues( );
 		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o catalogo que deseja" );
 		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( catalogueIndex );
-		Catalogue chosenCatalogue = new CatalogueDTOParser( ).valueOf( chosenCatalogueDTO );
 
-		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity) );
 		int serviceIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o serviço que deseja" );
 
-		FormID formID = new ServiceDTOParser( ).valueOf( availableServices.get( serviceIndex ) ).form( ).identity( );
-		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( formID );
+
+		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( availableServices.get(serviceIndex).form.identity() );
 		FormDTO form;
 
 		if ( serviceFormDTO.isPresent( ) ) {

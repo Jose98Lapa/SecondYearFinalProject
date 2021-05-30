@@ -50,7 +50,7 @@ public class HttpServerAjax extends Thread {
 
 
     public static synchronized String getStatusInfoStandingInHTML() {
-        theController.checkServer("192.168.1.92");
+        theController.setStatus();
         return "<span id=\"state\">Estado:" + status + "</span>";
     }
 

@@ -13,8 +13,12 @@ public class CheckActivityFluxController {
     private final HttpServerAjax server = new HttpServerAjax();
 
     public void showCollaborator() {
-        server.setStatus(checkServer("192.168.1.92"));
+       setStatus();
         server.start();
+    }
+
+    public void setStatus(){
+        server.setStatus(checkServer(Application.settings().getWorkflowServer()));
     }
 
     public String checkServer ( String ipAddress ) {

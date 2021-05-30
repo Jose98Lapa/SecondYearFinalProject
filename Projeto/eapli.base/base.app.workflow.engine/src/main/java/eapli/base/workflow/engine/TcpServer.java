@@ -13,6 +13,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketTask;
+import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
@@ -59,27 +60,29 @@ public class TcpServer implements Runnable {
 
             //Receives email
             byte[] emailInfo = sIn.readNBytes(3);
-            byte[] emailByteArray = sIn.readNBytes(emailInfo[2]);
+            byte[] emailByteArray = sIn.readNBytes(emailInfo[2]&0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
             //Get Collaborator by email
             CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
             InstituionalEmail iEmail = new InstituionalEmail(email);
             Optional<Collaborator> collabOp = collaboratorRepository.getColaboradorByEmail(iEmail);
-            CollaboratorDTO collaboratorDTO;
+            Collaborator collaborator = null;
             if (collabOp.isPresent())
-                collaboratorDTO = collabOp.get().toDTO();
+                collaborator = collabOp.get();
             else {
                 System.out.println("Invalid email");
                 System.exit(1);
             }
 
             //Get Ticket by collaborator TODO: Por implementar
-            List<TicketTask> lstTicketTask = new ArrayList<>();
+            TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
+            List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
 
             TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
             int finalCode = 254;
             for (TicketTask ticketTask : lstTicketTask) {
+
                 Optional<Ticket> ticketOp = ticketRepository.ofIdentity(new TicketID(ticketTask.identity().toString()));
                 Ticket ticket;
                 if (ticketOp.isPresent())
@@ -89,6 +92,7 @@ public class TcpServer implements Runnable {
                     finalCode = 253;
                     break;
                 }
+
                 TicketDTO ticketDTO = ticket.toDTO();
                 ServiceDTO serviceDTO = ticket.service().toDTO();
                 sendString(ticketDTO.urgency); //urgency
