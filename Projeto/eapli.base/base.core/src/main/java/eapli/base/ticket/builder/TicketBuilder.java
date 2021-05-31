@@ -1,5 +1,6 @@
 package eapli.base.ticket.builder;
 
+import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.ticket.domain.*;
 import eapli.framework.domain.model.DomainFactory;
@@ -15,6 +16,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 	private Urgency urgency;
 	private Service service;
 	private TicketWorkflow workflow;
+	private Form form;
 
 	public TicketBuilder solicitedOn ( String solicitedOn ) {
 		this.solicitedOn = LocalDate.parse( solicitedOn );
@@ -56,9 +58,14 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 		return this;
 	}
 
+	public TicketBuilder withForm ( Form form ) {
+		this.form = form;
+		return this;
+	}
+
 	@Override
 	public Ticket build ( ) {
-		return new Ticket( solicitedOn, deadLine, id, status, file, urgency, service, workflow );
+		return new Ticket( solicitedOn, deadLine, id, status, file, urgency, service, workflow, form );
 	}
 
 }

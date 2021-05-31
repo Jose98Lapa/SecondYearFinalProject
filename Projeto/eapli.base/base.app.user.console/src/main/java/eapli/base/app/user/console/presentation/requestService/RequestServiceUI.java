@@ -78,15 +78,13 @@ public class RequestServiceUI extends AbstractUI {
 					new FormName( "TicketAnswer" ),
 					attributes );
 
-			formRepository.save( answerForm );
-
-
 			ticketController.createTicket(
 					Utils.readLineFromConsole( "DeadLine (AAAA-MM-DDTHH:mm:ss)" ),
 					UUID.randomUUID().toString().substring(0,4),
 					Utils.readLineFromConsole( "File Path: " ),
 					new ServiceListService().getServiceByID(availableServices.get(serviceIndex).id),
-					Utils.readLineFromConsole( "Urgency: " )
+					Utils.readLineFromConsole( "Urgency: " ),
+					answerForm
 					);
 		}
 

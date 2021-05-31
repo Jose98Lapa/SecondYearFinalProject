@@ -50,7 +50,7 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 	public Ticket ( LocalDate solicitedOn, LocalDate deadLine,
 					TicketID id, TicketStatus status, AttachedFile file,
-					Urgency urgency, Service service, TicketWorkflow workflow  ) {
+					Urgency urgency, Service service, TicketWorkflow workflow, Form ticketForm  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
 		this.id = id;
@@ -59,6 +59,7 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		this.urgency = urgency;
 		this.service = service;
 		this.workflow = workflow;
+		this.ticketForm = ticketForm;
 		this.builder = new TicketBuilder();
 	}
 

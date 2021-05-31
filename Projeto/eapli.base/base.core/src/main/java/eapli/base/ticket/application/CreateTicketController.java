@@ -2,6 +2,7 @@ package eapli.base.ticket.application;
 
 import eapli.base.AppSettings;
 import eapli.base.catalogue.repositories.CatalogueRepository;
+import eapli.base.form.domain.Form;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.domain.Service;
 import eapli.base.task.domain.ApprovalTask;
@@ -29,7 +30,7 @@ public class CreateTicketController {
     }
 
 
-    public void createTicket(String deadline, String id, String file, Service service, String urgency) {
+    public void createTicket(String deadline, String id, String file, Service service, String urgency, Form form) {
 
         this.ticketTaskController = new CreateTaskController();
         if (service.workflow() != null && service.workflow().starterTask() != null) {
@@ -56,6 +57,7 @@ public class CreateTicketController {
                     .withStatus("PENDING")
                     .withUrgency(urgency)
                     .withWorkFlow(workflow)
+                    .withForm( form )
                     .build();
 
             ticketRepository.save(ticket);
