@@ -11,15 +11,15 @@ import java.util.LinkedList;
 
 public class DashboardController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final HttpServerAjax server = new HttpServerAjax();
     LinkedList<DashboardInfoDTO> dashboardInfo = new LinkedList<>();
     DashboardService service = new DashboardService();
 
     public void showCollaborator() {
+        HttpServerAjax server = new HttpServerAjax();
         String email = authz.session().get().authenticatedUser().email().toString();
         ListCollaboratorService listCollaboratorService = new ListCollaboratorService();
         Collaborator colab = listCollaboratorService.getCollaboratorByEmail(email);
-        server.setColab(colab.toDTO());
+        HttpServerAjax.setColab(colab.toDTO());
         server.start();
     }
 
