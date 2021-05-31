@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class AttributeLabel implements ValueObject, Serializable {
     private String label;
     @Transient
-    private String regex = "^[a-zA-Z]{1,50}$";
+    private String regex = "^[a-zA-Z0-9,!? \n\t]{1,50}$";
 
     public AttributeLabel(String label) {
         if (StringPredicates.isNullOrEmpty(label)) {
