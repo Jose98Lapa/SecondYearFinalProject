@@ -26,7 +26,6 @@ public class HttpServerAjax extends Thread {
             sock = new ServerSocket(55128);
         } catch (IOException ex) {
             System.err.println("Server failed to open local port " + 55128);
-
         }
         while (true) {
 
@@ -45,7 +44,7 @@ public class HttpServerAjax extends Thread {
 
     private static CollaboratorDTO colab;
 
-    public void setColab(CollaboratorDTO colab) {
+    public static synchronized void setColab(CollaboratorDTO colab) {
         HttpServerAjax.colab = colab;
     }
 

@@ -26,13 +26,13 @@ public class DashboardService {
         if (hours<2)
             toReturn[1]="3";
 
-        long duration  =LocalDateTime.now().getNano()- getDateFromString(segment).getNano();
+        long duration  =LocalDateTime.now().getNano() -getDateFromString(segment).getNano() ;
 
         long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
         long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
         long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
 
-        toReturn[0]= diffInDays + " Days " + diffInHours + " Hours " + diffInMinutes + " Minutes";
+        toReturn[0]=diffInMinutes + " Min";
         return toReturn;
     }
 
