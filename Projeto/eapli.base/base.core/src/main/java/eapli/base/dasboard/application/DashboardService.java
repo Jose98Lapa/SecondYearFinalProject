@@ -20,11 +20,11 @@ public class DashboardService {
     private String[] getRemainingTime(String segment) {
         String[] toReturn = new String[2];
         long hours = ChronoUnit.HOURS.between(getDateFromString(segment), LocalDateTime.now());
-        if(hours<0){
-            toReturn[1]="2";
+        if(hours<1){
+            toReturn[1]="1";
         }
         if (hours<2)
-            toReturn[1]="2";
+            toReturn[1]="3";
 
         long duration  =LocalDateTime.now().getNano()- getDateFromString(segment).getNano();
 

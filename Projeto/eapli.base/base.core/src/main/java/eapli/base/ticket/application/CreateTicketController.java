@@ -53,7 +53,7 @@ public class CreateTicketController {
                     .withId(id)
                     .withPossibleFile(file)
                     .withService(service)
-                    .withStatus("Pending")
+                    .withStatus("PENDING")
                     .withUrgency(urgency)
                     .withWorkFlow(workflow)
                     .build();

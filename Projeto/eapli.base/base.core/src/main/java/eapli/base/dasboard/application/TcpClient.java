@@ -44,7 +44,7 @@ public class TcpClient {
 			//System.exit(1);
 		}
 
-		System.out.println("Connection established with Worflow server\n");
+		//System.out.println("Connection established with Worflow server\n");
 	}
 
 	public void stopConnection() {
