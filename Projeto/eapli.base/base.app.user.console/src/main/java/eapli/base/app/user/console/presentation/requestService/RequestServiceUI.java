@@ -13,9 +13,10 @@ import eapli.base.form.domain.FormID;
 import eapli.base.form.domain.FormName;
 import eapli.base.form.domain.FormScript;
 import eapli.base.form.domain.attribute.*;
+import eapli.base.form.repository.FormRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
-import eapli.base.service.DTO.ServiceDTOParser;
 import eapli.base.team.application.TeamListService;
 import eapli.base.team.domain.Team;
 import eapli.base.ticket.application.CreateTicketController;
@@ -27,7 +28,8 @@ import java.util.*;
 
 public class RequestServiceUI extends AbstractUI {
 
-	private final CreateTicketController ticketController=new CreateTicketController();
+	private final CreateTicketController ticketController = new CreateTicketController();
+	private final FormRepository formRepository = PersistenceContext.repositories().form();
 
 	@Override
 	protected boolean doShow ( ) {
@@ -66,6 +68,8 @@ public class RequestServiceUI extends AbstractUI {
 						new AttributeID( UUID.randomUUID( ).toString( ) ),
 						++number
 				);
+
+				attributes.add( answerAttribute );
 			}
 
 			Form answerForm = new Form(
@@ -73,6 +77,9 @@ public class RequestServiceUI extends AbstractUI {
 					new FormID( Utils.readLineFromConsole( "Introduza o id do formulario: " ) ),
 					new FormName( "TicketAnswer" ),
 					attributes );
+
+			formRepository.save( answerForm );
+
 
 			ticketController.createTicket(
 					Utils.readLineFromConsole( "DeadLine (AAAA-MM-DDTHH:mm:ss)" ),
