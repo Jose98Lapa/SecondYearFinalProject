@@ -38,7 +38,7 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	@OneToOne
 	private Service service;
 
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL)
 	private Form ticketForm;
 
 	private TicketWorkflow workflow;
