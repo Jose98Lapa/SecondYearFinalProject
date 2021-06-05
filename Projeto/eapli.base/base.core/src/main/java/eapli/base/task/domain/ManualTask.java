@@ -18,8 +18,8 @@ public abstract class ManualTask extends Task implements Serializable {
     private Form form;
 
 
-    public ManualTask(TaskID taskID, Form form){
-        super(taskID);
+    public ManualTask(Form form){
+        super();
         this.form = form;
     }
 

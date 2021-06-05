@@ -21,4 +21,6 @@ public class AutomaticTaskDTO {
         this.script = script;
     }
 
+
+
 }

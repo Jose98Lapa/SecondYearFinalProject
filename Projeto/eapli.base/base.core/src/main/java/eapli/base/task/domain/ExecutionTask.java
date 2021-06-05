@@ -15,8 +15,8 @@ public class ExecutionTask extends ManualTask implements DTOable<ExecutionTaskDT
     @OneToOne
     private Team necessaryTeamForExecution;
 
-    public ExecutionTask(TaskID taskID, Form form,Team necessaryTeamForExecution) {
-        super(taskID,form);
+    public ExecutionTask( Form form,Team necessaryTeamForExecution) {
+        super(form);
         this.necessaryTeamForExecution = necessaryTeamForExecution;
     }
 

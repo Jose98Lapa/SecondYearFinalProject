@@ -1,5 +1,6 @@
 package eapli.base.form.domain;
 
+import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
@@ -13,21 +14,13 @@ import java.util.regex.Pattern;
 public class FormID implements ValueObject,Comparable<FormID>, Serializable{
 
     private String FormularioID;
-    @Transient
-    private String regex = "^[0-9]{1,10}$";
+
 
     public FormID(final String ID) {
         if (StringPredicates.isNullOrEmpty(ID)) {
-            throw new IllegalArgumentException("Formulario ID should neither be null nor empty");
-        }
-
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(ID);
-
-        if (m.matches()) {
+            FormularioID = GenerateRandomStringID.generateRandomStringID();
+        }else{
             this.FormularioID = ID;
-        } else {
-            throw new IllegalArgumentException("Formulario ID does not fit the criteria");
         }
     }
 
@@ -49,12 +42,12 @@ public class FormID implements ValueObject,Comparable<FormID>, Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FormID that = (FormID) o;
-        return Objects.equals(FormularioID, that.FormularioID) && Objects.equals(regex, that.regex);
+        return Objects.equals(FormularioID, that.FormularioID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(FormularioID, regex);
+        return Objects.hash(FormularioID);
     }
 
     @Override

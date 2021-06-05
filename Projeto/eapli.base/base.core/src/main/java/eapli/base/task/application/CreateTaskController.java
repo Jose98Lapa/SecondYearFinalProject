@@ -20,24 +20,27 @@ public class CreateTaskController {
 
     FunctionService functionService = new FunctionService();
     TeamListService teamListService = new TeamListService();
-    public void registerApprovalTask(ApprovalTaskDTO approvalTaskDTO){
+    public String registerApprovalTask(ApprovalTaskDTO approvalTaskDTO){
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
-        Task task = new ApprovalTask(TaskID.valueOf(approvalTaskDTO.taskID),getForm(approvalTaskDTO.formID),functionService.getFunctionByID(approvalTaskDTO.functionDTO.idFunction));
+        Task task = new ApprovalTask(getForm(approvalTaskDTO.formID),functionService.getFunctionByID(approvalTaskDTO.functionDTO.idFunction));
         taskRepository.save(task);
+        return task.identity().toString();
     }
 
-    public void registerManualTask(ExecutionTaskDTO approvalTaskDTO){
+    public String registerManualTask(ExecutionTaskDTO approvalTaskDTO){
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
-        Task task = new ExecutionTask(TaskID.valueOf(approvalTaskDTO.taskID),getForm(approvalTaskDTO.formID),teamListService.getTeam(approvalTaskDTO.teamDTO.teamID));
+        Task task = new ExecutionTask(getForm(approvalTaskDTO.formID),teamListService.getTeam(approvalTaskDTO.teamDTO.teamID));
         taskRepository.save(task);
+        return task.identity().toString();
     }
 
-    public void registerAutomaticTask(AutomaticTaskDTO approvalTaskDTO){
+    public String registerAutomaticTask(AutomaticTaskDTO approvalTaskDTO){
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
-        Task task = new AutomaticTask(TaskID.valueOf(approvalTaskDTO.taskID),ScriptPath.valueOf(approvalTaskDTO.script));
+        Task task = new AutomaticTask(ScriptPath.valueOf(approvalTaskDTO.script));
         taskRepository.save(task);
+        return task.identity().toString();
     }
 
     private Form getForm(String formId){

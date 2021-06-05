@@ -18,7 +18,6 @@ import java.util.List;
 
 public class TaskUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormUI.class);
-    private String taskId;
 
 
     CreateTaskController createTaskController = new CreateTaskController();
@@ -30,7 +29,6 @@ public class TaskUI extends AbstractUI {
     }
 
     public String createApprovalTask() {
-        this.taskId = Console.readLine("Insira o ID da task");
         String formId = formID();
         boolean continueLoop = true;
         List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
@@ -48,13 +46,12 @@ public class TaskUI extends AbstractUI {
                 functionDTO = functionDTOList.get(posicao);
             }
         }
-        ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(taskId, formId, functionDTO);
-        this.createTaskController.registerApprovalTask(approvalTaskDTO);
-        return taskId;
+        ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(formId, functionDTO);
+        return this.createTaskController.registerApprovalTask(approvalTaskDTO);
+
     }
 
     public String createExecutionTask() {
-        this.taskId = Console.readLine("Insira o ID da task");
         String formId = formID();
         List<TeamDTO> teamDTOList = new ArrayList<>();
         for (TeamDTO teamDTO : this.createTaskController.getTeamDTO()) {
@@ -75,23 +72,21 @@ public class TaskUI extends AbstractUI {
                 teamDTO = teamDTOList.get(posicao);
             }
         }
-        ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(taskId, formId, teamDTO);
-        this.createTaskController.registerManualTask(executionTaskDTO);
-        return this.taskId;
+        ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(formId, teamDTO);
+        return this.createTaskController.registerManualTask(executionTaskDTO);
+
     }
 
     public String createAutomaticTask() {
-        this.taskId = Console.readLine("Insira o ID da task");
+
         String scriptPath = Console.readLine("Insira o path do script");
-        AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO(taskId, scriptPath);
-        this.createTaskController.registerAutomaticTask(automaticTaskDTO);
-        return this.taskId;
+        AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("",scriptPath);
+        return this.createTaskController.registerAutomaticTask(automaticTaskDTO);
     }
 
 
     @Override
     protected boolean doShow() {
-        this.taskId = Console.readLine("Insira o ID da task");
         System.out.println("Insira 1 para criar uma tarefa de aprovação");
         System.out.println("Insira 2 para criar uma tarefa de execução");
         System.out.println("Insira 3 para criar uma tarefa de automatico");

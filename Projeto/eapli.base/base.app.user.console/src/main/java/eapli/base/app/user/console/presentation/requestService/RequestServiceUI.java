@@ -74,7 +74,7 @@ public class RequestServiceUI extends AbstractUI {
 
 			Form answerForm = new Form(
 					new FormScript( form.script ),
-					new FormID( Utils.readLineFromConsole( "Introduza o id do formulario: " ) ),
+					new FormID(null),
 					new FormName( "TicketAnswer" ),
 					attributes );
 

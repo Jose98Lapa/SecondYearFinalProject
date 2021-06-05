@@ -26,8 +26,13 @@ public class ExecutionTaskDTO {
 
     }
 
-    public ExecutionTaskDTO(String taskID, String formID, TeamDTO teamDTO) {
-        this.taskID = taskID;
+    public ExecutionTaskDTO( FormDTO formDTO) {
+        this.formDTO = formDTO;
+
+    }
+
+    public ExecutionTaskDTO(String formID, TeamDTO teamDTO) {
+
         this.formID = formID;
         this.teamDTO = teamDTO;
     }
