@@ -5,7 +5,7 @@ import java.util.Random;
 public class GenerateRandomStringID {
     public static String generateRandomStringID(){
         Random rand = new Random();
-        return generateRandomStringID(rand.nextInt(6)+1);
+        return generateRandomStringID(rand.nextInt(4)+3);
     }
 
     private static String generateRandomStringID(int number){
