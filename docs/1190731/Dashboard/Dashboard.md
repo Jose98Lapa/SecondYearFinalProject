@@ -13,6 +13,8 @@ Para receber a informação disponibilizada pelo Servidor do Motor de Fluxos est
 
 # 3. Integração/Demonstração
 
+Para o servidor HTTP utilizamos a porta 55128 em localhost.
+
 ```
 function refreshCriticality() {
     var request = new XMLHttpRequest();
