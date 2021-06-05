@@ -2,14 +2,18 @@ package eapli.base.task.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class TaskID implements ValueObject, Comparable<TaskID>, Serializable {
 
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String taskID;
 
     public TaskID (String taskID){

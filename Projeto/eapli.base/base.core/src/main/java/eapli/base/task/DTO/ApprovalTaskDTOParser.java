@@ -9,6 +9,6 @@ import eapli.framework.representations.dto.DTOParser;
 public class ApprovalTaskDTOParser implements DTOParser<ApprovalTaskDTO, ApprovalTask> {
     @Override
     public ApprovalTask valueOf(ApprovalTaskDTO dto) {
-        return new ApprovalTask(TaskID.valueOf(dto.taskID),new FormDTOParser().valueOf(dto.formDTO),new FunctionDTOParser().valueOf(dto.functionDTO));
+        return new ApprovalTask(new FormDTOParser().valueOf(dto.formDTO),new FunctionDTOParser().valueOf(dto.functionDTO));
     }
 }

@@ -18,8 +18,8 @@ public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO>
     @OneToOne
     private Function necessaryRoleForApproval;
 
-    public ApprovalTask(TaskID taskID, Form form,Function necessaryRoleForApproval) {
-        super(taskID,form);
+    public ApprovalTask(Form form,Function necessaryRoleForApproval) {
+        super(form);
         this.necessaryRoleForApproval = necessaryRoleForApproval;
 
     }
