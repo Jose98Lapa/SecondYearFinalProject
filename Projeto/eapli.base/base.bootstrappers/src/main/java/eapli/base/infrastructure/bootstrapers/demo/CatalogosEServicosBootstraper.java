@@ -161,41 +161,41 @@ public class CatalogosEServicosBootstraper implements Action {
 
                     //workflow
 
-                    NodeList workflow = element.getElementsByTagName("Workflow");
-                    for (sizeInside = 0; sizeInside < services.getLength(); sizeInside++) {
-                        Node nodeworkflow = services.item(sizeInside);
-                        if (nodeworkflow.getNodeType() == Node.ELEMENT_NODE) {
-                            Element elementService = (Element) workflow;
-                            String Wtipo = elementService.getElementsByTagName("Wtipo").item(0).getTextContent();
-                            String Waprov = elementService.getElementsByTagName("Waprov").item(0).getTextContent();
-                            String Wservice = elementService.getElementsByTagName("Wservice").item(0).getTextContent();
-                            String Wscript = elementService.getElementsByTagName("Wscript").item(0).getTextContent();
-                            String Wfunc = elementService.getElementsByTagName("Wfunc").item(0).getTextContent();
-                            String Wteam = elementService.getElementsByTagName("Wfunc").item(0).getTextContent();
+                    NodeList workflows = element.getElementsByTagName("Workflow");
+                    for (sizeInside = 0; sizeInside < workflows.getLength(); sizeInside++) {
+                        Node nodeWorkflow = workflows.item(sizeInside);
+                        if (nodeWorkflow.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementWorkflow = (Element) nodeWorkflow;
+                            String Wtipo = elementWorkflow.getElementsByTagName("Wtipo").item(0).getTextContent();
+                            String Waprov = elementWorkflow.getElementsByTagName("Waprov").item(0).getTextContent();
+                            String Wservice = elementWorkflow.getElementsByTagName("Wservice").item(0).getTextContent();
+                            String Wscript = elementWorkflow.getElementsByTagName("Wscript").item(0).getTextContent();
+                            String Wfunc = elementWorkflow.getElementsByTagName("Wfunc").item(0).getTextContent();
+                            String Wteam = elementWorkflow.getElementsByTagName("Wteam").item(0).getTextContent();
 
                             //form aprovacao
 
-                            String WAfId = elementService.getElementsByTagName("WAfId").item(0).getTextContent();
-                            String WAfnome = elementService.getElementsByTagName("WAfnome").item(0).getTextContent();
-                            String WAfscript = elementService.getElementsByTagName("WAfscript").item(0).getTextContent();
-                            String WAAlabel = elementService.getElementsByTagName("WAAlabel").item(0).getTextContent();
-                            String WAAdescricao = elementService.getElementsByTagName("WAAdescricao").item(0).getTextContent();
-                            String WAAtipo = elementService.getElementsByTagName("WAAtipo").item(0).getTextContent();
-                            String WAAregex = elementService.getElementsByTagName("WAAregex").item(0).getTextContent();
-                            String WAAnome = elementService.getElementsByTagName("WAAnome").item(0).getTextContent();
-                            String WAaID = elementService.getElementsByTagName("WAaID").item(0).getTextContent();
+                            String WAfId = elementWorkflow.getElementsByTagName("WAfId").item(0).getTextContent();
+                            String WAfnome = elementWorkflow.getElementsByTagName("WAfnome").item(0).getTextContent();
+                            String WAfscript = elementWorkflow.getElementsByTagName("WAfscript").item(0).getTextContent();
+                            String WAAlabel = elementWorkflow.getElementsByTagName("WAAlabel").item(0).getTextContent();
+                            String WAAdescricao = elementWorkflow.getElementsByTagName("WAAdescricao").item(0).getTextContent();
+                            String WAAtipo = elementWorkflow.getElementsByTagName("WAAtipo").item(0).getTextContent();
+                            String WAAregex = elementWorkflow.getElementsByTagName("WAAregex").item(0).getTextContent();
+                            String WAAnome = elementWorkflow.getElementsByTagName("WAAnome").item(0).getTextContent();
+                            String WAaID = elementWorkflow.getElementsByTagName("WAaID").item(0).getTextContent();
 
                             //form manual
 
-                            String WMfId = elementService.getElementsByTagName("WMfId").item(0).getTextContent();
-                            String WMfnome = elementService.getElementsByTagName("WMfnome").item(0).getTextContent();
-                            String WMfscript = elementService.getElementsByTagName("WMfscript").item(0).getTextContent();
-                            String WMAlabel = elementService.getElementsByTagName("WMAlabel").item(0).getTextContent();
-                            String WMAdescricao = elementService.getElementsByTagName("WMAdescricao").item(0).getTextContent();
-                            String WMAtipo = elementService.getElementsByTagName("WMAtipo").item(0).getTextContent();
-                            String WMAregex = elementService.getElementsByTagName("WMAregex").item(0).getTextContent();
-                            String WMAnome = elementService.getElementsByTagName("WMAnome").item(0).getTextContent();
-                            String WMaID = elementService.getElementsByTagName("WMaID").item(0).getTextContent();
+                            String WMfId = elementWorkflow.getElementsByTagName("WMfId").item(0).getTextContent();
+                            String WMfnome = elementWorkflow.getElementsByTagName("WMfnome").item(0).getTextContent();
+                            String WMfscript = elementWorkflow.getElementsByTagName("WMfscript").item(0).getTextContent();
+                            String WMAlabel = elementWorkflow.getElementsByTagName("WMAlabel").item(0).getTextContent();
+                            String WMAdescricao = elementWorkflow.getElementsByTagName("WMAdescricao").item(0).getTextContent();
+                            String WMAtipo = elementWorkflow.getElementsByTagName("WMAtipo").item(0).getTextContent();
+                            String WMAregex = elementWorkflow.getElementsByTagName("WMAregex").item(0).getTextContent();
+                            String WMAnome = elementWorkflow.getElementsByTagName("WMAnome").item(0).getTextContent();
+                            String WMaID = elementWorkflow.getElementsByTagName("WMaID").item(0).getTextContent();
 
                             ServiceRepository serviceRepository = PersistenceContext.repositories().servico();
                             CreateTaskController createTaskController = new CreateTaskController();
@@ -203,7 +203,7 @@ public class CatalogosEServicosBootstraper implements Action {
                             FormController formController = new FormController();
 
 
-                            Service service = serviceRepository.findByServicoID(ServiceID.valueOf(Wservice)).get();
+                            Service service = serviceRepository.ofIdentity(ServiceID.valueOf(Wservice)).get();
                             ServiceDTO servDTO = service.toDTO();
 
                             List<String> taskIDList = new ArrayList<>();
@@ -218,7 +218,7 @@ public class CatalogosEServicosBootstraper implements Action {
                                 formController.registerForm(fdto);
                                 formController.save();
                                 List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
-                                functionDTO = functionDTOList.get(Integer.parseInt(Wfunc));
+                                functionDTO = functionDTOList.get(Integer.parseInt(Wfunc)-1);
                                 ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(WAfId, functionDTO);
                                 taskIDList.add(createTaskController.registerApprovalTask(approvalTaskDTO));
                             }
@@ -239,7 +239,7 @@ public class CatalogosEServicosBootstraper implements Action {
                                     teamDTOList.add(teamDTO);
                                 }
                                 TeamDTO teamDTO = null;
-                                teamDTO = teamDTOList.get(Integer.parseInt(Wfunc));
+                                teamDTO = teamDTOList.get(Integer.parseInt(Wfunc)-1);
                                 ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(WMfId, teamDTO);
                                 taskIDList.add(createTaskController.registerManualTask(executionTaskDTO));
                             } else {
