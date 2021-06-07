@@ -4,12 +4,23 @@ import eapli.base.catalogue.application.CreateCatalogueController;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.collaborator.dto.CollaboratorDTO;
 import eapli.base.criticality.dto.CriticalityDTO;
+import eapli.base.function.DTO.FunctionDTO;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.service.Repository.ServiceRepository;
+import eapli.base.service.domain.Service;
+import eapli.base.service.domain.ServiceID;
+import eapli.base.service.domain.Workflow;
+import eapli.base.task.DTO.ApprovalTaskDTO;
+import eapli.base.task.DTO.AutomaticTaskDTO;
+import eapli.base.task.DTO.ExecutionTaskDTO;
+import eapli.base.task.application.CreateTaskController;
 import eapli.base.team.DTO.TeamDTO;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;
 import eapli.base.form.application.FormController;
 import eapli.base.service.Application.SpecifyServiceController;
 import eapli.base.service.DTO.ServiceDTO;
+import eapli.framework.io.util.Console;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -122,7 +133,7 @@ public class CatalogosEServicosBootstraper implements Action {
 
                             final Set<String> lstkeyWords = new HashSet<>();
                             lstkeyWords.add(keyWords);
-                            ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null );
+                            ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null);
                             servicoController.create(dto);
                             final Set<AttributeDTO> lstAtributos = new HashSet<>();
                             int number = 0;
@@ -148,9 +159,103 @@ public class CatalogosEServicosBootstraper implements Action {
                         }
                     }
 
+                    //workflow
+
+                    NodeList workflows = element.getElementsByTagName("Workflow");
+                    for (sizeInside = 0; sizeInside < workflows.getLength(); sizeInside++) {
+                        Node nodeWorkflow = workflows.item(sizeInside);
+                        if (nodeWorkflow.getNodeType() == Node.ELEMENT_NODE) {
+                            Element elementWorkflow = (Element) nodeWorkflow;
+                            String Wtipo = elementWorkflow.getElementsByTagName("Wtipo").item(0).getTextContent();
+                            String Waprov = elementWorkflow.getElementsByTagName("Waprov").item(0).getTextContent();
+                            String Wservice = elementWorkflow.getElementsByTagName("Wservice").item(0).getTextContent();
+                            String Wscript = elementWorkflow.getElementsByTagName("Wscript").item(0).getTextContent();
+                            String Wfunc = elementWorkflow.getElementsByTagName("Wfunc").item(0).getTextContent();
+                            String Wteam = elementWorkflow.getElementsByTagName("Wteam").item(0).getTextContent();
+
+                            //form aprovacao
+
+                            String WAfId = elementWorkflow.getElementsByTagName("WAfId").item(0).getTextContent();
+                            String WAfnome = elementWorkflow.getElementsByTagName("WAfnome").item(0).getTextContent();
+                            String WAfscript = elementWorkflow.getElementsByTagName("WAfscript").item(0).getTextContent();
+                            String WAAlabel = elementWorkflow.getElementsByTagName("WAAlabel").item(0).getTextContent();
+                            String WAAdescricao = elementWorkflow.getElementsByTagName("WAAdescricao").item(0).getTextContent();
+                            String WAAtipo = elementWorkflow.getElementsByTagName("WAAtipo").item(0).getTextContent();
+                            String WAAregex = elementWorkflow.getElementsByTagName("WAAregex").item(0).getTextContent();
+                            String WAAnome = elementWorkflow.getElementsByTagName("WAAnome").item(0).getTextContent();
+                            String WAaID = elementWorkflow.getElementsByTagName("WAaID").item(0).getTextContent();
+
+                            //form manual
+
+                            String WMfId = elementWorkflow.getElementsByTagName("WMfId").item(0).getTextContent();
+                            String WMfnome = elementWorkflow.getElementsByTagName("WMfnome").item(0).getTextContent();
+                            String WMfscript = elementWorkflow.getElementsByTagName("WMfscript").item(0).getTextContent();
+                            String WMAlabel = elementWorkflow.getElementsByTagName("WMAlabel").item(0).getTextContent();
+                            String WMAdescricao = elementWorkflow.getElementsByTagName("WMAdescricao").item(0).getTextContent();
+                            String WMAtipo = elementWorkflow.getElementsByTagName("WMAtipo").item(0).getTextContent();
+                            String WMAregex = elementWorkflow.getElementsByTagName("WMAregex").item(0).getTextContent();
+                            String WMAnome = elementWorkflow.getElementsByTagName("WMAnome").item(0).getTextContent();
+                            String WMaID = elementWorkflow.getElementsByTagName("WMaID").item(0).getTextContent();
+
+                            ServiceRepository serviceRepository = PersistenceContext.repositories().servico();
+                            CreateTaskController createTaskController = new CreateTaskController();
+                            SpecifyServiceController theController = new SpecifyServiceController();
+                            FormController formController = new FormController();
+
+
+                            Service service = serviceRepository.ofIdentity(ServiceID.valueOf(Wservice)).get();
+                            ServiceDTO servDTO = service.toDTO();
+
+                            List<String> taskIDList = new ArrayList<>();
+                            FunctionDTO functionDTO = null;
+
+                            if (Waprov.equals("S")) {  //aprovavcao
+                                final Set<AttributeDTO> lstAtributos = new HashSet<>();
+                                int number = 0;
+                                AttributeDTO at = new AttributeDTO(WAAnome, WAAlabel, WAAdescricao, WAAregex, WAAtipo, WAaID, number);
+                                lstAtributos.add(at);
+                                FormDTO fdto = new FormDTO(WAfscript, WAfId, WAfnome, lstAtributos);
+                                formController.registerForm(fdto);
+                                formController.save();
+                                List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
+                                functionDTO = functionDTOList.get(Integer.parseInt(Wfunc)-1);
+                                ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(WAfId, functionDTO);
+                                taskIDList.add(createTaskController.registerApprovalTask(approvalTaskDTO));
+                            }
+                            if (Wtipo.equals("M")) {  //manual/automatica
+
+                                //form
+
+                                final Set<AttributeDTO> lstAtributos = new HashSet<>();
+                                int number = 0;
+                                AttributeDTO at = new AttributeDTO(WMAnome, WMAlabel, WMAdescricao, WMAregex, WMAtipo, WMaID, number);
+                                lstAtributos.add(at);
+                                FormDTO fdto = new FormDTO(WMfscript, WMfId, WMfnome, lstAtributos);
+                                formController.registerForm(fdto);
+                                formController.save();
+
+                                List<TeamDTO> teamDTOList = new ArrayList<>();
+                                for (TeamDTO teamDTO : createTaskController.getTeamDTO()) {
+                                    teamDTOList.add(teamDTO);
+                                }
+                                TeamDTO teamDTO = null;
+                                teamDTO = teamDTOList.get(Integer.parseInt(Wfunc)-1);
+                                ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(WMfId, teamDTO);
+                                taskIDList.add(createTaskController.registerManualTask(executionTaskDTO));
+                            } else {
+                                AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("",Wscript);
+                                createTaskController.registerAutomaticTask(automaticTaskDTO);
+                            }
+                            theController.addWorkflowToService(taskIDList, servDTO);
+
+                            System.out.printf("WorkFLow adicionado - %s%n", servDTO.title);
+                        }
+
+                    }
                 }
             }
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (ParserConfigurationException | IOException |
+                SAXException e) {
             e.printStackTrace();
             return false;
         }

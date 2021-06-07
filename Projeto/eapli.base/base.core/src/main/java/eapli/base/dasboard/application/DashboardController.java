@@ -28,6 +28,7 @@ public class DashboardController {
         tcpClient.startConnection(Application.settings().getIpWorkflow());
         try {
             dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
+            tcpClient.stopConnection();
         } catch (IOException e) {
             e.printStackTrace();
             tcpClient.stopConnection();

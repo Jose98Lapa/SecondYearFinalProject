@@ -2,6 +2,9 @@ package eapli.base.dasboard.application;
 
 import eapli.base.collaborator.dto.CollaboratorDTO;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,21 +19,28 @@ import java.util.LinkedList;
 public class HttpServerAjax extends Thread {
    //static private final String BASE_FOLDER = "base.app.user.console/src/main/java/eapli/base/app/user/console/presentation/dashboard/www";
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dasboard/application/www";
-    static private ServerSocket sock;
+    static private SSLServerSocket sock;
     static private DashboardController theController  = new DashboardController();
 
     @Override
     public void run() {
-        Socket cliSock = null;
+        SSLSocket cliSock = null;
+        System.setProperty("javax.net.ssl.keyStore", "server.keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "password");
+        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
+        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+
         try {
-            sock = new ServerSocket(55128);
+            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            sock = (SSLServerSocket) sslF.createServerSocket(55128);
         } catch (IOException ex) {
+            ex.printStackTrace();
             System.err.println("Server failed to open local port " + 55128);
         }
         while (true) {
 
             try {
-                cliSock = sock.accept();
+                cliSock = (SSLSocket) sock.accept();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,6 +71,7 @@ public class HttpServerAjax extends Thread {
                     "                                </div>\n" +
                     "                            </td>\n" +
                     "                            <td>"+dto.title+"</td>\n" +
+                    "                            <td><img src="+dto.icon+" width=40 height=40></td>" +
                     "                            <td>"+dto.briefDesc+"</td>\n" +
                     "                            <td>"+dto.deadline+"</td>\n" +
                     "                            <td>"+dto.criticidade+"</td>\n" +
@@ -84,6 +95,7 @@ public class HttpServerAjax extends Thread {
                     "                                </div>\n" +
                     "                            </td>\n" +
                     "                            <td>"+dto.title+"</td>\n" +
+                    "                            <td><img src="+dto.icon+" width=40 height=40></td>" +
                     "                            <td>"+dto.briefDesc+"</td>\n" +
                     "                            <td>"+dto.deadline+"</td>\n" +
                     "                            <td>"+dto.criticidade+"</td>\n" +
