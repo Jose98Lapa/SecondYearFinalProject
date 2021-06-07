@@ -11,6 +11,9 @@ public class FeedbackValue implements ValueObject, Serializable {
     private int feedbackValue;
 
     public FeedbackValue(int feedbackValue) {
+        if (feedbackValue<0||feedbackValue>5){
+            throw new IllegalArgumentException("O feedback tem de ser um numero entre 0 e 5");
+        }
         this.feedbackValue = feedbackValue;
     }
 
@@ -33,5 +36,10 @@ public class FeedbackValue implements ValueObject, Serializable {
 
     public static FeedbackValue valueOf(int feedbackValue){
         return new FeedbackValue(feedbackValue);
+    }
+
+    @Override
+    public String toString() {
+        return feedbackValue+"";
     }
 }

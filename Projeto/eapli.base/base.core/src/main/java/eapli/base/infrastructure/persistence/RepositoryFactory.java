@@ -3,6 +3,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.feedback.repositories.FeedbackRepository;
 import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
@@ -105,6 +106,20 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	ClientUserRepository clientUsers();
+
+	/**
+	 *
+	 * @param autoTx the transactional context to enroll
+	 * @return
+	 */
+	FeedbackRepository feedback(TransactionalContext autoTx);
+
+	/**
+	 * repository will be created in auto transaction mode
+	 *
+	 * @return
+	 */
+	FeedbackRepository feedback();
 
 
 	/**
