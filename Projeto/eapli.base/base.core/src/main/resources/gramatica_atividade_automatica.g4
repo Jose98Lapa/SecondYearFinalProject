@@ -1,4 +1,4 @@
-grammar gramatica_formulario;
+grammar gramatica_atividade_automatica;
 
 /*
  *   Lexico
@@ -11,6 +11,7 @@ instrucao: expressao_inicializacao
    | estrutura_condicional
    | expressao_atribuicao
    | estrutura_xml
+   | enviar_email
    ;
 
 
@@ -72,6 +73,9 @@ estrutura_xml: inicializacao_tipo_ficheiro
                END_FICHEIRO
                ;
 
+enviar_email: SEND_EMAIL '(' identidade ',' identidade ',' identidade')'
+              ;
+
 estrutura_condicional: ife
                        elsee?
                        END_SE
@@ -114,6 +118,7 @@ TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
 
 TIPOFICHEIRO           : 'XML';
 END_FICHEIRO           : 'LMX';
+SEND_EMAIL                  : 'ENVIAR_EMAIL';
 
 ELEMENTO           : 'ELEMENTO';
 
