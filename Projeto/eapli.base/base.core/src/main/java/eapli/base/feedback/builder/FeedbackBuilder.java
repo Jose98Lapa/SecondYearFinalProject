@@ -7,6 +7,7 @@ import eapli.base.ticket.domain.Ticket;
 public class FeedbackBuilder {
     private Ticket ticket;
     private FeedbackValue feedbackValue;
+    private String email;
 
     public FeedbackBuilder withTicket(Ticket ticket){
         this.ticket = ticket;
@@ -18,7 +19,12 @@ public class FeedbackBuilder {
         return this;
     }
 
+    public FeedbackBuilder withEmail(String email){
+        this.email = email;
+        return this;
+    }
+
     public Feedback build(){
-        return new Feedback(feedbackValue,ticket);
+        return new Feedback(feedbackValue,ticket,email);
     }
 }

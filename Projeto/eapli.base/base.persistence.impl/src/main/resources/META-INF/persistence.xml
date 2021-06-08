@@ -61,6 +61,8 @@
     <class>eapli.base.ticketTask.domain.TicketAutomaticTask</class>
     <class>eapli.base.ticketTask.domain.TicketManualTask</class>
     <class>eapli.base.ticketTask.domain.TicketExecutionTask</class>
+    <class>eapli.base.feedback.domain.Feedback</class>
+    <class>eapli.base.feedback.domain.FeedbackValue</class>
 
 
     <properties>
