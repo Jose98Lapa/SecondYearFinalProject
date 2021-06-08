@@ -15,4 +15,8 @@ public interface TicketRepository extends DomainRepository< TicketID, Ticket > {
 
 	Iterable< Ticket > findAll();
 
+	List<Ticket> getPendingAssignedApprovalTickets();
+
+	List<Ticket> getPendingAssignedExecutionTickets();
+
 }

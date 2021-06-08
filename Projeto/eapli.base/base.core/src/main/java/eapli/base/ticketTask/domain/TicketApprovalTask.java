@@ -33,6 +33,10 @@ public class TicketApprovalTask extends TicketManualTask implements DTOable< Tic
 		return super.form();
 	}
 
+	public Collaborator collaborator(){
+		return this.approvedBy;
+	}
+
 	@Override
 	public TicketApprovalTaskDTO toDTO ( ) {
 		return new TicketApprovalTaskDTO(

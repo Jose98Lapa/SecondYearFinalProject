@@ -5,6 +5,7 @@ import eapli.base.service.domain.Service;
 import eapli.base.service.domain.Workflow;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.builder.TicketBuilder;
+import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -45,6 +46,10 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 	@Transient
 	private TicketBuilder builder;
+
+	private String client;
+
+	private LocalDate endDate;
 
 
 
@@ -112,5 +117,18 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		this.status = status;
 	}
 
+	public boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask){
+		return checkIfTicketTaskBelongsToTicket(ticketTask,this.workflow.starterTask());
+	}
+
+	private boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask,TicketTask starterTask){
+		if (ticketTask==null)
+			return false;
+		if (starterTask.equals(ticketTask)){
+			return true;
+		}else{
+			return checkIfTicketTaskBelongsToTicket(ticketTask,starterTask.transition().nextTask());
+		}
+	}
 
 }

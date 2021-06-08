@@ -50,4 +50,18 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
         return ticketList;
 
     }
+
+    @Override
+    public List<Ticket> getPendingAssignedApprovalTickets() {
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :id", Ticket.class);
+        q.setParameter("id", TicketStatus.valueOf("WAITING_APPROVAL"));
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Ticket> getPendingAssignedExecutionTickets() {
+        final TypedQuery<Ticket> p = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :id", Ticket.class);
+        p.setParameter("id", TicketStatus.valueOf("PENDING_EXECUTION"));
+        return p.getResultList();
+    }
 }

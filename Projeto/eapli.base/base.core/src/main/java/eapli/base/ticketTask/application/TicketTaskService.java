@@ -9,9 +9,12 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
+import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
 import eapli.base.ticketTask.domain.TicketTask;
+import eapli.base.ticketTask.domain.TicketTaskID;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import java.util.Optional;
 
 public class TicketTaskService {
     private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+    private final TicketTaskRepository ticketTaskRepository= PersistenceContext.repositories().ticketTasks();
     private final CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
 
     public Optional<Collaborator> getCollaborator(String email){
@@ -32,6 +36,48 @@ public class TicketTaskService {
         for (Ticket ticket: ticketList)
             ticketDTOList.add(ticket.toDTO());
         return ticketDTOList;
+    }
+
+    public List<TicketApprovalTaskDTO> getPendingApprovalTasksByCollaborator(Collaborator collaborator){
+        List<TicketApprovalTaskDTO> toReturn = new ArrayList<>();
+        for (Ticket ticket: ticketRepository.getPendingAssignedApprovalTickets()){
+            if (ticket.workflow().starterTask().getClass()==TicketApprovalTask.class){
+                TicketApprovalTask ticketApprovalTask = (TicketApprovalTask) ticket.workflow().starterTask();
+                if (ticketApprovalTask.collaborator().equals(collaborator))
+                    toReturn.add(ticketApprovalTask.toDTO());
+            }
+        }
+        return toReturn;
+    }
+
+    public List<TicketExecutionTaskDTO> getPendingExecutionTasksByCollaborator(Collaborator collaborator){
+        List<TicketExecutionTaskDTO> toReturn = new ArrayList<>();
+        for (Ticket ticket:ticketRepository.getPendingAssignedExecutionTickets()){
+            TicketTask incompleteTask = ticket.workflow().getFirstIncompleteTask();
+            if (incompleteTask.getClass()==TicketExecutionTask.class){
+                TicketExecutionTask ticketExecutionTask = (TicketExecutionTask) incompleteTask;
+                if (ticketExecutionTask.collaborator().equals(collaborator)){
+                    toReturn.add(ticketExecutionTask.toDTO());
+                }
+             }
+        }
+        return toReturn;
+
+    }
+
+    public TicketTask getTicketTaskByID(String id){
+        Optional<TicketTask> optionalTicketTask = ticketTaskRepository.ofIdentity(TicketTaskID.valueOf(id));
+        if (optionalTicketTask.isEmpty())
+            throw new IllegalArgumentException("ID invalido");
+        return optionalTicketTask.get();
+    }
+
+    public TicketDTO getTicketDTOByTicketTask(TicketTask ticketTask){
+        for (Ticket ticket:ticketRepository.findAll()){
+            if (ticket.checkIfTicketTaskBelongsToTicket(ticketTask))
+                return ticket.toDTO();
+        }
+        return null;
     }
 
     public boolean redeemTask(TicketDTO ticketDTO, Collaborator collaborator){

@@ -1,5 +1,6 @@
 package eapli.base.ticketTask.domain;
 
+import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.DomainEntity;
@@ -17,12 +18,15 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 
 	private Transition transition;
 
+	private String status;
+
 	protected TicketTask ( ) {
 	}
 
 	public TicketTask ( TicketTaskID ticketTaskID, Transition transition ) {
 		this.ticketTaskID = ticketTaskID;
 		this.transition = transition;
+		this.status = "INCOMPLETE";
 	}
 
 	@Override
@@ -38,5 +42,15 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 	public Transition transition ( ) {
 		return transition;
 	}
+
+	public void completeTask(){
+		this.status = "COMPLETE";
+	}
+
+	public String status(){
+		return this.status;
+	}
+
+
 
 }

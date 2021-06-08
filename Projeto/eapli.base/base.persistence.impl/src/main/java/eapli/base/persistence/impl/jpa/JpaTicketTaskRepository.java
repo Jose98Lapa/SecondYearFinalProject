@@ -25,6 +25,8 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 				"TicketTaskID");
 	}
 
+
+
 	@Override
 	public List<TicketTask> getTicketsByCollaborator(Collaborator collab) {
 		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
