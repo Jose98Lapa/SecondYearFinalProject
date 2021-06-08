@@ -2,30 +2,30 @@ package eapli.base.feedback.DTO;
 
 import eapli.base.ticket.DTO.TicketDTO;
 
+import java.time.LocalDate;
 
-import java.time.LocalDateTime;
 
 public class FeedbackDTO {
     public float id;
     public TicketDTO ticketDTO;
     public int feedbackValue;
     public String email;
-    public LocalDateTime localDateTime;
+    public LocalDate localDate;
 
-    public FeedbackDTO(float id, TicketDTO ticketDTO, int feedbackValue, String email, LocalDateTime localDateTime) {
+    public FeedbackDTO(float id, TicketDTO ticketDTO, int feedbackValue, String email, LocalDate localDate) {
         this.id = id;
         this.ticketDTO = ticketDTO;
         this.feedbackValue = feedbackValue;
         this.email = email;
-        this.localDateTime = localDateTime;
+        this.localDate = localDate;
     }
 
 
-    public FeedbackDTO(TicketDTO ticketDTO, int feedbackValue, String email, LocalDateTime localDateTime) {
+    public FeedbackDTO(TicketDTO ticketDTO, int feedbackValue, String email, LocalDate localDate) {
         this.ticketDTO = ticketDTO;
         this.feedbackValue = feedbackValue;
         this.email = email;
-        this.localDateTime = localDateTime;
+        this.localDate = localDate;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FeedbackDTO {
                 ", ticketDTO=" + ticketDTO +
                 ", feedbackValue=" + feedbackValue +
                 ", email='" + email + '\'' +
-                ", localDateTime=" + localDateTime +
+                ", localDate=" + localDate +
                 '}';
     }
 }

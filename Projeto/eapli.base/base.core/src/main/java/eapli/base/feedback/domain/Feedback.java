@@ -10,6 +10,7 @@ import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,14 +23,14 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
     @OneToOne
     private Ticket relativeToThisTicket;
     private String clientEmail;
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
     private boolean status;
 
     public Feedback(FeedbackValue feedbackValue, Ticket relativeToThisTicket,String clientEmail) {
         this.feedbackValue = feedbackValue;
         this.relativeToThisTicket = relativeToThisTicket;
         this.clientEmail = clientEmail;
-        this.dateCreated = LocalDateTime.now();
+        this.dateCreated = LocalDate.now();
         status = false;
     }
 
@@ -38,7 +39,7 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
         this.feedbackValue = feedbackValue;
         this.relativeToThisTicket = relativeToThisTicket;
         this.clientEmail = clientEmail;
-        this.dateCreated = LocalDateTime.now();
+        this.dateCreated = LocalDate.now();
         status = false;
     }
 
@@ -48,6 +49,10 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
 
     public void updateStatus(){
         this.status = !status;
+    }
+
+    public Ticket ticket(){
+        return relativeToThisTicket;
     }
 
 
