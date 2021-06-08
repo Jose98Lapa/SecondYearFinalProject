@@ -1,5 +1,6 @@
 package eapli.base.dasboard.application;
 
+import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.Socket;
 
@@ -8,11 +9,11 @@ import java.net.Socket;
  */
 public class HttpAjaxRequest extends Thread {
     String baseFolder;
-    Socket sock;
+    SSLSocket sock;
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HttpAjaxRequest(Socket s, String f) {
+    public HttpAjaxRequest(SSLSocket s, String f) {
         baseFolder = f;
         sock = s;
     }
@@ -27,7 +28,6 @@ public class HttpAjaxRequest extends Thread {
         try {
             HTTPmessage request = new HTTPmessage(inS);
             HTTPmessage response = new HTTPmessage();
-            //System.out.println(request.getURI());
             if (request.getMethod().equals("GET")) {
                 if (request.getURI().equals("/colabInfo")) {
                     response.setContentFromString(HttpServerAjax.getColabInfoStandingInHTML(), "text/html");

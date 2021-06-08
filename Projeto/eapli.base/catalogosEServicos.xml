@@ -58,6 +58,35 @@
             <tituloServico>Restauro Porta</tituloServico>
             <catalogoS>1</catalogoS>
         </Servico>
+
+        <Workflow>
+            <Wtipo>M</Wtipo>
+            <Waprov>S</Waprov>
+            <Wservice>1</Wservice>
+            <Wscript>1</Wscript>
+            <Wfunc>1</Wfunc>
+            <Wteam>1</Wteam>
+            <!--       -&#45;&#45;&#45;&#45;-->
+            <WAfId>100</WAfId>
+            <WAfnome>Form</WAfnome>
+            <WAfscript>1</WAfscript>
+            <WAAlabel>OLA</WAAlabel>
+            <WAAdescricao>ADEUS</WAAdescricao>
+            <WAAtipo>String</WAAtipo>
+            <WAAregex>olaololaoaloala</WAAregex>
+            <WAAnome>nome</WAAnome>
+            <WAaID>100</WAaID>
+     <!--       -&#45;&#45;&#45;&#45;-->
+            <WMfId>200</WMfId>
+            <WMfnome>Form</WMfnome>
+            <WMfscript>1</WMfscript>
+            <WMAlabel>OLA</WMAlabel>
+            <WMAdescricao>ADEUS</WMAdescricao>
+            <WMAtipo>String</WMAtipo>
+            <WMAregex>ololaolaola</WMAregex>
+            <WMAnome>Nome</WMAnome>
+            <WMaID>2001</WMaID>
+        </Workflow>
     </class1>
 
 <!--    <class1>

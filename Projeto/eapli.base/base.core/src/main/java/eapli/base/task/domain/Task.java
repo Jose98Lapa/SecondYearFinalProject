@@ -1,5 +1,6 @@
 package eapli.base.task.domain;
 
+import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
@@ -18,13 +19,10 @@ public abstract class Task implements DomainEntity<TaskID>, AggregateRoot<TaskID
 
 
 
-    public Task(TaskID taskID){
-        this.taskID = taskID;
+    public Task(){
+        this.taskID = new TaskID(GenerateRandomStringID.generateRandomStringID());
     }
 
-    protected Task() {
-        // For ORM
-    }
 
     public void editBeforeTask(Task beforeTask){
         if (this.getClass()==AutomaticTask.class||this.getClass()==ExecutionTask.class){

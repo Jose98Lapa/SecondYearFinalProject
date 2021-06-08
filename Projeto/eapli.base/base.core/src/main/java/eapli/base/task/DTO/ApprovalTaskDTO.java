@@ -18,13 +18,18 @@ public class ApprovalTaskDTO {
 
     }
 
-    public ApprovalTaskDTO(String taskID, FormDTO formDTO) {
+    public ApprovalTaskDTO(String taskID,FormDTO formDTO) {
         this.taskID = taskID;
         this.formDTO = formDTO;
     }
 
     public ApprovalTaskDTO(String taskID, String formID, FunctionDTO functionDTO) {
         this.taskID = taskID;
+        this.formID = formID;
+        this.functionDTO = functionDTO;
+    }
+
+    public ApprovalTaskDTO(String formID, FunctionDTO functionDTO) {
         this.formID = formID;
         this.functionDTO = functionDTO;
     }

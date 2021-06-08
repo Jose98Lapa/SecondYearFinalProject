@@ -18,8 +18,8 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO>, Se
 
 
 
-    public AutomaticTask(TaskID taskID,ScriptPath scriptPath) {
-        super(taskID);
+    public AutomaticTask(ScriptPath scriptPath) {
+        super();
         this.scriptPath = scriptPath;
     }
 

@@ -13,29 +13,32 @@ public class DashboardService {
         for (String line:input) {
             String [] segments= line.split("\\|");
             String[] aux = getRemainingTime(segments[1]);
-            toReturn.add(new DashboardInfoDTO(segments[3],segments[1],segments[1],segments[2],segments[4],segments[0],aux[0],aux[1]));
+            toReturn.add(new DashboardInfoDTO(segments[3],segments[0],segments[1],segments[2],segments[4],segments[5],aux[0],aux[1]));
         }
         return toReturn;
     }
     private String[] getRemainingTime(String segment) {
         String[] toReturn = new String[2];
-        long hours = ChronoUnit.HOURS.between(getDateFromString(segment), LocalDateTime.now());
+        long hours = ChronoUnit.HOURS.between(LocalDateTime.now(),getDateFromString(segment));
         if(hours<1){
             toReturn[1]="1";
         }
         if (hours<2)
             toReturn[1]="3";
 
-        long duration  =LocalDateTime.now().getNano() -getDateFromString(segment).getNano() ;
+        LocalDateTime d1 = LocalDateTime.now();
+        LocalDateTime d2 = getDateFromString(segment);
 
-        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
-        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
+        long days = d1.until(d2, ChronoUnit.DAYS);
+        d1 = d1.plusDays(days);
+        long hourss = d1.until(d2, ChronoUnit.HOURS);
+        d1 = d1.plusHours(hourss);
+        long minutes = d1.until(d2, ChronoUnit.MINUTES);
+        d1 = d1.plusMinutes(minutes);
 
-        toReturn[0]=diffInMinutes + " Min";
+        toReturn[0]=hours + " Hours ";
         return toReturn;
     }
-
 
     private LocalDateTime getDateFromString(String str){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

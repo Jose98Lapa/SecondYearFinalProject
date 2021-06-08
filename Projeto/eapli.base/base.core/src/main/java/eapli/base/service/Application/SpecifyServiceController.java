@@ -14,6 +14,7 @@ import eapli.base.service.builder.ServiceBuilder;
 import eapli.base.service.domain.*;
 import eapli.base.task.application.TaskListService;
 import eapli.base.task.domain.Task;
+import eapli.base.utils.GenerateRandomStringID;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,11 +132,11 @@ public class SpecifyServiceController {
         }
     }
 
-    public void addWorkflowToService(String workflowID, List<String> tasksID,ServiceDTO serviceDTO){
+    public void addWorkflowToService(List<String> tasksID,ServiceDTO serviceDTO){
         TaskListService taskListService = new TaskListService();
         Task starterTask= taskListService.getTaskByStringList(tasksID);
         PersistenceContext.repositories().tasks().save(starterTask);
-        Workflow workflow = new Workflow(workflowID,new Date(),starterTask);
+        Workflow workflow = new Workflow(GenerateRandomStringID.generateRandomStringID(),new Date(),starterTask);
         Service service = serviceListService.getServiceByID(serviceDTO.id);
         service.setWorkflow(workflow);
         serviceRepository.save(service);

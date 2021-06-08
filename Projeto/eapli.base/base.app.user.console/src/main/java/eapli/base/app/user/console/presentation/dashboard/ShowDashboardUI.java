@@ -16,7 +16,7 @@ public class ShowDashboardUI extends AbstractUI {
         theController.showCollaborator();
         URI uri;
         try {
-            uri = new URI("http://localhost:55128");
+            uri = new URI("https://localhost:55128");
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

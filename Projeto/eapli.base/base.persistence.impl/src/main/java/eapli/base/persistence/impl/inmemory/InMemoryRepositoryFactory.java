@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.feedback.repositories.FeedbackRepository;
 import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
@@ -50,6 +51,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	@Override
 	public ClientUserRepository clientUsers() {
 		return clientUsers(null);
+	}
+
+	@Override
+	public FeedbackRepository feedback(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
+	public FeedbackRepository feedback() {
+		return null;
 	}
 
 

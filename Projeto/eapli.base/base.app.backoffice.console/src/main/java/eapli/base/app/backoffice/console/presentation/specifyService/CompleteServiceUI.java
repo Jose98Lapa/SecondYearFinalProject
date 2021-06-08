@@ -121,7 +121,6 @@ public class CompleteServiceUI extends AbstractUI {
                     break;
                 }
                 case 8:{
-                    String workflowID = Console.readLine("Insira o id do workflow");
                     List<String> taskIDList = new ArrayList<>();
                     TaskUI taskUI = new TaskUI();
 
@@ -134,7 +133,7 @@ public class CompleteServiceUI extends AbstractUI {
                     }else{
                         taskIDList.add(taskUI.createAutomaticTask());
                     }
-                    theController.addWorkflowToService(workflowID,taskIDList,toComplete);
+                    theController.addWorkflowToService(taskIDList,toComplete);
 
 
                 }

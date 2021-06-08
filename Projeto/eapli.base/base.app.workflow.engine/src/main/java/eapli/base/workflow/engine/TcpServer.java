@@ -111,7 +111,7 @@ public class TcpServer implements Runnable {
                     sendString("30/06/2021 23:34");
                     sendString("Lavar janelas");
                     sendString("http://192.168.1.92/bootstrap.jpg");
-                    sendString("tens de lavar janelas");
+                    sendString("Lavar as janelas do escriotio do 5º andar");
                     sendString("4");
                     byte[] finalPackage = {(byte) 0, (byte) 254, (byte) 0, (byte) 0};
                     sOut.write(finalPackage);

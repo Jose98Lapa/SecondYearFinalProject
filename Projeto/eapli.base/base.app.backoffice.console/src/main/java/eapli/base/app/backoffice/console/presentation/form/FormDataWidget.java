@@ -10,7 +10,6 @@ public class FormDataWidget {
     public void show() {
         System.out.println("Insira informaçao relativa ao Formulário");
         this.nome = Console.readLine("Nome");
-        this.id = Console.readLine("ID");
         this.script = Console.readLine("Script");
     }
 

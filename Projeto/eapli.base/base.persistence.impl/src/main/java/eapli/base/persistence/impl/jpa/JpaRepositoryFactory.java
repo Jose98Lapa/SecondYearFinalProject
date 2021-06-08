@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.feedback.repositories.FeedbackRepository;
 import eapli.base.task.repository.TaskRepository;
 import eapli.base.teamType.repository.TeamTypeRepository;
 import eapli.base.catalogue.repositories.CatalogueRepository;
@@ -91,6 +92,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public TeamTypeRepository tiposDeEquipa(TransactionalContext autoTx) {
 		return new JpaTeamTypeRepository(autoTx);
+	}
+
+	@Override
+	public FeedbackRepository feedback() {
+		return new JpaFeedbackRepository(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FeedbackRepository feedback(TransactionalContext autoTx) {
+		return new JpaFeedbackRepository(autoTx);
 	}
 
 
