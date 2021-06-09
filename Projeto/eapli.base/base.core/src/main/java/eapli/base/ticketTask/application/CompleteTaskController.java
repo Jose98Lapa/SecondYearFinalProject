@@ -53,6 +53,8 @@ public class CompleteTaskController {
         return manualTask.form().toDTO();
     }
 
+    TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+
     public void updateTaskWithForm(Set<AttributeDTO> attributeSet){
         ManualTask manualTask = (ManualTask) this.currentWorkingTask.mainReference();
         FormDTO manualTaskFormDTO = manualTask.form().toDTO();
@@ -65,6 +67,12 @@ public class CompleteTaskController {
         CreateTaskController createTaskController = new CreateTaskController();
         currentWorkingTask.completeTask();
         createTaskController.registerTask(currentWorkingTask);
+        if (currentWorkingTask.mainReference().afterTask()==null)
+            workingTicket.endTicket();
+        else
+            workingTicket.pendingExecutingTicket();
+        ticketRepository.save(workingTicket);
+
     }
 
     public void approveOrDisapproveTicket(boolean approve){
@@ -73,7 +81,6 @@ public class CompleteTaskController {
         }else{
             workingTicket.disapproveTicket();
         }
-        TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
         ticketRepository.save(workingTicket);
     }
 

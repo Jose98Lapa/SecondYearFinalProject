@@ -64,7 +64,7 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
     @Override
     public List<Ticket> getPendingAssignedExecutionTickets() {
         final TypedQuery<Ticket> p = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :id", Ticket.class);
-        p.setParameter("id", TicketStatus.valueOf("PENDING_EXECUTION"));
+        p.setParameter("id", TicketStatus.valueOf("EXECUTING"));
         return p.getResultList();
     }
 }

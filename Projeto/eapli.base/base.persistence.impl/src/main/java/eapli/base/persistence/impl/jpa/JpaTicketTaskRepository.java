@@ -28,7 +28,7 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 
 	@Override
 	public Optional<TicketTask> ofIdentity(TicketTaskID ticketTaskID){
-		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.ticketTaskID = :id", TicketTask.class);
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.ticketTaskID = :id", TicketTask.class);
 		q.setParameter("id",ticketTaskID);
 		return q.getResultStream().findFirst();
 	}
@@ -36,7 +36,7 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 
 	@Override
 	public List<TicketTask> getTicketsByCollaborator(Collaborator collab) {
-		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
 		q.setParameter("approvedBy", collab);
 
 		List<TicketTask> ticketTaskList = new ArrayList<>();

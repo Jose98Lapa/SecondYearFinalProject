@@ -31,8 +31,6 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 	public TicketExecutionTaskDTO toDTO ( ) {
 		return new TicketExecutionTaskDTO(
 				super.ticketTaskID.toString(),
-				super.transition().previousTask().toString(),
-				super.transition().nextTask().toString(),
 				super.form(),
 				this.executedBy
 		);

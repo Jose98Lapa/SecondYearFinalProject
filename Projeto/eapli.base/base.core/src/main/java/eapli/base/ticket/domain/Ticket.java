@@ -151,5 +151,12 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 		this.status = TicketStatus.valueOf("DISAPPROVED");
 	}
 
+	public void pendingExecutingTicket(){
+		this.status = TicketStatus.valueOf("PENDING_EXECUTION");
+	}
+
+	public void endTicket(){
+		this.status = TicketStatus.valueOf("CONCLUDED");
+	}
 
 }
