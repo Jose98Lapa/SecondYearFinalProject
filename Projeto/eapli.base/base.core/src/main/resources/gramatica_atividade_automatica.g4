@@ -12,6 +12,7 @@ instrucao: expressao_inicializacao
    | expressao_atribuicao
    | estrutura_xml
    | enviar_email
+   | update_informacao
    ;
 
 
@@ -60,6 +61,7 @@ float
 identidade: VARIAVEL
    ;
 
+/*
 xml_path: '['(TEXTO|NUMERO)+']'
    ;
 
@@ -67,6 +69,7 @@ op
    : OPERADORLOGICO
    | OPERADORMATEMATICO
    ;
+*/
 
 estrutura_xml: inicializacao_tipo_ficheiro
                inicializacao_elemento+
@@ -74,6 +77,9 @@ estrutura_xml: inicializacao_tipo_ficheiro
                ;
 
 enviar_email: SEND_EMAIL '(' identidade ',' identidade ',' identidade')'
+              ;
+
+update_informacao: UPDATE '(' (TEXTO|NUMERO)+  ','  (TEXTO|NUMERO)+ ',' (TEXTO|NUMERO)+ ')' '->' '(' (TEXTO|NUMERO)+ ',' identidade ')'
               ;
 
 estrutura_condicional: ife
@@ -118,7 +124,8 @@ TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
 
 TIPOFICHEIRO           : 'XML';
 END_FICHEIRO           : 'LMX';
-SEND_EMAIL                  : 'ENVIAR_EMAIL';
+SEND_EMAIL             : 'ENVIAR_EMAIL';
+UPDATE                 : 'ATUALIZAR';
 
 ELEMENTO           : 'ELEMENTO';
 
