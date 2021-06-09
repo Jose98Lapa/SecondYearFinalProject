@@ -4,6 +4,7 @@ import eapli.base.form.Builder.FormBuilder;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;
 import eapli.base.form.domain.Form;
+import eapli.base.form.domain.FormID;
 import eapli.base.form.domain.attribute.*;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import javax.persistence.ElementCollection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class FormController {

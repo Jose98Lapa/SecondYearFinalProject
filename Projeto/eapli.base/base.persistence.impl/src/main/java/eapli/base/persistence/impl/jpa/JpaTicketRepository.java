@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, TicketID> implements TicketRepository {
+public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, String> implements TicketRepository {
     public JpaTicketRepository(TransactionalContext tx) {
         super(tx,"TicketID");
     }

@@ -7,7 +7,7 @@ import eapli.framework.domain.repositories.DomainRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface TicketRepository extends DomainRepository< TicketID, Ticket > {
+public interface TicketRepository extends DomainRepository< String, Ticket > {
 
 	Optional<Ticket> ofIdentity(TicketID number);
 
