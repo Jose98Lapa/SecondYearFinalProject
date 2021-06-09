@@ -52,11 +52,16 @@ public class SpecifyCollaboratorController {
         AddUserController addUserController = new AddUserController();
         PasswordGenerator pwrdGenerator = new PasswordGenerator();
         String[] name = colaborador.fullName.split(" ");
+        String password = pwrdGenerator.getPassword(7);
 
-        collabRepo.save(collaboratorDTOParser.valueOf(colaborador));
         Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.COLLABORATOR);
         roles.add(BaseRoles.CLIENT_USER);
-        addUserController.addUser(colaborador.nickname,pwrdGenerator.getPassword(7), name[0], name[name.length - 1], colaborador.email,roles);
+
+        collabRepo.save(collaboratorDTOParser.valueOf(colaborador));
+        addUserController.addUser(colaborador.nickname,password, name[0], name[name.length - 1], colaborador.email,roles);
+
+        //sends email with password
+        EmailSender.sendPassword(colaborador.email,password);
     }
 }
