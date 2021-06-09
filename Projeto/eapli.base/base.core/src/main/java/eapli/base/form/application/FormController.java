@@ -34,7 +34,7 @@ public class FormController {
     }
     public Form save(){
         form=fmb.build();
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.GSH,BaseRoles.POWER_USER);
+        //authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.GSH,BaseRoles.POWER_USER);
         return repo.save(form);
     }
    /* public void atributo(String nome, String desc, String label, String tipo, String regex){

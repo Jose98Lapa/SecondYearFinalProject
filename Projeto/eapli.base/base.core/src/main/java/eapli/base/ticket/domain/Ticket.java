@@ -139,4 +139,17 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 		}
 	}
 
+	public Form ticketForm(){
+		return this.ticketForm;
+	}
+
+	public void approveTicket(){
+		this.status = TicketStatus.valueOf("APPROVED");
+	}
+
+	public void disapproveTicket(){
+		this.status = TicketStatus.valueOf("DISAPPROVED");
+	}
+
+
 }

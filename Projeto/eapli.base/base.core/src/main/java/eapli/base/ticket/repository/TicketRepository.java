@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface TicketRepository extends DomainRepository< String, Ticket > {
 
-	Optional<Ticket> ofIdentity(TicketID number);
+
 
 	List<Ticket> getPendingTicket();
 
