@@ -4,11 +4,13 @@ import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.service.domain.Workflow;
 import eapli.base.ticket.DTO.TicketDTO;
+import eapli.base.ticket.application.GenerateTicketID;
 import eapli.base.ticket.builder.TicketBuilder;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +21,7 @@ import java.util.Objects;
  * @author 1190731
  */
 @Entity
-public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,Serializable {
+public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,8 +30,13 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 	private LocalDate solicitedOn, deadLine;
 
-	@EmbeddedId
-	private TicketID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_seq")
+	@GenericGenerator(
+			name = "ticket_seq",
+			strategy = "eapli.base.ticket.application.GenerateTicketID",
+			parameters = {@org.hibernate.annotations.Parameter(name = GenerateTicketID.INCREMENT_PARAM, value = "1")})
+	private String ID;
 
 
 	private TicketStatus status;
@@ -54,11 +61,10 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 
 	public Ticket ( LocalDate solicitedOn, LocalDate deadLine,
-					TicketID id, TicketStatus status, AttachedFile file,
+					TicketStatus status, AttachedFile file,
 					Urgency urgency, Service service, TicketWorkflow workflow, Form ticketForm  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
-		this.id = id;
 		this.status = status;
 		this.file = file;
 		this.urgency = urgency;
@@ -77,7 +83,7 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 		if ( o == null || getClass( ) != o.getClass( ) ) return false;
 		Ticket ticket = ( Ticket ) o;
 		return Objects.equals( solicitedOn, ticket.solicitedOn ) && Objects.equals( deadLine, ticket.deadLine )
-				&& Objects.equals( id, ticket.id ) && Objects.equals( status, ticket.status )
+				&& Objects.equals( ID, ticket.ID ) && Objects.equals( status, ticket.status )
 				&& Objects.equals( file, ticket.file ) && Objects.equals( urgency, ticket.urgency );
 	}
 
@@ -91,7 +97,7 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 
 	@Override
 	public int hashCode ( ) {
-		return Objects.hash( solicitedOn, deadLine, id, status, file, urgency );
+		return Objects.hash( solicitedOn, deadLine, ID, status, file, urgency );
 	}
 
 	@Override
@@ -100,13 +106,13 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	}
 
 	@Override
-	public TicketID identity ( ) {
-		return id;
+	public String identity ( ) {
+		return ID;
 	}
 
 	@Override
 	public TicketDTO toDTO ( ) {
-		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), id.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
+		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), ID.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
 	}
 
 	public TicketStatus status () {
@@ -122,13 +128,28 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	}
 
 	private boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask,TicketTask starterTask){
-		if (ticketTask==null)
+		if (starterTask==null)
 			return false;
-		if (starterTask.equals(ticketTask)){
+		if (starterTask.sameAs(ticketTask)){
 			return true;
 		}else{
+			if (starterTask.transition()==null)
+				return false;
 			return checkIfTicketTaskBelongsToTicket(ticketTask,starterTask.transition().nextTask());
 		}
 	}
+
+	public Form ticketForm(){
+		return this.ticketForm;
+	}
+
+	public void approveTicket(){
+		this.status = TicketStatus.valueOf("APPROVED");
+	}
+
+	public void disapproveTicket(){
+		this.status = TicketStatus.valueOf("DISAPPROVED");
+	}
+
 
 }

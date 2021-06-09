@@ -20,4 +20,9 @@ public class TicketApprovalTaskDTO {
 		this.approvedBy = approvedBy;
 	}
 
+	public TicketApprovalTaskDTO(String ticketTaskID, Form form, Collaborator approvedBy) {
+		this.ticketTaskID = ticketTaskID;
+		this.form = form;
+		this.approvedBy = approvedBy;
+	}
 }

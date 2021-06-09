@@ -92,4 +92,8 @@ public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> , Serializa
         }
         return new FormDTO(script.toString(), FormID.toString(),nome.toString(),key2);
     }
+
+    public FormScript script(){
+        return this.script;
+    }
 }

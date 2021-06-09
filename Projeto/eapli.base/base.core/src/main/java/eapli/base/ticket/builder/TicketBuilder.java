@@ -65,7 +65,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 
 	@Override
 	public Ticket build ( ) {
-		return new Ticket( solicitedOn, deadLine, id, status, file, urgency, service, workflow, form );
+		return new Ticket( solicitedOn, deadLine, status, file, urgency, service, workflow, form );
 	}
 
 }

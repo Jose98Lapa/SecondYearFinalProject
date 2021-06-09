@@ -20,4 +20,8 @@ public class CreateTaskController {
 		this.ticketTaskRepository.save( ticketAutomaticTask );
 	}
 
+	public void registerTask(TicketTask ticketTask){
+		this.ticketTaskRepository.save(ticketTask);
+	}
+
 }

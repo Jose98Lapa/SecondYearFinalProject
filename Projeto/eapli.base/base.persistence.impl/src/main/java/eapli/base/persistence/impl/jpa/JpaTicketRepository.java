@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, TicketID> implements TicketRepository {
+public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, String> implements TicketRepository {
     public JpaTicketRepository(TransactionalContext tx) {
         super(tx,"TicketID");
     }
@@ -24,11 +24,14 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, TicketID, T
     }
 
     @Override
-    public Optional<Ticket> ofIdentity(TicketID id) {
+    public Optional<Ticket> ofIdentity(String id) {
         final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.id = :id", Ticket.class);
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }
+
+
+
     @Override
     public List<Ticket> getPendingTicket(){
         final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :id", Ticket.class);
