@@ -3,10 +3,12 @@ package eapli.base.ticketTask.domain;
 import eapli.base.form.domain.Form;
 import eapli.base.task.domain.Task;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Entity
 public abstract class TicketManualTask extends TicketTask implements Serializable {
 
 	@OneToOne
@@ -26,6 +28,14 @@ public abstract class TicketManualTask extends TicketTask implements Serializabl
 
 	public Form form () {
 		return form;
+	}
+
+	public void updateForm(Form form){
+		this.form = form;
+	}
+
+	public String deadline(){
+		return deadline.toString();
 	}
 
 }

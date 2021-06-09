@@ -1,4 +1,4 @@
-package eapli.base.workflow.engine.engine;
+package eapli.base.workflow.engine;
 
 import eapli.base.Application;
 import eapli.base.catalogue.domain.Catalogue;
@@ -120,8 +120,7 @@ public class Engine {
 					} catch ( IOException e ) {
 						e.printStackTrace( );
 					}
-				} else if ( currentStateTicket.workflow().starterTask().transition() != null &&
-						currentStateTicket.workflow().starterTask().transition().hasNextTask()
+				} else if ( currentStateTicket.workflow().starterTask().transition().hasNextTask()
 						&& currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask ) {
 					try {
 						TcpExecuterClient client = new TcpExecuterClient();

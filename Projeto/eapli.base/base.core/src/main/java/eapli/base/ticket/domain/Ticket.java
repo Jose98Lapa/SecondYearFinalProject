@@ -1,5 +1,6 @@
 package eapli.base.ticket.domain;
 
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.service.domain.Workflow;
@@ -14,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -28,7 +30,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 	@Version
 	private Long version;
 
-	private LocalDate solicitedOn, deadLine;
+	private Date solicitedOn, deadLine, completedOn;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_seq")
@@ -38,13 +40,15 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 			parameters = {@org.hibernate.annotations.Parameter(name = GenerateTicketID.INCREMENT_PARAM, value = "1")})
 	private String ID;
 
-
 	private TicketStatus status;
 	private AttachedFile file;
 	private Urgency urgency;
 
 	@OneToOne
 	private Service service;
+
+	@OneToOne
+	private Collaborator requestedBy;
 
 	@OneToOne( cascade = CascadeType.ALL)
 	private Form ticketForm;
@@ -60,9 +64,10 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 
 
-	public Ticket ( LocalDate solicitedOn, LocalDate deadLine,
+	public Ticket ( Date solicitedOn, Date deadLine,
 					TicketStatus status, AttachedFile file,
-					Urgency urgency, Service service, TicketWorkflow workflow, Form ticketForm  ) {
+					Urgency urgency, Service service, TicketWorkflow workflow,
+					Form ticketForm, Collaborator requestedBy  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
 		this.status = status;
@@ -71,6 +76,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 		this.service = service;
 		this.workflow = workflow;
 		this.ticketForm = ticketForm;
+		this.requestedBy = requestedBy;
 		this.builder = new TicketBuilder();
 	}
 
@@ -137,6 +143,28 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 				return false;
 			return checkIfTicketTaskBelongsToTicket(ticketTask,starterTask.transition().nextTask());
 		}
+	}
+
+	public Form ticketForm(){
+		return this.ticketForm;
+	}
+
+	public void approveTicket(){
+		this.status = TicketStatus.valueOf("APPROVED");
+	}
+
+	public void disapproveTicket(){
+		this.status = TicketStatus.valueOf("DISAPPROVED");
+		this.endDate = LocalDate.now();
+	}
+
+	public void pendingExecutingTicket(){
+		this.status = TicketStatus.valueOf("PENDING_EXECUTION");
+	}
+
+	public void endTicket(){
+		this.status = TicketStatus.valueOf("CONCLUDED");
+		this.endDate = LocalDate.now();
 	}
 
 }

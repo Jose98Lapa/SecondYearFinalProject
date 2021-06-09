@@ -23,7 +23,7 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 	private Transition transition;
 
 	@OneToOne
-	Task mainReference;
+	private Task mainReference;
 
 	private String status;
 
@@ -61,6 +61,18 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 
 	public Task mainReference(){
 		return this.mainReference;
+	}
+
+	public void addAfterTask(TicketTask afterTask){
+		if (transition==null)
+			this.transition = new Transition();
+		this.transition.setNextTask(afterTask);
+	}
+
+	public void addBeforeTask(TicketTask beforeTask){
+		if (transition==null)
+			this.transition = new Transition();
+		this.transition.setPreviousTask(beforeTask);
 	}
 
 }

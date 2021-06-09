@@ -10,7 +10,6 @@ import org.hibernate.type.LongType;
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Properties;
 

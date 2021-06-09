@@ -15,9 +15,6 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.service.domain.Service;
-import eapli.base.task.domain.ApprovalTask;
-import eapli.base.task.domain.AutomaticTask;
-import eapli.base.task.domain.ExecutionTask;
 import eapli.base.task.domain.Task;
 import eapli.base.team.application.TeamListService;
 import eapli.base.team.domain.Team;
@@ -27,6 +24,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
+import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.base.ticketTask.domain.*;
 import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -48,7 +46,7 @@ public class CreateTicketController {
 
 
     public void createTicket(TicketDTO ticketDTO, ServiceDTO serviceDTO, Set<Attribute> attributeSet) {
-
+        TicketTaskService ticketTaskService = new TicketTaskService();
         this.ticketTaskController = new CreateTaskController();
         Service service = new ServiceListService().getServiceByID(serviceDTO.id);
 
@@ -57,7 +55,7 @@ public class CreateTicketController {
 
             Task starter = service.workflow().starterTask();
 
-            TicketTask starterTicketTask = createTicketTask(deadline, starter);
+            TicketTask starterTicketTask = ticketTaskService.createTicketTask(deadline, starter);
 
             String status;
 
@@ -89,42 +87,7 @@ public class CreateTicketController {
         }
     }
 
-    private TicketTask createTicketTask(String deadline, Task starter) {
-        if (starter instanceof ApprovalTask) {
-            TicketApprovalTask approvalTask = new TicketApprovalTask(
-                    new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null),starter, ((ApprovalTask) starter).form(),
-                    LocalDate.parse(deadline));
 
-            this.ticketTaskController.registerApprovalTask(approvalTask);
-            return approvalTask;
-        }
-
-        if (starter instanceof ExecutionTask) {
-            TicketExecutionTask executionTask = new TicketExecutionTask(
-                    new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null),starter,
-                    ((ExecutionTask) starter).form(),
-                    null,
-                    LocalDate.parse(deadline));
-
-            this.ticketTaskController.registerExecutionTask(executionTask);
-            return executionTask;
-        }
-
-        if (starter instanceof AutomaticTask) {
-            TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-                    new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null),starter,
-                    ((AutomaticTask) starter).scriptPath()
-            );
-
-            this.ticketTaskController.registerAutomaticTask(automaticTask);
-            return automaticTask;
-        }
-
-        return null;
-    }
 
     public List<CatalogueDTO> requestableCatalogues ( ) {
 

@@ -47,14 +47,14 @@ expr: expr '+' expr
 
 tipo_dados: identidade
    | integer
-   | float
+   | floate
    ;
 
 integer
    : '-'? NUMERO
    ;
 
-float
+floate
    : '-'? REAL
    ;
 
@@ -87,7 +87,7 @@ estrutura_condicional: ife
                        END_SE
                        ;
 
-ife               : SE ( identidade | NUMERO ) OPERADORLOGICO ( identidade | NUMERO ) ENTAO
+ife               : SE ( identidade | integer ) OPERADORLOGICO ( identidade | integer ) (OPERADORLOGICO_EC ( identidade | integer ) OPERADORLOGICO ( identidade | integer ))*  OPERADORLOGICO? ENTAO
                       instrucao+
                       ;
 elsee               : SENAO
@@ -101,15 +101,12 @@ fragment UPPERCASE  : [A-Z];
 
 VARIAVEL            : '$' (TEXTO) [_]? (TEXTO | NUMERO )*;
 
-COMMENT: '/*' .*? '*/' -> skip
-;
+OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' );
+OPERADORLOGICO_EC   : ('ou' | 'e');
+OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
+OPERADORATRIBUICAO  : '->';
 
-COMMENTLINE: '//' ~[\r\n]* -> skip
-;
-
-ESPACO              : [ \t\r\n]+ -> skip ;
-
-NOVALINHA           : ('\r'? '\n' | '\r')+;
+//NOVALINHA           : ('\r'? '\n' | '\r')+;
 
 // RESERVED KEYWORDS
 SE                  : 'se';
@@ -117,20 +114,22 @@ ENTAO               : 'entao';
 SENAO               : 'senao';
 END_SE              : 'es';
 
-NUMERO              : DIGITO+;
-REAL                : DIGITO+ ( [.,] DIGITO+ )?;
-TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
+ELEMENTO           : 'ELEMENTO';
 
 TIPOFICHEIRO           : 'XML';
 END_FICHEIRO           : 'LMX';
 SEND_EMAIL             : 'ENVIAR_EMAIL';
 UPDATE                 : 'ATUALIZAR';
 
-ELEMENTO           : 'ELEMENTO';
 
-NOME_FICHEIRO          : (TEXTO|NUMERO)+  '.' TEXTO ;
+NUMERO              : DIGITO+;
+REAL                : DIGITO+ ( [.,] DIGITO+ )?;
+TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
+NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 
-OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
-OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
-OPERADORATRIBUICAO  : '->';
+COMMENT: '/*' .*? '*/' -> skip
+;
+COMMENTLINE: '//' ~[\r\n]* -> skip
+;
+ESPACO              : [ \t\r\n]+ -> skip ;
