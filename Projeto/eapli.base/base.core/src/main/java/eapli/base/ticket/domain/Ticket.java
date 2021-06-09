@@ -149,6 +149,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	public void disapproveTicket(){
 		this.status = TicketStatus.valueOf("DISAPPROVED");
+		this.endDate = LocalDate.now();
 	}
 
 	public void pendingExecutingTicket(){
@@ -157,6 +158,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	public void endTicket(){
 		this.status = TicketStatus.valueOf("CONCLUDED");
+		this.endDate = LocalDate.now();
 	}
 
 }
