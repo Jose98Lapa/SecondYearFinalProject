@@ -730,6 +730,8 @@ public class gramatica_atividade_automaticaParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
+		public Tipo_dadosContext atom;
+		public Token op;
 		public Tipo_dadosContext tipo_dados() {
 			return getRuleContext(Tipo_dadosContext.class,0);
 		}
@@ -775,7 +777,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 			{
 			{
 			setState(120);
-			tipo_dados();
+			((ExprContext)_localctx).atom = tipo_dados();
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(136);
@@ -796,7 +798,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 						setState(122);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(123);
-						match(T__10);
+						((ExprContext)_localctx).op = match(T__10);
 						setState(124);
 						expr(6);
 						}
@@ -808,7 +810,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 						setState(125);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(126);
-						match(T__11);
+						((ExprContext)_localctx).op = match(T__11);
 						setState(127);
 						expr(5);
 						}
@@ -820,7 +822,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 						setState(128);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(129);
-						match(T__12);
+						((ExprContext)_localctx).op = match(T__12);
 						setState(130);
 						expr(4);
 						}
@@ -832,7 +834,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 						setState(131);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(132);
-						match(T__13);
+						((ExprContext)_localctx).op = match(T__13);
 						setState(133);
 						expr(3);
 						}

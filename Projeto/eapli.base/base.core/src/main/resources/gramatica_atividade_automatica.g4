@@ -39,11 +39,11 @@ expressao_atribuicao: identidade OPERADORATRIBUICAO expr
    ;
 */
 
-expr: expr '+' expr
-    | expr '-' expr
-    | expr '/' expr
-    | expr '*' expr
-    | tipo_dados;
+expr: expr op ='+' expr
+    | expr op ='-' expr
+    | expr op ='/' expr
+    | expr op ='*' expr
+    | atom = tipo_dados;
 
 tipo_dados: identidade
    | integer
