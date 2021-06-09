@@ -30,14 +30,14 @@ public class Team implements AggregateRoot<TeamID>, DTOable<TeamDTO>, Serializab
             (name="TEAM_RESPONSABLES",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
-    private final Set<Collaborator> collaboratorResponsaveisSet = new HashSet<>();
+    public final Set<Collaborator> collaboratorResponsaveisSet = new HashSet<>();
 
     @OneToMany
     @JoinTable
             (name="TEAM_TEAM_MEMBERS",
                     joinColumns = @JoinColumn(name="EQUIPA_ID")
             )
-    private final Set<Collaborator> teamMembers = new HashSet<>();
+    public final Set<Collaborator> teamMembers = new HashSet<>();
 
     public Team(String designation, Acronym acronym, TeamID teamID, Collaborator collaboratorResponsible, TeamType teamType) {
         this.designation = designation;

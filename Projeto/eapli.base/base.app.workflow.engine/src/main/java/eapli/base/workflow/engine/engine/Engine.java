@@ -1,11 +1,20 @@
 package eapli.base.workflow.engine.engine;
 
 import eapli.base.Application;
+import eapli.base.catalogue.domain.Catalogue;
+import eapli.base.catalogue.domain.CatalogueID;
+import eapli.base.catalogue.repositories.CatalogueRepository;
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.service.domain.Service;
+import eapli.base.team.domain.Team;
+import eapli.base.team.domain.TeamID;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
+import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.Constants;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
@@ -13,13 +22,18 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+
 public class Engine {
+
+	private HashMap<Catalogue,Queue<Team>> FCFSApproval = new HashMap();
+	private HashMap<TeamID,Queue<Collaborator>> FCFSApprovalAux = new HashMap();
+
 
 	public static void main ( String[] args ) {
 
@@ -120,6 +134,38 @@ public class Engine {
 					}
 				}
 				break;
+		}
+	}
+
+	public synchronized void FCFS(Ticket ticket){
+		TicketTask ticketTask = ticket.workflow().starterTask();
+		ArrayList<Collaborator> collabs = new ArrayList<>();
+		Service svr = ticket.service();
+		Catalogue cat = svr.catalogo();
+		ArrayList<Team> equipas = new ArrayList<>(cat.accessCriteria());
+		for (Team t :equipas) {
+			collabs.addAll(t.collaboratorResponsaveisSet);
+		}
+	}
+
+	public Collaborator selectCollaborator (){
+
+
+		return null;
+	}
+
+	public synchronized void fillFCFSInfo(){
+		CatalogueRepository catalogRepo = PersistenceContext.repositories().catalogs();
+
+		for (Catalogue cat: catalogRepo.findAll()) {
+			Queue<Team> teamQueue = new PriorityQueue();
+			for (Team t :cat.accessCriteria()) {
+				teamQueue.add(t);
+				Queue<Collaborator> memberQueue = new PriorityQueue();
+				memberQueue.addAll(t.teamMembers);
+				FCFSApprovalAux.put(t.identity(),memberQueue);
+			}
+			FCFSApproval.put(cat,teamQueue);
 		}
 	}
 
