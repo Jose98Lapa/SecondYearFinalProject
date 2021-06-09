@@ -240,7 +240,7 @@ public class CatalogosEServicosBootstraper implements Action {
                                 }
                                 TeamDTO teamDTO = null;
                                 teamDTO = teamDTOList.get(Integer.parseInt(Wfunc)-1);
-                                ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(WMfId, teamDTO);
+                                ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(WMfId, (List<TeamDTO>) teamDTO);
                                 taskIDList.add(createTaskController.registerManualTask(executionTaskDTO));
                             } else {
                                 AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("",Wscript);

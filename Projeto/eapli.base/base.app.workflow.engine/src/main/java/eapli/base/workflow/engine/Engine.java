@@ -13,8 +13,11 @@ import eapli.base.team.domain.TeamID;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
+import eapli.base.ticketTask.domain.TicketExecutionTask;
 import eapli.base.ticketTask.domain.TicketTask;
+import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.Constants;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
@@ -22,150 +25,221 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
+import java.text.Collator;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-
 public class Engine {
 
-	private HashMap<Catalogue,Queue<Team>> FCFSApproval = new HashMap();
-	private HashMap<TeamID,Queue<Collaborator>> FCFSApprovalAux = new HashMap();
+//    private HashMap<Catalogue, Queue<Team>> FCFSExecution = new HashMap();
+//    private HashMap<TeamID, Queue<Collaborator>> FCFSExecutionAux = new HashMap();
+
+    TreeMap<Date,Collaborator> historyExecution = new TreeMap<>();
+    TreeMap<Date,Collaborator> historyApproval = new TreeMap<>();
 
 
-	public static void main ( String[] args ) {
 
-		AuthzRegistry.configure(PersistenceContext.repositories().users(),
-				new BasePasswordPolicy(),
-				new PlainTextEncoder());
+    public static void main(String[] args) {
 
-		TicketRepository ticketRepository = PersistenceContext.repositories( ).tickets( );
-		Timer timer = new Timer( );
-		List< Ticket > previousState = new ArrayList<>( );
-		ticketRepository.findAll( ).forEach( previousState::add );
+        AuthzRegistry.configure(PersistenceContext.repositories().users(),
+                new BasePasswordPolicy(),
+                new PlainTextEncoder());
 
-
-			timer.scheduleAtFixedRate( new TimerTask( ) {
-
-				@Override
-				public void run ( ) {
-					engine( ticketRepository, previousState );
-				}
-			}, 0, 1000 );
-
-	}
-
-	private static void engine ( TicketRepository ticketRepository, List< Ticket > previousState ) {
-
-		ticketRepository = PersistenceContext.repositories( ).tickets( );
-		List< Ticket > currentState = new ArrayList<>( );
-		List< Ticket > lambdaPreviousState = previousState;
-		ticketRepository.findAll( ).forEach( currentState::add );
-		AtomicInteger modCount = new AtomicInteger( );
-
-		currentState.forEach( currentStateTicket ->
-						lambdaPreviousState.forEach(
-								previousStateTicket ->
-								{
-									if ( !( previousStateTicket
-											.status( )
-											.equals( currentStateTicket.status( ) ) ) ) {
-										moveStateFlow( currentStateTicket );
-										modCount.getAndIncrement( );
-									}
-								}
-						)
-		);
-
-		currentState.forEach( ticketRepository::save );
-
-		previousState = currentState;
-	}
-
-	private static void moveStateFlow ( Ticket currentStateTicket ) {
-
-		switch ( currentStateTicket.status().toString() ) {
-			case Constants.PENDING:
-				System.out.println( "Pending->WAITING" );
-				currentStateTicket.setStatus( new TicketStatus( Constants.WAITING_APPROVAL ) );
-				break;
-
-			case Constants.APPROVED:
-				System.out.println( "Approved->PENDINGEX" );
-
-				currentStateTicket.setStatus( new TicketStatus( Constants.PENDING_EXECUTION ) );
-				break;
-
-			case Constants.NOT_APPROVED:
-				System.out.println( "NOT_APPROVED" );
-
-				currentStateTicket.setStatus( new TicketStatus( Constants.FAILED ) );
-				break;
-
-			case Constants.PENDING_EXECUTION:
-				System.out.println("pendeexe" );
-				currentStateTicket.setStatus( new TicketStatus( Constants.EXECUTING ) );
-				break;
-			case Constants.EXECUTING:
-				System.out.println("exe" );
-				if ( currentStateTicket.workflow().starterTask() instanceof TicketAutomaticTask ) {
-					try {
-						TcpExecuterClient client = new TcpExecuterClient();
-						client.startConnection( Application.settings().getIpAutomatictaskExecutor() );
-						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
-						client.stopConnection();
-
-					} catch ( IOException e ) {
-						e.printStackTrace( );
-					}
-				} else if ( currentStateTicket.workflow().starterTask().transition().hasNextTask()
-						&& currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask ) {
-					try {
-						TcpExecuterClient client = new TcpExecuterClient();
-						client.startConnection( Application.settings().getIpAutomatictaskExecutor() );
-						client.executeAutomaticTask( ( ( TicketAutomaticTask ) currentStateTicket.workflow().starterTask() ).scriptPath().toString() );
-						client.stopConnection();
-
-					} catch ( IOException e ) {
-						e.printStackTrace( );
-					}
-				}
-				break;
-		}
-	}
-
-	public synchronized void FCFS(Ticket ticket){
-		TicketTask ticketTask = ticket.workflow().starterTask();
-		ArrayList<Collaborator> collabs = new ArrayList<>();
-		Service svr = ticket.service();
-		Catalogue cat = svr.catalogo();
-		ArrayList<Team> equipas = new ArrayList<>(cat.accessCriteria());
-		for (Team t :equipas) {
-			collabs.addAll(t.collaboratorResponsaveisSet);
-		}
-	}
-
-	public Collaborator selectCollaborator (){
+        TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+        Timer timer = new Timer();
+        List<Ticket> previousState = new ArrayList<>();
+        ticketRepository.findAll().forEach(previousState::add);
 
 
-		return null;
-	}
+        timer.scheduleAtFixedRate(new TimerTask() {
 
-	public synchronized void fillFCFSInfo(){
-		CatalogueRepository catalogRepo = PersistenceContext.repositories().catalogs();
+            @Override
+            public void run() {
+                engine(ticketRepository, previousState);
+            }
+        }, 0, 1000);
 
-		for (Catalogue cat: catalogRepo.findAll()) {
-			Queue<Team> teamQueue = new PriorityQueue();
-			for (Team t :cat.accessCriteria()) {
-				teamQueue.add(t);
-				Queue<Collaborator> memberQueue = new PriorityQueue();
-				memberQueue.addAll(t.teamMembers);
-				FCFSApprovalAux.put(t.identity(),memberQueue);
-			}
-			FCFSApproval.put(cat,teamQueue);
-		}
-	}
+    }
+
+    private static void engine(TicketRepository ticketRepository, List<Ticket> previousState) {
+
+        ticketRepository = PersistenceContext.repositories().tickets();
+        List<Ticket> currentState = new ArrayList<>();
+        List<Ticket> lambdaPreviousState = previousState;
+        ticketRepository.findAll().forEach(currentState::add);
+        AtomicInteger modCount = new AtomicInteger();
+
+        currentState.forEach(currentStateTicket ->
+                lambdaPreviousState.forEach(
+                        previousStateTicket ->
+                        {
+                            if (!(previousStateTicket
+                                    .status()
+                                    .equals(currentStateTicket.status()))) {
+                                moveStateFlow(currentStateTicket);
+                                modCount.getAndIncrement();
+                            }
+                        }
+                )
+        );
+
+        currentState.forEach(ticketRepository::save);
+
+        previousState = currentState;
+    }
+
+    private static void moveStateFlow(Ticket currentStateTicket) {
+
+        switch (currentStateTicket.status().toString()) {
+            case Constants.PENDING:
+                System.out.println("Pending->WAITING");
+                currentStateTicket.setStatus(new TicketStatus(Constants.WAITING_APPROVAL));
+                break;
+
+            case Constants.APPROVED:
+                System.out.println("Approved->PENDINGEX");
+
+                currentStateTicket.setStatus(new TicketStatus(Constants.PENDING_EXECUTION));
+                break;
+
+            case Constants.NOT_APPROVED:
+                System.out.println("NOT_APPROVED");
+
+                currentStateTicket.setStatus(new TicketStatus(Constants.FAILED));
+                break;
+
+            case Constants.PENDING_EXECUTION:
+                System.out.println("pendeexe");
+                currentStateTicket.setStatus(new TicketStatus(Constants.EXECUTING));
+                break;
+            case Constants.EXECUTING:
+                System.out.println("exe");
+                if (currentStateTicket.workflow().starterTask() instanceof TicketAutomaticTask) {
+                    try {
+                        TcpExecuterClient client = new TcpExecuterClient();
+                        client.startConnection(Application.settings().getIpAutomatictaskExecutor());
+                        client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
+                        client.stopConnection();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (currentStateTicket.workflow().starterTask().transition().hasNextTask()
+                        && currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
+                    try {
+                        TcpExecuterClient client = new TcpExecuterClient();
+                        client.startConnection(Application.settings().getIpAutomatictaskExecutor());
+                        client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
+                        client.stopConnection();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+        }
+    }
+
+    public synchronized void FCFS(Ticket ticket) {
+        Collaborator selected = null;
+        if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
+            selected=assignCollaboratorExecution(ticket);
+            ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
+        } else {
+            selected=assignCollaboratorApproval(ticket);
+            ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
+        }
+    }
+    //mapa ordenado por data de solicitacao de tickets com values de colaboradores
+
+    public Collaborator assignCollaboratorExecution(Ticket ticket){
+        Collaborator theChosenOne = null;
+        ArrayList<Collaborator> collaborators = new ArrayList<>();
+        Service svr = ticket.service();
+        Catalogue cat = svr.catalogo();
+        for (Team t :cat.accessCriteria()) {
+            collaborators.addAll(t.teamMembers);
+        }
+        for (Collaborator collab:collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyExecution.containsValue(collab)){
+                theChosenOne = collab;
+                historyExecution.put(new Date(),collab);
+            }
+        }
+        if (theChosenOne==null){ //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+            theChosenOne = historyExecution.firstEntry().getValue();
+            historyExecution.put(new Date(),historyExecution.remove(historyExecution.firstKey()));
+        }
+        return theChosenOne;
+    }
+
+    public Collaborator assignCollaboratorApproval(Ticket ticket){
+        Collaborator theChosenOne = null;
+        ArrayList<Collaborator> collaborators = new ArrayList<>();
+
+
+        //ir buscar os colaboradores capazes de aprovar
+
+
+        for (Collaborator collab:collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyApproval.containsValue(collab)){
+                theChosenOne = collab;
+                historyApproval.put(new Date(),collab);
+            }
+        }
+        if (theChosenOne==null){ //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+            theChosenOne = historyApproval.firstEntry().getValue();
+            historyApproval.put(new Date(),historyApproval.remove(historyApproval.firstKey()));
+        }
+        return theChosenOne;
+    }
+
+
+
+
+
+
+
+/*
+
+    public synchronized Collaborator selectCollaboratorExecution(Catalogue catalogue) {
+        Queue<Team> teams = null;
+        Queue<Collaborator> collabs;
+        for (Catalogue cat : FCFSExecution.keySet()) {
+            if (cat.equals(catalogue)) {
+                teams = FCFSExecution.get(cat);
+            }
+        }
+        for (TeamID teamID : FCFSExecutionAux.keySet()) {
+            if (teamID.equals(teams.peek().identity())) {
+                Team team = teams.remove();
+                teams.add(team);
+            }
+            collabs = FCFSExecutionAux.get(teamID);
+            Collaborator collaborator = collabs.remove();
+            collabs.add(collaborator);
+            return collaborator;
+        }
+        return null;
+    }
+
+    public synchronized void fillFCFSInfoExecution() { //collabs que conseguem executar
+        CatalogueRepository catalogRepo = PersistenceContext.repositories().catalogs();
+
+        for (Catalogue cat : catalogRepo.findAll()) {
+            Queue<Team> teamQueue = new PriorityQueue();
+            for (Team t : cat.accessCriteria()) {
+                teamQueue.add(t);
+                Queue<Collaborator> memberQueue = new PriorityQueue();
+                memberQueue.addAll(t.teamMembers);
+                FCFSExecutionAux.put(t.identity(), memberQueue);
+            }
+            FCFSExecution.put(cat, teamQueue);
+        }
+    }*/
 
 }
