@@ -19,73 +19,96 @@ import eapli.base.service.Application.ServiceListService;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.team.application.TeamListService;
 import eapli.base.team.domain.Team;
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.application.CreateTicketController;
-import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class RequestServiceUI extends AbstractUI {
 
-    private final CreateTicketController ticketController = new CreateTicketController();
+	private final CreateTicketController ticketController = new CreateTicketController();
+	private final FormRepository formRepository = PersistenceContext.repositories().form();
 
-    @Override
-    protected boolean doShow() {
+	@Override
+	protected boolean doShow ( ) {
 
+		ServiceListService servicesService = new ServiceListService( );
+		FormService formService = new FormService( );
 
-        FormService formService = new FormService();
+		List< CatalogueDTO > availableCatalogues = requestableCatalogues( );
+		int catalogueIndex = Utils.showAndSelectIndex( availableCatalogues, "Escolha o catalogo que deseja" );
+		CatalogueDTO chosenCatalogueDTO = availableCatalogues.get( catalogueIndex );
 
-        List<CatalogueDTO> availableCatalogues = ticketController.requestableCatalogues();
-        int catalogueIndex = Utils.showAndSelectIndex(availableCatalogues, "Escolha o catalogo que deseja");
-        CatalogueDTO chosenCatalogueDTO = availableCatalogues.get(catalogueIndex);
-
-        List<ServiceDTO> availableServices = this.ticketController.getServiceDTOByCatalogue(chosenCatalogueDTO);
-        int serviceIndex = Utils.showAndSelectIndex(availableServices, "Escolha o serviço que deseja");
-
-
-        FormDTO form = ticketController.getFormDTOByID(availableServices.get(serviceIndex).form.identity().toString());
+		List< ServiceDTO > availableServices = servicesService.getServiceDTOListByCatalogue( new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity) );
+		int serviceIndex = Utils.showAndSelectIndex( availableServices, "Escolha o serviço que deseja" );
 
 
-        Set<Attribute> attributes = new HashSet<>();
+		Optional< FormDTO > serviceFormDTO = formService.retrieveFormByID( availableServices.get(serviceIndex).form.identity() );
+		FormDTO form;
 
-        int number = 0;
+		if ( serviceFormDTO.isPresent( ) ) {
+			form = serviceFormDTO.get( );
+			Set< Attribute > attributes = new HashSet<>( );
 
-        for (AttributeDTO attribute : form.atrDTO) {
+			int number = 0;
+
+			for ( AttributeDTO attribute : form.atrDTO ) {
+				Utils.readLineFromConsole( attribute.label );
+
+				//System.out.println(attribute.tipo );
+
+				Attribute answerAttribute = new Attribute(
+						new AtributteName( "Resposta" ),
+						new AttributeLabel( Utils.readLineFromConsole( "Resposta a pergunta: " ) ),
+						new AttributeDescription( Utils.readLineFromConsole( "Resposta completa: " ) ),
+						new AttributeRegex( attribute.regex ),
+						new AttributeType( attribute.tipo ),
+						new AttributeID( UUID.randomUUID( ).toString( ) ),
+						++number
+				);
+
+				attributes.add( answerAttribute );
+			}
+
+			Form answerForm = new Form(
+					new FormScript( form.script ),
+					new FormID(null),
+					new FormName( "TicketAnswer" ),
+					attributes );
+
+		//TODO: CREATE TICKET
+		}
+
+		return false;
+	}
+
+	@Override
+	public String headline ( ) {
+		return "Solicitar servico";
+	}
 
 
-            System.out.println(attribute.label);
+	public List< CatalogueDTO > requestableCatalogues ( ) {
 
-            Attribute answerAttribute = new Attribute(
-                    new AtributteName("Resposta"),
-                    new AttributeLabel(attribute.label),
-                    new AttributeDescription(Utils.readLineFromConsole("Resposta completa: ")),
-                    new AttributeRegex(attribute.regex),
-                    new AttributeType(attribute.tipo),
-                    new AttributeID(UUID.randomUUID().toString()),
-                    ++number
-            );
+		ListCatalogueService catalogueService = new ListCatalogueService( );
+		ListCollaboratorService listCollaboratorService = new ListCollaboratorService( );
+		TeamListService teamListService = new TeamListService( );
+		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
 
-            attributes.add(answerAttribute);
-        }
+		String email = authorizationService
+				.session( )
+				.get( )
+				.authenticatedUser( )
+				.email( )
+				.toString( );
 
-        TicketDTO ticketDTO = new TicketDTO(LocalDate.now().toString(), Utils.readLineFromConsole("DeadLine (AAAA-MM-DD)"), "", "", Utils.readLineFromConsole("File Path: "), Utils.readLineFromConsole("Urgency: "));
+		Collaborator currentColaborator = listCollaboratorService.getCollaboratorByEmail( email );
+		Set< Team > teams = teamListService.getACollaboratorTeams( currentColaborator );
+		List< CatalogueDTO > catalogues = catalogueService.requestableCataloguesByTeams( teams );
 
-        ticketController.createTicket(
-                ticketDTO, availableServices.get(serviceIndex), attributes
-        );
-
-
-        return false;
-    }
-
-    @Override
-    public String headline() {
-        return "Solicitar servico";
-    }
-
+		return catalogues;
+	}
 
 }
