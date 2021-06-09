@@ -23,12 +23,10 @@ public class CompleteTaskController {
         return ticketTaskService.getPendingExecutionTasksByCollaborator(listCollaboratorService.getCollaboratorByEmail(authz.session().get().authenticatedUser().email().toString()));
     }
 
-    public TicketDTO getTickedDTOByTask(TicketApprovalTaskDTO ticketApprovalTask){
-        return ticketTaskService.getTicketDTOByTicketTask(ticketTaskService.getTicketTaskByID(ticketApprovalTask.ticketTaskID));
+    public TicketDTO getTickedDTOByTask(String ticketID){
+        return ticketTaskService.getTicketDTOByTicketTask(ticketTaskService.getTicketTaskByID(ticketID));
     }
 
-    public TicketDTO getTickedDTOByTask(TicketExecutionTaskDTO ticketApprovalTask){
-        return ticketTaskService.getTicketDTOByTicketTask(ticketTaskService.getTicketTaskByID(ticketApprovalTask.ticketTaskID));
-    }
+
 
 }

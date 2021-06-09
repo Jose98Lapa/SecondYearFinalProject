@@ -1,6 +1,7 @@
 package eapli.base.ticketTask.domain;
 
 import eapli.base.task.domain.ScriptPath;
+import eapli.base.task.domain.Task;
 import eapli.base.ticketTask.DTO.TicketAutomaticTaskDTO;
 import eapli.framework.representations.dto.DTOable;
 
@@ -18,8 +19,8 @@ public class TicketAutomaticTask extends TicketTask implements DTOable< TicketAu
 
 	}
 
-	public TicketAutomaticTask ( TicketTaskID ticketTaskID, Transition transition, ScriptPath scriptPath ) {
-		super( ticketTaskID, transition );
+	public TicketAutomaticTask (TicketTaskID ticketTaskID, Transition transition, Task mainReference, ScriptPath scriptPath ) {
+		super( ticketTaskID, transition, mainReference );
 		this.scriptPath = scriptPath;
 	}
 

@@ -39,8 +39,12 @@ public class CreateTicketController {
 
             TicketTask starterTicketTask = createTicketTask(deadline, starter);
 
-            if (starterTicketTask.transition().hasNextTask()) {
-                createTicketTask(deadline, starterTicketTask);
+            String status;
+
+            if (starterTicketTask.getClass()==TicketApprovalTask.class){
+                status = "PENDING";
+            }else{
+                status = "PENDING_EXECUTION";
             }
 
             TicketWorkflow workflow = new TicketWorkflow(
@@ -54,7 +58,7 @@ public class CreateTicketController {
                     .withId(id)
                     .withPossibleFile(file)
                     .withService(service)
-                    .withStatus("PENDING")
+                    .withStatus(status)
                     .withUrgency(urgency)
                     .withWorkFlow(workflow)
                     .withForm( form )
@@ -68,7 +72,7 @@ public class CreateTicketController {
         if (starter instanceof ApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
                     new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null), ((ApprovalTask) starter).form(),
+                    new Transition(null, null),starter, ((ApprovalTask) starter).form(),
                     LocalDate.parse(deadline));
 
             this.ticketTaskController.registerApprovalTask(approvalTask);
@@ -78,7 +82,7 @@ public class CreateTicketController {
         if (starter instanceof ExecutionTask) {
             TicketExecutionTask executionTask = new TicketExecutionTask(
                     new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null),
+                    new Transition(null, null),starter,
                     ((ExecutionTask) starter).form(),
                     null,
                     LocalDate.parse(deadline));
@@ -90,7 +94,7 @@ public class CreateTicketController {
         if (starter instanceof AutomaticTask) {
             TicketAutomaticTask automaticTask = new TicketAutomaticTask(
                     new TicketTaskID(starter.identity().toString()),
-                    new Transition(null, null),
+                    new Transition(null, null),starter,
                     ((AutomaticTask) starter).scriptPath()
             );
 
@@ -101,7 +105,7 @@ public class CreateTicketController {
         return null;
     }
 
-    private TicketTask createTicketTask(String deadline, TicketTask starter) {
+    /*private TicketTask createTicketTask(String deadline, TicketTask starter) {
         if (starter instanceof TicketApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
                     new TicketTaskID(starter.identity().toString()),
@@ -136,6 +140,6 @@ public class CreateTicketController {
         }
 
         return null;
-    }
+    }*/
 
 }

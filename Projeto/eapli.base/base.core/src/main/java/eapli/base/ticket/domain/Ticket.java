@@ -122,11 +122,13 @@ public class Ticket implements AggregateRoot< TicketID >, DTOable< TicketDTO >,S
 	}
 
 	private boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask,TicketTask starterTask){
-		if (ticketTask==null)
+		if (starterTask==null)
 			return false;
-		if (starterTask.equals(ticketTask)){
+		if (starterTask.sameAs(ticketTask)){
 			return true;
 		}else{
+			if (starterTask.transition()==null)
+				return false;
 			return checkIfTicketTaskBelongsToTicket(ticketTask,starterTask.transition().nextTask());
 		}
 	}

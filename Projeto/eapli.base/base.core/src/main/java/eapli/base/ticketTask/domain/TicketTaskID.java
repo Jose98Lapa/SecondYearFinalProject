@@ -52,9 +52,7 @@ public class TicketTaskID implements ValueObject, Comparable< TicketTaskID >, Se
 
 	@Override
 	public String toString ( ) {
-		return "TicketTaskID{" +
-				"ticketTaskID='" + ticketTaskID + '\'' +
-				'}';
+		return ticketTaskID;
 	}
 
 }
