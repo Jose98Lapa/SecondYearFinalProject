@@ -66,13 +66,12 @@ public class CompleteTaskController {
         this.ticketTaskService.updateTask(currentWorkingTask);
         CreateTaskController createTaskController = new CreateTaskController();
         currentWorkingTask.completeTask();
-        createTaskController.registerTask(currentWorkingTask);
         if (currentWorkingTask.mainReference().afterTask()==null)
             workingTicket.endTicket();
         else
             workingTicket.pendingExecutingTicket();
         ticketRepository.save(workingTicket);
-
+        createTaskController.registerTask(currentWorkingTask);
     }
 
     public void approveOrDisapproveTicket(boolean approve){
