@@ -2,6 +2,7 @@ package eapli.base.ticketTask.domain;
 
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
+import eapli.base.task.domain.Task;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.framework.representations.dto.DTOable;
 
@@ -25,20 +26,22 @@ public class TicketApprovalTask extends TicketManualTask implements DTOable< Tic
 
 	}
 
-	public TicketApprovalTask ( TicketTaskID ticketTaskID, Transition transition, Form form, LocalDate deadline ) {
-		super( ticketTaskID, transition, form, deadline );
+	public TicketApprovalTask (TicketTaskID ticketTaskID, Transition transition, Task mainReference, Form form, LocalDate deadline ) {
+		super( ticketTaskID, transition,mainReference, form, deadline );
 	}
 
 	public Form form(){
 		return super.form();
 	}
 
+	public Collaborator collaborator(){
+		return this.approvedBy;
+	}
+
 	@Override
 	public TicketApprovalTaskDTO toDTO ( ) {
 		return new TicketApprovalTaskDTO(
 				this.ticketTaskID.toString(),
-				this.transition().previousTask().toString(),
-				this.transition().nextTask().toString(),
 				this.form(),
 				approvedBy
 		);

@@ -20,4 +20,9 @@ public class TicketExecutionTaskDTO {
 		this.executedBy = executedBy;
 	}
 
+	public TicketExecutionTaskDTO(String ticketTaskID, Form form, Collaborator executedBy) {
+		this.ticketTaskID = ticketTaskID;
+		this.form = form;
+		this.executedBy = executedBy;
+	}
 }

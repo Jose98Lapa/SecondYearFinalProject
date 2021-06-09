@@ -2,6 +2,7 @@ package eapli.base.ticketTask.domain;
 
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
+import eapli.base.task.domain.Task;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.framework.representations.dto.DTOable;
 
@@ -9,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 public class TicketExecutionTask extends TicketManualTask implements DTOable< TicketExecutionTaskDTO >, Serializable {
@@ -21,9 +21,9 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 
 	}
 
-	public TicketExecutionTask ( TicketTaskID ticketTaskID, Transition transition,
-								 Form form, Collaborator executedBy, LocalDate deadline ) {
-		super( ticketTaskID, transition, form, deadline );
+	public TicketExecutionTask (TicketTaskID ticketTaskID, Transition transition, Task mainReference,
+								Form form, Collaborator executedBy, LocalDate deadline ) {
+		super( ticketTaskID, transition, mainReference , form, deadline);
 		this.executedBy = executedBy;
 	}
 
@@ -31,8 +31,6 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 	public TicketExecutionTaskDTO toDTO ( ) {
 		return new TicketExecutionTaskDTO(
 				super.ticketTaskID.toString(),
-				super.transition().previousTask().toString(),
-				super.transition().nextTask().toString(),
 				super.form(),
 				this.executedBy
 		);
@@ -40,5 +38,9 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 
 	public void setExecutedBy(Collaborator executedBy) {
 		this.executedBy = executedBy;
+	}
+
+	public Collaborator collaborator(){
+		return this.executedBy;
 	}
 }

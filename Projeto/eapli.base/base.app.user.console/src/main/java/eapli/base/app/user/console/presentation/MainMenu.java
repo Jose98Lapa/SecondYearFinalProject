@@ -23,6 +23,7 @@
  */
 package eapli.base.app.user.console.presentation;
 
+import eapli.base.app.user.console.presentation.completeTaskUI.CompleteTaskUI;
 import eapli.base.app.user.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
@@ -58,6 +59,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int MY_USER_OPTION = 1;
     private static final int CONSULTAR_SERVICO_OPTION = 2;
     private static final int REIVINDICAR_TAREFA = 3;
+    private static final int COMPLETAR_TAREFA = 4;
 
 
     private final AuthorizationService authz =
@@ -90,12 +92,20 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addSubMenu(CONSULTAR_SERVICO_OPTION, builderConsultarServicoMenu());
         mainMenu.addSubMenu(REIVINDICAR_TAREFA,builderRedeemTaskMenu());
+        mainMenu.addSubMenu(COMPLETAR_TAREFA,builderCompleteTaskMenu());
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
+    }
+
+    private Menu builderCompleteTaskMenu(){
+        final Menu completeTaskMenu = new Menu("Completar Tarefa");
+        completeTaskMenu.addItem(1,"Completar Tarefa",()->new CompleteTaskUI().show());
+        completeTaskMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return completeTaskMenu;
     }
 
     private Menu builderConsultarServicoMenu() {

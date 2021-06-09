@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, TicketTaskID, TicketTaskID > implements TicketTaskRepository {
 
@@ -26,8 +27,16 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Ti
 	}
 
 	@Override
+	public Optional<TicketTask> ofIdentity(TicketTaskID ticketTaskID){
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.ticketTaskID = :id", TicketTask.class);
+		q.setParameter("id",ticketTaskID);
+		return q.getResultStream().findFirst();
+	}
+
+
+	@Override
 	public List<TicketTask> getTicketsByCollaborator(Collaborator collab) {
-		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
 		q.setParameter("approvedBy", collab);
 
 		List<TicketTask> ticketTaskList = new ArrayList<>();

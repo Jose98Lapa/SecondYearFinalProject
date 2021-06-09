@@ -52,9 +52,6 @@ public class AttributeLabel implements ValueObject, Serializable {
 
     @Override
     public String toString() {
-        return "AtributoLabel{" +
-                "label='" + label + '\'' +
-                ", regex='" + regex + '\'' +
-                '}';
+        return label;
     }
 }

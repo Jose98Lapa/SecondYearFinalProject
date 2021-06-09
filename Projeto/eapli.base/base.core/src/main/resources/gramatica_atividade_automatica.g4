@@ -4,31 +4,48 @@ grammar gramatica_atividade_automatica;
  *   Lexico
  */
 
-gramatica: 'BEGIN' lista_linhas 'END';
+gramatica: 'BEGIN' instrucao* 'END';
 
-lista_linhas: lista_linhas expressao
-   | expressao
-   ;
-
-expressao: expressao_inicializacao
+instrucao: expressao_inicializacao
    | expr
    | estrutura_condicional
    | expressao_atribuicao
+   | estrutura_xml
+   | enviar_email
+   | update_informacao
    ;
 
-expressao_inicializacao: TIPODADOS ident
-   | TIPODADOS ident OPERADORATRIBUICAO expr
-   | TIPODADOS ident OPERADORATRIBUICAO tipo_dados
+
+inicializacao_tipo_ficheiro: TIPOFICHEIRO identidade
+   | TIPOFICHEIRO identidade OPERADORATRIBUICAO '"' NOME_FICHEIRO '"'
    ;
 
-expressao_atribuicao: ident OPERADORATRIBUICAO tipo_dados
+inicializacao_elemento: ELEMENTO identidade
+   | ELEMENTO  atribuicao_elemento;
+
+atribuicao_elemento: identidade OPERADORATRIBUICAO 'FIND' '[' (TEXTO|NUMERO)+ ']' 'where' '(' (TEXTO|NUMERO)+ ',' (TEXTO|NUMERO)+ ')'
    ;
 
-expr: expr op tipo_dados
-   | ident OPERADORATRIBUICAO expr
+expressao_inicializacao: TIPODADOS identidade
+   | TIPODADOS expressao_atribuicao
    ;
 
-tipo_dados: ident
+expressao_atribuicao: identidade OPERADORATRIBUICAO expr
+    | identidade OPERADORATRIBUICAO identidade'(' (TEXTO|NUMERO)+ ')'
+   ;
+
+/*expr: expr op tipo_dados
+   | identidade OPERADORATRIBUICAO expr
+   ;
+*/
+
+expr: expr '+' expr
+    | expr '-' expr
+    | expr '/' expr
+    | expr '*' expr
+    | tipo_dados;
+
+tipo_dados: identidade
    | integer
    | float
    ;
@@ -41,52 +58,78 @@ float
    : '-'? REAL
    ;
 
-ident: TEXTO
+identidade: VARIAVEL
+   ;
+
+/*
+xml_path: '['(TEXTO|NUMERO)+']'
    ;
 
 op
    : OPERADORLOGICO
    | OPERADORMATEMATICO
    ;
+*/
 
+estrutura_xml: inicializacao_tipo_ficheiro
+               inicializacao_elemento+
+               END_FICHEIRO
+               ;
+
+enviar_email: SEND_EMAIL '(' identidade ',' identidade ',' identidade')'
+              ;
+
+update_informacao: UPDATE '(' (TEXTO|NUMERO)+  ','  (TEXTO|NUMERO)+ ',' (TEXTO|NUMERO)+ ')' '->' '(' (TEXTO|NUMERO)+ ',' identidade ')'
+              ;
 
 estrutura_condicional: ife
                        elsee?
-                       END_STATEMENT
+                       END_SE
                        ;
 
-ife               : SE ( VARIAVEL | VALOR ) OPERADORLOGICO ( VARIAVEL | VALOR ) ENTAO
-                      expressao+
+ife               : SE ( identidade | NUMERO ) OPERADORLOGICO ( identidade | NUMERO ) ENTAO
+                      instrucao+
                       ;
 elsee               : SENAO
-                      expressao+
+                      instrucao+
                       ;
 
-
-/*
- *  Sintaxe
- */
 
 fragment DIGITO     : [0-9];
 fragment LOWERCASE  : [a-z];
 fragment UPPERCASE  : [A-Z];
 
-VARIAVEL            : ('$' TEXTO) | ('$' ( TEXTO | NUMERO )+);
-VALOR               : '$' DIGITO | '$' NUMERO;
+VARIAVEL            : '$' (TEXTO) [_]? (TEXTO | NUMERO )*;
 
-WS                  : [ \t\r\n]+ -> skip ;
+COMMENT: '/*' .*? '*/' -> skip
+;
+
+COMMENTLINE: '//' ~[\r\n]* -> skip
+;
+
+ESPACO              : [ \t\r\n]+ -> skip ;
+
 NOVALINHA           : ('\r'? '\n' | '\r')+;
 
 // RESERVED KEYWORDS
 SE                  : 'se';
 ENTAO               : 'entao';
 SENAO               : 'senao';
-END_STATEMENT       : 'es';
+END_SE              : 'es';
 
 NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
+
+TIPOFICHEIRO           : 'XML';
+END_FICHEIRO           : 'LMX';
+SEND_EMAIL             : 'ENVIAR_EMAIL';
+UPDATE                 : 'ATUALIZAR';
+
+ELEMENTO           : 'ELEMENTO';
+
+NOME_FICHEIRO          : (TEXTO|NUMERO)+  '.' TEXTO ;
 
 OPERADORLOGICO      : ( '<' | '>' | '=' | '!=' | '>=' | '<=' | 'ou' | 'e' );
 OPERADORMATEMATICO  : ( '-' | '+' | '*' | '/' );
