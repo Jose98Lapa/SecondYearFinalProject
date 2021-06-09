@@ -83,7 +83,7 @@ public class TcpServer implements Runnable {
                 int finalCode = 254;
                 for (TicketTask ticketTask : lstTicketTask) {
 
-                    Optional<Ticket> ticketOp = ticketRepository.ofIdentity(new TicketID(ticketTask.identity().toString()));
+                    Optional<Ticket> ticketOp = ticketRepository.ofIdentity(ticketTask.identity().toString());
                     Ticket ticket;
                     if (ticketOp.isPresent())
                         ticket = ticketOp.get();
