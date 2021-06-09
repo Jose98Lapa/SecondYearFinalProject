@@ -47,14 +47,14 @@ expr: expr '+' expr
 
 tipo_dados: identidade
    | integer
-   | float
+   | floate
    ;
 
 integer
    : '-'? NUMERO
    ;
 
-float
+floate
    : '-'? REAL
    ;
 
