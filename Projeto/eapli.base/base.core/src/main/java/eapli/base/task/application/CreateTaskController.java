@@ -13,7 +13,9 @@ import eapli.base.task.domain.*;
 import eapli.base.task.repository.TaskRepository;
 import eapli.base.team.DTO.TeamDTO;
 import eapli.base.team.application.TeamListService;
+import eapli.base.team.domain.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateTaskController {
@@ -28,11 +30,18 @@ public class CreateTaskController {
         return task.identity().toString();
     }
 
-    public String registerManualTask(ExecutionTaskDTO approvalTaskDTO){
+    public String registerManualTask(ExecutionTaskDTO executionTaskDTO){
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
-        Task task = new ExecutionTask(getForm(approvalTaskDTO.formID),teamListService.getTeam(approvalTaskDTO.teamDTO.teamID));
+        List< Team > teamList = new ArrayList<>( );
+
+        executionTaskDTO
+                .teamListDTO
+                .forEach( teamDTO -> teamList.add( teamListService.getTeam( teamDTO.teamID ) ) );
+
+        Task task = new ExecutionTask(getForm(executionTaskDTO.formID),teamList );
         taskRepository.save(task);
+
         return task.identity().toString();
     }
 

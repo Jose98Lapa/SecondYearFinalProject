@@ -1,15 +1,17 @@
 package eapli.base.ticket.builder;
 
+import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.ticket.domain.*;
 import eapli.framework.domain.model.DomainFactory;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class TicketBuilder implements DomainFactory< Ticket > {
 
-	private LocalDate solicitedOn, deadLine;
+	private Date solicitedOn, deadLine;
 	private TicketID id;
 	private TicketStatus status;
 	private AttachedFile file;
@@ -17,14 +19,15 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 	private Service service;
 	private TicketWorkflow workflow;
 	private Form form;
+	private Collaborator requestedBy;
 
 	public TicketBuilder solicitedOn ( String solicitedOn ) {
-		this.solicitedOn = LocalDate.parse( solicitedOn );
+		this.solicitedOn = Date.valueOf( solicitedOn );
 		return this;
 	}
 
 	public TicketBuilder withDeadLine ( String deadLine ) {
-		this.deadLine = LocalDate.parse( deadLine );
+		this.deadLine = Date.valueOf( deadLine );
 		return this;
 	}
 
@@ -63,9 +66,14 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 		return this;
 	}
 
+	public TicketBuilder requestedBy ( Collaborator collaborator ) {
+		this.requestedBy = collaborator;
+		return this;
+	}
+
 	@Override
 	public Ticket build ( ) {
-		return new Ticket( solicitedOn, deadLine, status, file, urgency, service, workflow, form );
+		return new Ticket( solicitedOn, deadLine, status, file, urgency, service, workflow, form, requestedBy );
 	}
 
 }

@@ -10,8 +10,6 @@ import java.time.LocalDate;
 @Embeddable
 public class TicketWorkflow implements ValueObject, Serializable {
 
-
-
 	private LocalDate startingDate;
 
 	@OneToOne(cascade = CascadeType.ALL)

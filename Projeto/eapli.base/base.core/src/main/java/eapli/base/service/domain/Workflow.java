@@ -1,7 +1,7 @@
 package eapli.base.service.domain;
 
 import eapli.base.task.domain.Task;
-import eapli.base.ticketTask.domain.TicketTask;
+
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.Entity;
