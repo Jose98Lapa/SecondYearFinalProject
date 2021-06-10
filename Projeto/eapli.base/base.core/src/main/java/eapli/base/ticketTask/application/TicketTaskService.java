@@ -69,7 +69,7 @@ public class TicketTaskService {
     }
 
     public TicketTask getTicketTaskByID(String id){
-        Optional<TicketTask> optionalTicketTask = ticketTaskRepository.ofIdentity(TicketTaskID.valueOf(id));
+        Optional<TicketTask> optionalTicketTask = ticketTaskRepository.ofIdentity(Long.parseLong(id));
         if (optionalTicketTask.isEmpty())
             throw new IllegalArgumentException("ID invalido");
         return optionalTicketTask.get();
@@ -87,7 +87,6 @@ public class TicketTaskService {
         CreateTaskController ticketTaskController = new CreateTaskController();
         if (starter instanceof ApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter, ((ApprovalTask) starter).form(),
                     LocalDate.parse(deadline));
             ticketTaskController.registerTask(approvalTask);
@@ -96,7 +95,6 @@ public class TicketTaskService {
 
         if (starter instanceof ExecutionTask) {
             TicketExecutionTask executionTask = new TicketExecutionTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter,
                     ((ExecutionTask) starter).form(),
                     null,
@@ -108,7 +106,6 @@ public class TicketTaskService {
 
         if (starter instanceof AutomaticTask) {
             TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter,
                     ((AutomaticTask) starter).scriptPath()
             );
