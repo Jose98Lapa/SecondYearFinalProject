@@ -29,7 +29,7 @@ import eapli.base.app.user.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
 import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
-import eapli.base.app.user.console.presentation.redeemTaskController.RedeemTaskUI;
+import eapli.base.app.user.console.presentation.redeemTaskUI.RedeemTaskUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

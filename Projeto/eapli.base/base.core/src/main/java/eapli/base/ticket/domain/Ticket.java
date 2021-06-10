@@ -125,9 +125,21 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 		return this.status;
 	}
 
-	public void setStatus(TicketStatus status) {
-		this.status = status;
-	}
+	public void statusPending() {status=new TicketStatus("PENDING");}
+
+	public void statusWaitingApproval() {status=new TicketStatus("WAITING_APPROVAL");}
+
+	public void statusApproved() {status=new TicketStatus("APPROVED");}
+
+	public void statusNotApproved() {status=new TicketStatus("NOT_APPROVED");}
+
+	public void statusPendingExecution() {status=new TicketStatus("PENDING_EXECUTION");}
+
+	public void statusExecuting() {status=new TicketStatus("EXECUTING");}
+
+	public void statusConcluded() {status=new TicketStatus("CONCLUDED");}
+
+	public void statusFailed() {status=new TicketStatus("FAILED");}
 
 	public boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask){
 		return checkIfTicketTaskBelongsToTicket(ticketTask,this.workflow.starterTask());
