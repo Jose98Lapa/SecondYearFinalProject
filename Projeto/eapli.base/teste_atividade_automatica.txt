@@ -1,0 +1,26 @@
+BEGIN
+    XML $file -> "exemplo.xml"
+        ELEMENTO $specificProduct -> FIND [prod] where (id,5)
+    LMX
+
+    TEXTO $nome -> $specificProduct(nome)
+    NUMERO $price -> $specificProduct(price)
+    TEXTO $status
+
+    se $price >0
+    entao
+        $status-> 2
+    senao
+        $status-> 2
+    es
+
+    TEXTO $destinatario-> 4
+    TEXTO $corpo -> 4
+
+    TEXTO $assunto-> 4
+    //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
+    ENVIAR_EMAIL($destinatario,$assunto,$corpo)
+
+    ATUALIZAR(pessoa,id,4) -> (nome,$nome)
+
+END

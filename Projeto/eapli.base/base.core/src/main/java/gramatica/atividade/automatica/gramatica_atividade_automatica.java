@@ -1,3 +1,5 @@
+package gramatica.atividade.automatica;
+
 import java.io.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -9,7 +11,7 @@ public class gramatica_atividade_automatica {
     }
 
     public static void parseWithVisitor() throws IOException {
-        gramatica_atividade_automaticaLexer lexer = new gramatica_atividade_automaticaLexer(CharStreams.fromFileName("teste.txt"));
+        gramatica_atividade_automaticaLexer lexer = new gramatica_atividade_automaticaLexer(CharStreams.fromFileName("teste_atividade_automatica.txt"));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         gramatica_atividade_automaticaParser parser = new gramatica_atividade_automaticaParser(tokens);
         ParseTree tree = parser.gramatica(); // parse

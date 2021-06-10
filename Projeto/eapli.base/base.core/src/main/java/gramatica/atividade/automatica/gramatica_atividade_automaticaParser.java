@@ -1,12 +1,9 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/resources\gramatica_atividade_automatica.g4 by ANTLR 4.9.1
+package gramatica.atividade.automatica;// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/resources\gramatica_atividade_automatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class gramatica_atividade_automaticaParser extends Parser {
@@ -31,7 +28,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 		RULE_elsee = 17;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"gramatica", "instrucao", "inicializacao_tipo_ficheiro", "inicializacao_elemento", 
+                "gramatica", "instrucao", "inicializacao_tipo_ficheiro", "inicializacao_elemento",
 			"atribuicao_elemento", "expressao_inicializacao", "expressao_atribuicao", 
 			"expr", "tipo_dados", "integer", "floate", "identidade", "estrutura_xml", 
 			"enviar_email", "update_informacao", "estrutura_condicional", "ife", 
@@ -94,7 +91,7 @@ public class gramatica_atividade_automaticaParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "gramatica_atividade_automatica.g4"; }
+	public String getGrammarFileName() { return "gramatica/atividade/automatica/gramatica_atividade_automatica.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
