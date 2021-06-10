@@ -1,6 +1,7 @@
 package eapli.base.ticketTask.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticketTask.domain.*;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 
@@ -20,8 +21,8 @@ public class CreateTaskController {
 		this.ticketTaskRepository.save( ticketAutomaticTask );
 	}
 
-	public void registerTask(TicketTask ticketTask){
-		this.ticketTaskRepository.save(ticketTask);
+	public TicketTask registerTicketTask(TicketTask ticketTask){
+		return this.ticketTaskRepository.save(ticketTask);
 	}
 
 }

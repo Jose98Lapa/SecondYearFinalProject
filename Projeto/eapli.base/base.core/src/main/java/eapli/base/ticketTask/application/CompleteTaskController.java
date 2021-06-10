@@ -8,15 +8,11 @@ import eapli.base.form.application.FormController;
 import eapli.base.form.domain.Form;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.task.domain.ManualTask;
-import eapli.base.ticket.DTO.TicketDTO;
-import eapli.base.ticket.application.CreateTicketController;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
-import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketManualTask;
-import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -58,7 +54,7 @@ public class CompleteTaskController {
     public void updateTaskWithForm(Set<AttributeDTO> attributeSet){
         ManualTask manualTask = (ManualTask) this.currentWorkingTask.mainReference();
         FormDTO manualTaskFormDTO = manualTask.form().toDTO();
-        FormDTO formDTO = new FormDTO(manualTaskFormDTO.script, GenerateRandomStringID.generateRandomStringID(),"Formulario da Atividade "+ manualTaskFormDTO.id, attributeSet);
+        FormDTO formDTO = new FormDTO(manualTaskFormDTO.script, GenerateRandomStringID.generateRandomStringID(),"Formulario da Atividade "+ currentWorkingTask.identity(), attributeSet);
         FormController formController = new FormController();
         formController.registerForm(formDTO);
         Form form = formController.save();
@@ -71,7 +67,7 @@ public class CompleteTaskController {
         else
             workingTicket.pendingExecutingTicket();
         ticketRepository.save(workingTicket);
-        createTaskController.registerTask(currentWorkingTask);
+        createTaskController.registerTicketTask(currentWorkingTask);
     }
 
     public void approveOrDisapproveTicket(boolean approve){
