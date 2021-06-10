@@ -132,7 +132,7 @@ public class Engine {
         }
     }
 
-    public synchronized void FCFS(Ticket ticket) {
+    public synchronized Ticket FCFS(Ticket ticket) {
         Collaborator selected = null;
         if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
             selected = assignCollaboratorExecution(ticket);
@@ -141,6 +141,7 @@ public class Engine {
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
         }
+        return ticket;
     }
 
     public synchronized Collaborator assignCollaboratorExecution(Ticket ticket) {
