@@ -11,6 +11,7 @@ import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
+import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 	@Version
 	private Long version;
 
-	private Date solicitedOn, deadLine, completedOn;
+	private LocalDate solicitedOn, deadLine, completedOn;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_seq")
@@ -47,9 +48,6 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 	@OneToOne
 	private Service service;
 
-	@OneToOne
-	private Collaborator requestedBy;
-
 	@OneToOne( cascade = CascadeType.ALL)
 	private Form ticketForm;
 
@@ -60,23 +58,22 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	private String client;
 
-	private LocalDate endDate;
 
 
-
-	public Ticket ( Date solicitedOn, Date deadLine,
+	public Ticket ( LocalDate solicitedOn, LocalDate deadLine, LocalDate completedOn,
 					TicketStatus status, AttachedFile file,
 					Urgency urgency, Service service, TicketWorkflow workflow,
-					Form ticketForm, Collaborator requestedBy  ) {
+					Form ticketForm, String client  ) {
 		this.solicitedOn = solicitedOn;
 		this.deadLine = deadLine;
+		this.completedOn = completedOn;
 		this.status = status;
 		this.file = file;
 		this.urgency = urgency;
 		this.service = service;
 		this.workflow = workflow;
 		this.ticketForm = ticketForm;
-		this.requestedBy = requestedBy;
+		this.client = client;
 		this.builder = new TicketBuilder();
 	}
 
@@ -118,7 +115,8 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	@Override
 	public TicketDTO toDTO ( ) {
-		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), ID.toString( ), status.toString( ), file.toString( ), urgency.toString( ) );
+		return new TicketDTO( solicitedOn.toString( ), deadLine.toString( ), ID.toString( ),
+				status.toString( ), file.toString( ), urgency.toString( ), service.identity().toString(), client  );
 	}
 
 	public TicketStatus status () {
@@ -167,7 +165,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	public void disapproveTicket(){
 		this.status = TicketStatus.valueOf("DISAPPROVED");
-		this.endDate = LocalDate.now();
+		this.completedOn = LocalDate.now();
 	}
 
 	public void pendingExecutingTicket(){
@@ -176,7 +174,7 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 
 	public void endTicket(){
 		this.status = TicketStatus.valueOf("CONCLUDED");
-		this.endDate = LocalDate.now();
+		this.completedOn = LocalDate.now();
 	}
 
 	public int compareBySolicitedOn(Ticket other) {
