@@ -85,24 +85,24 @@ public class Engine {
         switch (currentStateTicket.status().toString()) {
             case Constants.PENDING:
                 System.out.println("Pending->WAITING");
-                currentStateTicket.setStatus(new TicketStatus(Constants.WAITING_APPROVAL));
+                currentStateTicket.statusWaitingApproval();
                 break;
 
             case Constants.APPROVED:
                 System.out.println("Approved->PENDINGEX");
 
-                currentStateTicket.setStatus(new TicketStatus(Constants.PENDING_EXECUTION));
+                currentStateTicket.statusPendingExecution();
                 break;
 
             case Constants.NOT_APPROVED:
                 System.out.println("NOT_APPROVED");
 
-                currentStateTicket.setStatus(new TicketStatus(Constants.FAILED));
+                currentStateTicket.statusFailed();
                 break;
 
             case Constants.PENDING_EXECUTION:
                 System.out.println("pendeexe");
-                currentStateTicket.setStatus(new TicketStatus(Constants.EXECUTING));
+                currentStateTicket.statusExecuting();
                 break;
             case Constants.EXECUTING:
                 System.out.println("exe");
