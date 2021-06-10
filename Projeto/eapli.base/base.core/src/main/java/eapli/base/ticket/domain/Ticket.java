@@ -167,4 +167,12 @@ public class Ticket implements AggregateRoot< String >, DTOable< TicketDTO >,Ser
 		this.endDate = LocalDate.now();
 	}
 
+	public int compareBySolicitedOn(Ticket other) {
+		return this.solicitedOn.compareTo(other.solicitedOn);
+	}
+
+	public String displayInfoForList() {
+		return "Ticket" + "solicitedOn=" + solicitedOn +", deadLine=" + deadLine +", completedOn=" + completedOn +", ID='" + ID + '\'' +", status=" + status +", service=" + service.toDTO().title +
+				'}';
+	}
 }
