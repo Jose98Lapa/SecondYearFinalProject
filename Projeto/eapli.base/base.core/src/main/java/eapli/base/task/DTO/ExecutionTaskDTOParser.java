@@ -3,17 +3,14 @@ package eapli.base.task.DTO;
 
 import eapli.base.form.DTO.FormDTOParser;
 import eapli.base.task.domain.ExecutionTask;
-import eapli.base.task.domain.TaskID;
 
-
-import eapli.base.team.DTO.TeamDTO;
 import eapli.base.team.DTO.TeamDTOParser;
 import eapli.base.team.domain.Team;
 import eapli.framework.representations.dto.DTOParser;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 public class ExecutionTaskDTOParser implements DTOParser<ExecutionTaskDTO, ExecutionTask> {
     @Override

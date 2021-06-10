@@ -26,8 +26,7 @@ public class CreateTaskController {
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
         Task task = new ApprovalTask(getForm(approvalTaskDTO.formID),functionService.getFunctionByID(approvalTaskDTO.functionDTO.idFunction));
-        taskRepository.save(task);
-        return task.identity().toString();
+        return taskRepository.save(task).identity().toString();
     }
 
     public String registerManualTask(ExecutionTaskDTO executionTaskDTO){
@@ -40,16 +39,13 @@ public class CreateTaskController {
                 .forEach( teamDTO -> teamList.add( teamListService.getTeam( teamDTO.teamID ) ) );
 
         Task task = new ExecutionTask(getForm(executionTaskDTO.formID),teamList );
-        taskRepository.save(task);
-
-        return task.identity().toString();
+        return taskRepository.save(task).identity().toString();
     }
 
     public String registerAutomaticTask(AutomaticTaskDTO approvalTaskDTO){
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
         Task task = new AutomaticTask(ScriptPath.valueOf(approvalTaskDTO.script));
-        taskRepository.save(task);
-        return task.identity().toString();
+        return taskRepository.save(task).identity().toString();
     }
 
     private Form getForm(String formId){

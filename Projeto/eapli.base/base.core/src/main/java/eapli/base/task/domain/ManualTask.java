@@ -41,7 +41,7 @@ public abstract class ManualTask extends Task implements Serializable {
     }
 
     @Override
-    public TaskID identity() {
+    public Long identity() {
         return super.taskID;
     }
 

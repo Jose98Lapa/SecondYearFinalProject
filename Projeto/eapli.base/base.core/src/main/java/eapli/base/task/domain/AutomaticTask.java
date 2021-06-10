@@ -34,7 +34,7 @@ public class AutomaticTask extends Task implements DTOable<AutomaticTaskDTO>, Se
     }
 
     @Override
-    public TaskID identity() {
+    public Long identity() {
         return super.taskID;
     }
 

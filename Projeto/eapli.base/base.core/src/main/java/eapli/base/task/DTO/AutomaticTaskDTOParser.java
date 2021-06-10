@@ -2,7 +2,7 @@ package eapli.base.task.DTO;
 
 import eapli.base.task.domain.AutomaticTask;
 import eapli.base.task.domain.ScriptPath;
-import eapli.base.task.domain.TaskID;
+
 
 
 import eapli.framework.representations.dto.DTOParser;
