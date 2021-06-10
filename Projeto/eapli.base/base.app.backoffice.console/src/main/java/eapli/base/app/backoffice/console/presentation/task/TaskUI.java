@@ -77,7 +77,7 @@ public class TaskUI extends AbstractUI {
 
 				if ( posicao < -1 || posicao > teamDTOList.size( ) ) {
 					System.out.println( "O valor inserido está fora dos limites.\nPor favor re-insira uma posição válida" );
-				} else {
+				} else if (posicao!=-1) {
 					teamList.add( teamDTOList.get( posicao ) );
 				}
 

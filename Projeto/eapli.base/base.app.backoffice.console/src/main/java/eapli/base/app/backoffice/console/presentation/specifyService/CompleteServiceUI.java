@@ -128,13 +128,19 @@ public class CompleteServiceUI extends AbstractUI {
                         taskIDList.add(taskUI.createApprovalTask());
                     }
 
-                    if (Console.readBoolean("A tarefa é manual")){
-                        taskIDList.add(taskUI.createExecutionTask());
-                    }else{
-                        taskIDList.add(taskUI.createAutomaticTask());
-                    }
-                    theController.addWorkflowToService(taskIDList,toComplete);
+                    boolean continueLoop;
+                    do{
+                        if (Console.readBoolean("A tarefa é manual")){
+                            taskIDList.add(taskUI.createExecutionTask());
+                        }else{
+                            taskIDList.add(taskUI.createAutomaticTask());
+                        }
 
+                        continueLoop = Console.readBoolean("Deseja continuar a adicionar tarefas?");
+
+                    }while (continueLoop);
+
+                    theController.addWorkflowToService(taskIDList,toComplete);
 
                 }
 

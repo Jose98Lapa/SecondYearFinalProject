@@ -12,8 +12,7 @@ import java.util.Objects;
 @Embeddable
 public class TaskID implements ValueObject, Comparable<TaskID>, Serializable {
 
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+
     private String taskID;
 
     public TaskID (String taskID){

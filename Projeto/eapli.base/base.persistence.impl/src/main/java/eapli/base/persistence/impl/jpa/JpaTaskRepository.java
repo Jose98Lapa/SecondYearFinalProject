@@ -1,8 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.function.domain.Function;
+
 import eapli.base.task.domain.Task;
-import eapli.base.task.domain.TaskID;
 import eapli.base.task.repository.TaskRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -10,7 +9,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import javax.persistence.TypedQuery;
 import java.util.Optional;
 
-public class JpaTaskRepository extends JpaAutoTxRepository<Task,TaskID, TaskID> implements TaskRepository {
+public class JpaTaskRepository extends JpaAutoTxRepository<Task,Long, Long> implements TaskRepository {
     public JpaTaskRepository(TransactionalContext tx) {
         super(tx, "Task");
     }
@@ -19,7 +18,7 @@ public class JpaTaskRepository extends JpaAutoTxRepository<Task,TaskID, TaskID> 
     }
 
     @Override
-    public Optional<Task> ofIdentity(TaskID id) {
+    public Optional<Task> ofIdentity(Long id) {
         final TypedQuery<Task> query =
                 createQuery("Select e From eapli.base.task.domain.Task e where e.taskID =: id ",
                         Task.class);
