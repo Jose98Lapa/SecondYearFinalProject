@@ -23,6 +23,10 @@ public class ExecutionTask extends ManualTask implements DTOable<ExecutionTaskDT
         this.executingTeams = new ArrayList<>( necessaryTeamsForExecution );
     }
 
+    public List<Team> executingTeams() {
+        return executingTeams;
+    }
+
     protected ExecutionTask() {
         //For ORM
     }

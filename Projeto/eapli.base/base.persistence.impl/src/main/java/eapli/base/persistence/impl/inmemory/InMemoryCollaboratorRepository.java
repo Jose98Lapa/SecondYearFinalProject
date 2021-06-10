@@ -4,6 +4,7 @@ import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.function.domain.Function;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
@@ -14,6 +15,11 @@ public class InMemoryCollaboratorRepository
 
     static {
         InMemoryInitializer.init();
+    }
+
+    @Override
+    public Iterable<Collaborator> getCollaboratorsByRole(Function function) {
+        return null;
     }
 
     @Override

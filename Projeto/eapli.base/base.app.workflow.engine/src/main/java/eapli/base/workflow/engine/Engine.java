@@ -5,11 +5,15 @@ import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.domain.CatalogueID;
 import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.service.domain.Service;
+import eapli.base.task.domain.ApprovalTask;
+import eapli.base.task.domain.ExecutionTask;
 import eapli.base.team.domain.Team;
 import eapli.base.team.domain.TeamID;
+import eapli.base.team.repositories.TeamRepository;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
@@ -38,9 +42,8 @@ public class Engine {
 //    private HashMap<Catalogue, Queue<Team>> FCFSExecution = new HashMap();
 //    private HashMap<TeamID, Queue<Collaborator>> FCFSExecutionAux = new HashMap();
 
-    TreeMap<Date,Collaborator> historyExecution = new TreeMap<>();
-    TreeMap<Date,Collaborator> historyApproval = new TreeMap<>();
-
+    TreeMap<Date, Collaborator> historyExecution = new TreeMap<>();
+    TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
 
 
     public static void main(String[] args) {
@@ -147,99 +150,80 @@ public class Engine {
     public synchronized void FCFS(Ticket ticket) {
         Collaborator selected = null;
         if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
-            selected=assignCollaboratorExecution(ticket);
+            selected = assignCollaboratorExecution(ticket);
             ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
         } else {
-            selected=assignCollaboratorApproval(ticket);
+            selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
         }
     }
-    //mapa ordenado por data de solicitacao de tickets com values de colaboradores
 
-    public Collaborator assignCollaboratorExecution(Ticket ticket){
+    public synchronized Collaborator assignCollaboratorExecution(Ticket ticket) {
+
+        TeamRepository teamRepository = PersistenceContext.repositories().teams();
+
+        Collaborator theChosenOne = null;
+        ArrayList<Collaborator> collaborators = new ArrayList<>();
+        ArrayList<Team> execTeams = new ArrayList<>();
+        ArrayList<Team> execTeamsUpdated = new ArrayList<>();
+        Service svr = ticket.service();
+
+        if (svr.workflow().starterTask() instanceof ExecutionTask) {
+            execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
+        }
+        for (Team t : execTeams){ //update teams
+            execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
+        }
+        execTeams.clear();// delete old list
+        for (Team t : execTeamsUpdated) { //save updated collaborators
+            collaborators.addAll(t.teamMembers());
+        }
+        for (Date date:historyExecution.keySet()) {
+            if (!collaborators.contains(historyExecution.get(date))) {//se algum colaborador for removido retira do historico
+                historyExecution.remove(date);
+            }
+        }
+        for (Collaborator collab : collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyExecution.containsValue(collab)) {
+                theChosenOne = collab;
+                historyExecution.put(new Date(), collab);
+            }
+        }
+        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+            theChosenOne = historyExecution.firstEntry().getValue();
+            historyExecution.put(new Date(), historyExecution.remove(historyExecution.firstKey()));
+        }
+        return theChosenOne;
+    }
+
+    public synchronized Collaborator assignCollaboratorApproval(Ticket ticket) {
+        CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
+
         Collaborator theChosenOne = null;
         ArrayList<Collaborator> collaborators = new ArrayList<>();
         Service svr = ticket.service();
-        Catalogue cat = svr.catalogo();
-        for (Team t :cat.accessCriteria()) {
-            collaborators.addAll(t.teamMembers);
+
+        if (svr.workflow().starterTask() instanceof ApprovalTask) {
+            collaborators.addAll((Collection<? extends Collaborator>) collaboratorRepository.getCollaboratorsByRole(
+                    ((ApprovalTask) svr.workflow().starterTask()).necessaryRoleForApproval())
+            ); // base de dados colab by role
         }
-        for (Collaborator collab:collaborators) { //verificar se existe algum que ainda nao tenha feito nada
-            if (!historyExecution.containsValue(collab)){
-                theChosenOne = collab;
-                historyExecution.put(new Date(),collab);
+
+        for (Date date:historyApproval.keySet()) {
+            if (!collaborators.contains(historyApproval.get(date))) {//se algum colaborador for removido retira do historico
+                historyApproval.remove(date);
             }
         }
-        if (theChosenOne==null){ //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-            theChosenOne = historyExecution.firstEntry().getValue();
-            historyExecution.put(new Date(),historyExecution.remove(historyExecution.firstKey()));
-        }
-        return theChosenOne;
-    }
-
-    public Collaborator assignCollaboratorApproval(Ticket ticket){
-        Collaborator theChosenOne = null;
-        ArrayList<Collaborator> collaborators = new ArrayList<>();
-
-
-        //ir buscar os colaboradores capazes de aprovar
-
-
-        for (Collaborator collab:collaborators) { //verificar se existe algum que ainda nao tenha feito nada
-            if (!historyApproval.containsValue(collab)){
+        for (Collaborator collab : collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyApproval.containsValue(collab)) {
                 theChosenOne = collab;
-                historyApproval.put(new Date(),collab);
+                historyApproval.put(new Date(), collab);
             }
         }
-        if (theChosenOne==null){ //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
             theChosenOne = historyApproval.firstEntry().getValue();
-            historyApproval.put(new Date(),historyApproval.remove(historyApproval.firstKey()));
+            historyApproval.put(new Date(), historyApproval.remove(historyApproval.firstKey()));
         }
         return theChosenOne;
     }
-
-
-
-
-
-
-
-/*
-
-    public synchronized Collaborator selectCollaboratorExecution(Catalogue catalogue) {
-        Queue<Team> teams = null;
-        Queue<Collaborator> collabs;
-        for (Catalogue cat : FCFSExecution.keySet()) {
-            if (cat.equals(catalogue)) {
-                teams = FCFSExecution.get(cat);
-            }
-        }
-        for (TeamID teamID : FCFSExecutionAux.keySet()) {
-            if (teamID.equals(teams.peek().identity())) {
-                Team team = teams.remove();
-                teams.add(team);
-            }
-            collabs = FCFSExecutionAux.get(teamID);
-            Collaborator collaborator = collabs.remove();
-            collabs.add(collaborator);
-            return collaborator;
-        }
-        return null;
-    }
-
-    public synchronized void fillFCFSInfoExecution() { //collabs que conseguem executar
-        CatalogueRepository catalogRepo = PersistenceContext.repositories().catalogs();
-
-        for (Catalogue cat : catalogRepo.findAll()) {
-            Queue<Team> teamQueue = new PriorityQueue();
-            for (Team t : cat.accessCriteria()) {
-                teamQueue.add(t);
-                Queue<Collaborator> memberQueue = new PriorityQueue();
-                memberQueue.addAll(t.teamMembers);
-                FCFSExecutionAux.put(t.identity(), memberQueue);
-            }
-            FCFSExecution.put(cat, teamQueue);
-        }
-    }*/
-
 }

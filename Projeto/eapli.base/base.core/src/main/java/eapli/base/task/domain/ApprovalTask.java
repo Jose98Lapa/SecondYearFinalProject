@@ -29,6 +29,9 @@ public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO>
 
     }
 
+    public Function necessaryRoleForApproval() {
+        return necessaryRoleForApproval;
+    }
 
     public Form form(){
         return super.form();

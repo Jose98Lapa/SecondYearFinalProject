@@ -4,6 +4,9 @@ import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.function.domain.Function;
+import eapli.base.ticket.domain.Ticket;
+import eapli.base.ticket.domain.TicketStatus;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -20,6 +23,13 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Collaborator,
         super(persistenceUnitName, "MecanographicNumber");
     }
 
+
+    @Override
+    public Iterable<Collaborator> getCollaboratorsByRole(Function function) {
+        final TypedQuery<Collaborator> q = createQuery("Select e From eapli.base.collaborator.domain.Collaborator e where e.function =:function ", Collaborator.class);
+        q.setParameter("function", function);
+        return q.getResultList();
+    }
 
     @Override
     public Optional<Collaborator> ofIdentity(MecanographicNumber id){
