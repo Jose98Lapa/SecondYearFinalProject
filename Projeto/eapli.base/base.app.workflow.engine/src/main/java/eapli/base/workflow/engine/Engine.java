@@ -1,18 +1,13 @@
 package eapli.base.workflow.engine;
 
 import eapli.base.Application;
-import eapli.base.catalogue.domain.Catalogue;
-import eapli.base.catalogue.domain.CatalogueID;
-import eapli.base.catalogue.repositories.CatalogueRepository;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.service.domain.Service;
 import eapli.base.task.domain.ApprovalTask;
 import eapli.base.task.domain.ExecutionTask;
 import eapli.base.team.domain.Team;
-import eapli.base.team.domain.TeamID;
 import eapli.base.team.repositories.TeamRepository;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
@@ -20,8 +15,6 @@ import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
-import eapli.base.ticketTask.domain.TicketTask;
-import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.Constants;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
@@ -29,18 +22,11 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
-import java.text.Collator;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Engine {
-
-//    private HashMap<Catalogue, Queue<Team>> FCFSExecution = new HashMap();
-//    private HashMap<TeamID, Queue<Collaborator>> FCFSExecutionAux = new HashMap();
 
     TreeMap<Date, Collaborator> historyExecution = new TreeMap<>();
     TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
@@ -69,7 +55,6 @@ public class Engine {
     }
 
     private static void engine(TicketRepository ticketRepository, List<Ticket> previousState) {
-
         ticketRepository = PersistenceContext.repositories().tickets();
         List<Ticket> currentState = new ArrayList<>();
         List<Ticket> lambdaPreviousState = previousState;
@@ -100,24 +85,24 @@ public class Engine {
         switch (currentStateTicket.status().toString()) {
             case Constants.PENDING:
                 System.out.println("Pending->WAITING");
-                currentStateTicket.setStatus(new TicketStatus(Constants.WAITING_APPROVAL));
+                currentStateTicket.statusWaitingApproval();
                 break;
 
             case Constants.APPROVED:
                 System.out.println("Approved->PENDINGEX");
 
-                currentStateTicket.setStatus(new TicketStatus(Constants.PENDING_EXECUTION));
+                currentStateTicket.statusPendingExecution();
                 break;
 
             case Constants.NOT_APPROVED:
                 System.out.println("NOT_APPROVED");
 
-                currentStateTicket.setStatus(new TicketStatus(Constants.FAILED));
+                currentStateTicket.statusFailed();
                 break;
 
             case Constants.PENDING_EXECUTION:
                 System.out.println("pendeexe");
-                currentStateTicket.setStatus(new TicketStatus(Constants.EXECUTING));
+                currentStateTicket.statusExecuting();
                 break;
             case Constants.EXECUTING:
                 System.out.println("exe");
@@ -152,7 +137,7 @@ public class Engine {
         if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
             selected = assignCollaboratorExecution(ticket);
             ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
-        } else {
+        } else if (ticket.workflow().starterTask() instanceof TicketApprovalTask){
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
         }
@@ -171,14 +156,14 @@ public class Engine {
         if (svr.workflow().starterTask() instanceof ExecutionTask) {
             execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
         }
-        for (Team t : execTeams){ //update teams
+        for (Team t : execTeams) { //update teams
             execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
         }
         execTeams.clear();// delete old list
         for (Team t : execTeamsUpdated) { //save updated collaborators
             collaborators.addAll(t.teamMembers());
         }
-        for (Date date:historyExecution.keySet()) {
+        for (Date date : historyExecution.keySet()) {
             if (!collaborators.contains(historyExecution.get(date))) {//se algum colaborador for removido retira do historico
                 historyExecution.remove(date);
             }
@@ -190,8 +175,12 @@ public class Engine {
             }
         }
         if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-            theChosenOne = historyExecution.firstEntry().getValue();
-            historyExecution.put(new Date(), historyExecution.remove(historyExecution.firstKey()));
+            for (Date date:historyExecution.keySet()) {
+                if (collaborators.contains(historyExecution.get(date))){
+                    theChosenOne = historyExecution.get(date);
+                    historyExecution.put(new Date(), historyExecution.remove(date));
+                }
+            }
         }
         return theChosenOne;
     }
@@ -209,7 +198,7 @@ public class Engine {
             ); // base de dados colab by role
         }
 
-        for (Date date:historyApproval.keySet()) {
+        for (Date date : historyApproval.keySet()) {
             if (!collaborators.contains(historyApproval.get(date))) {//se algum colaborador for removido retira do historico
                 historyApproval.remove(date);
             }
@@ -220,9 +209,13 @@ public class Engine {
                 historyApproval.put(new Date(), collab);
             }
         }
-        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-            theChosenOne = historyApproval.firstEntry().getValue();
-            historyApproval.put(new Date(), historyApproval.remove(historyApproval.firstKey()));
+        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo que tem permissoes
+            for (Date date:historyApproval.keySet()) {
+                if (collaborators.contains(historyApproval.get(date))){
+                    theChosenOne = historyApproval.get(date);
+                    historyApproval.put(new Date(), historyApproval.remove(date));
+                }
+            }
         }
         return theChosenOne;
     }

@@ -67,4 +67,11 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
         p.setParameter("id", TicketStatus.valueOf("EXECUTING"));
         return p.getResultList();
     }
+
+    @Override
+    public List<Ticket> getTicketsByClient(String client) {
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.client = :client", Ticket.class);
+        q.setParameter("client", client);
+        return q.getResultList();
+    }
 }

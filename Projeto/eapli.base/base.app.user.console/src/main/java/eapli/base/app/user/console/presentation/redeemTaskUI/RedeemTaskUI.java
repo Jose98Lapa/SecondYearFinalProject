@@ -1,8 +1,6 @@
-package eapli.base.app.user.console.presentation.redeemTaskController;
+package eapli.base.app.user.console.presentation.redeemTaskUI;
 
-import eapli.base.catalogue.application.CheckServicesController;
 import eapli.base.ticket.DTO.TicketDTO;
-import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticketTask.application.RedeemTaskController;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;

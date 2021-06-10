@@ -19,4 +19,7 @@ public interface TicketRepository extends DomainRepository< String, Ticket > {
 
 	List<Ticket> getPendingAssignedExecutionTickets();
 
+
+	List<Ticket> getTicketsByClient(String client);
+
 }

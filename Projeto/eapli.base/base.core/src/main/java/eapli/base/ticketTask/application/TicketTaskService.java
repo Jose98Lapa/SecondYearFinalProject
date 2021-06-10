@@ -142,11 +142,11 @@ public class TicketTaskService {
         if (Oticket.isPresent()) {
             ticket = Oticket.get();
             if (ticketDTO.status.equals("PENDING")) {
-                ticket.setStatus(TicketStatus.valueOf("WAITING_APPROVAL"));
+                ticket.statusWaitingApproval();
                 TicketApprovalTask ticketTask = (TicketApprovalTask) ticket.workflow().starterTask();
                 ticketTask.setApprovedBy(collaborator); //Atribuir a aprovação ao colaborador
             }else {
-                ticket.setStatus(TicketStatus.valueOf("EXECUTING"));
+                ticket.statusExecuting();
                 TicketTask ticketTask = ticket.workflow().starterTask();
                 TicketExecutionTask ticketExecutionTask;
                 if (ticketTask.getClass().equals(TicketApprovalTask.class))
