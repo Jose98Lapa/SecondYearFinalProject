@@ -1,6 +1,5 @@
 package eapli.base.ticket.application;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.service.Repository.ServiceRepository;
 
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
