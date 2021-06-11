@@ -59,24 +59,37 @@ public class CompleteTaskController {
         formController.registerForm(formDTO);
         Form form = formController.save();
         currentWorkingTask.updateForm(form);
-        this.ticketTaskService.updateTask(currentWorkingTask);
-        CreateTaskController createTaskController = new CreateTaskController();
-        currentWorkingTask.completeTask();
-        if (currentWorkingTask.mainReference().afterTask()==null)
-            workingTicket.endTicket();
-        else
-            workingTicket.pendingExecutingTicket();
-        ticketRepository.save(workingTicket);
-        createTaskController.registerTicketTask(currentWorkingTask);
     }
 
     public void approveOrDisapproveTicket(boolean approve){
         if (approve){
             workingTicket.approveTicket();
+            concludeTicket();
         }else{
             workingTicket.disapproveTicket();
+            ticketRepository.save(workingTicket);
+            completeTask();
         }
+    }
+
+    public void concludeTicket(){
+        if (currentWorkingTask.mainReference().afterTask()==null)
+            workingTicket.endTicket();
+        else
+            workingTicket.pendingExecutingTicket();
         ticketRepository.save(workingTicket);
+        this.ticketTaskService.updateTask(currentWorkingTask);
+        completeTask();
+    }
+
+    private void completeTask(){
+        CreateTaskController createTaskController = new CreateTaskController();
+        currentWorkingTask.completeTask();
+        createTaskController.registerTicketTask(currentWorkingTask);
+    }
+
+    public List<FormDTO> getPreviousTicketTasksForm(){
+        return ticketTaskService.getPreviousTicketTasksForm(workingTicket);
     }
 
 

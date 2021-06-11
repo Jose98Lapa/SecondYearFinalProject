@@ -17,13 +17,13 @@ public class Utils {
         return value;
     }
 
-    static public < E > int selectIndex ( int size, String question ) {
+    static public < E > int selectIndex ( int size, String question,int limit ) {
 
         int value;
 
         do {
             value = Console.readInteger(question);
-        } while ( value < -1 || value > size );
+        } while ( value < limit || value > size );
 
         return value;
     }

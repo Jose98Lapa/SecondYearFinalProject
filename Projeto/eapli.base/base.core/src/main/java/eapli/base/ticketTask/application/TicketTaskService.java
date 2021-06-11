@@ -3,11 +3,9 @@ package eapli.base.ticketTask.application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
+import eapli.base.form.DTO.FormDTO;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.task.domain.ApprovalTask;
-import eapli.base.task.domain.AutomaticTask;
-import eapli.base.task.domain.ExecutionTask;
-import eapli.base.task.domain.Task;
+import eapli.base.task.domain.*;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
@@ -43,7 +41,7 @@ public class TicketTaskService {
         for (Ticket ticket: ticketRepository.getPendingAssignedApprovalTickets()){
             if (ticket.workflow().starterTask().getClass()==TicketApprovalTask.class){
                 TicketApprovalTask ticketApprovalTask = (TicketApprovalTask) ticket.workflow().starterTask();
-                if (ticketApprovalTask.collaborator().equals(collaborator))
+                if (ticketApprovalTask.collaborator() != null && ticketApprovalTask.collaborator().equals(collaborator))
                     toReturn.add(ticketApprovalTask.toDTO());
             }
         }
@@ -154,4 +152,19 @@ public class TicketTaskService {
 
         return true;
     }
+
+    public List<FormDTO> getPreviousTicketTasksForm(Ticket ticket){
+        List<FormDTO> formDTOList = new ArrayList<>();
+        TicketTask temp = ticket.workflow().starterTask();
+        while (temp.transition().hasNextTask()){
+            if (temp.status().equals("COMPLETE")){
+                if (temp.getClass()==TicketApprovalTask.class||temp.getClass()==TicketExecutionTask.class){
+                    TicketManualTask ticketTask = (TicketManualTask) temp;
+                    formDTOList.add(ticketTask.form().toDTO());
+                }
+            }
+        }
+        return formDTOList;
+    }
+
 }

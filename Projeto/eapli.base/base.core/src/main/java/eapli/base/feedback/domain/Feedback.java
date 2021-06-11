@@ -23,15 +23,11 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
     @OneToOne
     private Ticket relativeToThisTicket;
     private String clientEmail;
-    private LocalDate dateCreated;
-    private boolean status;
 
     public Feedback(FeedbackValue feedbackValue, Ticket relativeToThisTicket,String clientEmail) {
         this.feedbackValue = feedbackValue;
         this.relativeToThisTicket = relativeToThisTicket;
         this.clientEmail = clientEmail;
-        this.dateCreated = LocalDate.now();
-        status = false;
     }
 
     public Feedback(Long identity, FeedbackValue feedbackValue, Ticket relativeToThisTicket,String clientEmail) {
@@ -39,16 +35,10 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
         this.feedbackValue = feedbackValue;
         this.relativeToThisTicket = relativeToThisTicket;
         this.clientEmail = clientEmail;
-        this.dateCreated = LocalDate.now();
-        status = false;
     }
 
     protected Feedback(){
         // For ORM
-    }
-
-    public void updateStatus(){
-        this.status = !status;
     }
 
     public Ticket ticket(){
@@ -69,6 +59,6 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
 
     @Override
     public FeedbackDTO toDTO() {
-        return new FeedbackDTO(identity,relativeToThisTicket.toDTO(),Integer.parseInt(feedbackValue.toString()),clientEmail,dateCreated);
+        return new FeedbackDTO(identity,relativeToThisTicket.toDTO(),Integer.parseInt(feedbackValue.toString()),clientEmail);
     }
 }
