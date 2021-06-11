@@ -23,6 +23,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,31 +59,43 @@ public class TcpServer implements Runnable {
 
             //Receives email
             byte[] emailInfo = sIn.readNBytes(3);
-            byte[] emailByteArray = sIn.readNBytes(emailInfo[2]&0xff);
+            byte[] emailByteArray = sIn.readNBytes(emailInfo[2] & 0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-            boolean mock=true;
-            if (!mock) {
+            boolean mock = true;
+            if (mock) {
+                String finalString = "5";
+                finalString = compileString(finalString, "30/06/2021 23:34");
+                finalString = compileString(finalString, "Lavar janelas");
+                finalString = compileString(finalString, "http://192.168.1.92/bootstrap.jpg");
+                finalString = compileString(finalString, "Lavar as janelas do escriotio do 5º andar");
+                finalString = compileString(finalString, "4");
+                sendData(finalString);
+                byte[] finalPackage = {(byte) 0, (byte) 252, (byte) 0, (byte) 0};
+                sOut.write(finalPackage);
+                sOut.flush();
+            } else {
 
-            //Get Collaborator by email
-            CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
-            InstituionalEmail iEmail = new InstituionalEmail(email);
-            Optional<Collaborator> collabOp = collaboratorRepository.getColaboradorByEmail(iEmail);
-            Collaborator collaborator = null;
-            if (collabOp.isPresent())
-                collaborator = collabOp.get();
-            else {
-                System.out.println("Invalid email");
-                System.exit(1);
-            }
+                //Get Collaborator by email
+                CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
+                InstituionalEmail iEmail = new InstituionalEmail(email);
+                Optional<Collaborator> collabOp = collaboratorRepository.getColaboradorByEmail(iEmail);
+                Collaborator collaborator = null;
+                if (collabOp.isPresent())
+                    collaborator = collabOp.get();
+                else {
+                    System.out.println("Invalid email");
+                    System.exit(1);
+                }
 
+                //Gets Tasks belonging to the collaborator
                 TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
+                TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
                 List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
 
-                TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-                int finalCode = 254;
+                //Sends the Task data
+                int finalCode = 252;
                 for (TicketTask ticketTask : lstTicketTask) {
-
                     Optional<Ticket> ticketOp = ticketRepository.ofIdentity(ticketTask.identity().toString());
                     Ticket ticket;
                     if (ticketOp.isPresent())
@@ -95,42 +108,49 @@ public class TcpServer implements Runnable {
 
                     TicketDTO ticketDTO = ticket.toDTO();
                     ServiceDTO serviceDTO = ticket.service().toDTO();
-                    sendString(ticketDTO.urgency); //urgency
-                    sendString(ticketDTO.deadLine); //deadline
-                    sendString(serviceDTO.title); //title
-                    sendString(serviceDTO.icon); //icon
-                    sendString(serviceDTO.briefDescription); //briefDesc
-                    sendString(ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
+                    String finalString = ticketDTO.urgency;
+                    finalString = compileString(finalString, ticketDTO.deadLine);
+                    finalString = compileString(finalString, serviceDTO.title);
+                    finalString = compileString(finalString, serviceDTO.icon);
+                    finalString = compileString(finalString, serviceDTO.briefDescription);
+                    finalString = compileString(finalString, ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade);
+                    sendData(finalString);
                 }
 
                 byte[] finalPackage = {(byte) 0, (byte) finalCode, (byte) 0, (byte) 0};
                 sOut.write(finalPackage);
                 sOut.flush();
-            }else{
-                    sendString("5");
-                    sendString("30/06/2021 23:34");
-                    sendString("Lavar janelas");
-                    sendString("http://192.168.1.92/bootstrap.jpg");
-                    sendString("Lavar as janelas do escriotio do 5º andar");
-                    sendString("4");
-                    byte[] finalPackage = {(byte) 0, (byte) 254, (byte) 0, (byte) 0};
-                    sOut.write(finalPackage);
-                    sOut.flush();
             }
+
         } catch (IOException ex) {
             System.out.println("An error ocurred");
             stopConnection(clientSocket.getInetAddress());
         }
     }
 
-    public void sendString(String s) throws IOException {
-        byte[] byteArray = s.getBytes(StandardCharsets.UTF_8);
-        byte[] info = {(byte) 0, (byte) 255, (byte) byteArray.length};
-        byte[] fullPackage = ArrayUtils.addAll(info, byteArray);
-        sOut.write(fullPackage);
-        sOut.flush();
+    public static String compileString(String finalString, String toAddString) {
+        return finalString = finalString + "|" + toAddString;
     }
 
+    public void sendData(String finalString) throws IOException {
+        byte[] fullByteArray = finalString.getBytes(StandardCharsets.UTF_8);
+        byte[] info = {(byte) 0, (byte) 255, (byte) 255};
+
+        int dataSize = 255; // Data size to divide
+        for (int i = 0; i < fullByteArray.length; i += dataSize) {
+            byte[] splitByteArray = Arrays.copyOfRange(fullByteArray, i, Math.min(fullByteArray.length, i + dataSize));
+            if (splitByteArray.length == dataSize) {
+                byte[] fullPackage = ArrayUtils.addAll(info, splitByteArray);
+                sOut.write(fullPackage);
+                sOut.flush();
+            } else {
+                byte[] finalInfo = {(byte) 0, (byte) 254, (byte) splitByteArray.length};
+                byte[] fullPackage = ArrayUtils.addAll(info, splitByteArray);
+                sOut.write(fullPackage);
+                sOut.flush();
+            }
+        }
+    }
 
     public void run() {
         InetAddress clientIP = clientSocket.getInetAddress();
