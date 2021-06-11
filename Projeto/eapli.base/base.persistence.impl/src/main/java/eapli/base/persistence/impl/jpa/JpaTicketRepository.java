@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 
+import eapli.base.feedback.domain.Feedback;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.domain.TicketStatus;
@@ -9,6 +10,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -72,6 +74,16 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
     public List<Ticket> getTicketsByClient(String client) {
         final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.client = :client", Ticket.class);
         q.setParameter("client", client);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Ticket> getFeedbackBetweenDatesFromAClient(String client, LocalDate localDateStart, LocalDate localDateEnd) {
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.client=:id and e.completedOn between :localDateStart and :localDateEnd and e.status = :status ", Ticket.class);
+        q.setParameter("id",client);
+        q.setParameter("localDateStart",localDateStart);
+        q.setParameter("localDateEnd",localDateEnd);
+        q.setParameter("status",TicketStatus.valueOf("COMPLETED"));
         return q.getResultList();
     }
 }

@@ -113,7 +113,7 @@ public class TicketBuilder implements DomainFactory< Ticket > {
 		return this;
 	}
 
-	public TicketBuilder requestedBy ( String collaboratorEmail ) {
+	public TicketBuilder withRequestedBy ( String collaboratorEmail ) {
 		this.requestedBy = collaboratorEmail;
 		return this;
 	}

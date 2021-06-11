@@ -8,6 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface FeedbackRepository extends DomainRepository<Long, Feedback> {
-    public List<Feedback> getFeedbackBetweenDatesFromACliente(String client, LocalDate localDateStart,LocalDate localDateEnd);
+
 
 }

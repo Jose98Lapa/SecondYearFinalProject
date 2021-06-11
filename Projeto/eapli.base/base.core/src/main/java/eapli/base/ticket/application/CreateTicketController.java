@@ -114,6 +114,8 @@ public class CreateTicketController {
 
 
 	public void createTicket(TicketDTO ticketDTO, ServiceDTO serviceDTO, Set<Attribute> attributeSet) {
+		AuthorizationService authz = AuthzRegistry.authorizationService();
+		String email = authz.session().get().authenticatedUser().email().toString();
 		TicketTaskService ticketTaskService = new TicketTaskService();
 		CreateTaskController ticketTaskController = new CreateTaskController();
 		Service service = new ServiceListService().getServiceByID(serviceDTO.id);
@@ -149,6 +151,7 @@ public class CreateTicketController {
 					.withUrgency(ticketDTO.urgency)
 					.withWorkFlow(workflow)
 					.withForm( form )
+					.withRequestedBy(email)
 					.build();
 
 			ticketRepository.save(ticket);

@@ -44,7 +44,7 @@ public class CompleteTaskUI extends AbstractUI {
 
         System.out.println("0- cancel");
 
-        int option = eapli.base.app.user.console.presentation.Utils.selectIndex(i,"Escolha o ticket")-1;
+        int option = eapli.base.app.user.console.presentation.Utils.selectIndex(i,"Escolha o ticket",-1)-1;
         if (option == -1){
             return false;
         }
