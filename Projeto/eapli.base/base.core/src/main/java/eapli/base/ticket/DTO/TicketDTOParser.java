@@ -9,7 +9,6 @@ public class TicketDTOParser implements DTOParser< TicketDTO, Ticket > {
 	@Override
 	public Ticket valueOf ( TicketDTO dto ) {
 		return new TicketBuilder( )
-				.withId( dto.id )
 				.withPossibleFile( dto.file )
 				.withStatus( dto.status )
 				.solicitedOn( dto.solicitedOn )

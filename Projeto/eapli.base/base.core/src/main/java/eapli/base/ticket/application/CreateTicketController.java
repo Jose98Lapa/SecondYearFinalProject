@@ -49,7 +49,7 @@ public class CreateTicketController {
 		this.builder = new TicketBuilder( );
 	}
 
-	public List< CatalogueDTO > requestableCatalogues ( ) {
+	/*public List< CatalogueDTO > requestableCatalogues ( ) {
 
 		ListCatalogueService catalogueService = new ListCatalogueService( );
 		ListCollaboratorService listCollaboratorService = new ListCollaboratorService( );
@@ -107,6 +107,82 @@ public class CreateTicketController {
 	public FormDTO getFormDTOByID ( String ID ) {
 
 		return ( new FormService( ).getFormFromID( FormID.valueOf( ID ) ).toDTO( ) );
+	}*/
+
+	private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
+
+
+
+	public void createTicket(TicketDTO ticketDTO, ServiceDTO serviceDTO, Set<Attribute> attributeSet) {
+		TicketTaskService ticketTaskService = new TicketTaskService();
+		CreateTaskController ticketTaskController = new CreateTaskController();
+		Service service = new ServiceListService().getServiceByID(serviceDTO.id);
+
+		if (service.workflow() != null && service.workflow().starterTask() != null) {
+			String deadline = ticketDTO.deadLine;
+
+			Task starter = service.workflow().starterTask();
+
+			TicketTask starterTicketTask = ticketTaskService.createTicketTask(deadline, starter);
+
+			String status;
+
+			if (starterTicketTask.getClass()==TicketApprovalTask.class){
+				status = "PENDING";
+			}else{
+				status = "PENDING_EXECUTION";
+			}
+
+			TicketWorkflow workflow = new TicketWorkflow(
+					LocalDate.now(),
+					starterTicketTask
+			);
+
+			Form form = new Form(service.form().script(), FormID.valueOf(GenerateRandomStringID.generateRandomStringID()), FormName.valueOf("temp"),attributeSet);
+
+
+			Ticket ticket = builder.solicitedOn(LocalDate.now().toString())
+					.withDeadLine(deadline)
+					.withPossibleFile(ticketDTO.file)
+					.withService(service)
+					.withStatus(status)
+					.withUrgency(ticketDTO.urgency)
+					.withWorkFlow(workflow)
+					.withForm( form )
+					.build();
+
+			ticketRepository.save(ticket);
+		}
+	}
+
+
+
+	public List<CatalogueDTO> requestableCatalogues ( ) {
+
+		ListCatalogueService catalogueService = new ListCatalogueService( );
+		ListCollaboratorService listCollaboratorService = new ListCollaboratorService( );
+		TeamListService teamListService = new TeamListService( );
+		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
+
+		String email = authorizationService
+				.session( )
+				.get( )
+				.authenticatedUser( )
+				.email( )
+				.toString( );
+
+		Collaborator currentColaborator = listCollaboratorService.getCollaboratorByEmail( email );
+		Set<Team> teams = teamListService.getACollaboratorTeams( currentColaborator );
+		return catalogueService.requestableCataloguesByTeams( teams );
+	}
+
+	public List<ServiceDTO> getServiceDTOByCatalogue(CatalogueDTO chosenCatalogueDTO){
+		ServiceListService servicesService = new ServiceListService( );
+		return servicesService.getServiceDTOListByCatalogue( new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity) );
+	}
+
+	public FormDTO getFormDTOByID(String ID){
+		return new FormService().getFormFromID(FormID.valueOf(ID)).toDTO();
 	}
 
 }
