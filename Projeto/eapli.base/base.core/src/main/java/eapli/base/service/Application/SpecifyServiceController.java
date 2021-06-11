@@ -136,7 +136,7 @@ public class SpecifyServiceController {
         TaskListService taskListService = new TaskListService();
         Task starterTask= taskListService.getTaskByStringList(tasksID);
         PersistenceContext.repositories().tasks().save(starterTask);
-        Workflow workflow = new Workflow(GenerateRandomStringID.generateRandomStringID(),new Date(),starterTask);
+        Workflow workflow = new Workflow(new Date(),starterTask);
         Service service = serviceListService.getServiceByID(serviceDTO.id);
         service.setWorkflow(workflow);
         serviceRepository.save(service);

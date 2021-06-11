@@ -10,22 +10,25 @@ public class FeedbackDTO {
     public TicketDTO ticketDTO;
     public int feedbackValue;
     public String email;
-    public LocalDate localDate;
 
-    public FeedbackDTO(float id, TicketDTO ticketDTO, int feedbackValue, String email, LocalDate localDate) {
+
+    public FeedbackDTO(float id, TicketDTO ticketDTO, int feedbackValue, String email) {
         this.id = id;
         this.ticketDTO = ticketDTO;
         this.feedbackValue = feedbackValue;
         this.email = email;
-        this.localDate = localDate;
     }
 
 
-    public FeedbackDTO(TicketDTO ticketDTO, int feedbackValue, String email, LocalDate localDate) {
+    public FeedbackDTO(TicketDTO ticketDTO, int feedbackValue, String email) {
         this.ticketDTO = ticketDTO;
         this.feedbackValue = feedbackValue;
         this.email = email;
-        this.localDate = localDate;
+    }
+
+    public FeedbackDTO(TicketDTO ticketDTO, int feedbackValue) {
+        this.ticketDTO = ticketDTO;
+        this.feedbackValue = feedbackValue;
     }
 
     @Override
@@ -35,7 +38,6 @@ public class FeedbackDTO {
                 ", ticketDTO=" + ticketDTO +
                 ", feedbackValue=" + feedbackValue +
                 ", email='" + email + '\'' +
-                ", localDate=" + localDate +
                 '}';
     }
 }

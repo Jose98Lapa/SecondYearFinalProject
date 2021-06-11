@@ -49,7 +49,8 @@ public class CatalogueDTO {
 
 
     public CatalogueDTO(Long identity, String catalogTitle, String icon,
-                        String briefDesc, String completeDesc, Set<Collaborator> responsableCollabs, Set<Team> accessCriteria, Criticality nivelCriticality) {
+                        String briefDesc, String completeDesc, Set<Collaborator> responsableCollabs,
+                        Set<Team> accessCriteria, Criticality nivelCriticality) {
 
         this.identity = identity;
         this.catalogTitle = catalogTitle;

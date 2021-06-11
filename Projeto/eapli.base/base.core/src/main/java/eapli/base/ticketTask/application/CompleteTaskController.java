@@ -8,15 +8,11 @@ import eapli.base.form.application.FormController;
 import eapli.base.form.domain.Form;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.task.domain.ManualTask;
-import eapli.base.ticket.DTO.TicketDTO;
-import eapli.base.ticket.application.CreateTicketController;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
-import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketManualTask;
-import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -58,29 +54,42 @@ public class CompleteTaskController {
     public void updateTaskWithForm(Set<AttributeDTO> attributeSet){
         ManualTask manualTask = (ManualTask) this.currentWorkingTask.mainReference();
         FormDTO manualTaskFormDTO = manualTask.form().toDTO();
-        FormDTO formDTO = new FormDTO(manualTaskFormDTO.script, GenerateRandomStringID.generateRandomStringID(),"Formulario da Atividade "+ manualTaskFormDTO.id, attributeSet);
+        FormDTO formDTO = new FormDTO(manualTaskFormDTO.script, GenerateRandomStringID.generateRandomStringID(),"Formulario da Atividade "+ currentWorkingTask.identity(), attributeSet);
         FormController formController = new FormController();
         formController.registerForm(formDTO);
         Form form = formController.save();
         currentWorkingTask.updateForm(form);
-        this.ticketTaskService.updateTask(currentWorkingTask);
-        CreateTaskController createTaskController = new CreateTaskController();
-        currentWorkingTask.completeTask();
-        if (currentWorkingTask.mainReference().afterTask()==null)
-            workingTicket.endTicket();
-        else
-            workingTicket.pendingExecutingTicket();
-        ticketRepository.save(workingTicket);
-        createTaskController.registerTask(currentWorkingTask);
     }
 
     public void approveOrDisapproveTicket(boolean approve){
         if (approve){
             workingTicket.approveTicket();
+            concludeTicket();
         }else{
             workingTicket.disapproveTicket();
+            ticketRepository.save(workingTicket);
+            completeTask();
         }
+    }
+
+    public void concludeTicket(){
+        if (currentWorkingTask.mainReference().afterTask()==null)
+            workingTicket.endTicket();
+        else
+            workingTicket.pendingExecutingTicket();
         ticketRepository.save(workingTicket);
+        this.ticketTaskService.updateTask(currentWorkingTask);
+        completeTask();
+    }
+
+    private void completeTask(){
+        CreateTaskController createTaskController = new CreateTaskController();
+        currentWorkingTask.completeTask();
+        createTaskController.registerTicketTask(currentWorkingTask);
+    }
+
+    public List<FormDTO> getPreviousTicketTasksForm(){
+        return ticketTaskService.getPreviousTicketTasksForm(workingTicket);
     }
 
 

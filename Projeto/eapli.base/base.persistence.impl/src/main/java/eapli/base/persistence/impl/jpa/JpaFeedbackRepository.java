@@ -19,12 +19,5 @@ public class JpaFeedbackRepository extends JpaAutoTxRepository<Feedback, Long, L
         super(persistenceUnitName, "Feedback");
     }
 
-    @Override
-    public List<Feedback> getFeedbackBetweenDatesFromACliente(String client, LocalDate localDateStart, LocalDate localDateEnd) {
-        final TypedQuery<Feedback> q = createQuery("SELECT e FROM eapli.base.feedback.domain.Feedback e WHERE e.clientEmail=:id and e.dateCreated between :localDateStart and :localDateEnd ", Feedback.class);
-        q.setParameter("id",client);
-        q.setParameter("localDateStart",localDateStart);
-        q.setParameter("localDateEnd",localDateEnd);
-        return q.getResultList();
-    }
+
 }

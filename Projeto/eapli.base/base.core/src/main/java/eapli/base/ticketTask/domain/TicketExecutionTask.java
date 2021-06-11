@@ -21,9 +21,9 @@ public class TicketExecutionTask extends TicketManualTask implements DTOable< Ti
 
 	}
 
-	public TicketExecutionTask (TicketTaskID ticketTaskID, Transition transition, Task mainReference,
+	public TicketExecutionTask (Transition transition, Task mainReference,
 								Form form, Collaborator executedBy, LocalDate deadline ) {
-		super( ticketTaskID, transition, mainReference , form, deadline);
+		super(transition, mainReference , form, deadline);
 		this.executedBy = executedBy;
 	}
 

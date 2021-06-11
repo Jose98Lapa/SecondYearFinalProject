@@ -6,18 +6,16 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.DomainEntity;
 
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public abstract class TicketTask  implements DomainEntity< TicketTaskID >, AggregateRoot< TicketTaskID >, Serializable {
+public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot< Long >, Serializable {
 
-	@EmbeddedId
-	protected TicketTaskID ticketTaskID;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long ticketTaskID;
 
 	@Embedded
 	private Transition transition;
@@ -30,15 +28,14 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 	protected TicketTask ( ) {
 	}
 
-	public TicketTask ( TicketTaskID ticketTaskID, Transition transition, Task mainReference ) {
-		this.ticketTaskID = ticketTaskID;
+	public TicketTask ( Transition transition, Task mainReference ) {
 		this.transition = transition;
 		this.status = "INCOMPLETE";
 		this.mainReference = mainReference;
 	}
 
 	@Override
-	public TicketTaskID identity ( ) {
+	public Long identity ( ) {
 		return ticketTaskID;
 	}
 
@@ -73,6 +70,19 @@ public abstract class TicketTask  implements DomainEntity< TicketTaskID >, Aggre
 		if (transition==null)
 			this.transition = new Transition();
 		this.transition.setPreviousTask(beforeTask);
+	}
+
+	public TicketTask getFirstIncompleteTask(){
+		return getFirstIncompleteTask(this);
+	}
+
+	private TicketTask getFirstIncompleteTask(TicketTask ticketTask){
+		if (ticketTask.transition==null) return ticketTask;
+		if (ticketTask.status.equals("INCOMPLETE"))
+			return ticketTask;
+		else
+			return getFirstIncompleteTask(ticketTask.transition().nextTask());
+
 	}
 
 }

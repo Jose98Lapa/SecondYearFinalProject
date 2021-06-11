@@ -4,7 +4,7 @@
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
-            <iconCatalogo>http://192.168.1.92/bootstrap.jpg</iconCatalogo>
+            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
             <tituloCatalogoC>Restauros</tituloCatalogoC>
             <descricaoBreveC>descricao breve restauros</descricaoBreveC>
             <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
@@ -15,7 +15,7 @@
             <Formulario>
                 <fId>1</fId>
                 <fnome>Formulario Bicicleta</fnome>
-                <fscript>http://192.168.1.92/bootstrap.txt</fscript>
+                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
                 <Atributo>
                     <Alabel>Opcao</Alabel>
                     <Adescricao>Qual o tipo</Adescricao>
@@ -30,7 +30,7 @@
             <ServicoID>1</ServicoID>
             <keyWords>bicileta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
-            <iconServico>http://192.168.1.92/bootstrap.jpg</iconServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Restauro Bicileta</tituloServico>
             <catalogoS>1</catalogoS>
         </Servico>
@@ -39,7 +39,7 @@
             <Formulario>
                 <fId>2</fId>
                 <fnome>Formulario Porta</fnome>
-                <fscript>http://192.168.1.92/bootstrap.txt</fscript>
+                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
                 <Atributo>
                     <Alabel>Opcao</Alabel>
                     <Adescricao>Qual o tipo</Adescricao>
@@ -54,7 +54,7 @@
             <ServicoID>2</ServicoID>
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
-            <iconServico>http://192.168.1.92/bootstrap.jpg</iconServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Restauro Porta</tituloServico>
             <catalogoS>1</catalogoS>
         </Servico>
@@ -93,7 +93,7 @@
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
-            <iconCatalogo>http://192.168.1.92/bootstrap.jpg</iconCatalogo>
+            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
             <tituloCatalogoC>Instalações</tituloCatalogoC>
             <descricaoBreveC>descricao breve instalações</descricaoBreveC>
             <descricaoCompletaC>Catalogo de instalações</descricaoCompletaC>
@@ -104,7 +104,7 @@
             <Formulario>
                 <fId>3</fId>
                 <fnome>Formulario OS</fnome>
-                <fscript>http://192.168.1.92/bootstrap.txt</fscript>
+                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
                 <Atributo>
                     <Alabel>Opcao</Alabel>
                     <Adescricao>Qual o OS</Adescricao>
@@ -119,7 +119,7 @@
             <ServicoID>3</ServicoID>
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
-            <iconServico>http://192.168.1.92/bootstrap.jpg</iconServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Instalacao OS</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
@@ -128,7 +128,7 @@
             <Formulario>
                 <fId>4</fId>
                 <fnome>Formulario Computador</fnome>
-                <fscript>http://192.168.1.92/bootstrap.txt</fscript>
+                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
                 <Atributo>
                     <Alabel>Opcao</Alabel>
                     <Adescricao>Qual o Computador</Adescricao>
@@ -143,7 +143,7 @@
             <ServicoID>4</ServicoID>
             <keyWords>porta</keyWords>
             <statusServico>INCOMPLETO</statusServico>
-            <iconServico>http://192.168.1.92/bootstrap.jpg</iconServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Instalacao Computador</tituloServico>
             <catalogoS>2</catalogoS>
         </Servico>
