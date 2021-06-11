@@ -54,9 +54,8 @@ public class RequestServiceUI extends AbstractUI {
 		int selectedCatalogueIndex = Utils.showAndSelectIndex( requestableCatalogues, "Escolha o catalogo que deseja" );
 		CatalogueDTO chosenCatalogueDTO = requestableCatalogues.get( selectedCatalogueIndex );
 
-		ServiceListService servicesService = new ServiceListService( );
 		List< ServiceDTO > requestableServices =
-				servicesService.getServiceDTOListByCatalogue( new CatalogueDTOParser( ).valueOf( chosenCatalogueDTO ) );
+				ticketController.getServicesByCatalogue( chosenCatalogueDTO );
 
 		int selectedServiceIndex = Utils.showAndSelectIndex( requestableServices, "Escolha o serviço que deseja" );
 		ServiceDTO selectedService = requestableServices.get( selectedServiceIndex );
