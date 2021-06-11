@@ -9,10 +9,7 @@ import eapli.base.task.domain.AutomaticTask;
 import eapli.base.task.domain.ExecutionTask;
 import eapli.base.task.domain.Task;
 import eapli.base.ticket.DTO.TicketDTO;
-import eapli.base.ticket.application.CreateTicketController;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketID;
-import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
@@ -69,7 +66,7 @@ public class TicketTaskService {
     }
 
     public TicketTask getTicketTaskByID(String id){
-        Optional<TicketTask> optionalTicketTask = ticketTaskRepository.ofIdentity(TicketTaskID.valueOf(id));
+        Optional<TicketTask> optionalTicketTask = ticketTaskRepository.ofIdentity(Long.parseLong(id));
         if (optionalTicketTask.isEmpty())
             throw new IllegalArgumentException("ID invalido");
         return optionalTicketTask.get();
@@ -87,34 +84,28 @@ public class TicketTaskService {
         CreateTaskController ticketTaskController = new CreateTaskController();
         if (starter instanceof ApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter, ((ApprovalTask) starter).form(),
                     LocalDate.parse(deadline));
-            ticketTaskController.registerTask(approvalTask);
-            return approvalTask;
+            return ticketTaskController.registerTicketTask(approvalTask);
         }
 
         if (starter instanceof ExecutionTask) {
             TicketExecutionTask executionTask = new TicketExecutionTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter,
                     ((ExecutionTask) starter).form(),
                     null,
                     LocalDate.parse(deadline));
 
-            ticketTaskController.registerTask(executionTask);
-            return executionTask;
+            return ticketTaskController.registerTicketTask(executionTask);
         }
 
         if (starter instanceof AutomaticTask) {
             TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-                    new TicketTaskID(starter.identity().toString()),
                     new Transition(null, null),starter,
                     ((AutomaticTask) starter).scriptPath()
             );
 
-            ticketTaskController.registerTask(automaticTask);
-            return automaticTask;
+            return ticketTaskController.registerTicketTask(automaticTask);
         }
 
         return null;
@@ -134,7 +125,7 @@ public class TicketTaskService {
         TicketTask temp = createTicketTask(deadline,ticketTask.mainReference().afterTask());
         ticketTask.addAfterTask(temp);
         temp.addBeforeTask(ticketTask);
-        new CreateTaskController().registerTask(temp);
+        new CreateTaskController().registerTicketTask(temp);
 
     }
 
@@ -153,9 +144,9 @@ public class TicketTaskService {
                 TicketTask ticketTask = ticket.workflow().starterTask();
                 TicketExecutionTask ticketExecutionTask;
                 if (ticketTask.getClass().equals(TicketApprovalTask.class))
-                    ticketExecutionTask= (TicketExecutionTask) ticketTask.transition().nextTask();
+                    ticketExecutionTask= (TicketExecutionTask) ticketTask.transition().nextTask().getFirstIncompleteTask();
                 else
-                    ticketExecutionTask=(TicketExecutionTask) ticketTask;
+                    ticketExecutionTask=(TicketExecutionTask) ticketTask.getFirstIncompleteTask();
                 ticketExecutionTask.setExecutedBy(collaborator);
             }
             ticketRepository.save(ticket);

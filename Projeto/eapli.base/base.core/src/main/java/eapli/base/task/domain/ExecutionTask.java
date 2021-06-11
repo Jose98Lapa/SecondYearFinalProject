@@ -5,9 +5,7 @@ import eapli.base.task.DTO.ExecutionTaskDTO;
 import eapli.base.team.domain.Team;
 import eapli.framework.representations.dto.DTOable;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,8 @@ import java.util.List;
 @Entity
 public class ExecutionTask extends ManualTask implements DTOable<ExecutionTaskDTO> , Serializable {
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name="EXECUTION_TASK_TEAM", joinColumns = @JoinColumn(name="TASK_ID"))
     private List<Team> executingTeams;
 
     public ExecutionTask( Form form, List< Team > necessaryTeamsForExecution) {

@@ -4,17 +4,16 @@ import eapli.base.task.domain.Task;
 
 import eapli.framework.domain.model.DomainEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Workflow implements DomainEntity< String >, Serializable {
+public class Workflow implements DomainEntity< Long >, Serializable {
 
 	@Id
-	private String workflowID;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long workflowID;
 
 	private Date startingDate;
 
@@ -24,8 +23,7 @@ public class Workflow implements DomainEntity< String >, Serializable {
 	protected Workflow ( ) {
 	}
 
-	public Workflow ( String workflowID, Date startingDate, Task starter ) {
-		setWorkflowID( workflowID );
+	public Workflow ( Date startingDate, Task starter ) {
 		setStartingDate( startingDate );
 		setStarterTask( starter );
 	}
@@ -36,13 +34,10 @@ public class Workflow implements DomainEntity< String >, Serializable {
 	}
 
 	@Override
-	public String identity ( ) {
+	public Long identity ( ) {
 		return workflowID;
 	}
 
-	public void setWorkflowID ( String workflowID ) {
-		this.workflowID = workflowID;
-	}
 
 	public Date startingDate ( ) {
 		return startingDate;
