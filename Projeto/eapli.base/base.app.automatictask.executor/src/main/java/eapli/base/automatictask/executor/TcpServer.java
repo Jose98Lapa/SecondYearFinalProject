@@ -6,30 +6,41 @@ import com.jcraft.jsch.SftpException;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.SFTPClient;
 import eapli.base.utils.SplitInfo;
-import org.apache.commons.lang3.ArrayUtils;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 class TcpServer {
 
-    static ServerSocket sock;
+    static SSLServerSocket sock;
 
     public static void main(String[] args) throws Exception {
         Socket cliSock;
 
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", "server.keystore");
+        System.setProperty("javax.net.ssl.trustStorePassword", "password");
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore", "server.keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "password");
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         try {
-            sock = new ServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sock = (SSLServerSocket) sslF.createServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sock.setNeedClientAuth(true);
         } catch (IOException ex) {
-            System.err.println("Failed to open server socket");
+            System.out.println("Server failed to open local port " + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
             System.exit(1);
         }
+
 
         while (true) {
             cliSock = sock.accept();
