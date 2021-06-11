@@ -10,7 +10,6 @@ import eapli.base.task.domain.ExecutionTask;
 import eapli.base.team.domain.Team;
 import eapli.base.team.repositories.TeamRepository;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
