@@ -1,4 +1,4 @@
-grammar gramatica_atividade_automatica;
+grammar GramaticaAtividadeAutomatica;
 
 /*
  *   Lexico
@@ -39,15 +39,14 @@ expressao_atribuicao: identidade OPERADORATRIBUICAO expr
    ;
 */
 
-expr: expr op ='+' expr
-    | expr op ='-' expr
-    | expr op ='/' expr
-    | expr op ='*' expr
-    | atom = tipo_dados;
+expr: left=expr op=('*'|'/') right=expr # opExprMulDiv
+    | left=expr op=('+'|'-') right=expr # opExprSumDif
+    | atom = tipo_dados #atomExpr
+    ;
 
-tipo_dados: identidade
-   | integer
-   | floate
+tipo_dados: identidade #tp_ident
+   | integer #tp_integer
+   | floate  #tp_float
    ;
 
 integer

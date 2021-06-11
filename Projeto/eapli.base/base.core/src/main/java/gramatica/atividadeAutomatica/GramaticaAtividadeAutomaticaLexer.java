@@ -1,12 +1,16 @@
-package gramatica.atividade.automatica;// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/resources\gramatica_atividade_automatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+package gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class gramatica_atividade_automaticaLexer extends Lexer {
+public class GramaticaAtividadeAutomaticaLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.9.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -42,7 +46,7 @@ public class gramatica_atividade_automaticaLexer extends Lexer {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'BEGIN'", "'END'", "'\"'", "'FIND'", "'['", "']'", "'where'", 
-			"'('", "','", "')'", "'+'", "'-'", "'/'", "'*'", null, null, null, null, 
+			"'('", "','", "')'", "'*'", "'/'", "'+'", "'-'", null, null, null, null, 
 			"'->'", "'se'", "'entao'", "'senao'", "'es'", null, "'ELEMENTO'", "'XML'", 
 			"'LMX'", "'ENVIAR_EMAIL'", "'ATUALIZAR'"
 		};
@@ -93,13 +97,13 @@ public class gramatica_atividade_automaticaLexer extends Lexer {
 	}
 
 
-	public gramatica_atividade_automaticaLexer(CharStream input) {
+	public GramaticaAtividadeAutomaticaLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "gramatica/atividade/automatica/gramatica_atividade_automatica.g4"; }
+	public String getGrammarFileName() { return "GramaticaAtividadeAutomatica.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -160,8 +164,8 @@ public class gramatica_atividade_automaticaLexer extends Lexer {
 		"[\\\7$\2\2\\\b\3\2\2\2]^\7H\2\2^_\7K\2\2_`\7P\2\2`a\7F\2\2a\n\3\2\2\2"+
 		"bc\7]\2\2c\f\3\2\2\2de\7_\2\2e\16\3\2\2\2fg\7y\2\2gh\7j\2\2hi\7g\2\2i"+
 		"j\7t\2\2jk\7g\2\2k\20\3\2\2\2lm\7*\2\2m\22\3\2\2\2no\7.\2\2o\24\3\2\2"+
-		"\2pq\7+\2\2q\26\3\2\2\2rs\7-\2\2s\30\3\2\2\2tu\7/\2\2u\32\3\2\2\2vw\7"+
-		"\61\2\2w\34\3\2\2\2xy\7,\2\2y\36\3\2\2\2z{\t\2\2\2{ \3\2\2\2|}\t\3\2\2"+
+		"\2pq\7+\2\2q\26\3\2\2\2rs\7,\2\2s\30\3\2\2\2tu\7\61\2\2u\32\3\2\2\2vw"+
+		"\7-\2\2w\34\3\2\2\2xy\7/\2\2y\36\3\2\2\2z{\t\2\2\2{ \3\2\2\2|}\t\3\2\2"+
 		"}\"\3\2\2\2~\177\t\4\2\2\177$\3\2\2\2\u0080\u0081\7&\2\2\u0081\u0083\5"+
 		"G$\2\u0082\u0084\t\5\2\2\u0083\u0082\3\2\2\2\u0083\u0084\3\2\2\2\u0084"+
 		"\u0089\3\2\2\2\u0085\u0088\5G$\2\u0086\u0088\5C\"\2\u0087\u0085\3\2\2"+
