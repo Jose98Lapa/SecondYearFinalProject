@@ -59,7 +59,6 @@ public class CompleteTaskController {
         formController.registerForm(formDTO);
         Form form = formController.save();
         currentWorkingTask.updateForm(form);
-        this.ticketTaskService.updateTask(currentWorkingTask);
     }
 
     public void approveOrDisapproveTicket(boolean approve){
@@ -69,6 +68,7 @@ public class CompleteTaskController {
         }else{
             workingTicket.disapproveTicket();
             ticketRepository.save(workingTicket);
+            completeTask();
         }
     }
 
@@ -78,6 +78,11 @@ public class CompleteTaskController {
         else
             workingTicket.pendingExecutingTicket();
         ticketRepository.save(workingTicket);
+        this.ticketTaskService.updateTask(currentWorkingTask);
+        completeTask();
+    }
+
+    private void completeTask(){
         CreateTaskController createTaskController = new CreateTaskController();
         currentWorkingTask.completeTask();
         createTaskController.registerTicketTask(currentWorkingTask);
