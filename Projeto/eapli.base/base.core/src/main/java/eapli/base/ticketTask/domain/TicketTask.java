@@ -77,7 +77,7 @@ public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot
 	}
 
 	private TicketTask getFirstIncompleteTask(TicketTask ticketTask){
-		if (ticketTask.transition==null) return null;
+		if (ticketTask.transition==null) return ticketTask;
 		if (ticketTask.status.equals("INCOMPLETE"))
 			return ticketTask;
 		else

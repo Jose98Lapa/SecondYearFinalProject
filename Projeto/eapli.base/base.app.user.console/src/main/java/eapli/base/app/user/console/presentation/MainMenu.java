@@ -25,6 +25,7 @@ package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.user.console.presentation.checkUserTickets.CheckUserTickersUI;
 import eapli.base.app.user.console.presentation.completeTaskUI.CompleteTaskUI;
+import eapli.base.app.user.console.presentation.feedbackUI.ReviewTicketUI;
 import eapli.base.app.user.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
@@ -62,6 +63,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int REIVINDICAR_TAREFA = 3;
     private static final int COMPLETAR_TAREFA = 4;
     private static final int CHECKTICKETS = 5;
+    private static final int REVIEWTICKET = 6;
 
 
     private final AuthorizationService authz =
@@ -96,6 +98,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(REIVINDICAR_TAREFA,builderRedeemTaskMenu());
         mainMenu.addSubMenu(COMPLETAR_TAREFA,builderCompleteTaskMenu());
         mainMenu.addSubMenu(CHECKTICKETS,builderCheckUserTickets());
+        mainMenu.addSubMenu(REVIEWTICKET,builderReviewTicketMenu());
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
@@ -121,7 +124,7 @@ class MainMenu extends ClientUserBaseUI {
 
     private Menu builderRedeemTaskMenu() {
         final Menu redeemTaskMenu = new Menu("Reivindicar Tarefa");
-        redeemTaskMenu.addItem(2, "Reivindicar Tarefa", () -> new RedeemTaskUI().show());
+        redeemTaskMenu.addItem(1, "Reivindicar Tarefa", () -> new RedeemTaskUI().show());
         redeemTaskMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return redeemTaskMenu;
     }
@@ -131,6 +134,13 @@ class MainMenu extends ClientUserBaseUI {
         visualizar_tickets.addItem(1, "Visualizar Tickets", () -> new CheckUserTickersUI().show());
         visualizar_tickets.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return visualizar_tickets;
+    }
+
+    private Menu builderReviewTicketMenu(){
+        final Menu reviewTicketMenu = new Menu("Feedback");
+        reviewTicketMenu.addItem(1,"Dar feedback ao Ticket",()->new ReviewTicketUI().show());
+        reviewTicketMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
+        return reviewTicketMenu;
     }
 
 }

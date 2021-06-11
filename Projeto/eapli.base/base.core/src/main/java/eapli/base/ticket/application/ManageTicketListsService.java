@@ -23,14 +23,14 @@ public class ManageTicketListsService {
             String str = "";
             if(ticket.status().equals(TicketStatus.valueOf("CONCLUDED"))){
                 str=ticket.displayInfoForList();
-                line = ansi().eraseScreen().fg(GREEN).a(str).reset();
+                line = ansi().fg(GREEN).a(str).reset();
             }else{
                 str=ticket.displayInfoForList();
-                line = ansi().eraseScreen().fg(WHITE).a(str).reset();
+                line = ansi().fg(WHITE).a(str).reset();
             }
             toReturn.add(line.toString());
         }
-        return null;
+        return toReturn;
 
     }
 

@@ -9,7 +9,9 @@ public class CheckUserTickersUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        theController.loadInformation();
+        for (String str: theController.loadInformation()) {
+            System.out.println(str);
+        }
         return true;
     }
 
