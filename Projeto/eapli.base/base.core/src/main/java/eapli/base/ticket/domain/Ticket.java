@@ -196,7 +196,6 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     }
 
     public String displayInfoForList() {
-        return "Ticket" + "solicitedOn=" + solicitedOn + ", deadLine=" + deadLine + ", completedOn=" + completedOn + ", ID='" + ID + '\'' + ", status=" + status + ", service=" + service.toDTO().title +
-                '}';
+        return "Ticket -> " + "Solicited on " + solicitedOn + ", Deadline " + deadLine + ", Completed on " + completedOn + ", ID '" + ID + '\'' + ", status " + status + ", service " + service.toDTO().title;
     }
 }
