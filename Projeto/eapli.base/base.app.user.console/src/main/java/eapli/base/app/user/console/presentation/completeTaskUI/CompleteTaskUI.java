@@ -24,7 +24,7 @@ public class CompleteTaskUI extends AbstractUI {
         List<TicketApprovalTaskDTO> list = completeTaskController.getListOfTicketApprovalTasks();
         int i;
         for (i=0;i<list.size();i++){
-            System.out.println( "-------------------------------- | Index : " + i +1 + " | -------------------------------------------" );
+            System.out.println( "-------------------------------- | Index : " + (i +1) + " | -------------------------------------------" );
             System.out.println(list.get(i));
         }
 
@@ -38,7 +38,7 @@ public class CompleteTaskUI extends AbstractUI {
         List<TicketExecutionTaskDTO> list1 = completeTaskController.getListOfTicketExecutionTasks();
 
         for (i=breakpoint;i<list1.size()+breakpoint;i++){
-            System.out.println( "-------------------------------- | Index : " + i + 1 + " | -------------------------------------------" );
+            System.out.println( "-------------------------------- | Index : " + (i + 1) + " | -------------------------------------------" );
             System.out.println(list1.get(i));
         }
 
@@ -59,11 +59,27 @@ public class CompleteTaskUI extends AbstractUI {
 
         completeTaskController.getTickedByTask(ticketTaskID);
 
-        FormDTO ticketForm = completeTaskController.getTicketsFormDTO();
+        if (Console.readBoolean("Deseja ver a informação anterior deste ticket")){
+            FormDTO ticketForm = completeTaskController.getTicketsFormDTO();
 
-        for (AttributeDTO atrDTO : ticketForm.atrDTO) {
-            System.out.println(atrDTO);
+            System.out.println("Formulário do Ticket" +ticketForm.nome);
+
+            for (AttributeDTO atrDTO : ticketForm.atrDTO) {
+                System.out.println(atrDTO);
+            }
+
+            for (FormDTO formDTO : completeTaskController.getPreviousTicketTasksForm()){
+                System.out.println("Titulo Do Form" + formDTO.nome);
+                for (AttributeDTO attributeDTO:formDTO.atrDTO){
+                    System.out.println(attributeDTO);
+                }
+
+            }
+
+
         }
+
+
 
 
         FormDTO form = completeTaskController.getTaskFormDTO();
@@ -91,6 +107,8 @@ public class CompleteTaskUI extends AbstractUI {
 
         if (resposta) {
             completeTaskController.approveOrDisapproveTicket(Console.readBoolean("Deseja aprovar?"));
+        }else{
+            completeTaskController.concludeTicket();
         }
 
 
