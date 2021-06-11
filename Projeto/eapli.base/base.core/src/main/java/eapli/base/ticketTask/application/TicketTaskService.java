@@ -41,7 +41,7 @@ public class TicketTaskService {
         for (Ticket ticket: ticketRepository.getPendingAssignedApprovalTickets()){
             if (ticket.workflow().starterTask().getClass()==TicketApprovalTask.class){
                 TicketApprovalTask ticketApprovalTask = (TicketApprovalTask) ticket.workflow().starterTask();
-                if (ticketApprovalTask.collaborator().equals(collaborator))
+                if (ticketApprovalTask.collaborator() != null && ticketApprovalTask.collaborator().equals(collaborator))
                     toReturn.add(ticketApprovalTask.toDTO());
             }
         }

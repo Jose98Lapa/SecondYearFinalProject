@@ -83,7 +83,7 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
         q.setParameter("id",client);
         q.setParameter("localDateStart",localDateStart);
         q.setParameter("localDateEnd",localDateEnd);
-        q.setParameter("status",TicketStatus.valueOf("COMPLETED"));
+        q.setParameter("status",TicketStatus.valueOf("CONCLUDED"));
         return q.getResultList();
     }
 }
