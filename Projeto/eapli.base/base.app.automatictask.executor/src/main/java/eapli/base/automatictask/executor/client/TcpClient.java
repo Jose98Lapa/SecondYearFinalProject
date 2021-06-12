@@ -139,7 +139,7 @@ class TcpClient {
                     cycle = false;
                     break;
                 case 20:
-                    tcpExecuterClient.executeAutomaticTask("");
+                    tcpExecuterClient.executeAutomaticTask("bootstrap.txt");
                     break;
                 default:
                     System.out.println("Invalid Option");
