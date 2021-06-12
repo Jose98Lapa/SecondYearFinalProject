@@ -2,11 +2,10 @@ package eapli.base.ticket.application;
 
 import eapli.base.Application;
 import eapli.base.dasboard.application.TcpClient;
-import eapli.base.ticket.domain.Ticket;
 
 public class TicketService {
 
-	public static boolean sendToWorkflowServer ( Ticket ticket ) {
+	public static boolean sendToWorkflowServer ( String ticketID ) {
 
 		boolean sentSuccessfully = false;
 

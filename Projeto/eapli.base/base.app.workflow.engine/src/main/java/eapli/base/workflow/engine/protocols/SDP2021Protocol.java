@@ -2,7 +2,7 @@ package eapli.base.workflow.engine.protocols;
 
 public interface SDP2021Protocol {
 
-	public boolean read ( );
+	public byte[] read ( );
 
-	public boolean write ( );
+	public byte[] write ( );
 }
