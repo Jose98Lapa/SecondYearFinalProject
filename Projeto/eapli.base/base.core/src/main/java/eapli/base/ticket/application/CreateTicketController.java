@@ -23,12 +23,10 @@ import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.builder.TicketBuilder;
 import eapli.base.ticket.domain.Constants;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketWorkflow;
-import eapli.base.ticketTask.application.TicketTaskService;
+import eapli.base.ticket.repository.TicketRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -36,11 +34,12 @@ import java.util.Set;
 public class CreateTicketController {
 
 	private final TicketBuilder builder;
-	private Service service;
+	private final TicketRepository ticketRepository;
 
 	public CreateTicketController ( ) {
 
 		this.builder = new TicketBuilder( );
+		ticketRepository = PersistenceContext.repositories( ).tickets( );
 	}
 
 	public List< CatalogueDTO > requestableCatalogues ( ) {
@@ -66,13 +65,15 @@ public class CreateTicketController {
 	public List< ServiceDTO > getServicesByCatalogue ( CatalogueDTO chosenCatalogueDTO ) {
 
 		ServiceListService servicesService = new ServiceListService( );
-		Catalogue chosenCatalogue = new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity);
-		return servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+		Catalogue chosenCatalogue = new CatalogueDTOParser( ).valueOf( chosenCatalogueDTO );
+		List< ServiceDTO > serviceDTOList = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+
+		return serviceDTOList;
 	}
 
 	public void selectService ( ServiceDTO selectedService ) {
 
-		this.service = new ServiceListService().getServiceByID(selectedService.id);
+		Service service = new ServiceDTOParser( ).valueOf( selectedService );
 		this.builder.withService( service );
 	}
 
@@ -92,15 +93,14 @@ public class CreateTicketController {
 				.withPossibleFile( ticketDTO.file )
 				.withUrgency( ticketDTO.urgency )
 				.requestedBy( ticketDTO.requestedBy )
-				.withWorkFlow(new TicketWorkflow(LocalDate.now(),new TicketTaskService().createTicketTask(ticketDTO.deadLine,service.workflow().starterTask())))
 				.build( );
 
-		//return TicketService.sendToWorkflowServer( ticket );
-		PersistenceContext.repositories().tickets().save(ticket);
-		return true;
+		ticketRepository.save( ticket );
+
+		return TicketService.sendToWorkflowServer( ticket.identity() );
 	}
 
-
+	//TODO: Devia estar no FormController
 	public FormDTO getFormDTOByID ( String ID ) {
 
 		return ( new FormService( ).getFormFromID( FormID.valueOf( ID ) ).toDTO( ) );
