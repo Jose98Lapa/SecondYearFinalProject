@@ -56,5 +56,9 @@ public abstract class ManualTask extends Task implements Serializable {
         this.averageTimeToExecute = (averageTimeToExecute * (numberOfExecutions-1) + executionTime) / numberOfExecutions;
     }
 
+    public long averageExecutionTime(){
+        return this.averageTimeToExecute;
+    }
+
 
 }
