@@ -2,6 +2,7 @@ package eapli.base.dasboard.application;
 
 import eapli.base.Application;
 import eapli.framework.io.util.Console;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -11,6 +12,10 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.function.IntFunction;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TcpClient {
 
@@ -117,6 +122,30 @@ public class TcpClient {
 
 		return taskInfoList;
 
+	}
+
+	public boolean dispatchTicket ( String ticketID ) {
+
+		byte version = 1, code = 4, payloadSize = 0;
+		byte[] payload = ticketID.getBytes( StandardCharsets.UTF_8 );
+		payloadSize = ( byte ) payload.length;
+		byte[] headers = { version, code, payloadSize };
+		byte[] packet = buildPacket( headers, payload );
+
+		try {
+
+			sOut.write( packet );
+			byte[] response = sIn.readNBytes( 3 );
+			return response[ 1 ] == 2;
+
+		} catch ( IOException exception ) {
+			return false;
+		}
+	}
+
+	private byte[] buildPacket ( byte[] headers, byte[] payload ) {
+
+		return ArrayUtils.addAll( headers,payload );
 	}
 
 

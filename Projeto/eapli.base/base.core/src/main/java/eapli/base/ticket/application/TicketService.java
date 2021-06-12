@@ -8,13 +8,12 @@ public class TicketService {
 	public static boolean sendToWorkflowServer ( String ticketID ) {
 
 		boolean sentSuccessfully = false;
-
 		TcpClient tcpClient = new TcpClient();
+
 		tcpClient.startConnection( Application.settings().getIpWorkflow() );
-
-
-
+		sentSuccessfully = tcpClient.dispatchTicket( ticketID );
 		tcpClient.stopConnection();
+
 		return sentSuccessfully;
 	}
 
