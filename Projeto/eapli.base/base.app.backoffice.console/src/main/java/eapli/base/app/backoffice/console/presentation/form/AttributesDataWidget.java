@@ -8,15 +8,16 @@ public class AttributesDataWidget {
     private String label;
     private String tipo;
     private String regex;
-    private String id;
+    private int number;
 
     public void show() {
+
+        System.out.println( "Attribute\t" + number );
         this.nome = Console.readLine("Nome");
         this.desc = Console.readLine("Descrição");
         this.label = Console.readLine("Label");
         this.tipo = Console.readLine("Tipo");
         this.regex = Console.readLine("Regex");
-        this.id = Console.readLine("ID");
     }
 
     public String getNome() {
@@ -39,7 +40,8 @@ public class AttributesDataWidget {
         return regex;
     }
 
-    public String getId() {
-        return id;
+    public int getNumber () {
+        return number;
     }
+
 }

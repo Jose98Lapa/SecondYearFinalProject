@@ -1,9 +1,7 @@
 package eapli.base.ticket.domain;
 
-import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
-import eapli.base.service.domain.Workflow;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.application.GenerateTicketID;
 import eapli.base.ticket.builder.TicketBuilder;
@@ -11,12 +9,10 @@ import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
-import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -56,22 +52,23 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     @Transient
     private TicketBuilder builder;
 
-    private String client;
+    private String requestedBy;
 
 
     public Ticket(LocalDate solicitedOn, LocalDate deadLine,
                   TicketStatus status, AttachedFile file,
                   Urgency urgency, Service service, TicketWorkflow workflow,
-                  Form ticketForm, String client) {
+                  Form ticketForm, String requestedBy ) {
         this.solicitedOn = solicitedOn;
         this.deadLine = deadLine;
+        this.completedOn = null;
         this.status = status;
         this.file = file;
         this.urgency = urgency;
         this.service = service;
         this.workflow = workflow;
         this.ticketForm = ticketForm;
-        this.client = client;
+        this.requestedBy = requestedBy;
         this.builder = new TicketBuilder();
     }
 
@@ -114,7 +111,7 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     @Override
     public TicketDTO toDTO() {
         return new TicketDTO(solicitedOn.toString(), deadLine.toString(),
-                status.toString(), file.toString(), urgency.toString(), service.toDTO(), client, identity());
+                status.toString(), file.toString(), urgency.toString(), service.toDTO(), requestedBy, identity());
     }
 
     public TicketStatus status() {
@@ -201,5 +198,9 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
 
     public void reviewed(){
         this.status = TicketStatus.valueOf("REVIEWED");
+    }
+
+    public Urgency urgency(){
+        return this.urgency;
     }
 }

@@ -4,6 +4,8 @@ package eapli.base.ticket.DTO;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.framework.representations.dto.DTO;
 
+import java.util.UUID;
+
 @DTO
 public class TicketDTO {
 
@@ -45,6 +47,16 @@ public class TicketDTO {
 		this.requestedBy = requestedBy;
 		this.serviceDTO = serviceDTO;
 		this.id = ID;
+	}
+
+	public TicketDTO( String solicitedOn, String deadLine, String file,
+					  String urgency, ServiceDTO serviceDTO, String requestedBy ) {
+		this.solicitedOn = solicitedOn;
+		this.deadLine = deadLine;
+		this.file = file;
+		this.urgency = urgency;
+		this.requestedBy = requestedBy;
+		this.serviceDTO = serviceDTO;
 	}
 
 	@Override
