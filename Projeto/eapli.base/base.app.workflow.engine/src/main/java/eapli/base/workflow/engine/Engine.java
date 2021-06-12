@@ -220,5 +220,11 @@ public class Engine {
         return theChosenOne;
     }
 
+    public synchronized void assigningAlgorithm(){
+        List<Ticket> ticketList = PersistenceContext.repositories().tickets().getPendingTicket();
+
+
+    }
+
 
 }

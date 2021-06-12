@@ -137,6 +137,7 @@ public class TicketTaskService {
                 ticket.statusWaitingApproval();
                 TicketApprovalTask ticketTask = (TicketApprovalTask) ticket.workflow().starterTask();
                 ticketTask.setApprovedBy(collaborator); //Atribuir a aprovação ao colaborador
+                ticketTask.redeemTask();
             }else {
                 ticket.statusExecuting();
                 TicketTask ticketTask = ticket.workflow().starterTask();
@@ -146,6 +147,7 @@ public class TicketTaskService {
                 else
                     ticketExecutionTask=(TicketExecutionTask) ticketTask.getFirstIncompleteTask();
                 ticketExecutionTask.setExecutedBy(collaborator);
+                ticketExecutionTask.redeemTask();
             }
             ticketRepository.save(ticket);
             }

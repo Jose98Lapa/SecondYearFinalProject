@@ -84,7 +84,7 @@ public class Service implements AggregateRoot<ServiceID>, DTOable<ServiceDTO>, S
     protected Service() {
     }
 
-    public Catalogue catalogo() {
+    public Catalogue catalogue() {
         return this.catalogue;
     }
 

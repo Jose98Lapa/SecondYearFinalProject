@@ -3,6 +3,8 @@ package eapli.base.task.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.task.DTO.ExecutionTaskDTO;
+import eapli.base.task.domain.ApprovalTask;
+import eapli.base.task.domain.ExecutionTask;
 import eapli.base.task.domain.Task;
 import eapli.base.task.repository.TaskRepository;
 
@@ -23,6 +25,22 @@ public class TaskListService {
             currentTask.editBeforeTask(beforeTask);
             beforeTask.editAfterTask(currentTask);
             beforeTask = currentTask;
+        }
+        return starterTask;
+    }
+
+    public Task addAverageExecutionTimeToTask(Task task,long approvalTime,long executionTime, int numberOfExecutions){
+        long averageExecutionTime = executionTime/numberOfExecutions;
+        Task starterTask = task;
+        while (task.hasAfterTask()){
+            if (task.getClass()== ApprovalTask.class){
+                ((ApprovalTask) task).setAverageTimeToExecute(approvalTime);
+                averageExecutionTime = executionTime/(numberOfExecutions-1);
+            }
+            if (task.getClass()== ExecutionTask.class){
+                ((ExecutionTask) task).setAverageTimeToExecute(averageExecutionTime);
+            }
+            task = task.afterTask();
         }
         return starterTask;
 

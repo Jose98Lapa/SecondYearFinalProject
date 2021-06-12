@@ -16,4 +16,11 @@ public class CriticalityListService {
         criticidadeRepo.findAllGlobal().forEach(nivel -> niveisCriticidade.add(nivel.toDTO()));
         return niveisCriticidade;
     }
+
+
+    public long convertCriticalityValueInMinutes(String value){
+        String hour = value.substring(0,2);
+        String minute = value.substring(3);
+        return Long.parseLong(hour)*60 + Long.parseLong(minute);
+    }
 }

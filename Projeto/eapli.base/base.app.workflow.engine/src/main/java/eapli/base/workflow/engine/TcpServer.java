@@ -9,7 +9,6 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
@@ -100,7 +99,7 @@ public class TcpServer implements Runnable {
                     sendString(serviceDTO.title); //title
                     sendString(serviceDTO.icon); //icon
                     sendString(serviceDTO.briefDescription); //briefDesc
-                    sendString(ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
+                    sendString(ticket.service().catalogue().toDTO().nivelCriticidade.valorCriticidade); //criticityLvl
                 }
 
                 byte[] finalPackage = {(byte) 0, (byte) finalCode, (byte) 0, (byte) 0};

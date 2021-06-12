@@ -90,4 +90,12 @@ public class Criticality implements AggregateRoot<Long>, DTOable<CriticalityDTO>
     public void changeResolutionObjectiveTo(final ResolutionObjective newObjective){
         this.objetivoRes = newObjective;
     }
+
+    public ApprovalObjective approvalObjective(){
+        return this.objetivoAprov;
+    }
+
+    public ResolutionObjective resolutionObjective(){
+        return this.objetivoRes;
+    }
 }
