@@ -7,6 +7,7 @@ import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.function.domain.Function;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryCollaboratorRepository
@@ -25,6 +26,11 @@ public class InMemoryCollaboratorRepository
     @Override
     public Optional<Collaborator> getColaboradorByEmail(InstituionalEmail email) {
         return Optional.empty();
+    }
+
+    @Override
+    public List<Collaborator> getCollaboratorListByFunction(Function function) {
+        return null;
     }
 /*
     @Override

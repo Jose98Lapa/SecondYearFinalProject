@@ -6,6 +6,7 @@ import eapli.base.collaborator.domain.MecanographicNumber;
 import eapli.base.function.domain.Function;
 import eapli.framework.domain.repositories.DomainRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CollaboratorRepository extends DomainRepository<MecanographicNumber, Collaborator> {
@@ -19,6 +20,8 @@ public interface CollaboratorRepository extends DomainRepository<MecanographicNu
     Optional<Collaborator> ofIdentity(MecanographicNumber id);
 
     Optional<Collaborator> getColaboradorByEmail(InstituionalEmail email);
+
+    List<Collaborator> getCollaboratorListByFunction(Function function);
 
 
 }
