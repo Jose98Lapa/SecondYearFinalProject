@@ -25,7 +25,7 @@ public class TcpClient {
 	private DataInputStream sIn;
 
 
-	public void startConnection(String ip) {
+	public boolean startConnection(String ip) {
 		try {
 			serverIP = InetAddress.getByName(ip);
 		} catch (UnknownHostException ex) {
@@ -38,6 +38,7 @@ public class TcpClient {
 		} catch (IOException ex) {
 			System.out.println("Failed to establish TCP connection");
 			//System.exit(1);
+			return false;
 		}
 
 
@@ -47,9 +48,10 @@ public class TcpClient {
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Failed to establish DataOutputStream or DataInputStream");
 			//System.exit(1);
+			return false;
 		}
-
 		//System.out.println("Connection established with Worflow server\n");
+		return true;
 	}
 
 	public void stopConnection() {
