@@ -24,14 +24,17 @@ public class DashboardController {
     }
 
     public void receiveInfoFromServer(String email) {
+        boolean connected ;
         TcpClient tcpClient = new TcpClient();
-        tcpClient.startConnection(Application.settings().getIpWorkflow());
-        try {
-            dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
-            tcpClient.stopConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-            tcpClient.stopConnection();
+        connected = tcpClient.startConnection(Application.settings().getIpWorkflow());
+        if (connected) {
+            try {
+                dashboardInfo = service.prepareInformation(tcpClient.TaskInfoList(email));
+                tcpClient.stopConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+                tcpClient.stopConnection();
+            }
         }
     }
 
