@@ -91,7 +91,7 @@ public class TcpServer implements Runnable {
                 //Gets Tasks belonging to the collaborator
                 TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
                 TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-                List<TicketTask> lstTicketTask = ticketTaskRepository.getTicketsByCollaborator(collaborator);
+                List<TicketTask> lstTicketTask = ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
 
                 //Sends the Task data
                 int finalCode = 252;
@@ -113,7 +113,7 @@ public class TcpServer implements Runnable {
                     finalString = compileString(finalString, serviceDTO.title);
                     finalString = compileString(finalString, serviceDTO.icon);
                     finalString = compileString(finalString, serviceDTO.briefDescription);
-                    finalString = compileString(finalString, ticket.service().catalogo().toDTO().nivelCriticidade.valorCriticidade);
+                    finalString = compileString(finalString, ticket.service().catalogue().toDTO().nivelCriticidade.valorCriticidade);
                     sendData(finalString);
                 }
 
