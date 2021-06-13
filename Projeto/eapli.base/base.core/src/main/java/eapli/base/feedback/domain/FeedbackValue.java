@@ -42,4 +42,8 @@ public class FeedbackValue implements ValueObject, Serializable {
     public String toString() {
         return feedbackValue+"";
     }
+
+    public int value(){
+        return feedbackValue;
+    }
 }

@@ -170,15 +170,19 @@ public class TicketTaskService {
     }
 
     public long getTimeToFinishAllTasks(Collaborator collaborator) {
-        List<TicketTask> ticketTaskList = ticketTaskRepository.getTicketsByCollaborator(collaborator);
+        List<TicketTask> ticketTaskList = ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
         long time = 0;
         for (TicketTask ticketTask : ticketTaskList) {
             Task task = ticketTask.mainReference();
             if (task.getClass() == ApprovalTask.class || task.getClass() == ExecutionTask.class) {
-                time += ((ManualTask) task).averageExecutionTime();
+                time += task.maxTimeOfExecution();
             }
         }
         return time;
+    }
+
+    public List<TicketTask> getCompletedApprovalTasksByCollaborator(Collaborator collaborator){
+        return ticketTaskRepository.getCompleteApprovedTicketsByCollaborator(collaborator);
     }
 
 }

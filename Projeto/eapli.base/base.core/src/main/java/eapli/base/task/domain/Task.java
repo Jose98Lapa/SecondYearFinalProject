@@ -17,6 +17,7 @@ public abstract class Task implements DomainEntity<Long>, AggregateRoot<Long>, S
     private Task beforeTask;
     @OneToOne(cascade = CascadeType.ALL)
     private Task afterTask;
+    private long maxTimeOfExecution;
 
 
     public Task() {
@@ -55,6 +56,14 @@ public abstract class Task implements DomainEntity<Long>, AggregateRoot<Long>, S
 
     public Task previousTask() {
         return this.beforeTask;
+    }
+
+    public void addMaxTimeOfExecution(long maxTimeOfExecution){
+        this.maxTimeOfExecution = maxTimeOfExecution;
+    }
+
+    public long maxTimeOfExecution(){
+        return this.maxTimeOfExecution;
     }
 
 

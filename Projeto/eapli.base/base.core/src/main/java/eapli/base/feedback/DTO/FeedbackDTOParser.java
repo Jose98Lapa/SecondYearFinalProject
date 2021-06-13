@@ -6,6 +6,6 @@ import eapli.base.ticket.DTO.TicketDTOParser;
 
 public class FeedbackDTOParser {
     public static Feedback valueOf(FeedbackDTO feedbackDTO){
-        return new Feedback(FeedbackValue.valueOf(feedbackDTO.feedbackValue),new TicketDTOParser().valueOf(feedbackDTO.ticketDTO), feedbackDTO.email);
+        return new Feedback(FeedbackValue.valueOf(feedbackDTO.feedbackValue), feedbackDTO.email);
     }
 }

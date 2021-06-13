@@ -9,6 +9,7 @@ import eapli.base.task.domain.ApprovalTask;
 import eapli.base.task.domain.ExecutionTask;
 import eapli.base.team.domain.Team;
 import eapli.base.team.repositories.TeamRepository;
+import eapli.base.ticket.application.TicketListService;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.Urgency;
 import eapli.base.ticket.repository.TicketRepository;
@@ -236,11 +237,13 @@ public class Engine {
     private synchronized void chooseApprovalCollaborator(Ticket ticket){
         List<Collaborator> collaboratorList = new ArrayList<>();
         Map<Collaborator,Long> collaboratorAndTotalTaskTime = new LinkedHashMap<>();
+        Map<Collaborator,Float> collaboratorAndFitnessMap = new LinkedHashMap<>();
         TicketTask ticketTask = ticket.workflow().getFirstIncompleteTask();
         ApprovalTask approvalTask = (ApprovalTask) ticketTask.mainReference();
         for (Collaborator collaborator:PersistenceContext.repositories().collaborators().getCollaboratorsByRole(approvalTask.necessaryRoleForApproval())){
             collaboratorList.add(collaborator);
             collaboratorAndTotalTaskTime.put(collaborator,new TicketTaskService().getTimeToFinishAllTasks(collaborator));
+            collaboratorAndFitnessMap.put(collaborator,new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket,collaborator));
         }
         if (ticket.urgency().equals(Urgency.valueOf("urgente"))){
 

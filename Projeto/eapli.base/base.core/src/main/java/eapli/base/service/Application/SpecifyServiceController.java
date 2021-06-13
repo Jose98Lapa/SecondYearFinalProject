@@ -137,7 +137,7 @@ public class SpecifyServiceController {
         TaskListService taskListService = new TaskListService();
         Task starterTask= taskListService.getTaskByStringList(tasksID);
         CriticalityListService criticalityListService = new CriticalityListService();
-        starterTask = taskListService.addAverageExecutionTimeToTask(starterTask, criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().approvalObjective().tempoMedio()),criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().resolutionObjective().tempoMedio()), tasksID.size());
+        starterTask = taskListService.addMaxExecutionTimeToTask(starterTask, criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().approvalObjective().tempoMaximo()),criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().resolutionObjective().tempoMaximo()), tasksID.size());
         PersistenceContext.repositories().tasks().save(starterTask);
         Workflow workflow = new Workflow(new Date(),starterTask);
         service.setWorkflow(workflow);

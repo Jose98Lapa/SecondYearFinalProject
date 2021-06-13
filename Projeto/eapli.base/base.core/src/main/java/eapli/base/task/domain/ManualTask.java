@@ -17,8 +17,7 @@ public abstract class ManualTask extends Task implements Serializable {
     @OneToOne
     private Form form;
 
-    private long averageTimeToExecute;
-    private int numberOfExecutions=0;
+
 
     public ManualTask(Form form){
         super();
@@ -47,18 +46,6 @@ public abstract class ManualTask extends Task implements Serializable {
         return super.taskID;
     }
 
-    public void setAverageTimeToExecute(long averageTimeToExecute){
-        this.averageTimeToExecute = averageTimeToExecute;
-    }
-
-    public void updateAverageTimeToExecute(long executionTime){
-        numberOfExecutions++;
-        this.averageTimeToExecute = (averageTimeToExecute * (numberOfExecutions-1) + executionTime) / numberOfExecutions;
-    }
-
-    public long averageExecutionTime(){
-        return this.averageTimeToExecute;
-    }
 
 
 }

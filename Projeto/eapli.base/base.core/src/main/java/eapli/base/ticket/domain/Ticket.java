@@ -1,5 +1,6 @@
 package eapli.base.ticket.domain;
 
+import eapli.base.feedback.domain.Feedback;
 import eapli.base.form.domain.Form;
 import eapli.base.service.domain.Service;
 import eapli.base.ticket.DTO.TicketDTO;
@@ -51,6 +52,9 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
 
     @Transient
     private TicketBuilder builder;
+
+    @OneToOne
+    private Feedback feedback;
 
     private String requestedBy;
 
@@ -196,8 +200,13 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         return "Ticket -> " + "Solicited on " + solicitedOn + ", Deadline " + deadLine + ", Completed on " + completedOn + ", ID '" + ID + '\'' + ", status " + status + ", service " + service.toDTO().title;
     }
 
-    public void reviewed(){
+    public void reviewed(Feedback feedback){
         this.status = TicketStatus.valueOf("REVIEWED");
+        this.feedback = feedback;
+    }
+
+    public Feedback feedback(){
+        return this.feedback;
     }
 
     public Urgency urgency(){

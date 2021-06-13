@@ -9,6 +9,8 @@ import eapli.framework.domain.model.DomainEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot< Long >, Serializable {
@@ -24,6 +26,8 @@ public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot
 	private Task mainReference;
 
 	private String status;
+
+	private LocalDateTime dateStarted, dateEnded;
 
 	protected TicketTask ( ) {
 	}
@@ -48,9 +52,6 @@ public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot
 		return transition;
 	}
 
-	public void completeTask(){
-		this.status = "COMPLETE";
-	}
 
 	public String status(){
 		return this.status;
@@ -84,5 +85,19 @@ public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot
 			return getFirstIncompleteTask(ticketTask.transition().nextTask());
 
 	}
+
+	public void redeemTask() {
+		dateStarted = LocalDateTime.now();
+	}
+
+	public void completeTask(){
+		this.status = "COMPLETE";
+		dateEnded = LocalDateTime.now();
+	}
+
+	public long getTimeInMinutesOfExecution(){
+		return dateStarted.until(dateEnded, ChronoUnit.MINUTES);
+	}
+
 
 }

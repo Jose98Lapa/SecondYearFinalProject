@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskListService {
-    private TaskRepository taskRepository = PersistenceContext.repositories().tasks();
+    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
 
 
@@ -29,16 +29,15 @@ public class TaskListService {
         return starterTask;
     }
 
-    public Task addAverageExecutionTimeToTask(Task task,long approvalTime,long executionTime, int numberOfExecutions){
+    public Task addMaxExecutionTimeToTask(Task task, long approvalTime, long executionTime, int numberOfExecutions){
         long averageExecutionTime = executionTime/numberOfExecutions;
         Task starterTask = task;
         while (task.hasAfterTask()){
             if (task.getClass()== ApprovalTask.class){
-                ((ApprovalTask) task).setAverageTimeToExecute(approvalTime);
+                task.addMaxTimeOfExecution(approvalTime);
                 averageExecutionTime = executionTime/(numberOfExecutions-1);
-            }
-            if (task.getClass()== ExecutionTask.class){
-                ((ExecutionTask) task).setAverageTimeToExecute(averageExecutionTime);
+            }else {
+                task.addMaxTimeOfExecution(averageExecutionTime);
             }
             task = task.afterTask();
         }

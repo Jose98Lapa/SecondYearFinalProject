@@ -19,7 +19,7 @@ public abstract class TicketManualTask extends TicketTask implements Serializabl
 
 	private LocalDate deadline;
 
-	private LocalDateTime dateStarted, dateEnded;
+
 
 
 	protected TicketManualTask ( ) {
@@ -43,18 +43,5 @@ public abstract class TicketManualTask extends TicketTask implements Serializabl
 		return deadline.toString();
 	}
 
-	public void redeemTask() {
-		dateStarted = LocalDateTime.now();
-	}
-
-	@Override
-	public void completeTask(){
-		super.completeTask();
-		dateEnded = LocalDateTime.now();
-	}
-
-	public long getTimeInMinutesOfExecution(){
-		return dateStarted.until(dateEnded, ChronoUnit.MINUTES);
-	}
 
 }

@@ -27,11 +27,13 @@ public class ReviewTicketController {
         return this.ticketListService.getPendingTicketsToReview(email);
     }
 
-    public void createService(FeedbackDTO feedbackDTO){
+    public void createFeedback(FeedbackDTO feedbackDTO,TicketDTO ticketDTO){
         FeedbackBuilder feedbackBuilder = new FeedbackBuilder();
         TicketListService ticketListService = new TicketListService();
-        Feedback feedback = feedbackBuilder.withFeedbackValue(FeedbackValue.valueOf(feedbackDTO.feedbackValue)).withEmail(feedbackDTO.email).withTicket(ticketListService.reviewTicket(feedbackDTO.ticketDTO.id)).withEmail(email).build();
-        feedbackRepository.save(feedback);
+        Feedback feedback = feedbackBuilder.withFeedbackValue(FeedbackValue.valueOf(feedbackDTO.feedbackValue)).withEmail(feedbackDTO.email).withEmail(email).build();
+        feedback =feedbackRepository.save(feedback);
+
+        ticketListService.reviewTicket(ticketDTO.id,feedback);
     }
 
 

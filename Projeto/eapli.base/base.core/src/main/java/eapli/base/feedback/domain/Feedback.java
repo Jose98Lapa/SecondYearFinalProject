@@ -20,20 +20,18 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
     private Long identity;
     @Embedded
     private FeedbackValue feedbackValue;
-    @OneToOne
-    private Ticket relativeToThisTicket;
+
     private String clientEmail;
 
-    public Feedback(FeedbackValue feedbackValue, Ticket relativeToThisTicket,String clientEmail) {
+    public Feedback(FeedbackValue feedbackValue, String clientEmail) {
         this.feedbackValue = feedbackValue;
-        this.relativeToThisTicket = relativeToThisTicket;
         this.clientEmail = clientEmail;
     }
 
-    public Feedback(Long identity, FeedbackValue feedbackValue, Ticket relativeToThisTicket,String clientEmail) {
+    public Feedback(Long identity, FeedbackValue feedbackValue,String clientEmail) {
         this.identity = identity;
         this.feedbackValue = feedbackValue;
-        this.relativeToThisTicket = relativeToThisTicket;
+
         this.clientEmail = clientEmail;
     }
 
@@ -41,9 +39,7 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
         // For ORM
     }
 
-    public Ticket ticket(){
-        return relativeToThisTicket;
-    }
+
 
 
 
@@ -59,6 +55,10 @@ public class Feedback implements AggregateRoot<Long>,DTOable<FeedbackDTO>, Seria
 
     @Override
     public FeedbackDTO toDTO() {
-        return new FeedbackDTO(identity,relativeToThisTicket.toDTO(),Integer.parseInt(feedbackValue.toString()),clientEmail);
+        return new FeedbackDTO(identity,Integer.parseInt(feedbackValue.toString()),clientEmail);
+    }
+
+    public FeedbackValue value(){
+        return this.feedbackValue;
     }
 }
