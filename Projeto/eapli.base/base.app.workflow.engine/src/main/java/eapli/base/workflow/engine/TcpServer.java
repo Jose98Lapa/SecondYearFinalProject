@@ -94,7 +94,7 @@ public class TcpServer implements Runnable {
                 List<TicketTask> lstTicketTask = ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
 
                 //Sends the Task data
-                int finalCode = 252;
+                int finalCode = 4;
                 for (TicketTask ticketTask : lstTicketTask) {
                     Optional<Ticket> ticketOp = ticketRepository.ofIdentity(ticketTask.identity().toString());
                     Ticket ticket;

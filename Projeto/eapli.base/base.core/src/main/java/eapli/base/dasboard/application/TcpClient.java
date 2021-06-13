@@ -98,7 +98,7 @@ public class TcpClient {
 			byte[] info = sIn.readNBytes(3);
 
 			//No more tasks associated with the collaborator
-			if ((info[1]&0xff)==252)
+			if ((info[1]&0xff)==4)
 				break;
 			if ((info[1]&0xff)==253){
 				System.out.println("A error occurred");
@@ -114,11 +114,6 @@ public class TcpClient {
 				taskInfoBuilder.setLength(0);
 				taskInfo="";
 			}
-		}
-
-		if (taskInfoList.isEmpty()){
-			System.out.println("Não existem tarefas associadas a este colaborador");
-			return null;
 		}
 
 		return taskInfoList;
