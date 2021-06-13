@@ -23,10 +23,13 @@ import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.builder.TicketBuilder;
 import eapli.base.ticket.domain.Constants;
 import eapli.base.ticket.domain.Ticket;
+import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +38,7 @@ public class CreateTicketController {
 
 	private final TicketBuilder builder;
 	private final TicketRepository ticketRepository;
+	private Service service;
 
 	public CreateTicketController ( ) {
 
@@ -65,15 +69,14 @@ public class CreateTicketController {
 	public List< ServiceDTO > getServicesByCatalogue ( CatalogueDTO chosenCatalogueDTO ) {
 
 		ServiceListService servicesService = new ServiceListService( );
-		Catalogue chosenCatalogue = new CatalogueDTOParser( ).valueOf( chosenCatalogueDTO );
-		List< ServiceDTO > serviceDTOList = servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
+		Catalogue chosenCatalogue = new ListCatalogueService().getCatalogueByID(chosenCatalogueDTO.identity);
+		return servicesService.getServiceDTOListByCatalogue( chosenCatalogue );
 
-		return serviceDTOList;
 	}
 
 	public void selectService ( ServiceDTO selectedService ) {
 
-		Service service = new ServiceDTOParser( ).valueOf( selectedService );
+		this.service = new ServiceListService().getServiceByID(selectedService.id);
 		this.builder.withService( service );
 	}
 
@@ -92,12 +95,12 @@ public class CreateTicketController {
 				.withStatus( Constants.PENDING )
 				.withPossibleFile( ticketDTO.file )
 				.withUrgency( ticketDTO.urgency )
+				.withWorkFlow(new TicketWorkflow( LocalDate.now(),new TicketTaskService().createTicketTask(ticketDTO.deadLine,service.workflow().starterTask())))
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
-		ticketRepository.save( ticket );
-
-		return TicketService.sendToWorkflowServer( ticket.identity() );
+		PersistenceContext.repositories().tickets().save( ticket );
+		return true;
 	}
 
 	//TODO: Devia estar no FormController
