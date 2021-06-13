@@ -91,28 +91,29 @@ public class TcpClient {
 
 		//receber os atributos
 		List<String> taskInfoList = new ArrayList<>();
-		int count=0;
-		String taskInfo;
-		StringBuilder taskInfobuilder = new StringBuilder();
+		StringBuilder taskInfoBuilder = new StringBuilder();
+
+
 		while(true){
 			byte[] info = sIn.readNBytes(3);
-			if ((info[1]&0xff)==254)
+
+			//No more tasks associated with the collaborator
+			if ((info[1]&0xff)==252)
 				break;
 			if ((info[1]&0xff)==253){
 				System.out.println("A error occurred");
 				break;
 			}
+
 			byte[] byteArray = sIn.readNBytes(info[2]&0xff);
 			String atribute = new String(byteArray, StandardCharsets.UTF_8);
-			taskInfobuilder.append(atribute).append("|");
-			if (count==5){
-				taskInfo=taskInfobuilder.toString();
-				taskInfobuilder.setLength(0);
+			taskInfoBuilder.append(atribute);
+			if ((info[1]&0xff)==254){
+				String taskInfo=taskInfoBuilder.toString();
 				taskInfoList.add(taskInfo);
+				taskInfoBuilder.setLength(0);
 				taskInfo="";
-				count=0;
 			}
-			count++;
 		}
 
 		if (taskInfoList.isEmpty()){

@@ -35,6 +35,8 @@
 
 [ 3 ] : Pedido para obter Lista de Tarefas do colaborador a fazer o pedido com devolução de resposta com código 2.
 
+[ 4 ] : Resposta sem dados, representa o final da lista de Tarefas.
+
 [ 253 ] : Erro -> Resposta de erro por parte do servidor, caso surja um erro ou uma inconsistencia na comunicação com a base de dados.
 
 [ 254 ] : Término segmento -> Representa o conjunto de dados final de um segmento.
