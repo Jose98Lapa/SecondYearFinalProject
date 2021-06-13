@@ -9,12 +9,15 @@ import eapli.base.task.domain.ApprovalTask;
 import eapli.base.task.domain.ExecutionTask;
 import eapli.base.team.domain.Team;
 import eapli.base.team.repositories.TeamRepository;
+import eapli.base.ticket.application.TicketListService;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketStatus;
+import eapli.base.ticket.domain.Urgency;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
+import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.Constants;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
@@ -220,4 +223,35 @@ public class Engine {
         }
         return theChosenOne;
     }
+
+    public synchronized void assigningAlgorithm(){
+        List<Ticket> ticketList = PersistenceContext.repositories().tickets().getPendingTicket();
+        for (Ticket ticket:ticketList){
+            if (ticket.workflow().getFirstIncompleteTask().getClass()==TicketApprovalTask.class){
+                chooseApprovalCollaborator(ticket);
+            }
+        }
+
+    }
+
+    private synchronized void chooseApprovalCollaborator(Ticket ticket){
+        List<Collaborator> collaboratorList = new ArrayList<>();
+        Map<Collaborator,Long> collaboratorAndTotalTaskTime = new LinkedHashMap<>();
+        Map<Collaborator,Float> collaboratorAndFitnessMap = new LinkedHashMap<>();
+        TicketTask ticketTask = ticket.workflow().getFirstIncompleteTask();
+        ApprovalTask approvalTask = (ApprovalTask) ticketTask.mainReference();
+        for (Collaborator collaborator:PersistenceContext.repositories().collaborators().getCollaboratorsByRole(approvalTask.necessaryRoleForApproval())){
+            collaboratorList.add(collaborator);
+            collaboratorAndTotalTaskTime.put(collaborator,new TicketTaskService().getTimeToFinishAllTasks(collaborator));
+            collaboratorAndFitnessMap.put(collaborator,new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket,collaborator));
+        }
+        if (ticket.urgency().equals(Urgency.valueOf("urgente"))){
+
+        }
+
+
+
+    }
+
+
 }

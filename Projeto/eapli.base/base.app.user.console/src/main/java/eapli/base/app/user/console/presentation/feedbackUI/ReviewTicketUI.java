@@ -19,8 +19,8 @@ public class ReviewTicketUI extends AbstractUI {
         if (option == -1) return false;
         TicketDTO ticketDTO = ticketDTOList.get(option);
         int feedback = eapli.base.app.user.console.presentation.Utils.selectIndex(5,"Insira o valor de 0 a 5",0);
-        FeedbackDTO feedbackDTO = new FeedbackDTO(ticketDTO,feedback);
-        reviewTicketController.createService(feedbackDTO);
+        FeedbackDTO feedbackDTO = new FeedbackDTO(feedback);
+        reviewTicketController.createFeedback(feedbackDTO,ticketDTO);
 
         return false;
     }

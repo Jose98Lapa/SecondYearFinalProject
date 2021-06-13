@@ -11,6 +11,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Optional;
 
 public class JpaCollaboratorRepository extends JpaAutoTxRepository<Collaborator, MecanographicNumber, MecanographicNumber> implements CollaboratorRepository {
@@ -43,5 +44,12 @@ public class JpaCollaboratorRepository extends JpaAutoTxRepository<Collaborator,
         final TypedQuery<Collaborator> q = createQuery("Select e From eapli.base.collaborator.domain.Collaborator e where e.email =:id ", Collaborator.class);
         q.setParameter("id", email);
         return q.getResultStream().findFirst();
+    }
+
+    @Override
+    public List<Collaborator> getCollaboratorListByFunction(Function function) {
+        final TypedQuery<Collaborator> q = createQuery("Select e From eapli.base.collaborator.domain.Collaborator e where e.function =:id ", Collaborator.class);
+        q.setParameter("id", function);
+        return q.getResultList();
     }
 }

@@ -17,7 +17,7 @@ import java.util.Set;
 public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> , Serializable {
 
     @Version
-    Long version ;
+    Long version;
 
     private FormScript script;
     @EmbeddedId

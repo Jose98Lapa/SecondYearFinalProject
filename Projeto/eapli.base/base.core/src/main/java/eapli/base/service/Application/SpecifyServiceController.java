@@ -4,6 +4,7 @@ import eapli.base.catalogue.application.ListCatalogueService;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.repositories.CatalogueRepository;
+import eapli.base.criticality.application.CriticalityListService;
 import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
@@ -14,7 +15,6 @@ import eapli.base.service.builder.ServiceBuilder;
 import eapli.base.service.domain.*;
 import eapli.base.task.application.TaskListService;
 import eapli.base.task.domain.Task;
-import eapli.base.utils.GenerateRandomStringID;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -133,11 +133,13 @@ public class SpecifyServiceController {
     }
 
     public void addWorkflowToService(List<String> tasksID,ServiceDTO serviceDTO){
+        Service service = serviceListService.getServiceByID(serviceDTO.id);
         TaskListService taskListService = new TaskListService();
         Task starterTask= taskListService.getTaskByStringList(tasksID);
+        CriticalityListService criticalityListService = new CriticalityListService();
+        starterTask = taskListService.addMaxExecutionTimeToTask(starterTask, criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().approvalObjective().tempoMaximo()),criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().resolutionObjective().tempoMaximo()), tasksID.size());
         PersistenceContext.repositories().tasks().save(starterTask);
         Workflow workflow = new Workflow(new Date(),starterTask);
-        Service service = serviceListService.getServiceByID(serviceDTO.id);
         service.setWorkflow(workflow);
         serviceRepository.save(service);
 

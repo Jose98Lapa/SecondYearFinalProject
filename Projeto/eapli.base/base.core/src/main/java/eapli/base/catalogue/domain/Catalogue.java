@@ -31,7 +31,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
     private CompleteDescription completeDesc;
 
     @OneToOne
-    private Criticality nivelCriticality;
+    private Criticality criticalityLevel;
 
     @ManyToMany
     @JoinTable(name="CATALOGUE_RESPONSABLES", joinColumns = @JoinColumn(name="CATALOGO_ID"))
@@ -46,10 +46,10 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
 
     public Catalogue(Title title, Icon icon, BriefDescription briefDesc,
                      CompleteDescription completeDesc, final Set<Collaborator> responsableCollabs,
-                     final Set<Team> accessCriteria, Criticality nivelCriticality) {
+                     final Set<Team> accessCriteria, Criticality criticalityLevel) {
         Preconditions.nonNull(accessCriteria);
         Preconditions.nonNull(responsableCollabs);
-        Preconditions.nonNull(nivelCriticality);
+        Preconditions.nonNull(criticalityLevel);
         Preconditions.nonEmpty(accessCriteria);
         Preconditions.nonEmpty(responsableCollabs);
         this.title = title;
@@ -58,7 +58,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticality = nivelCriticality;
+        this.criticalityLevel = criticalityLevel;
         this.status = true;
     }
 
@@ -67,7 +67,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
 
     public Catalogue(Long identity, Title title, Icon icon, BriefDescription briefDesc,
                      CompleteDescription completeDesc, final Set<Collaborator> responsableCollabs,
-                     final Set<Team> accessCriteria, Criticality nivelCriticality) {
+                     final Set<Team> accessCriteria, Criticality criticalityLevel) {
         this.identity = identity;
         this.title = title;
         this.icon = icon;
@@ -75,7 +75,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
         this.completeDesc = completeDesc;
         addResponsableCollabs(responsableCollabs);
         addAccessCriteria(accessCriteria);
-        this.nivelCriticality = nivelCriticality;
+        this.criticalityLevel = criticalityLevel;
         this.status = true;
     }
 
@@ -119,7 +119,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
     }
 
     public void changeCriticalityLevelTo(final Criticality newCriticality){
-        this.nivelCriticality = newCriticality;
+        this.criticalityLevel = newCriticality;
     }
 
     public Long identity() {
@@ -143,8 +143,8 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
     }
 
 
-    public Criticality nivelCriticidade() {
-        return nivelCriticality;
+    public Criticality criticalityLevel() {
+        return criticalityLevel;
     }
 
 
@@ -171,6 +171,6 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
                 title.toString(),
                 icon.toString(),
                 briefDesc.toString(),
-                completeDesc.toString(),responsableCollabs,accessCriteria, nivelCriticality);
+                completeDesc.toString(),responsableCollabs,accessCriteria, criticalityLevel);
     }
 }

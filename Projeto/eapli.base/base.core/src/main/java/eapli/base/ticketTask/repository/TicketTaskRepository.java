@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface TicketTaskRepository extends DomainRepository< Long, TicketTask > {
 
-    List<TicketTask> getTicketsByCollaborator(Collaborator collab);
+    List<TicketTask> getIncompleteTicketsByCollaborator(Collaborator collab);
+
+    List<TicketTask> getCompleteApprovedTicketsByCollaborator(Collaborator collab);
 
 }

@@ -18,6 +18,7 @@ public abstract class ManualTask extends Task implements Serializable {
     private Form form;
 
 
+
     public ManualTask(Form form){
         super();
         this.form = form;
@@ -44,6 +45,7 @@ public abstract class ManualTask extends Task implements Serializable {
     public Long identity() {
         return super.taskID;
     }
+
 
 
 }

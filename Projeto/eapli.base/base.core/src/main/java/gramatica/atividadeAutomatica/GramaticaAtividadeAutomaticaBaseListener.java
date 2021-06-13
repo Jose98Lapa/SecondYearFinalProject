@@ -40,25 +40,25 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInicializacao_tipo_ficheiro(GramaticaAtividadeAutomaticaParser.Inicializacao_tipo_ficheiroContext ctx) { }
+	@Override public void enterTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInicializacao_tipo_ficheiro(GramaticaAtividadeAutomaticaParser.Inicializacao_tipo_ficheiroContext ctx) { }
+	@Override public void exitTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInicializacao_elemento(GramaticaAtividadeAutomaticaParser.Inicializacao_elementoContext ctx) { }
+	@Override public void enterElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInicializacao_elemento(GramaticaAtividadeAutomaticaParser.Inicializacao_elementoContext ctx) { }
+	@Override public void exitElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -76,49 +76,49 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressao_inicializacao(GramaticaAtividadeAutomaticaParser.Expressao_inicializacaoContext ctx) { }
+	@Override public void enterInicializacaoIdent(GramaticaAtividadeAutomaticaParser.InicializacaoIdentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressao_inicializacao(GramaticaAtividadeAutomaticaParser.Expressao_inicializacaoContext ctx) { }
+	@Override public void exitInicializacaoIdent(GramaticaAtividadeAutomaticaParser.InicializacaoIdentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressao_atribuicao(GramaticaAtividadeAutomaticaParser.Expressao_atribuicaoContext ctx) { }
+	@Override public void enterInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressao_atribuicao(GramaticaAtividadeAutomaticaParser.Expressao_atribuicaoContext ctx) { }
+	@Override public void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) { }
+	@Override public void enterVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) { }
+	@Override public void exitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOpExprSumDif(GramaticaAtividadeAutomaticaParser.OpExprSumDifContext ctx) { }
+	@Override public void enterVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOpExprSumDif(GramaticaAtividadeAutomaticaParser.OpExprSumDifContext ctx) { }
+	@Override public void exitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -131,6 +131,90 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPowExpr(GramaticaAtividadeAutomaticaParser.PowExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPowExpr(GramaticaAtividadeAutomaticaParser.PowExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -244,37 +328,37 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) { }
+	@Override public void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) { }
+	@Override public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) { }
+	@Override public void enterCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) { }
+	@Override public void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) { }
+	@Override public void enterStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) { }
+	@Override public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

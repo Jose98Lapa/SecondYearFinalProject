@@ -3,6 +3,8 @@ package eapli.base.task.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.task.DTO.ExecutionTaskDTO;
+import eapli.base.task.domain.ApprovalTask;
+import eapli.base.task.domain.ExecutionTask;
 import eapli.base.task.domain.Task;
 import eapli.base.task.repository.TaskRepository;
 
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskListService {
-    private TaskRepository taskRepository = PersistenceContext.repositories().tasks();
+    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
 
 
@@ -23,6 +25,21 @@ public class TaskListService {
             currentTask.editBeforeTask(beforeTask);
             beforeTask.editAfterTask(currentTask);
             beforeTask = currentTask;
+        }
+        return starterTask;
+    }
+
+    public Task addMaxExecutionTimeToTask(Task task, long approvalTime, long executionTime, int numberOfExecutions){
+        long averageExecutionTime = executionTime/numberOfExecutions;
+        Task starterTask = task;
+        while (task.hasAfterTask()){
+            if (task.getClass()== ApprovalTask.class){
+                task.addMaxTimeOfExecution(approvalTime);
+                averageExecutionTime = executionTime/(numberOfExecutions-1);
+            }else {
+                task.addMaxTimeOfExecution(averageExecutionTime);
+            }
+            task = task.afterTask();
         }
         return starterTask;
 
