@@ -1,6 +1,5 @@
 package eapli.base.ticketTask.domain;
 
-import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.form.domain.Form;
 import eapli.base.task.domain.Task;
 

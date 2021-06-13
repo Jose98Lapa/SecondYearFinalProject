@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Entity
-public abstract class TicketTask  implements DomainEntity< Long >, AggregateRoot< Long >, Serializable {
+@Inheritance( strategy = InheritanceType.TABLE_PER_CLASS )
+public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot< Long >, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

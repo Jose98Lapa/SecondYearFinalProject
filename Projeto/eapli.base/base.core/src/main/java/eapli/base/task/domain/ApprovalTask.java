@@ -13,32 +13,38 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class ApprovalTask extends ManualTask implements DTOable<ApprovalTaskDTO> , Serializable {
+public class ApprovalTask extends ManualTask implements DTOable< ApprovalTaskDTO >, Serializable {
 
-    @OneToOne
-    private Function necessaryRoleForApproval;
+	@OneToOne
+	private Function necessaryRoleForApproval;
 
-    public ApprovalTask(Form form,Function necessaryRoleForApproval) {
-        super(form);
-        this.necessaryRoleForApproval = necessaryRoleForApproval;
+	public ApprovalTask ( Form form, Function necessaryRoleForApproval ) {
 
-    }
+		super( form );
+		this.necessaryRoleForApproval = necessaryRoleForApproval;
 
-    protected ApprovalTask() {
-       super();
+	}
 
-    }
+	protected ApprovalTask ( ) {
 
-    public Function necessaryRoleForApproval() {
-        return necessaryRoleForApproval;
-    }
+		super( );
 
-    public Form form(){
-        return super.form();
-    }
+	}
 
-    @Override
-    public ApprovalTaskDTO toDTO() {
-        return new ApprovalTaskDTO(super.taskID.toString(),super.form().toDTO());
-    }
+	public Function necessaryRoleForApproval ( ) {
+
+		return necessaryRoleForApproval;
+	}
+
+	public Form form ( ) {
+
+		return super.form( );
+	}
+
+	@Override
+	public ApprovalTaskDTO toDTO ( ) {
+
+		return new ApprovalTaskDTO( super.taskID.toString( ), super.form( ).toDTO( ) );
+	}
+
 }

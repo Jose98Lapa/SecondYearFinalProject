@@ -79,11 +79,17 @@ public class TicketTaskService {
     }
 
     public TicketTask createTicketTask(String deadline, Task starter) {
+
         CreateTaskController ticketTaskController = new CreateTaskController();
+
         if (starter instanceof ApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
-                    new Transition(null, null), starter, ((ApprovalTask) starter).form(),
-                    LocalDate.parse(deadline));
+                    new Transition(null, null),
+                    starter,
+                    ((ApprovalTask) starter).form(),
+                    LocalDate.parse(deadline)
+            );
+
             return ticketTaskController.registerTicketTask(approvalTask);
         }
 
@@ -92,14 +98,16 @@ public class TicketTaskService {
                     new Transition(null, null), starter,
                     ((ExecutionTask) starter).form(),
                     null,
-                    LocalDate.parse(deadline));
+                    LocalDate.parse(deadline)
+            );
 
             return ticketTaskController.registerTicketTask(executionTask);
         }
 
         if (starter instanceof AutomaticTask) {
             TicketAutomaticTask automaticTask = new TicketAutomaticTask(
-                    new Transition(null, null), starter,
+                    new Transition(null, null),
+                    starter,
                     ((AutomaticTask) starter).scriptPath()
             );
 

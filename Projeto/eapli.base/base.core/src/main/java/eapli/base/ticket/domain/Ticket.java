@@ -10,6 +10,8 @@ import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
+import eapli.framework.validations.Preconditions;
+import org.antlr.v4.runtime.atn.SemanticContext;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -63,6 +65,7 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
                   TicketStatus status, AttachedFile file,
                   Urgency urgency, Service service, TicketWorkflow workflow,
                   Form ticketForm, String requestedBy ) {
+
         this.solicitedOn = solicitedOn;
         this.deadLine = deadLine;
         this.completedOn = null;
@@ -93,6 +96,10 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         return workflow;
     }
 
+    public void setWorkflow ( TicketWorkflow ticketWorkflow ) {
+        this.workflow = workflow;
+    }
+
     public Service service() {
         return service;
     }
@@ -116,6 +123,10 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     public TicketDTO toDTO() {
         return new TicketDTO(solicitedOn.toString(), deadLine.toString(),
                 status.toString(), file.toString(), urgency.toString(), service.toDTO(), requestedBy, identity());
+    }
+
+    public LocalDate deadline ( ) {
+        return this.deadLine;
     }
 
     public TicketStatus status() {

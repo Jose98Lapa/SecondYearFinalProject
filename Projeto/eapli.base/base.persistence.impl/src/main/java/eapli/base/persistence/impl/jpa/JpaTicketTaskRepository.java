@@ -2,6 +2,10 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.ticket.DTO.TicketDTO;
+import eapli.base.ticketTask.domain.TicketApprovalTask;
+import eapli.base.ticketTask.domain.TicketAutomaticTask;
+import eapli.base.ticketTask.domain.TicketExecutionTask;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -62,4 +66,38 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 		q.setParameter("status","COMPLETE");
 		return q.getResultList();
 	}
+
+	@Override
+	public Optional< TicketApprovalTask > approvalTaskOf ( TicketDTO ticket ) {
+
+		final String queryString =
+				"SELECT e " +
+				"FROM eapli.base.ticketTask.domain.TicketApprovalTask e" +
+				"WHERE e.";
+		final TypedQuery< TicketApprovalTask >  query = createQuery( queryString, TicketApprovalTask.class  );
+		query.setParameter( "id", ticket.id );
+
+		return Optional.of( query.getSingleResult() );
+	}
+
+	@Override
+	public Optional< TicketAutomaticTask > automaticTaskOf ( TicketDTO ticket ) {
+
+		final String queryString = "";
+		final TypedQuery< TicketAutomaticTask >  query = createQuery( queryString, TicketAutomaticTask.class  );
+		query.setParameter( "id", ticket.id );
+
+		return Optional.of( query.getSingleResult() );
+	}
+
+	@Override
+	public Optional< TicketExecutionTask > executionTaskOf ( TicketDTO ticket ) {
+
+		final String queryString = "";
+		final TypedQuery< TicketExecutionTask >  query = createQuery( queryString, TicketExecutionTask.class  );
+		query.setParameter( "id", ticket.id );
+
+		return Optional.of( query.getSingleResult() );
+	}
+
 }
