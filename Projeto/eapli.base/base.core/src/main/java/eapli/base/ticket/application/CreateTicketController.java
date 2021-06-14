@@ -95,7 +95,7 @@ public class CreateTicketController {
 				.withStatus( Constants.PENDING )
 				.withPossibleFile( ticketDTO.file )
 				.withUrgency( ticketDTO.urgency )
-				.withWorkFlow(new TicketWorkflow( LocalDate.now(),new TicketTaskService().createTicketTask(ticketDTO.deadLine,service.workflow().starterTask())))
+				.withWorkFlow( new TicketWorkflow( null ) )
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
