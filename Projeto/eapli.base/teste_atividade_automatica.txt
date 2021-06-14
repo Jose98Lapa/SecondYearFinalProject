@@ -3,18 +3,17 @@ BEGIN
         ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
     LMX
 
-    /*
-    TEXTO $nome -> $specificProduct(nome)
-    NUMERO $price -> $specificProduct(price)
+    TEXTO $nome -> $specificProduct(preco)
+    //NUMERO $price -> $specificProduct(price)
     TEXTO $status
-
+/*
     se $price >0
     entao
         $status-> 2
     senao
         $status-> 2
     es
-    */
+*/
     TEXTO $destinatario-> "guili@isep.ipp.pt"
     TEXTO $assunto -> "Teste 1"
 

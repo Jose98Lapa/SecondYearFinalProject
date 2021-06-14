@@ -516,17 +516,18 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 	}
 
 	public static class Atribuicao_elementoContext extends ParserRuleContext {
+		public IdentidadeContext nomeVar;
 		public Token what;
 		public IdentidadeContext file;
 		public Token id;
 		public Token idvalue;
+		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaAtividadeAutomaticaParser.OPERADORATRIBUICAO, 0); }
 		public List<IdentidadeContext> identidade() {
 			return getRuleContexts(IdentidadeContext.class);
 		}
 		public IdentidadeContext identidade(int i) {
 			return getRuleContext(IdentidadeContext.class,i);
 		}
-		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaAtividadeAutomaticaParser.OPERADORATRIBUICAO, 0); }
 		public List<TerminalNode> TEXTO() { return getTokens(GramaticaAtividadeAutomaticaParser.TEXTO); }
 		public TerminalNode TEXTO(int i) {
 			return getToken(GramaticaAtividadeAutomaticaParser.TEXTO, i);
@@ -562,7 +563,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(79);
-			identidade();
+			((Atribuicao_elementoContext)_localctx).nomeVar = identidade();
 			setState(80);
 			match(OPERADORATRIBUICAO);
 			setState(81);
@@ -792,13 +793,16 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		}
 	}
 	public static class VariavelVariavelContext extends AtribuicaoContext {
+		public IdentidadeContext nomeVar;
+		public IdentidadeContext nomeElemento;
+		public Token what;
+		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaAtividadeAutomaticaParser.OPERADORATRIBUICAO, 0); }
 		public List<IdentidadeContext> identidade() {
 			return getRuleContexts(IdentidadeContext.class);
 		}
 		public IdentidadeContext identidade(int i) {
 			return getRuleContext(IdentidadeContext.class,i);
 		}
-		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaAtividadeAutomaticaParser.OPERADORATRIBUICAO, 0); }
 		public List<TerminalNode> TEXTO() { return getTokens(GramaticaAtividadeAutomaticaParser.TEXTO); }
 		public TerminalNode TEXTO(int i) {
 			return getToken(GramaticaAtividadeAutomaticaParser.TEXTO, i);
@@ -848,11 +852,11 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(116);
-				identidade();
+				((VariavelVariavelContext)_localctx).nomeVar = identidade();
 				setState(117);
 				match(OPERADORATRIBUICAO);
 				setState(118);
-				identidade();
+				((VariavelVariavelContext)_localctx).nomeElemento = identidade();
 				setState(119);
 				match(T__7);
 				setState(121); 
@@ -862,9 +866,10 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 					{
 					{
 					setState(120);
+					((VariavelVariavelContext)_localctx).what = _input.LT(1);
 					_la = _input.LA(1);
 					if ( !(_la==NUMERO || _la==TEXTO) ) {
-					_errHandler.recoverInline(this);
+						((VariavelVariavelContext)_localctx).what = (Token)_errHandler.recoverInline(this);
 					}
 					else {
 						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;

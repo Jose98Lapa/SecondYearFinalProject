@@ -1,6 +1,6 @@
 package gramatica.atividadeAutomatica;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 public class Value {
 
@@ -24,6 +24,10 @@ public class Value {
         return Integer.parseInt(value.toString());
     }
 
+    public Element asElement() {
+        return (Element) value;
+    }
+
     public String asString() {
         return String.valueOf(value);
     }
@@ -40,8 +44,8 @@ public class Value {
         return value instanceof String;
     }
 
-    public boolean isNode() {
-        return value instanceof Node;
+    public boolean isElemento() {
+        return value instanceof Element;
     }
 
     @Override

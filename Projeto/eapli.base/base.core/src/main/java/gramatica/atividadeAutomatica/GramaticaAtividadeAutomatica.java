@@ -9,6 +9,7 @@ import java.util.Stack;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -437,13 +438,13 @@ public class GramaticaAtividadeAutomatica {
         @Override
         public Value visitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
             String id = ctx.identidade().getText();
-            Value value = new Value(ctx.STRING().getText().replaceAll("\"",""));
+            Value value = new Value(ctx.STRING().getText().replaceAll("\"", ""));
             return memory.put(id, value);
         }
 
         @Override
         public Value visitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
-            String file = ctx.file.getText();
+            String file = this.visit(ctx.file).toString();
             String what = ctx.what.getText();
             String id = ctx.id.getText();
             String idValue = ctx.idvalue.getText();
@@ -458,7 +459,7 @@ public class GramaticaAtividadeAutomatica {
                 XPathFactory xpathFactory = XPathFactory.newInstance();
                 XPath xpath = xpathFactory.newXPath();
 
-                return new Value(getSomethingByID(doc, xpath, what,id,idValue));
+                return memory.put(ctx.nomeVar.getText(), new Value(getSomethingByID(doc, xpath, what, id, idValue)));
 
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
@@ -466,16 +467,28 @@ public class GramaticaAtividadeAutomatica {
             return null;
         }
 
-        private Node getSomethingByID(Document doc, XPath xpath,String what, String id, String idValue) {
+        private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
             try {
                 XPathExpression expr =
-                        xpath.compile("//[@name='"+what+"']/[@"+id+"='"+idValue+"']");
-                Node nodes = (Node) expr.evaluate(doc, XPathConstants.NODESET);
-                return nodes;
+                        xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                Element element = (Element) node;
+                String preco = element.getAttribute("id");
+                return element;
             } catch (XPathExpressionException e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        public Value visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) {
+            Element element = this.visit(ctx.nomeElemento).asElement();
+            String what = ctx.what.getText();
+            Node node = element.getElementsByTagName(what).item(0);
+            Element resultElement = (Element)node;
+            Value result = new Value(resultElement.getTextContent());
+            return memory.put(ctx.nomeVar.getText(), result);
         }
 
 
