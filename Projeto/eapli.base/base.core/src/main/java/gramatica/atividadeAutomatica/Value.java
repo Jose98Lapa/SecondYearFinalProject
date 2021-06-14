@@ -1,5 +1,7 @@
 package gramatica.atividadeAutomatica;
 
+import org.w3c.dom.Node;
+
 public class Value {
 
     public static Value VOID = new Value(new Object());
@@ -31,7 +33,15 @@ public class Value {
     }
 
     public boolean isInteger() {
-        return value instanceof Double;
+        return value instanceof Integer;
+    }
+
+    public boolean isString() {
+        return value instanceof String;
+    }
+
+    public boolean isNode() {
+        return value instanceof Node;
     }
 
     @Override

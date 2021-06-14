@@ -28,15 +28,39 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitInstrucao(GramaticaAtividadeAutomaticaParser.InstrucaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx);
+	void enterEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx);
+	void exitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ficheiroIdent}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 */
+	void enterFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ficheiroIdent}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 */
+	void exitFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ficheiroNomeFicheiro}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 */
+	void enterFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ficheiroNomeFicheiro}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 */
+	void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#elemento}.
 	 * @param ctx the parse tree
@@ -105,6 +129,36 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 * @param ctx the parse tree
 	 */
 	void exitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
+	 * @param ctx the parse tree
+	 */
+	void enterStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
+	 * @param ctx the parse tree
+	 */
+	void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.
@@ -268,25 +322,39 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#string}.
 	 * @param ctx the parse tree
 	 */
-	void enterEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
+	void enterString(GramaticaAtividadeAutomaticaParser.StringContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#string}.
 	 * @param ctx the parse tree
 	 */
-	void exitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
+	void exitString(GramaticaAtividadeAutomaticaParser.StringContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * Enter a parse tree produced by the {@code emailAtributos}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
 	 * @param ctx the parse tree
 	 */
-	void enterEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx);
+	void enterEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * Exit a parse tree produced by the {@code emailAtributos}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
 	 * @param ctx the parse tree
 	 */
-	void exitEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx);
+	void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code emailString}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code emailString}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#update_informacao}.
 	 * @param ctx the parse tree
@@ -297,34 +365,4 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 * @param ctx the parse tree
 	 */
 	void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
-	 * @param ctx the parse tree
-	 */
-	void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
-	 * @param ctx the parse tree
-	 */
-	void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
-	 * @param ctx the parse tree
-	 */
-	void enterCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
-	 * @param ctx the parse tree
-	 */
-	void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
-	 * @param ctx the parse tree
-	 */
-	void enterStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
-	 * @param ctx the parse tree
-	 */
-	void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 }

@@ -23,11 +23,25 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitInstrucao(GramaticaAtividadeAutomaticaParser.InstrucaoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx);
+	T visitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ficheiroIdent}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ficheiroNomeFicheiro}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_ficheiro}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#elemento}.
 	 * @param ctx the parse tree
@@ -68,6 +82,24 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 * @return the visitor result
 	 */
 	T visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.
@@ -164,39 +196,29 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#estrutura_xml}.
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#string}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx);
+	T visitString(GramaticaAtividadeAutomaticaParser.StringContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * Visit a parse tree produced by the {@code emailAtributos}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx);
+	T visitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code emailString}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#update_informacao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#condition_block}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#stat_block}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 }

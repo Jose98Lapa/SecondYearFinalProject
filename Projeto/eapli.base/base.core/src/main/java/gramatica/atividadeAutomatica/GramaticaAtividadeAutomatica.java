@@ -8,6 +8,15 @@ import java.util.Stack;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.*;
 
 public class GramaticaAtividadeAutomatica {
     public static void main(String[] args) throws IOException {
@@ -315,6 +324,11 @@ public class GramaticaAtividadeAutomatica {
             Value left = new Value(this.visit(ctx.left));
             Value right = new Value(this.visit(ctx.right));
 
+            if (left.isString() || right.isString()) {
+                if (!(left.isString() && right.isString()))
+                    throw new RuntimeException("Exception message");
+            }
+
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MAIS:
                     return left.isDouble() && right.isDouble() ?
@@ -401,5 +415,69 @@ public class GramaticaAtividadeAutomatica {
 
             return Value.VOID;
         }
+
+        @Override
+        public Value visitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
+            Value destinatario = new Value(this.visit(ctx.destinatario));
+            Value assunto = new Value(this.visit(ctx.assunto));
+            Value corpo = new Value(this.visit(ctx.corpo));
+            EmailSender.sendEmail(destinatario.asString(), assunto.asString(), corpo.asString());
+            return Value.VOID;
+        }
+
+        @Override
+        public Value visitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) {
+            Value destinatario = new Value(this.visit(ctx.destinatario));
+            Value assunto = new Value(ctx.assunto);
+            Value corpo = new Value(ctx.corpo);
+            EmailSender.sendEmail(destinatario.asString(), assunto.asString(), corpo.asString());
+            return Value.VOID;
+        }
+
+        @Override
+        public Value visitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
+            String id = ctx.identidade().getText();
+            Value value = new Value(ctx.STRING().getText().replaceAll("\"",""));
+            return memory.put(id, value);
+        }
+
+        @Override
+        public Value visitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
+            String file = ctx.file.getText();
+            String what = ctx.what.getText();
+            String id = ctx.id.getText();
+            String idValue = ctx.idvalue.getText();
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder;
+            Document doc = null;
+            try {
+                builder = factory.newDocumentBuilder();
+                doc = builder.parse(file);
+                XPathFactory xpathFactory = XPathFactory.newInstance();
+                XPath xpath = xpathFactory.newXPath();
+
+                return new Value(getSomethingByID(doc, xpath, what,id,idValue));
+
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private Node getSomethingByID(Document doc, XPath xpath,String what, String id, String idValue) {
+            try {
+                XPathExpression expr =
+                        xpath.compile("//[@name='"+what+"']/[@"+id+"='"+idValue+"']");
+                Node nodes = (Node) expr.evaluate(doc, XPathConstants.NODESET);
+                return nodes;
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
     }
 }

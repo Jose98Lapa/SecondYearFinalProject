@@ -31,7 +31,21 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -74,6 +88,27 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -178,14 +213,21 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { return visitChildren(ctx); }
+	@Override public T visitString(GramaticaAtividadeAutomaticaParser.StringContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -193,25 +235,4 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { return visitChildren(ctx); }
 }

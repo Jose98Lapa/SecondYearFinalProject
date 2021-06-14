@@ -40,13 +40,37 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx) { }
+	@Override public void enterEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipo_ficheiro(GramaticaAtividadeAutomaticaParser.Tipo_ficheiroContext ctx) { }
+	@Override public void exitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFicheiroIdent(GramaticaAtividadeAutomaticaParser.FicheiroIdentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -119,6 +143,42 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -292,25 +352,37 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { }
+	@Override public void enterString(GramaticaAtividadeAutomaticaParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEstrutura_xml(GramaticaAtividadeAutomaticaParser.Estrutura_xmlContext ctx) { }
+	@Override public void exitString(GramaticaAtividadeAutomaticaParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx) { }
+	@Override public void enterEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEnviar_email(GramaticaAtividadeAutomaticaParser.Enviar_emailContext ctx) { }
+	@Override public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -323,42 +395,6 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
