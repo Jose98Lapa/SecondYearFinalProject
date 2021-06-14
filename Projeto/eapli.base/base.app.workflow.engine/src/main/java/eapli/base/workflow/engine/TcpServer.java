@@ -9,7 +9,6 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
@@ -18,9 +17,10 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import java.util.Optional;
 
 public class TcpServer implements Runnable {
 
-    private static ServerSocket serverSocket;
+    private static SSLServerSocket sslServerSocket;
     private Socket clientSocket;
     private DataOutputStream sOut;
     private DataInputStream sIn;
@@ -185,16 +185,28 @@ public class TcpServer implements Runnable {
 
     public static void main(String[] args) {
         Socket cliSock;
+
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", "server.keystore");
+        System.setProperty("javax.net.ssl.trustStorePassword", "password");
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore", "server.keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "password");
+
+        SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
         try {
-            serverSocket = new ServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
+            sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sslServerSocket.setNeedClientAuth(true);
         } catch (IOException ex) {
-            System.err.println("Failed to open server socket");
+            System.out.println("Server failed to open local port " + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
             System.exit(1);
         }
         while (true) {
             try {
-                cliSock = serverSocket.accept();
+                cliSock = sslServerSocket.accept();
                 new Thread(new TcpServer(cliSock)).start();
 
             } catch (IOException e) {

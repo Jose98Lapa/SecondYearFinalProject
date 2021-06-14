@@ -1,20 +1,26 @@
-grammar gramatica_formulario;
+grammar gramaticaFormulario;
 
 /*
  *   Lexico
  */
 
-gramatica: 'BEGIN' instrucao+ 'END';
+gramaica: 'BEGIN' instrucao+ 'END';
 
 instrucao: inicializacao
    | expr
    | if_stat
    | atribuicao
+   | atribuicao_atributo
    ;
 
 inicializacao: TIPODADOS identidade     #inicializacaoIdent
    | TIPODADOS atribuicao               #inicializacaoAtribuicao
    ;
+
+atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
+
+get_atributo: 'atr' '[' NUMERO ']'
+  ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                          #variavelExpr
     | identidade OPERADORATRIBUICAO identidade'(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
@@ -33,7 +39,8 @@ expr: left=expr POW right=expr                          #powExpr
 tipo_dados: identidade #tp_ident
    | integer           #tp_integer
    | floate            #tp_float
-   | stringe           #tp_stringe
+   | STRING            #tp_stringe
+   | data              #tp_data
    ;
 
 integer
@@ -44,8 +51,8 @@ floate
    : '-'? REAL
    ;
 
-stringe
-   : '"' TEXTO '"'
+data
+   : '"' DATAREGEX '"'
    ;
 
 identidade: VARIAVEL
@@ -65,6 +72,7 @@ stat_block
 fragment DIGITO     : [0-9];
 fragment LOWERCASE  : [a-z];
 fragment UPPERCASE  : [A-Z];
+
 
 OU : 'ou';
 E : 'e';
@@ -91,19 +99,21 @@ ENTAO               : 'entao';
 SENAO               : 'senao';
 END_SE              : 'es';
 
-TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO';
+TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO' | 'DATA';
 ELEMENTO           : 'ELEMENTO';
-
-TIPOFICHEIRO           : 'XML';
-END_FICHEIRO           : 'LMX';
-SEND_EMAIL             : 'ENVIAR_EMAIL';
-UPDATE                 : 'ATUALIZAR';
-
 
 NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
+STRING              : '"' ~('"')+ '"';
+
+
+DATA_DIA            : [0]?[1-9]|[12][0-9]|[3][01];
+DATA_MES            : [0]?[1-9]|[1][012];
+DATA_ANO            : DIGITO DIGITO DIGITO DIGITO;
+DATAREGEX           : DATA_DIA '/' DATA_MES '/' DATA_ANO;
+
 
 COMMENT: '/*' .*? '*/' -> skip
 ;

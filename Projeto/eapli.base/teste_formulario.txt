@@ -1,0 +1,7 @@
+BEGIN
+DATA $dataInicio -> atr[5]
+DATA $dataFim -> atr[5]
+NUMERO $result
+se $dataFim > $dataInicio entao $result -> 1
+es
+END
