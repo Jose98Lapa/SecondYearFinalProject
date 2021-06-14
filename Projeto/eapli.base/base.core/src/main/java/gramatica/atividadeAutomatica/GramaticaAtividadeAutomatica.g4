@@ -21,14 +21,14 @@ estrutura_xml: tipo_ficheiro
                END_FICHEIRO
                ;
 
-tipo_ficheiro: TIPOFICHEIRO identidade                                  #ficheiroIdent
+tipo_ficheiro: TIPOFICHEIRO identidade                   #ficheiroIdent
     | TIPOFICHEIRO identidade OPERADORATRIBUICAO STRING  #ficheiroNomeFicheiro
     ;
 
 elemento: ELEMENTO identidade
     | ELEMENTO  atribuicao_elemento;
 
-atribuicao_elemento: identidade OPERADORATRIBUICAO 'FIND' '[' what=(TEXTO|NUMERO)+',' file=identidade ']' 'where' '(' id=(TEXTO|NUMERO)+ ',' idvalue=(TEXTO|NUMERO)+ ')'
+atribuicao_elemento: nomeVar=identidade OPERADORATRIBUICAO 'FIND' '[' what=(TEXTO|NUMERO)+',' file=identidade ']' 'where' '(' id=(TEXTO|NUMERO)+ ',' idvalue=(TEXTO|NUMERO)+ ')'
     ;
 
 inicializacao: TIPODADOS identidade         #inicializacaoIdent
@@ -36,7 +36,7 @@ inicializacao: TIPODADOS identidade         #inicializacaoIdent
     ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                          #variavelExpr
-    | identidade OPERADORATRIBUICAO identidade'(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
+    | nomeVar=identidade OPERADORATRIBUICAO nomeElemento=identidade'(' what=(TEXTO|NUMERO)+ ')'   #variavelVariavel
     ;
 
 if_stat: SE condition_block (SENAO stat_block)? END_SE
