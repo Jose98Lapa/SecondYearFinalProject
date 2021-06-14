@@ -1,10 +1,10 @@
-grammar gramatica_formulario;
+grammar gramaticaFormulario;
 
 /*
  *   Lexico
  */
 
-gramatica: 'BEGIN' instrucao+ 'END';
+gramaica: 'BEGIN' instrucao+ 'END';
 
 instrucao: inicializacao
    | expr
@@ -17,9 +17,9 @@ inicializacao: TIPODADOS identidade     #inicializacaoIdent
    | TIPODADOS atribuicao               #inicializacaoAtribuicao
    ;
 
- atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
+atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 
-get_atributo: 'atr' '(' NUMERO ')'
+get_atributo: 'atr' '[' NUMERO ']'
   ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                          #variavelExpr
