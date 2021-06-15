@@ -1,9 +1,12 @@
 package eapli.base.app.backoffice.console.presentation.checkActivityFlux;
 
-import eapli.base.app.backoffice.console.presentation.checkActivityFlux.HttpAjaxRequest;
 import eapli.base.app.backoffice.console.presentation.checkActivityFlux.application.CheckActivityFluxController;
 import eapli.base.collaborator.dto.CollaboratorDTO;
+import eapli.base.dasboard.application.HttpAjaxRequest;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,23 +26,28 @@ public class HttpServerAjax extends Thread {
 
     @Override
     public void run() {
-        Socket cliSock = null;
+        SSLSocket cliSock = null;
+        System.setProperty("javax.net.ssl.keyStore", "server.keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "password");
+        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
+        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
 
 
         try {
-            sock = new ServerSocket(55128);
+            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            sock = sslF.createServerSocket(55128);
         } catch (IOException ex) {
+            ex.printStackTrace();
             System.err.println("Server failed to open local port " + 55128);
-
         }
         while (true) {
 
             try {
-                cliSock = sock.accept();
+                cliSock = (SSLSocket) sock.accept();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
+            eapli.base.dasboard.application.HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
         }
     }
