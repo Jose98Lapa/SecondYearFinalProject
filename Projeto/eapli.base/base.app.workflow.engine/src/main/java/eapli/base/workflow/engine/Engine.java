@@ -321,28 +321,18 @@ public class Engine {
                     if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
                         new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
                         return;
-                    } else {
-                        if (redistributeTask(entry.getKey(), ticketTask.mainReference().maxTimeOfExecution(), collaboratorAndTotalTaskTime, collaboratorAndFitnessMap) && !entry.getKey().sameAs(collaborator)) {
-                            new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
-                            return;
-                        }
                     }
                 }
             }
         } else {
-            for (Map.Entry<Collaborator, Long> entry : temp.entrySet()) {
-                if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
-                    new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
-                    return;
-                }
-
-            }
+            new TicketTaskService().addCollaborator(ticketTask, temp.entrySet().iterator().next().getKey());
         }
 
 
     }
 
-    private synchronized boolean redistributeTask(Collaborator collaborator, long minutesOfExecution, Map<Collaborator, Long> collaboratorAndTotalTaskTime, Map<Collaborator, Float> collaboratorAndFitnessMap) {
+    private synchronized boolean redistributeTask(Collaborator collaborator, long minutesOfExecution, Map<
+            Collaborator, Long> collaboratorAndTotalTaskTime, Map<Collaborator, Float> collaboratorAndFitnessMap) {
         List<Ticket> ticketList = new ArrayList<>();
         long timeNecessary = 0;
         for (TicketTask ticketTask : new TicketTaskService().getPendingApprovalTasks(collaborator)) {
