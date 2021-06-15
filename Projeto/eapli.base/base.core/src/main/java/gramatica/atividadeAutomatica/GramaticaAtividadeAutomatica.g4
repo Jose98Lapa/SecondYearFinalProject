@@ -7,7 +7,6 @@ grammar GramaticaAtividadeAutomatica;
 gramatica: 'BEGIN' instrucao* 'END';
 
 instrucao: inicializacao
-    | expr
     | if_stat
     | atribuicao
     | estrutura_xml
@@ -35,8 +34,8 @@ inicializacao: TIPODADOS identidade         #inicializacaoIdent
     | TIPODADOS atribuicao                  #inicializacaoAtribuicao
     ;
 
-atribuicao: identidade OPERADORATRIBUICAO expr                          #variavelExpr
-    | nomeVar=identidade OPERADORATRIBUICAO nomeElemento=identidade'(' what=(TEXTO|NUMERO)+ ')'   #variavelVariavel
+atribuicao: identidade OPERADORATRIBUICAO expr                          #atr_variavelExpr
+    | nomeVar=identidade OPERADORATRIBUICAO nomeElemento=identidade'(' what=(TEXTO|NUMERO)+ ')'   #atr_variavelVariavel
     ;
 
 if_stat: SE condition_block (SENAO stat_block)? END_SE
@@ -88,7 +87,7 @@ enviar_email: SEND_EMAIL '(' destinatario=identidade ',' assunto=identidade ',' 
             | SEND_EMAIL '(' destinatario=identidade ',' assunto=STRING ',' corpo=STRING')'            #emailString
             ;
 
-update_informacao: UPDATE '(' what=(TEXTO|NUMERO)+  ','  id=(TEXTO|NUMERO)+ ',' idvalue=(TEXTO|NUMERO)+ ')' '->' '(' whatToUpdate=(TEXTO|NUMERO)+ ',' updatevalue=identidade ')'
+update_informacao: UPDATE '(' what=(TEXTO|NUMERO)+  ','  id=(TEXTO|NUMERO)+ ',' idvalue=STRING ')' '->' '(' whatToUpdate=(TEXTO|NUMERO)+ ',' updatevalue=identidade ')'
               ;
 
 

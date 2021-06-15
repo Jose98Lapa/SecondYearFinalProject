@@ -69,19 +69,19 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code variavelExpr}
+	 * Visit a parse tree produced by the {@code atr_variavelExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx);
+	T visitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code variavelVariavel}
+	 * Visit a parse tree produced by the {@code atr_variavelVariavel}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx);
+	T visitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
 	 * @param ctx the parse tree

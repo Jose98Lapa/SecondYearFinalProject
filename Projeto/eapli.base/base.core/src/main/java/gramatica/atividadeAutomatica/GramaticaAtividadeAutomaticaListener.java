@@ -106,29 +106,29 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code variavelExpr}
+	 * Enter a parse tree produced by the {@code atr_variavelExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx);
+	void enterAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code variavelExpr}
+	 * Exit a parse tree produced by the {@code atr_variavelExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx);
+	void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code variavelVariavel}
+	 * Enter a parse tree produced by the {@code atr_variavelVariavel}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx);
+	void enterAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code variavelVariavel}
+	 * Exit a parse tree produced by the {@code atr_variavelVariavel}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx);
+	void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
 	 * @param ctx the parse tree

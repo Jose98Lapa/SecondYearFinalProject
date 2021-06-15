@@ -80,14 +80,14 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

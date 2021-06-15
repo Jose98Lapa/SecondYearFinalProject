@@ -2,7 +2,6 @@ BEGIN
     XML $file -> "exemplo.xml"
         ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
     LMX
-
     TEXTO $price -> $specificProduct(preco)
   //NUMERO $price -> $specificProduct(price)
   //TEXTO $status
@@ -26,7 +25,7 @@ BEGIN
     //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
 
-    $nome -> "Restauro Porta"
-    ATUALIZAR(service,serviceid,2) -> (servicetitle,$nome)
+    TEXTO $nome -> "INATIVO"
+    ATUALIZAR(service,status,"Teste") -> (status,$nome)
 
 END

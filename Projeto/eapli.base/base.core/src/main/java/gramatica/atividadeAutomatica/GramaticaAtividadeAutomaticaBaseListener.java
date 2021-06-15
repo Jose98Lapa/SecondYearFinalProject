@@ -124,25 +124,25 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) { }
+	@Override public void enterAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) { }
+	@Override public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { }
+	@Override public void enterAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) { }
+	@Override public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
