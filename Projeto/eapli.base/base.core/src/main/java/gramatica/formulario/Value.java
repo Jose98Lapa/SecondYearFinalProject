@@ -2,7 +2,10 @@ package gramatica.formulario;
 
 import org.w3c.dom.Element;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Value {
 
@@ -27,12 +30,13 @@ public class Value {
     }
 
     public LocalDate asDate () {
-        return LocalDate.parse( ( CharSequence ) this.value );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // create a LocalDate object and
+        LocalDate dt = LocalDate.parse(this.value.toString(), formatter);
+        return dt ;
     }
 
-    public Element asElement() {
-        return (Element) value;
-    }
 
     public String asString() {
         return String.valueOf(value);
@@ -55,7 +59,17 @@ public class Value {
     }
 
     public boolean isDate () {
-        return value instanceof LocalDate;
+        return isValidDate(value.toString());
+    }
+    public static boolean isValidDate(String inDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(inDate.trim());
+        } catch (ParseException pe) {
+            return false;
+        }
+        return true;
     }
 
     @Override

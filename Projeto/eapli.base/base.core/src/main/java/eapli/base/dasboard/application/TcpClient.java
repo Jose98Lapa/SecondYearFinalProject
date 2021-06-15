@@ -1,14 +1,12 @@
 package eapli.base.dasboard.application;
 
 import eapli.base.Application;
-import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -56,6 +54,7 @@ public class TcpClient {
             socket.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
 

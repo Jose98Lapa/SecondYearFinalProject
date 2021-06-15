@@ -20,14 +20,14 @@ public class AttributeLabel implements ValueObject, Serializable {
             throw new IllegalArgumentException("Label should neither be null nor empty");
         }
 
-        Pattern p = Pattern.compile(regex);
+       /* Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(label);
 
-        if (m.matches()) {
+        if (m.matches()) {*/
             this.label = label;
-        } else {
-            throw new IllegalArgumentException("Label does not fit the criteria");
-        }
+       // } else {
+         //   throw new IllegalArgumentException("Label does not fit the criteria");
+      //  }
     }
 
     protected AttributeLabel() {
