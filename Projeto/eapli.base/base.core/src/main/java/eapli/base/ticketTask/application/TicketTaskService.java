@@ -135,6 +135,18 @@ public class TicketTaskService {
 
     }
 
+    public void addCollaborator (TicketTask ticketTask,Collaborator collaborator){
+        if (ticketTask.getClass()==TicketApprovalTask.class){
+            ((TicketApprovalTask) ticketTask).setApprovedBy(collaborator);
+        }
+        if (ticketTask.getClass()==TicketExecutionTask.class){
+            ((TicketExecutionTask) ticketTask).setExecutedBy(collaborator);
+        }
+
+        ticketTaskRepository.save(ticketTask);
+
+    }
+
     public boolean redeemTask(TicketDTO ticketDTO, Collaborator collaborator) {
         Optional<Ticket> Oticket = ticketRepository.ofIdentity(ticketDTO.id);
         Ticket ticket;
@@ -188,6 +200,11 @@ public class TicketTaskService {
         }
         return time;
     }
+
+    public List<TicketTask> getPendingApprovalTasks(Collaborator collaborator){
+        return ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
+    }
+
 
     public List<TicketTask> getCompletedApprovalTasksByCollaborator(Collaborator collaborator){
         return ticketTaskRepository.getCompleteApprovedTicketsByCollaborator(collaborator);

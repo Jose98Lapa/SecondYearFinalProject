@@ -140,7 +140,7 @@ public class Engine {
         if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
             selected = assignCollaboratorExecution(ticket);
             ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
-        } else if (ticket.workflow().starterTask() instanceof TicketApprovalTask){
+        } else if (ticket.workflow().starterTask() instanceof TicketApprovalTask) {
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
         }
@@ -179,8 +179,8 @@ public class Engine {
             }
         }
         if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-            for (Date date:historyExecution.keySet()) {
-                if (collaborators.contains(historyExecution.get(date))){
+            for (Date date : historyExecution.keySet()) {
+                if (collaborators.contains(historyExecution.get(date))) {
                     theChosenOne = historyExecution.get(date);
                     historyExecution.put(new Date(), historyExecution.remove(date));
                 }
@@ -214,8 +214,8 @@ public class Engine {
             }
         }
         if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo que tem permissoes
-            for (Date date:historyApproval.keySet()) {
-                if (collaborators.contains(historyApproval.get(date))){
+            for (Date date : historyApproval.keySet()) {
+                if (collaborators.contains(historyApproval.get(date))) {
                     theChosenOne = historyApproval.get(date);
                     historyApproval.put(new Date(), historyApproval.remove(date));
                 }
@@ -224,32 +224,140 @@ public class Engine {
         return theChosenOne;
     }
 
-    public synchronized void assigningAlgorithm(){
+    public synchronized void assigningAlgorithm() {
         List<Ticket> ticketList = PersistenceContext.repositories().tickets().getPendingTicket();
-        for (Ticket ticket:ticketList){
-            if (ticket.workflow().getFirstIncompleteTask().getClass()==TicketApprovalTask.class){
+        for (Ticket ticket : ticketList) {
+            if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketApprovalTask.class) {
                 chooseApprovalCollaborator(ticket);
             }
         }
 
     }
 
-    private synchronized void chooseApprovalCollaborator(Ticket ticket){
-        List<Collaborator> collaboratorList = new ArrayList<>();
-        Map<Collaborator,Long> collaboratorAndTotalTaskTime = new LinkedHashMap<>();
-        Map<Collaborator,Float> collaboratorAndFitnessMap = new LinkedHashMap<>();
+    private synchronized void chooseApprovalCollaborator(Ticket ticket) {
+        Map<Collaborator, Long> collaboratorAndTotalTaskTime = new HashMap<>();
+        Map<Collaborator, Float> collaboratorAndFitnessMap = new HashMap<>();
         TicketTask ticketTask = ticket.workflow().getFirstIncompleteTask();
         ApprovalTask approvalTask = (ApprovalTask) ticketTask.mainReference();
-        for (Collaborator collaborator:PersistenceContext.repositories().collaborators().getCollaboratorsByRole(approvalTask.necessaryRoleForApproval())){
-            collaboratorList.add(collaborator);
-            collaboratorAndTotalTaskTime.put(collaborator,new TicketTaskService().getTimeToFinishAllTasks(collaborator));
-            collaboratorAndFitnessMap.put(collaborator,new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket,collaborator));
+        long allCollaboratorTime = 0;
+        for (Collaborator collaborator : PersistenceContext.repositories().collaborators().getCollaboratorsByRole(approvalTask.necessaryRoleForApproval())) {
+            long timeToFinishAllTasks = new TicketTaskService().getTimeToFinishAllTasks(collaborator);
+            allCollaboratorTime += timeToFinishAllTasks;
+            collaboratorAndTotalTaskTime.put(collaborator, timeToFinishAllTasks);
+            collaboratorAndFitnessMap.put(collaborator, new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket, collaborator));
         }
-        if (ticket.urgency().equals(Urgency.valueOf("urgente"))){
+        chooseCollaborator(ticket, collaboratorAndTotalTaskTime, collaboratorAndFitnessMap, ticketTask, allCollaboratorTime, null);
 
+    }
+
+    private synchronized void chooseCollaborator(Ticket ticket, Map<Collaborator, Long> collaboratorAndTotalTaskTime, Map<Collaborator, Float> collaboratorAndFitnessMap, TicketTask ticketTask, long allCollaboratorTime, Collaborator collaborator) {
+        boolean add = allCollaboratorTime > (long) collaboratorAndTotalTaskTime.size() * 5 * 60;
+
+        List<Map.Entry<Collaborator, Long>> list
+                = new LinkedList<>(
+                collaboratorAndTotalTaskTime.entrySet());
+
+
+        list.sort(Map.Entry.comparingByValue());
+
+        // put data from sorted list to hashmap
+        HashMap<Collaborator, Long> temp
+                = new LinkedHashMap<>();
+        for (Map.Entry<Collaborator, Long> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+
+        if (ticket.urgency().equals(Urgency.valueOf("urgente"))) {
+            List<Map.Entry<Collaborator, Float>> listValue
+                    = new LinkedList<>(
+                    collaboratorAndFitnessMap.entrySet());
+
+
+            list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+            // put data from sorted list to hashmap
+            HashMap<Collaborator, Float> tempByFitness
+                    = new LinkedHashMap<>();
+            for (Map.Entry<Collaborator, Float> aa : listValue) {
+                tempByFitness.put(aa.getKey(), aa.getValue());
+            }
+
+            if (add) {
+                new TicketTaskService().addCollaborator(ticketTask, tempByFitness.entrySet().iterator().next().getKey());
+            } else {
+                for (Map.Entry<Collaborator, Float> entry : tempByFitness.entrySet()) {
+                    if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
+                        new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
+                        return;
+                    } else {
+                        if (redistributeTask(entry.getKey(), ticketTask.mainReference().maxTimeOfExecution(), collaboratorAndTotalTaskTime, collaboratorAndFitnessMap) && !entry.getKey().sameAs(collaborator)) {
+                            new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
+                            return;
+                        }
+                    }
+                }
+            }
+            return;
+        }
+        if (ticket.urgency().equals(Urgency.valueOf("reduzida"))) {
+            List<Map.Entry<Collaborator, Float>> listValue
+                    = new LinkedList<>(
+                    collaboratorAndFitnessMap.entrySet());
+
+
+            list.sort(Map.Entry.comparingByValue());
+
+            // put data from sorted list to hashmap
+            HashMap<Collaborator, Float> tempByFitness
+                    = new LinkedHashMap<>();
+            for (Map.Entry<Collaborator, Float> aa : listValue) {
+                tempByFitness.put(aa.getKey(), aa.getValue());
+            }
+
+            if (add) {
+                new TicketTaskService().addCollaborator(ticketTask, tempByFitness.entrySet().iterator().next().getKey());
+            } else {
+                for (Map.Entry<Collaborator, Float> entry : tempByFitness.entrySet()) {
+                    if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
+                        new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
+                        return;
+                    } else {
+                        if (redistributeTask(entry.getKey(), ticketTask.mainReference().maxTimeOfExecution(), collaboratorAndTotalTaskTime, collaboratorAndFitnessMap) && !entry.getKey().sameAs(collaborator)) {
+                            new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
+                            return;
+                        }
+                    }
+                }
+            }
+        } else {
+            for (Map.Entry<Collaborator, Long> entry : temp.entrySet()) {
+                if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
+                    new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
+                    return;
+                }
+
+            }
         }
 
 
+    }
+
+    private synchronized boolean redistributeTask(Collaborator collaborator, long minutesOfExecution, Map<Collaborator, Long> collaboratorAndTotalTaskTime, Map<Collaborator, Float> collaboratorAndFitnessMap) {
+        List<Ticket> ticketList = new ArrayList<>();
+        long timeNecessary = 0;
+        for (TicketTask ticketTask : new TicketTaskService().getPendingApprovalTasks(collaborator)) {
+            Ticket ticket = new TicketTaskService().getTicketDTOByTicketTask(ticketTask);
+            if (!ticket.urgency().equals(Urgency.valueOf("urgente")) && timeNecessary < minutesOfExecution) {
+                ticketList.add(ticket);
+                timeNecessary += ticket.workflow().getFirstIncompleteTask().mainReference().maxTimeOfExecution();
+            }
+        }
+        if (ticketList.isEmpty())
+            return false;
+        for (Ticket ticket : ticketList) {
+            chooseCollaborator(ticket, collaboratorAndTotalTaskTime, collaboratorAndFitnessMap, ticket.workflow().getFirstIncompleteTask(), 0, collaborator);
+        }
+        return true;
 
     }
 
