@@ -47,7 +47,7 @@ public class HttpServerAjax extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            eapli.base.dasboard.application.HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
+            HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
         }
     }
