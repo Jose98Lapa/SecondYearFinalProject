@@ -6,6 +6,8 @@ import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.task.domain.*;
+import eapli.base.team.application.TeamListService;
+import eapli.base.team.domain.Team;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
@@ -15,9 +17,7 @@ import eapli.base.ticketTask.domain.*;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TicketTaskService {
     private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
@@ -208,6 +208,14 @@ public class TicketTaskService {
 
     public List<TicketTask> getCompletedApprovalTasksByCollaborator(Collaborator collaborator){
         return ticketTaskRepository.getCompleteApprovedTicketsByCollaborator(collaborator);
+    }
+
+    public Set<Collaborator> getCollaboratorByTicketTask(TicketTask ticketTask){
+        if (!(ticketTask instanceof TicketExecutionTask))
+            throw new IllegalArgumentException("TicketTask inválida");
+        ExecutionTask executionTask = (ExecutionTask)  ticketTask.mainReference();
+        Set<Team> teams = new HashSet<>(executionTask.executingTeams());
+        return new TeamListService().getCollaboratorByTeams(teams);
     }
 
 }

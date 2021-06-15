@@ -229,6 +229,8 @@ public class Engine {
         for (Ticket ticket : ticketList) {
             if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketApprovalTask.class) {
                 chooseApprovalCollaborator(ticket);
+            }else if (ticket.workflow().getFirstIncompleteTask().getClass()==TicketExecutionTask.class){
+                chooseExecutionCollaborator(ticket);
             }
         }
 
@@ -246,6 +248,27 @@ public class Engine {
             collaboratorAndTotalTaskTime.put(collaborator, timeToFinishAllTasks);
             collaboratorAndFitnessMap.put(collaborator, new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket, collaborator));
         }
+        chooseCollaborator(ticket, collaboratorAndTotalTaskTime, collaboratorAndFitnessMap, ticketTask, allCollaboratorTime, null);
+    }
+
+    private synchronized void chooseExecutionCollaborator(Ticket ticket){
+        TicketTask ticketTask = ticket.workflow().getFirstIncompleteTask();
+        if (ticketTask.transition()!=null&&ticketTask.transition().hasPreviousTask()&&ticketTask.transition().previousTask().getClass()==TicketExecutionTask.class){
+            TicketExecutionTask ticketExecutionTask = (TicketExecutionTask) ticketTask.transition().previousTask();
+            new TicketTaskService().addCollaborator(ticketTask,ticketExecutionTask.collaborator());
+            return;
+        }
+        Map<Collaborator, Long> collaboratorAndTotalTaskTime = new HashMap<>();
+        Map<Collaborator, Float> collaboratorAndFitnessMap = new HashMap<>();
+        ExecutionTask executionTask = (ExecutionTask) ticketTask.mainReference();
+        long allCollaboratorTime = 0;
+        for (Collaborator collaborator:new TicketTaskService().getCollaboratorByTicketTask(ticketTask)){
+            long timeToFinishAllTasks = new TicketTaskService().getTimeToFinishAllTasks(collaborator);
+            allCollaboratorTime += timeToFinishAllTasks;
+            collaboratorAndTotalTaskTime.put(collaborator, timeToFinishAllTasks);
+            collaboratorAndFitnessMap.put(collaborator, new TicketListService().getCollaboratorPerformanceInApprovalTasks(ticket, collaborator));
+        }
+
         chooseCollaborator(ticket, collaboratorAndTotalTaskTime, collaboratorAndFitnessMap, ticketTask, allCollaboratorTime, null);
 
     }
