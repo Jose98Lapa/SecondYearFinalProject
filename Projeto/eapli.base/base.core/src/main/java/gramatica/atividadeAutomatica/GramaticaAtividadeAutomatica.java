@@ -1,8 +1,10 @@
 package gramatica.atividadeAutomatica;
 
 import java.io.*;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -507,30 +509,27 @@ public class GramaticaAtividadeAutomatica {
 
         @Override
         public Value visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
-            String what = ctx.what.getText();
-            String id = ctx.id.getText();
-            String idvalue = ctx.idvalue.getText();
-            String whatToUpdate = ctx.whatToUpdate.getText();
-            String updatevalue = this.visit(ctx.updatevalue).asString();
-
+            String what = ctx.what.getText().replaceAll("\"", "");
+            String id = ctx.id.getText().replaceAll("\"", "");
+            String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
+            String whatToUpdate = ctx.whatToUpdate.getText().replaceAll("\"", "");
+            String updatevalue = this.visit(ctx.updatevalue).asString().replaceAll("\"", "");
 
             String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
             String user = "admin";
             String passwd = "eapli";
 
-            String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s", what, whatToUpdate , updatevalue, id , idvalue) ;
+            String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s'", what, whatToUpdate, updatevalue, id, idvalue);
+            try {
+                Class.forName("org.h2.Driver");
 
-            try (var con = DriverManager.getConnection(url, user, passwd);
-                 var st = con.createStatement();
-                 var rs = st.executeQuery(query)) {
-
-                while (rs.next()) {
-
-                    System.out.printf("%d %s %d%n", rs.getInt(1),
-                            rs.getString(2), rs.getInt(3));
-                }
-
-            } catch (SQLException ex) {
+                Connection conn = DriverManager.getConnection(url, user, passwd);
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate(query);
+                stmt.close();
+                conn.close();
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
             }
             return Value.VOID;
         }
