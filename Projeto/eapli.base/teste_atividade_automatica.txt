@@ -26,6 +26,7 @@ BEGIN
     //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
 
-    //ATUALIZAR(pessoa,id,4) -> (nome,$nome)
+    $nome -> "Restauro Porta"
+    ATUALIZAR(service,serviceid,2) -> (servicetitle,$nome)
 
 END
