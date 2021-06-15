@@ -44,13 +44,13 @@ public class TcpClient {
         try {
             socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getPortWorkflow()));
         } catch (IOException ex) {
-            System.out.println("Failed to establish TCP connection");
+            //System.out.println("Failed to establish TCP connection");
             //System.exit(1);
             return false;
         }
 
 
-        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortWorkflow()));
 
         try {
             socket.startHandshake();
@@ -161,28 +161,6 @@ public class TcpClient {
     private byte[] buildPacket(byte[] headers, byte[] payload) {
 
         return ArrayUtils.addAll(headers, payload);
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        TcpClient tcpClient = new TcpClient();
-        tcpClient.startConnection(Application.settings().getIpWorkflow());
-
-        boolean cycle = true;
-        while (cycle) {
-            int i = Console.readInteger("Insira num (0 para sair)");
-            switch (i) {
-                case 0:
-                    tcpClient.stopConnection();
-                    cycle = false;
-                    break;
-                case 1:
-                    tcpClient.TaskInfoList("guilli@isep.ipp.pt");
-                    break;
-                default:
-                    System.out.println("Invalid Option");
-            }
-        }
     }
 }
 
