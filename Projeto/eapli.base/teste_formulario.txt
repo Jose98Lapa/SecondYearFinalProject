@@ -2,6 +2,6 @@ BEGIN
 DATA $dataInicio -> atr[1]
 DATA $dataFim -> atr[1]
 NUMERO $result
-se $dataFim > $dataInicio entao $result -> 1
+se $dataFim = $dataInicio entao $result -> 5
 es
 END

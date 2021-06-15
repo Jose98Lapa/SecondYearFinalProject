@@ -250,11 +250,17 @@ public class GramaticaFormulario {
                     if (left.isString() && right.isString()) {
                         return new Value(left.value.equals(right.value));
                     }
+                    if (left.isDate() && right.isDate()) {
+                        return new Value(left.value.equals(right.value));
+                    }
                 case GramaticaFormularioParser.NEQ:
                     if (left.isDouble() && right.isDouble()) {
                         return new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE);
                     }
                     if (left.isString() && right.isString()) {
+                        return new Value(!left.value.equals(right.value));
+                    }
+                    if (left.isDate() && right.isDate()) {
                         return new Value(!left.value.equals(right.value));
                     }
                 default:
