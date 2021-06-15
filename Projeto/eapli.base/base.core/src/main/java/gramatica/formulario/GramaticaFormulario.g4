@@ -22,8 +22,9 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
 
-atribuicao: identidade OPERADORATRIBUICAO expr                          #variavelExpr
-    | identidade OPERADORATRIBUICAO identidade'(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
+atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
+    | identidade OPERADORATRIBUICAO identidade '(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
+    | identidade OPERADORATRIBUICAO get_atributo                         #variavelAtr
    ;
 
 expr: left=expr POW right=expr                          #powExpr
