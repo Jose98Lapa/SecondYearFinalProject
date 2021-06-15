@@ -62,7 +62,7 @@ public class TcpServer implements Runnable {
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2] & 0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-            boolean mock = false;
+            boolean mock = true;
             if (mock) {
                 String finalString = "5";
                 finalString = compileString(finalString, "30/06/2021 23:34");
