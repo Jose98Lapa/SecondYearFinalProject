@@ -65,6 +65,10 @@ public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> , Serializa
         return AggregateRoot.super.compareTo(other);
     }
 
+    public Set<Attribute> atributes() {
+        return atr;
+    }
+
     @Override
     public String toString() {
         return "Formulario{" +

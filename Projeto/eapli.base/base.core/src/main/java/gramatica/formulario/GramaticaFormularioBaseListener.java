@@ -112,6 +112,18 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAtomExpr(GramaticaFormularioParser.AtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

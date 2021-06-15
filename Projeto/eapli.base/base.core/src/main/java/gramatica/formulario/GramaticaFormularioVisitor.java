@@ -64,6 +64,13 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariavelVariavel(GramaticaFormularioParser.VariavelVariavelContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code variavelAtr}
+	 * labeled alternative in {@link GramaticaFormularioParser#atribuicao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaFormularioParser#expr}.
 	 * @param ctx the parse tree

@@ -1,5 +1,14 @@
 package gramatica.formulario;
 
+import eapli.base.form.DTO.FormDTOParser;
+import eapli.base.form.domain.Form;
+import eapli.base.form.domain.FormID;
+import eapli.base.form.domain.attribute.Attribute;
+import eapli.base.form.domain.attribute.AttributeID;
+import eapli.base.form.repository.FormRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.infrastructure.persistence.RepositoryFactory;
+import gramatica.atividadeAutomatica.GramaticaAtividadeAutomaticaParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -24,11 +33,18 @@ public class GramaticaFormulario {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
         ParseTree tree = parser.gramatica();
-        GramaticaFormulario.EvalVisitor eval = new GramaticaFormulario.EvalVisitor();
+        EvalVisitor eval = new EvalVisitor();
+        FormRepository repo = PersistenceContext.repositories().form();
+        eval.defineForm(new FormDTOParser().valueOf(repo.findByFormID(FormID.valueOf("6ca92198-5168-4c6c-9467-3877390bde7f")).get()));
         System.out.println(eval.visit(tree));
     }
 
     static class EvalVisitor extends GramaticaFormularioBaseVisitor<Value> {
+        Form form;
+
+        public void defineForm(Form form) {
+            this.form = form;
+        }
 
         public static final double SMALL_VALUE = 0.00000000001;
 
@@ -42,6 +58,22 @@ public class GramaticaFormulario {
         @Override
         public Value visitAtomExpr(GramaticaFormularioParser.AtomExprContext ctx) {
             return visitChildren(ctx);
+        }
+        @Override
+        public Value visitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
+            Value value = this.visit(ctx.get_atributo()); //
+            memory.put(ctx.identidade().getText(),value);
+            return visitChildren(ctx);
+        }
+
+        @Override
+        public Value visitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) {
+            for (Attribute atr:form.atributes()) {
+                if (atr.number()==Integer.parseInt(ctx.numero.getText())){
+                    return memory.get(ctx.numero.getText());
+                }
+            }
+            return Value.VOID;
         }
 
         @Override
