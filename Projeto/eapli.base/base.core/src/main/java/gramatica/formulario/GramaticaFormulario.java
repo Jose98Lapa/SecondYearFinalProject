@@ -179,10 +179,10 @@ public class GramaticaFormulario {
 
             switch (ctx.op.getType()) {
                 case GramaticaFormularioParser.LT:
-                    return left.isDouble() && right.isDouble() ?
-                            new Value(left.asDouble() < right.asDouble()) :
-                            left.isDate() && right.isDate() ?
-                                    new Value(left.asDate().isBefore( right.asDate()));
+                    if (left.isDouble() && right.isDouble())
+                        return new Value(left.asDouble() < right.asDouble());
+                    if ( left.isDate() && right.isDate())
+                        new Value(left.asDate().isBefore( right.asDate()));
                 case GramaticaFormularioParser.LTEQ:
                     return new Value(left.asDouble() <= right.asDouble());
                 case GramaticaFormularioParser.GT:
