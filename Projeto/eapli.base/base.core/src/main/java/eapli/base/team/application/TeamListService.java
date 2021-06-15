@@ -9,6 +9,7 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.teamType.Domain.TeamType;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,6 +37,15 @@ public class TeamListService {
             }
         }
         return teamHashSet;
+    }
+
+    public Set<Collaborator> getCollaboratorByTeams(Set<Team> teamList){
+        Set<Collaborator> toReturn = new HashSet<>();
+        for (Team team:teamList){
+            toReturn.addAll(team.teamMembers());
+        }
+        return toReturn;
+
     }
 
     public void canIAddTheCollaborator(Collaborator collaborator, TeamType teamType){
