@@ -47,7 +47,7 @@ public class HttpServerAjax extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
+            CheckActivityHttpAjaxRequest req = new CheckActivityHttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
         }
     }
