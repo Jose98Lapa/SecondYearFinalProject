@@ -268,6 +268,18 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code tp_string}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_dados}.
+	 * @param ctx the parse tree
+	 */
+	void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tp_string}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_dados}.
+	 * @param ctx the parse tree
+	 */
+	void exitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code tp_integer}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_dados}.
 	 * @param ctx the parse tree

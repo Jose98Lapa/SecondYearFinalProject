@@ -1513,9 +1513,6 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public FloateContext floate() {
 			return getRuleContext(FloateContext.class,0);
 		}
-		public StringContext string() {
-			return getRuleContext(StringContext.class,0);
-		}
 		public Tp_floatContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1550,6 +1547,25 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class Tp_stringContext extends Tipo_dadosContext {
+		public StringContext string() {
+			return getRuleContext(StringContext.class,0);
+		}
+		public Tp_stringContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_string(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_string(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_string(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final Tipo_dadosContext tipo_dados() throws RecognitionException {
 		Tipo_dadosContext _localctx = new Tipo_dadosContext(_ctx, getState());
@@ -1567,19 +1583,19 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new Tp_integerContext(_localctx);
+				_localctx = new Tp_stringContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(177);
-				integer();
+				string();
 				}
 				break;
 			case 3:
-				_localctx = new Tp_floatContext(_localctx);
+				_localctx = new Tp_integerContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(178);
-				floate();
+				integer();
 				}
 				break;
 			case 4:
@@ -1587,7 +1603,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(179);
-				string();
+				floate();
 				}
 				break;
 			}
@@ -1925,6 +1941,11 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 	}
 
 	public static class Update_informacaoContext extends ParserRuleContext {
+		public Token what;
+		public Token id;
+		public Token idvalue;
+		public Token whatToUpdate;
+		public IdentidadeContext updatevalue;
 		public TerminalNode UPDATE() { return getToken(GramaticaAtividadeAutomaticaParser.UPDATE, 0); }
 		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaAtividadeAutomaticaParser.OPERADORATRIBUICAO, 0); }
 		public IdentidadeContext identidade() {
@@ -1975,9 +1996,10 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				{
 				{
 				setState(218);
+				((Update_informacaoContext)_localctx).what = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==NUMERO || _la==TEXTO) ) {
-				_errHandler.recoverInline(this);
+					((Update_informacaoContext)_localctx).what = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1999,9 +2021,10 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				{
 				{
 				setState(224);
+				((Update_informacaoContext)_localctx).id = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==NUMERO || _la==TEXTO) ) {
-				_errHandler.recoverInline(this);
+					((Update_informacaoContext)_localctx).id = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2023,9 +2046,10 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				{
 				{
 				setState(230);
+				((Update_informacaoContext)_localctx).idvalue = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==NUMERO || _la==TEXTO) ) {
-				_errHandler.recoverInline(this);
+					((Update_informacaoContext)_localctx).idvalue = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2051,9 +2075,10 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				{
 				{
 				setState(238);
+				((Update_informacaoContext)_localctx).whatToUpdate = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==NUMERO || _la==TEXTO) ) {
-				_errHandler.recoverInline(this);
+					((Update_informacaoContext)_localctx).whatToUpdate = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2069,7 +2094,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			setState(243);
 			match(T__4);
 			setState(244);
-			identidade();
+			((Update_informacaoContext)_localctx).updatevalue = identidade();
 			setState(245);
 			match(T__8);
 			}
@@ -2170,7 +2195,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		"\3\2\2\2\u00ad\u00a1\3\2\2\2\u00ad\u00a4\3\2\2\2\u00ad\u00a7\3\2\2\2\u00ad"+
 		"\u00aa\3\2\2\2\u00ae\u00b1\3\2\2\2\u00af\u00ad\3\2\2\2\u00af\u00b0\3\2"+
 		"\2\2\u00b0\31\3\2\2\2\u00b1\u00af\3\2\2\2\u00b2\u00b7\5 \21\2\u00b3\u00b7"+
-		"\5\34\17\2\u00b4\u00b7\5\36\20\2\u00b5\u00b7\5\"\22\2\u00b6\u00b2\3\2"+
+		"\5\"\22\2\u00b4\u00b7\5\34\17\2\u00b5\u00b7\5\36\20\2\u00b6\u00b2\3\2"+
 		"\2\2\u00b6\u00b3\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b6\u00b5\3\2\2\2\u00b7"+
 		"\33\3\2\2\2\u00b8\u00ba\7\25\2\2\u00b9\u00b8\3\2\2\2\u00b9\u00ba\3\2\2"+
 		"\2\u00ba\u00bb\3\2\2\2\u00bb\u00bc\7\'\2\2\u00bc\35\3\2\2\2\u00bd\u00bf"+

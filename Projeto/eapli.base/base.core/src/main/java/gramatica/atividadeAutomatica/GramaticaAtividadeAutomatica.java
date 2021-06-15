@@ -1,10 +1,13 @@
 package gramatica.atividadeAutomatica;
 
 import java.io.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.logging.Logger;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -291,7 +294,18 @@ public class GramaticaAtividadeAutomatica {
         }
 
         @Override
+        public Value visitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx) {
+            String id = ctx.identidade().getText();
+            return memory.get(id);
+        }
+
+        @Override
         public Value visitTp_float(GramaticaAtividadeAutomaticaParser.Tp_floatContext ctx) {
+            return new Value(ctx.getText());
+        }
+
+        @Override
+        public Value visitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) {
             return new Value(ctx.getText());
         }
 
@@ -325,16 +339,18 @@ public class GramaticaAtividadeAutomatica {
             Value left = new Value(this.visit(ctx.left));
             Value right = new Value(this.visit(ctx.right));
 
-            if (left.isString() || right.isString()) {
-                if (!(left.isString() && right.isString()))
-                    throw new RuntimeException("Exception message");
-            }
-
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MAIS:
-                    return left.isDouble() && right.isDouble() ?
-                            new Value(left.asDouble() + right.asDouble()) :
-                            new Value(left.asInteger() + right.asInteger());
+                    if (left.isDouble() && right.isDouble())
+                        return new Value(left.asDouble() + right.asDouble());
+
+                    if (left.isInteger() && right.isInteger())
+                        return new Value(left.asInteger() + right.asInteger());
+
+                    if (left.isString() || right.isString())
+                        return new Value(left.asString() + right.asString());
+
+                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
                 case GramaticaAtividadeAutomaticaParser.MENOS:
                     return left.isDouble() && right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
@@ -419,19 +435,19 @@ public class GramaticaAtividadeAutomatica {
 
         @Override
         public Value visitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
-            Value destinatario = new Value(this.visit(ctx.destinatario));
-            Value assunto = new Value(this.visit(ctx.assunto));
-            Value corpo = new Value(this.visit(ctx.corpo));
-            EmailSender.sendEmail(destinatario.asString(), assunto.asString(), corpo.asString());
+            String destinatario = this.visit(ctx.destinatario).asString().replaceAll("\"", "");
+            String assunto = this.visit(ctx.assunto).asString().replaceAll("\"", "");
+            String corpo = this.visit(ctx.corpo).asString().replaceAll("\"", "");
+            EmailSender.sendEmail(destinatario, assunto, corpo);
             return Value.VOID;
         }
 
         @Override
         public Value visitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) {
-            Value destinatario = new Value(this.visit(ctx.destinatario));
-            Value assunto = new Value(ctx.assunto);
-            Value corpo = new Value(ctx.corpo);
-            EmailSender.sendEmail(destinatario.asString(), assunto.asString(), corpo.asString());
+            String destinatario = this.visit(ctx.destinatario).asString().replaceAll("\"", "");
+            String assunto = ctx.assunto.getText().replaceAll("\"", "");
+            String corpo = ctx.corpo.getText().replaceAll("\"", "");
+            EmailSender.sendEmail(destinatario, assunto, corpo);
             return Value.VOID;
         }
 
@@ -444,7 +460,7 @@ public class GramaticaAtividadeAutomatica {
 
         @Override
         public Value visitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
-            String file = this.visit(ctx.file).toString();
+            String file = this.visit(ctx.file).asString();
             String what = ctx.what.getText();
             String id = ctx.id.getText();
             String idValue = ctx.idvalue.getText();
@@ -469,11 +485,9 @@ public class GramaticaAtividadeAutomatica {
 
         private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
             try {
-                XPathExpression expr =
-                        xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
                 Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
                 Element element = (Element) node;
-                String preco = element.getAttribute("id");
                 return element;
             } catch (XPathExpressionException e) {
                 e.printStackTrace();
@@ -486,9 +500,39 @@ public class GramaticaAtividadeAutomatica {
             Element element = this.visit(ctx.nomeElemento).asElement();
             String what = ctx.what.getText();
             Node node = element.getElementsByTagName(what).item(0);
-            Element resultElement = (Element)node;
+            Element resultElement = (Element) node;
             Value result = new Value(resultElement.getTextContent());
             return memory.put(ctx.nomeVar.getText(), result);
+        }
+
+        @Override
+        public Value visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
+            String what = ctx.what.getText();
+            String id = ctx.id.getText();
+            String idvalue = ctx.idvalue.getText();
+            String whatToUpdate = ctx.whatToUpdate.getText();
+            String updatevalue = this.visit(ctx.updatevalue).asString();
+
+
+            String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
+            String user = "admin";
+            String passwd = "eapli";
+
+            String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s", what, whatToUpdate , updatevalue, id , idvalue) ;
+
+            try (var con = DriverManager.getConnection(url, user, passwd);
+                 var st = con.createStatement();
+                 var rs = st.executeQuery(query)) {
+
+                while (rs.next()) {
+
+                    System.out.printf("%d %s %d%n", rs.getInt(1),
+                            rs.getString(2), rs.getInt(3));
+                }
+
+            } catch (SQLException ex) {
+            }
+            return Value.VOID;
         }
 
 

@@ -178,6 +178,13 @@ public class GramaticaAtividadeAutomaticaBaseVisitor<T> extends AbstractParseTre
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

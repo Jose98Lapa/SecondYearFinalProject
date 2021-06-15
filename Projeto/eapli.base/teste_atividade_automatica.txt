@@ -3,9 +3,9 @@ BEGIN
         ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
     LMX
 
-    TEXTO $nome -> $specificProduct(preco)
-    //NUMERO $price -> $specificProduct(price)
-    TEXTO $status
+    TEXTO $price -> $specificProduct(preco)
+  //NUMERO $price -> $specificProduct(price)
+  //TEXTO $status
 /*
     se $price >0
     entao
@@ -17,7 +17,12 @@ BEGIN
     TEXTO $destinatario-> "guili@isep.ipp.pt"
     TEXTO $assunto -> "Teste 1"
 
-    TEXTO $corpo-> "Teste de corpo 1_"
+    se $price<5 entao
+        TEXTO $corpo-> "O preço é menor que 5 : " + $price + "$."
+    senao
+        TEXTO $corpo-> "O preço é maior que 5 : " + $price + "$."
+    es
+
     //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
 

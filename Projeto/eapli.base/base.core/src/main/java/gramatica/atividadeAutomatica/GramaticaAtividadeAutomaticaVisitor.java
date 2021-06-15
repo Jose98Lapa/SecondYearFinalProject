@@ -164,6 +164,13 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code tp_string}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_dados}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code tp_integer}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#tipo_dados}.
 	 * @param ctx the parse tree

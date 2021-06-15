@@ -63,7 +63,7 @@ class EmailSender {
             message.setSubject(subjectt);
 
             //set the content of the email message
-            message.setContent(contentt, "text/html");
+            message.setContent(contentt, "text/html; charset=ISO-8859-1");
 
             //send the email message
             Transport.send(message);

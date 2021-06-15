@@ -41,7 +41,7 @@ public class Value {
     }
 
     public boolean isString() {
-        return value instanceof String;
+        return value.toString().contains("\"");
     }
 
     public boolean isElemento() {
@@ -74,7 +74,6 @@ public class Value {
         return this.value.equals(that.value);
     }
 
-    @Override
     public String toString() {
         return String.valueOf(value);
     }

@@ -292,6 +292,18 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx) { }
 	/**
 	 * {@inheritDoc}
