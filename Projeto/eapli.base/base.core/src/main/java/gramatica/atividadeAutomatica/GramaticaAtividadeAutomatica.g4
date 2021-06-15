@@ -62,9 +62,9 @@ expr: atom  = tipo_dados                                   #atomExpr
     ;
 
 tipo_dados: identidade  #tp_ident
+    | string            #tp_string
     | integer           #tp_integer
     | floate            #tp_float
-    | string            #tp_float
     ;
 
 integer
@@ -88,7 +88,7 @@ enviar_email: SEND_EMAIL '(' destinatario=identidade ',' assunto=identidade ',' 
             | SEND_EMAIL '(' destinatario=identidade ',' assunto=STRING ',' corpo=STRING')'            #emailString
             ;
 
-update_informacao: UPDATE '(' (TEXTO|NUMERO)+  ','  (TEXTO|NUMERO)+ ',' (TEXTO|NUMERO)+ ')' '->' '(' (TEXTO|NUMERO)+ ',' identidade ')'
+update_informacao: UPDATE '(' what=(TEXTO|NUMERO)+  ','  id=(TEXTO|NUMERO)+ ',' idvalue=(TEXTO|NUMERO)+ ')' '->' '(' whatToUpdate=(TEXTO|NUMERO)+ ',' updatevalue=identidade ')'
               ;
 
 
