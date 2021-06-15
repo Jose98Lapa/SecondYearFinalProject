@@ -1,6 +1,6 @@
 BEGIN
-DATA $dataInicio -> atr[6]
-DATA $dataFim -> atr[6]
+DATA $dataInicio -> atr[1]
+DATA $dataFim -> atr[1]
 NUMERO $result
 se $dataFim > $dataInicio entao $result -> 1
 es
