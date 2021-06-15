@@ -71,7 +71,7 @@ public class TcpServer implements Runnable {
                 finalString = compileString(finalString, "Lavar as janelas do escriotio do 5º andar");
                 finalString = compileString(finalString, "4");
                 sendData(finalString);
-                byte[] finalPackage = {(byte) 0, (byte) 252, (byte) 0, (byte) 0};
+                byte[] finalPackage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
                 sOut.write(finalPackage);
                 sOut.flush();
             } else {
