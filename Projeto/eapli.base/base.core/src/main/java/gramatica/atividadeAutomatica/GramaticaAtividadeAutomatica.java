@@ -12,6 +12,7 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,12 +35,18 @@ public class GramaticaAtividadeAutomatica {
         GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName("teste_atividade_automatica.txt"));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
-        ParseTree tree = parser.gramatica(); // parse
+        try {
+            parser.removeErrorListeners();
+            parser.setErrorHandler(new BailErrorStrategy());
+            ParseTree tree = parser.gramatica(); // parse
+            EvalVisitor eval = new EvalVisitor();
+            System.out.println(eval.visit(tree));
+        } catch (ParseCancellationException e) {
+            System.out.println(e.getMessage());
+        }
         //ParseTreeWalker walker = new ParseTreeWalker();
         //EvalListener eval = new EvalListener();
         //walker.walk(eval, tree);
-        EvalVisitor eval = new EvalVisitor();
-        System.out.println(eval.visit(tree));
     }
 
 
@@ -263,26 +270,34 @@ public class GramaticaAtividadeAutomatica {
         private Map<String, Value> memory = new HashMap<>();
 
         @Override
-        public Value visitGramatica(GramaticaAtividadeAutomaticaParser.GramaticaContext ctx) {
-            return visitChildren(ctx);
-        }
-
-        @Override
-        public Value visitAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) {
-            return visitChildren(ctx);
-        }
-
-        @Override
         public Value visitInicializacaoIdent(GramaticaAtividadeAutomaticaParser.InicializacaoIdentContext ctx) {
             String id = ctx.identidade().getText();
             return memory.put(id, Value.VOID);
         }
 
         @Override
-        public Value visitVariavelExpr(GramaticaAtividadeAutomaticaParser.VariavelExprContext ctx) {
+        public Value visitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
             String id = ctx.identidade().getText();
             Value value = this.visit(ctx.expr());
+            String cameFrom = ctx.getParent().getRuleContext().getChild(0).getText();
+            if (!memory.containsKey(id) && verifyInitialization(cameFrom))
+                throw new ParseCancellationException(String.format("Variavel %s não inicializada", id));
             return memory.put(id, value);
+        }
+
+        public boolean verifyInitialization(String where) {
+            //return !where.equalsIgnoreCase(GramaticaAtividadeAutomaticaParser.TIPODADOS));
+            return true;
+        }
+
+        @Override
+        public Value visitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
+            Element element = this.visit(ctx.nomeElemento).asElement();
+            String what = ctx.what.getText();
+            Node node = element.getElementsByTagName(what).item(0);
+            Element resultElement = (Element) node;
+            Value result = new Value(resultElement.getTextContent());
+            return memory.put(ctx.nomeVar.getText(), result);
         }
 
         @Override
@@ -313,16 +328,15 @@ public class GramaticaAtividadeAutomatica {
 
         @Override
         public Value visitPowExpr(GramaticaAtividadeAutomaticaParser.PowExprContext ctx) {
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
             return new Value(Math.pow(left.asDouble(), right.asDouble()));
         }
 
         @Override
         public Value visitMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) {
-
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MULT:
@@ -332,14 +346,14 @@ public class GramaticaAtividadeAutomatica {
                 case GramaticaAtividadeAutomaticaParser.MOD:
                     return new Value(left.asDouble() % right.asDouble());
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new ParseCancellationException("Operação não reconhecida");
             }
         }
 
         @Override
         public Value visitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MAIS:
@@ -352,21 +366,21 @@ public class GramaticaAtividadeAutomatica {
                     if (left.isString() || right.isString())
                         return new Value(left.asString() + right.asString());
 
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new ParseCancellationException("Não foi possivel fazer a operação");
                 case GramaticaAtividadeAutomaticaParser.MENOS:
                     return left.isDouble() && right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
                             new Value(left.asInteger() - right.asInteger());
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new ParseCancellationException("Operação não reconhecida");
             }
         }
 
         @Override
         public Value visitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
 
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
 
 
             switch (ctx.op.getType()) {
@@ -379,15 +393,15 @@ public class GramaticaAtividadeAutomatica {
                 case GramaticaAtividadeAutomaticaParser.GTEQ:
                     return new Value(left.asDouble() >= right.asDouble());
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new ParseCancellationException("Operação não reconhecida");
             }
         }
 
         @Override
         public Value visitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx) {
 
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.EQ:
@@ -399,21 +413,21 @@ public class GramaticaAtividadeAutomatica {
                             new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE) :
                             new Value(!left.equals(right));
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new ParseCancellationException("Operação não reconhecida");
             }
         }
 
         @Override
         public Value visitAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx) {
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
             return new Value(left.asBoolean() && right.asBoolean());
         }
 
         @Override
         public Value visitOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx) {
-            Value left = new Value(this.visit(ctx.left));
-            Value right = new Value(this.visit(ctx.right));
+            Value left = this.visit(ctx.left);
+            Value right = this.visit(ctx.right);
             return new Value(left.asBoolean() || right.asBoolean());
         }
 
@@ -480,9 +494,8 @@ public class GramaticaAtividadeAutomatica {
                 return memory.put(ctx.nomeVar.getText(), new Value(getSomethingByID(doc, xpath, what, id, idValue)));
 
             } catch (ParserConfigurationException | SAXException | IOException e) {
-                e.printStackTrace();
+                throw new ParseCancellationException("Ficheiro xml não reconhecido");
             }
-            return null;
         }
 
         private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
@@ -492,20 +505,10 @@ public class GramaticaAtividadeAutomatica {
                 Element element = (Element) node;
                 return element;
             } catch (XPathExpressionException e) {
-                e.printStackTrace();
+                throw new ParseCancellationException("Atributo xml não encontrado");
             }
-            return null;
         }
 
-        @Override
-        public Value visitVariavelVariavel(GramaticaAtividadeAutomaticaParser.VariavelVariavelContext ctx) {
-            Element element = this.visit(ctx.nomeElemento).asElement();
-            String what = ctx.what.getText();
-            Node node = element.getElementsByTagName(what).item(0);
-            Element resultElement = (Element) node;
-            Value result = new Value(resultElement.getTextContent());
-            return memory.put(ctx.nomeVar.getText(), result);
-        }
 
         @Override
         public Value visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
@@ -529,7 +532,7 @@ public class GramaticaAtividadeAutomatica {
                 stmt.close();
                 conn.close();
             } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
+                throw new ParseCancellationException("Update não executado");
             }
             return Value.VOID;
         }
