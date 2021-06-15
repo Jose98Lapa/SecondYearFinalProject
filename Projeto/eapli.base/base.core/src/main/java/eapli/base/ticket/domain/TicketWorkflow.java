@@ -10,33 +10,21 @@ import java.time.LocalDate;
 @Embeddable
 public class TicketWorkflow implements ValueObject, Serializable {
 
-	private LocalDate startingDate;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	private TicketTask starterTask;
 
 	protected TicketWorkflow ( ) {
 	}
 
-	public TicketWorkflow (LocalDate startingDate, TicketTask starter ) {
+	public TicketWorkflow ( TicketTask starter ) {
 
-		setStartingDate( startingDate );
 		setStarterTask( starter );
 	}
 
-	public TicketWorkflow valueOf (LocalDate startingDate, TicketTask starter ) {
-		return new TicketWorkflow( startingDate, starter );
+	public TicketWorkflow valueOf ( TicketTask starter ) {
+		return new TicketWorkflow( starter );
 	}
 
-
-
-	public LocalDate startingDate ( ) {
-		return startingDate;
-	}
-
-	public void setStartingDate ( LocalDate startingDate ) {
-		this.startingDate = startingDate;
-	}
 
 	public TicketTask starterTask ( ) {
 		return starterTask;

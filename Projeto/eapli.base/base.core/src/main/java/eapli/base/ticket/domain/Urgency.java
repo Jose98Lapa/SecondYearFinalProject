@@ -16,7 +16,7 @@ public class Urgency implements ValueObject, Serializable {
 	private String urgency;
 
 	public Urgency ( String urgency ) {
-		if ( urgency == null || urgency.isEmpty( ) || !urgency.matches( "^\\d+$" ) ) {
+		if ( urgency == null || urgency.isEmpty( ) || !urgency.matches( "reduzida|moderada|urgente" ) ) {
 			throw new IllegalArgumentException( "Valor da urgencia nao cumpre os critérios" );
 		}
 

@@ -74,10 +74,10 @@ public class RequestServiceUI extends AbstractUI {
 
 		TicketDTO ticket = new TicketDTO(
 				LocalDate.now().toString(),
-				Utils.readLineFromConsole( " Introduza a deadline do ticket" ),
+				Utils.readLineFromConsole( " Introduza a deadline do ticket ( ex: 2021-03-31 )" ),
 				Utils.readLineFromConsole( " Introduza o nome do ficheiro que quer introduzir" +
 						"( \"None\" em caso de nenhum ). " ),
-				Utils.readLineFromConsole( " Introduza a urgencia do ticket" ),
+				Utils.readLineFromConsole( " Introduza a urgencia do ticket ( reduzida / moderada / urgente)" ),
 				selectedService,
 				sessionEmail()
 		);
