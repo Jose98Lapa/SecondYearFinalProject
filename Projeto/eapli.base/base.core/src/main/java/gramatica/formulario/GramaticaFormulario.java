@@ -1,32 +1,31 @@
 package gramatica.formulario;
 
-import eapli.base.form.DTO.FormDTOParser;
 import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
-import eapli.base.form.domain.attribute.Attribute;
-import eapli.base.form.domain.attribute.AttributeID;
-import eapli.base.form.repository.FormRepository;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.infrastructure.persistence.RepositoryFactory;
-import gramatica.atividadeAutomatica.GramaticaAtividadeAutomaticaParser;
+import eapli.base.form.domain.FormName;
+import eapli.base.form.domain.FormScript;
+import eapli.base.form.domain.attribute.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class GramaticaFormulario {
     public static void main(String[] args) {
-            System.out.println("Result with Visitor : ");
+		System.out.println("Result with Visitor : ");
             parseWithVisitor();
     }
 
     public static void parseWithVisitor(){
         GramaticaFormularioLexer lexer = null;
         try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName("teste_formulario.txt"));
+            lexer = new GramaticaFormularioLexer( CharStreams.fromFileName("teste_formulario.txt") );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,8 +33,30 @@ public class GramaticaFormulario {
         GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
         ParseTree tree = parser.gramatica();
         EvalVisitor eval = new EvalVisitor();
-        FormRepository repo = PersistenceContext.repositories().form();
-        eval.defineForm(new FormDTOParser().valueOf(repo.findByFormID(FormID.valueOf("6ca92198-5168-4c6c-9467-3877390bde7f")).get()));
+
+        Set< Attribute> attributeSet = new HashSet<>( );
+
+        attributeSet.add( new Attribute(
+                new AtributteName( "nome" ),
+                new AttributeLabel( "label" ),
+                new AttributeDescription( "descricao" ),
+                new AttributeRegex( "gboiua" ),
+                new AttributeType( "int" ),
+                new AttributeID( "fnsaoi" ),
+                1 )
+        );
+        attributeSet.add( new Attribute(
+                new AtributteName( "nomeum" ),
+                new AttributeLabel( "label2" ),
+                new AttributeDescription( "descricao2" ),
+                new AttributeRegex( "gboiua2" ),
+                new AttributeType( "int" ),
+                new AttributeID( "fnsaoi2" ),
+                2 )
+        );
+
+        Form form = new Form( new FormScript( "none" ), new FormID( "2345678" ), new FormName( "name" ), attributeSet );
+        eval.defineForm( form );
         System.out.println(eval.visit(tree));
     }
 
@@ -61,8 +82,9 @@ public class GramaticaFormulario {
         }
         @Override
         public Value visitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
-            Value value = this.visit(ctx.get_atributo()); //
-            memory.put(ctx.identidade().getText(),value);
+
+            Value value = new Value( this.visit(ctx.get_atributo() ));
+            memory.put(ctx.identidade().getText(), value );
             return visitChildren(ctx);
         }
 
@@ -70,7 +92,7 @@ public class GramaticaFormulario {
         public Value visitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) {
             for (Attribute atr:form.atributes()) {
                 if (atr.number()==Integer.parseInt(ctx.numero.getText())){
-                    return memory.get(ctx.numero.getText());
+                    return memory.get(ctx.start.getText( ));
                 }
             }
             return Value.VOID;
@@ -157,7 +179,10 @@ public class GramaticaFormulario {
 
             switch (ctx.op.getType()) {
                 case GramaticaFormularioParser.LT:
-                    return new Value(left.asDouble() < right.asDouble());
+                    return left.isDouble() && right.isDouble() ?
+                            new Value(left.asDouble() < right.asDouble()) :
+                            left.isDate() && right.isDate() ?
+                                    new Value(left.asDate().isBefore( right.asDate()));
                 case GramaticaFormularioParser.LTEQ:
                     return new Value(left.asDouble() <= right.asDouble());
                 case GramaticaFormularioParser.GT:
@@ -179,11 +204,11 @@ public class GramaticaFormulario {
                 case GramaticaFormularioParser.EQ:
                     return left.isDouble() && right.isDouble() ?
                             new Value(Math.abs(left.asDouble() - right.asDouble()) < SMALL_VALUE) :
-                            new Value(left.equals(right));
+                            new Value(left.toString().equals(right.toString()));
                 case GramaticaFormularioParser.NEQ:
                     return left.isDouble() && right.isDouble() ?
                             new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE) :
-                            new Value(!left.equals(right));
+                            new Value(!left.toString().equals(right.toString()));
                 default:
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
             }

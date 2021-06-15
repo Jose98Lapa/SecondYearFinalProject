@@ -3,11 +3,8 @@ package gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class GramaticaAtividadeAutomaticaParser extends Parser {
@@ -31,7 +28,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		RULE_identidade = 15, RULE_string = 16, RULE_enviar_email = 17, RULE_update_informacao = 18;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"gramatica", "instrucao", "estrutura_xml", "tipo_ficheiro", "elemento", 
+				"gramatica", "instrucao", "estrutura_xml", "tipo_ficheiro", "elemento",
 			"atribuicao_elemento", "inicializacao", "atribuicao", "if_stat", "condition_block", 
 			"stat_block", "expr", "tipo_dados", "integer", "floate", "identidade", 
 			"string", "enviar_email", "update_informacao"

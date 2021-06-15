@@ -2,6 +2,8 @@ package gramatica.formulario;
 
 import org.w3c.dom.Element;
 
+import java.time.LocalDate;
+
 public class Value {
 
     public static Value VOID = new Value(new Object());
@@ -22,6 +24,10 @@ public class Value {
 
     public int asInteger() {
         return Integer.parseInt(value.toString());
+    }
+
+    public LocalDate asDate () {
+        return LocalDate.parse( ( CharSequence ) this.value );
     }
 
     public Element asElement() {
@@ -46,6 +52,10 @@ public class Value {
 
     public boolean isElemento() {
         return value instanceof Element;
+    }
+
+    public boolean isDate () {
+        return value instanceof LocalDate;
     }
 
     @Override
