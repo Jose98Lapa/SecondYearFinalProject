@@ -1,14 +1,12 @@
 package eapli.base.dasboard.application;
 
 import eapli.base.Application;
-import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -44,18 +42,19 @@ public class TcpClient {
         try {
             socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getPortWorkflow()));
         } catch (IOException ex) {
-            System.out.println("Failed to establish TCP connection");
+            //System.out.println("Failed to establish TCP connection");
             //System.exit(1);
             return false;
         }
 
 
-        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortWorkflow()));
 
         try {
             socket.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
 
@@ -161,28 +160,6 @@ public class TcpClient {
     private byte[] buildPacket(byte[] headers, byte[] payload) {
 
         return ArrayUtils.addAll(headers, payload);
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        TcpClient tcpClient = new TcpClient();
-        tcpClient.startConnection(Application.settings().getIpWorkflow());
-
-        boolean cycle = true;
-        while (cycle) {
-            int i = Console.readInteger("Insira num (0 para sair)");
-            switch (i) {
-                case 0:
-                    tcpClient.stopConnection();
-                    cycle = false;
-                    break;
-                case 1:
-                    tcpClient.TaskInfoList("guilli@isep.ipp.pt");
-                    break;
-                default:
-                    System.out.println("Invalid Option");
-            }
-        }
     }
 }
 

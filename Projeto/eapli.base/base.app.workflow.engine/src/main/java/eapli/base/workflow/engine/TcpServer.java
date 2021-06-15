@@ -30,7 +30,7 @@ import java.util.Optional;
 public class TcpServer implements Runnable {
 
     private static SSLServerSocket sslServerSocket;
-    private Socket clientSocket;
+    private final Socket clientSocket;
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
@@ -62,7 +62,7 @@ public class TcpServer implements Runnable {
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2] & 0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-            boolean mock = false;
+            boolean mock = true;
             if (mock) {
                 String finalString = "5";
                 finalString = compileString(finalString, "30/06/2021 23:34");
@@ -71,7 +71,7 @@ public class TcpServer implements Runnable {
                 finalString = compileString(finalString, "Lavar as janelas do escriotio do 5º andar");
                 finalString = compileString(finalString, "4");
                 sendData(finalString);
-                byte[] finalPackage = {(byte) 0, (byte) 252, (byte) 0, (byte) 0};
+                byte[] finalPackage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
                 sOut.write(finalPackage);
                 sOut.flush();
             } else {
@@ -194,14 +194,14 @@ public class TcpServer implements Runnable {
         System.setProperty("javax.net.ssl.keyStore", "server.keystore");
         System.setProperty("javax.net.ssl.keyStorePassword", "password");
 
-        SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
+
+        SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         try {
-            sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
             sslServerSocket.setNeedClientAuth(true);
         } catch (IOException ex) {
-            System.out.println("Server failed to open local port " + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            System.out.println("Server failed to open local port " + Integer.parseInt(Application.settings().getPortWorkflow()));
             System.exit(1);
         }
         while (true) {

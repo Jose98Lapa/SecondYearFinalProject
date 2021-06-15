@@ -6,13 +6,13 @@ import java.net.Socket;
 /**
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HttpAjaxRequest extends Thread {
+public class CheckActivityHttpAjaxRequest extends Thread {
     String baseFolder;
     Socket sock;
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HttpAjaxRequest(Socket s, String f) {
+    public CheckActivityHttpAjaxRequest(Socket s, String f) {
         baseFolder = f;
         sock = s;
     }
