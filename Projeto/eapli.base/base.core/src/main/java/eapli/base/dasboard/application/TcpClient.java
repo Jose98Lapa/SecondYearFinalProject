@@ -50,7 +50,7 @@ public class TcpClient {
         }
 
 
-        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortWorkflow()));
 
         try {
             socket.startHandshake();
