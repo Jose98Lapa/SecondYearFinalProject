@@ -34,6 +34,10 @@ public class AttributeRegex implements ValueObject, Serializable {
         return new AttributeRegex(string);
     }
 
+    public String regex () {
+        return regex();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(RegString);

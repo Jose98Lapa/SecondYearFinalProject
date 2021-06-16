@@ -37,6 +37,10 @@ public class AttributeDescription implements ValueObject , Serializable {
         return new AttributeDescription(string);
     }
 
+    public String descricao () {
+        return descricao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
