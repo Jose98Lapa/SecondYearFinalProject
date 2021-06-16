@@ -135,7 +135,7 @@ public class Engine {
         }
     }
 
-    public synchronized Ticket FCFS(Ticket ticket) {
+    public Ticket FCFS(Ticket ticket) {
         Collaborator selected = null;
         if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
             selected = assignCollaboratorExecution(ticket);

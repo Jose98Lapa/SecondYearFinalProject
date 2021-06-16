@@ -34,6 +34,7 @@ public class AppSettings {
     private static final String PORT_AUTOMATICTASK_EXECUTOR = "PORT_AUTOMATICTASK_EXECUTOR";
     private static final String IP_WORKFLOW = "WORKFLOW_SERVER";
     private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
+    private static final String COLLABORATOR_ASSIGNER_ALGORITHM = "COLLABORATOR_ASSIGNER_ALGORITHM";
 
     private final Properties applicationProperties = new Properties();
 
@@ -73,6 +74,7 @@ public class AppSettings {
         this.applicationProperties.setProperty(IP_WORKFLOW, "172.17.0.2");
         this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
         this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
+        this.applicationProperties.setProperty( COLLABORATOR_ASSIGNER_ALGORITHM, "FCFS" );
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -120,6 +122,10 @@ public class AppSettings {
 
     public Integer getHighCaloriesDishLimit() {
         return Integer.valueOf(this.applicationProperties.getProperty(HIGH_CALORIES_DISH_LIMIT));
+    }
+
+    public String getCollaboratorAssignerAlgorithm () {
+        return this.applicationProperties.getProperty( COLLABORATOR_ASSIGNER_ALGORITHM );
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
