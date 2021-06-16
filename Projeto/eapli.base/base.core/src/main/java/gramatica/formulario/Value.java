@@ -51,7 +51,8 @@ public class Value {
     }
 
     public boolean isString() {
-        return value.toString().contains("\"");
+        String string = value.toString().substring(1,value.toString().length()-1);
+        return string instanceof java.lang.String;
     }
 
     public boolean isElemento() {

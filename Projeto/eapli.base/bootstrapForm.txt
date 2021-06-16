@@ -1,0 +1,5 @@
+BEGIN
+TEXTO $a -> atr[1]
+se "arrouz" = $a entao FAIL
+es
+END

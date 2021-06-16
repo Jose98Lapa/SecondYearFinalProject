@@ -64,7 +64,7 @@ public class SFTPClient {
 
     public File getScript(String source) throws JSchException, SftpException {
         int i = source.lastIndexOf('/');
-        String filename=source;
+        String filename="";
         if (i > 0)
             filename += source.substring(i + 1);
 
@@ -78,7 +78,8 @@ public class SFTPClient {
             sftpChannel.mkdir(localServerFolder);
             sftpChannel.cd(localServerFolder);
         }
-        sftpChannel.get(source, filename);
+
+        sftpChannel.get(filename, filename);
         sftpChannel.exit();
         session.disconnect();
         return new File(filename);

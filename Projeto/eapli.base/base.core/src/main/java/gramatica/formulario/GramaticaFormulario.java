@@ -24,11 +24,11 @@ public class GramaticaFormulario {
         Set<Attribute> attributeSet = new HashSet<>();
 
         attributeSet.add(new Attribute(
-                new AtributteName("nome"),
-                new AttributeLabel("15/07/2022"),
-                new AttributeDescription("descricao"),
+                new AtributteName("tipoRestauro"),
+                new AttributeLabel("arroz"),
+                new AttributeDescription("Qual o tipo"),
                 new AttributeRegex("gboiua"),
-                new AttributeType("Date"),
+                new AttributeType("String"),
                 new AttributeID("88"),
                 1)
         );
@@ -43,7 +43,8 @@ public class GramaticaFormulario {
         );
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
-        parseWithVisitor("teste_formulario.txt",form);
+        //parseWithVisitor("teste_formulario.txt",form);
+        parseWithVisitor("bootstrapForm.txt",form);
     }
 
     public static void parseWithVisitor(String file,Form form) {
@@ -154,6 +155,11 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitTp_integer(GramaticaFormularioParser.Tp_integerContext ctx) {
+            return new Value(ctx.getText());
+        }
+
+        @Override
+        public Value visitTp_stringe(GramaticaFormularioParser.Tp_stringeContext ctx) {
             return new Value(ctx.getText());
         }
 
@@ -283,7 +289,7 @@ public class GramaticaFormulario {
                         return new Value(Math.abs(left.asDouble() - right.asDouble()) < SMALL_VALUE);
                     }
                     if (left.isString() && right.isString()) {
-                        return new Value(left.value.equals(right.value));
+                        return new Value(removeAspas(left).equals(removeAspas(right)));
                     }
                     if (left.isDate() && right.isDate()) {
                         return new Value(left.value.equals(right.value));
@@ -301,6 +307,12 @@ public class GramaticaFormulario {
                 default:
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
             }
+        }
+        public String removeAspas(Value val){
+            if (val.toString().contains("\"")){
+                return val.toString().substring(1,val.toString().length()-1);
+            }
+            return val.toString();
         }
 
         @Override
