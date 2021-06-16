@@ -299,6 +299,25 @@ public class GramaticaFormulario {
 
             return Value.VOID;
         }
-    }
 
+        @Override
+        public Value visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
+            System.out.println("FAIL");
+            return Value.VOID;
+        }
+
+        @Override
+        public Value visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
+            String toCheck =memory.get( ctx.var.getText()).toString();
+            String regexBefore = ctx.regex.getText();
+            String regex = regexBefore.substring(1,regexBefore.length()-1);
+            if (toCheck.matches(regex)) {
+                return Value.VOID;
+            } else {
+                System.out.println("Does not match regex");
+                return Value.VOID;
+            }
+        }
+
+    }
 }

@@ -26,7 +26,7 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
 
-matchregex: MATCHREGEX '[' get_atributo ',' regex = STRING ']' #match_regex
+matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex = STRING ']' #match_regex
 ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
