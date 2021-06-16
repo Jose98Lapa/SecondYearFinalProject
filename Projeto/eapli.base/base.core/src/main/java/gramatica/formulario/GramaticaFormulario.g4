@@ -13,6 +13,7 @@ instrucao: inicializacao
    | atribuicao_atributo
    | fail
    | matchregex
+   | matchregexatribut
    ;
 
 fail:FAIL #validationFail
@@ -29,6 +30,9 @@ get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
 
 matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex =  REGEX ']' #match_regex
+;
+
+matchregexatribut :MATCHREGEX '[' atri=get_atributo ',' regex = REGEX ']' #match_regex_atribut
 ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr

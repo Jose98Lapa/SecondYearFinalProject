@@ -14,7 +14,7 @@ public class AttributesDataWidget {
 
         System.out.println( "Attribute\t" + number );
         this.nome = Console.readLine("Nome");
-        this.desc = Console.readLine("Descrição");
+        this.desc = Console.readLine("Pergunta");
         this.label = Console.readLine("Label");
         this.tipo = Console.readLine("Tipo");
         this.regex = Console.readLine("Regex");

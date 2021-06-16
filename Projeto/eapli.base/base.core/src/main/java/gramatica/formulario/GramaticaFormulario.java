@@ -8,7 +8,9 @@ import eapli.base.form.domain.attribute.*;
 import gramatica.atividadeAutomatica.GramaticaAtividadeAutomaticaParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.yaml.snakeyaml.parser.ParserException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -59,6 +61,40 @@ public class GramaticaFormulario {
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
         eval.defineForm(form);
         System.out.println(eval.visit(tree));
+    }
+
+    static class EvalListener extends GramaticaFormularioBaseListener {
+        Form form;
+        private Map<String, Value> memory = new HashMap<>();
+        public void defineForm(Form form) {
+            this.form = form;
+        }
+
+        @Override
+        public void enterMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
+            String toCheck = memory.get(ctx.var.getText()).toString();
+            String regexBefore = ctx.regex.getText();
+            String regex = regexBefore.substring(2, regexBefore.length() - 2);
+            if (!toCheck.matches(regex)) {
+                throw new ParseCancellationException("Regex Inválido");
+            }
+        }
+
+        @Override
+        public void enterAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) {
+            for (Attribute atr : form.atributes()) {
+                if (atr.number() == Integer.parseInt(ctx.numero.getText())) {
+                    //return memory.put(ctx., new Value(atr.toDTO().label);
+                }
+            }
+
+        }
+
+
+
+
+
+
     }
 
     static class EvalVisitor extends GramaticaFormularioBaseVisitor<Value> {
@@ -308,13 +344,13 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
-            String toCheck =memory.get( ctx.var.getText()).toString();
+            String toCheck = memory.get(ctx.var.getText()).toString();
             String regexBefore = ctx.regex.getText();
-            String regex = regexBefore.substring(2,regexBefore.length()-2);
+            String regex = regexBefore.substring(2, regexBefore.length() - 2);
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                System.out.println(toCheck+ "Does not match regex");
+                System.out.println(toCheck + "Does not match regex");
                 return Value.VOID;
             }
         }
