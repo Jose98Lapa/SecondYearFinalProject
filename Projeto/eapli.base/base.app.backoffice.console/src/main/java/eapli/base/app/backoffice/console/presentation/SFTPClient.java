@@ -65,7 +65,7 @@ public class SFTPClient {
         session.disconnect();
     }
 
-    public String getScriptToString(String source) throws JSchException, SftpException {
+    public File getScript(String source) throws JSchException, SftpException {
         int i = source.lastIndexOf('/');
         String filename=source;
         if (i > 0)
@@ -82,12 +82,9 @@ public class SFTPClient {
             sftpChannel.cd(localServerFolder);
         }
         sftpChannel.get(source, filename);
-        String output =new BufferedReader(new InputStreamReader(sftpChannel.get(filename))).lines().collect(Collectors.joining("\n"));
         sftpChannel.exit();
         session.disconnect();
-        File temp = new File(filename);
-        temp.delete();
-        return output;
+        return new File(filename);
     }
 
     public String chooser(String type) {
