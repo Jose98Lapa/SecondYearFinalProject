@@ -3,7 +3,6 @@ package eapli.base.app.user.console.presentation.completeTaskUI;
 import eapli.base.app.backoffice.console.Utils;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;
-import eapli.base.form.domain.attribute.*;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.application.CompleteTaskController;
