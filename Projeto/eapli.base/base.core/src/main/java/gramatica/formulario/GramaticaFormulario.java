@@ -88,7 +88,7 @@ public class GramaticaFormulario {
         }
 
         @Override
-        public void enterMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
+        public void exitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
             String toCheck = memory.get(ctx.var.getText()).toString();
             String regexBefore = ctx.regex.getText();
             String regex = regexBefore.substring(2, regexBefore.length() - 2);
@@ -111,8 +111,14 @@ public class GramaticaFormulario {
         }
 
         @Override
+        public void exitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
+            String id = ctx.identidade().getText();
+            Value value = valueStack.pop();
+            memory.put(id, value);
+        }
+
+        @Override
         public void enterAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
-            ctx.get_atributo();
             String id = ctx.inicializacao().getText();
             memory.put(id,valueStack.pop());
         }
@@ -125,6 +131,28 @@ public class GramaticaFormulario {
             if (!toCheck.matches(regex)) {
                 throw new ParseCancellationException("Regex Inválido");
             }
+        }
+
+        @Override
+        public void exitEqualExpr(GramaticaFormularioParser.EqualExprContext ctx) {
+            Value left = memory.get(ctx.left.getText());
+            Value right = memory.get(ctx.right.getText());
+            switch (ctx.op.getText()){
+                case "="-> {
+                    if (left.equals(right))
+                        System.out.println("Passou");
+                    else
+                        System.out.println("Nao passou");
+                }
+
+                case "!=" ->{
+                    if (!left.equals(right))
+                        System.out.println("Passou");
+                    else
+                        System.out.println("Nao passou");
+                }
+            }
+
         }
 
 
