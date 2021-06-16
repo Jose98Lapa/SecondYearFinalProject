@@ -1,17 +1,11 @@
-package gramatica.atividadeAutomatica;
+package eapli.base.automatictask.executor;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.antlr.v4.runtime.*;
+import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,15 +15,22 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GramaticaAtividadeAutomatica {
+public class ExecutorAtividadeAutomatica {
     public static void main(String[] args) throws IOException {
-        System.out.println("Result with Visitor : ");
-        parseWithVisitor();
+        //System.out.println("Result with Visitor : ");
+        //parseWithVisitor("teste_atividade_automatica.txt");
     }
 
-    public static void parseWithVisitor() throws IOException {
-        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName("teste_atividade_automatica.txt"));
+    public static void parseWithVisitor(String script) throws IOException {
+        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
         try {

@@ -1,9 +1,16 @@
 // Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
-package gramatica.atividadeAutomatica;
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
+package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
+
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
@@ -120,15 +127,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_gramatica; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterGramatica(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterGramatica(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitGramatica(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitGramatica(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitGramatica(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitGramatica(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -196,15 +203,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_instrucao; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterInstrucao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterInstrucao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitInstrucao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitInstrucao(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInstrucao(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInstrucao(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -290,15 +297,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_estrutura_xml; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterEstrutura_xml(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterEstrutura_xml(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitEstrutura_xml(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitEstrutura_xml(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEstrutura_xml(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEstrutura_xml(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -312,7 +319,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			{
 			setState(55);
 			tipo_ficheiro();
-			setState(57); 
+			setState(57);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -322,7 +329,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				elemento();
 				}
 				}
-				setState(59); 
+				setState(59);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==ELEMENTO );
@@ -346,7 +353,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_tipo_ficheiro; }
-	 
+
 		public Tipo_ficheiroContext() { }
 		public void copyFrom(Tipo_ficheiroContext ctx) {
 			super.copyFrom(ctx);
@@ -360,15 +367,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public FicheiroIdentContext(Tipo_ficheiroContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterFicheiroIdent(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterFicheiroIdent(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitFicheiroIdent(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitFicheiroIdent(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFicheiroIdent(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFicheiroIdent(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -382,15 +389,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public FicheiroNomeFicheiroContext(Tipo_ficheiroContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterFicheiroNomeFicheiro(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterFicheiroNomeFicheiro(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitFicheiroNomeFicheiro(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitFicheiroNomeFicheiro(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFicheiroNomeFicheiro(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFicheiroNomeFicheiro(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -453,15 +460,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_elemento; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterElemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterElemento(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitElemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitElemento(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitElemento(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitElemento(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -531,15 +538,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_atribuicao_elemento; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterAtribuicao_elemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterAtribuicao_elemento(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitAtribuicao_elemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitAtribuicao_elemento(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtribuicao_elemento(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtribuicao_elemento(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -559,7 +566,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			match(T__2);
 			setState(81);
 			match(T__3);
-			setState(83); 
+			setState(83);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -578,7 +585,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				}
 				}
 				}
-				setState(85); 
+				setState(85);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NUMERO || _la==TEXTO );
@@ -592,7 +599,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			match(T__6);
 			setState(91);
 			match(T__7);
-			setState(93); 
+			setState(93);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -611,13 +618,13 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				}
 				}
 				}
-				setState(95); 
+				setState(95);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NUMERO || _la==TEXTO );
 			setState(97);
 			match(T__4);
-			setState(99); 
+			setState(99);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -636,7 +643,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				}
 				}
 				}
-				setState(101); 
+				setState(101);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NUMERO || _la==TEXTO );
@@ -660,7 +667,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_inicializacao; }
-	 
+
 		public InicializacaoContext() { }
 		public void copyFrom(InicializacaoContext ctx) {
 			super.copyFrom(ctx);
@@ -674,15 +681,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public InicializacaoIdentContext(InicializacaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterInicializacaoIdent(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterInicializacaoIdent(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitInicializacaoIdent(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitInicializacaoIdent(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInicializacaoIdent(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInicializacaoIdent(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -694,15 +701,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public InicializacaoAtribuicaoContext(InicializacaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterInicializacaoAtribuicao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterInicializacaoAtribuicao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitInicializacaoAtribuicao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitInicializacaoAtribuicao(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInicializacaoAtribuicao(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInicializacaoAtribuicao(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -752,7 +759,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_atribuicao; }
-	 
+
 		public AtribuicaoContext() { }
 		public void copyFrom(AtribuicaoContext ctx) {
 			super.copyFrom(ctx);
@@ -769,15 +776,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Atr_variavelExprContext(AtribuicaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterAtr_variavelExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterAtr_variavelExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitAtr_variavelExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitAtr_variavelExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtr_variavelExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtr_variavelExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -803,15 +810,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Atr_variavelVariavelContext(AtribuicaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterAtr_variavelVariavel(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterAtr_variavelVariavel(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitAtr_variavelVariavel(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitAtr_variavelVariavel(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtr_variavelVariavel(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtr_variavelVariavel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -848,7 +855,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				((Atr_variavelVariavelContext)_localctx).nomeElemento = identidade();
 				setState(118);
 				match(T__7);
-				setState(120); 
+				setState(120);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
@@ -867,7 +874,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 					}
 					}
 					}
-					setState(122); 
+					setState(122);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==NUMERO || _la==TEXTO );
@@ -904,15 +911,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_if_stat; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterIf_stat(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterIf_stat(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitIf_stat(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitIf_stat(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitIf_stat(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitIf_stat(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -969,15 +976,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_condition_block; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterCondition_block(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterCondition_block(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitCondition_block(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitCondition_block(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitCondition_block(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitCondition_block(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1020,15 +1027,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_stat_block; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterStat_block(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterStat_block(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitStat_block(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitStat_block(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitStat_block(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitStat_block(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1072,7 +1079,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-	 
+
 		public ExprContext() { }
 		public void copyFrom(ExprContext ctx) {
 			super.copyFrom(ctx);
@@ -1086,15 +1093,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public AtomExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterAtomExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterAtomExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitAtomExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitAtomExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtomExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAtomExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1111,15 +1118,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public OrExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterOrExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterOrExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitOrExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitOrExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitOrExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitOrExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1139,15 +1146,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public MulDivModExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterMulDivModExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterMulDivModExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitMulDivModExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitMulDivModExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitMulDivModExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitMulDivModExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1164,15 +1171,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public PowExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterPowExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterPowExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitPowExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitPowExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitPowExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitPowExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1191,15 +1198,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public SumDifExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterSumDifExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterSumDifExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitSumDifExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitSumDifExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitSumDifExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitSumDifExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1220,15 +1227,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public RelationalExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterRelationalExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterRelationalExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitRelationalExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitRelationalExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitRelationalExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitRelationalExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1247,15 +1254,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public EqualExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterEqualExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterEqualExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitEqualExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitEqualExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEqualExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEqualExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1272,15 +1279,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public AndExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterAndExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterAndExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitAndExpr(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitAndExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAndExpr(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitAndExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1313,7 +1320,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			setState(172);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -1486,15 +1493,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Tp_integerContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_integer(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_integer(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_integer(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_integer(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_integer(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_integer(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1505,15 +1512,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Tp_floatContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_float(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_float(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_float(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_float(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_float(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_float(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1524,15 +1531,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Tp_identContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_ident(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_ident(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_ident(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_ident(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_ident(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_ident(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1543,15 +1550,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public Tp_stringContext(Tipo_dadosContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_string(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterTp_string(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_string(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitTp_string(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_string(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitTp_string(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1617,15 +1624,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_integer; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterInteger(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterInteger(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitInteger(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitInteger(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInteger(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitInteger(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1671,15 +1678,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_floate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterFloate(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterFloate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitFloate(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitFloate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFloate(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitFloate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1724,15 +1731,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_identidade; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterIdentidade(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterIdentidade(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitIdentidade(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitIdentidade(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitIdentidade(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitIdentidade(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1766,15 +1773,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_string; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterString(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitString(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitString(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitString(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitString(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1825,15 +1832,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public EmailAtributosContext(Enviar_emailContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterEmailAtributos(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterEmailAtributos(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitEmailAtributos(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitEmailAtributos(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEmailAtributos(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEmailAtributos(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1852,15 +1859,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		public EmailStringContext(Enviar_emailContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterEmailString(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterEmailString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitEmailString(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitEmailString(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEmailString(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitEmailString(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1955,15 +1962,15 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_update_informacao; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterUpdate_informacao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).enterUpdate_informacao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitUpdate_informacao(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener) ((GramaticaAtividadeAutomaticaListener)listener).exitUpdate_informacao(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitUpdate_informacao(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitUpdate_informacao(this);
 			else return visitor.visitChildren(this);
 		}
 	}

@@ -2,7 +2,6 @@ BEGIN
     XML $file -> "exemplo.xml"
         ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
     LMX
-    4
     TEXTO $price -> $specificProduct(preco)
   //NUMERO $price -> $specificProduct(price)
   //TEXTO $status

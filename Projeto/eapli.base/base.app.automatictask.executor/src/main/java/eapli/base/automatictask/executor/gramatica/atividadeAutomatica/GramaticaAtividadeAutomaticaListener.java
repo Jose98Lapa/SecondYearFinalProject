@@ -1,5 +1,5 @@
 // Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
-package gramatica.atividadeAutomatica;
+package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
