@@ -365,7 +365,7 @@ public class GramaticaFormulario {
                         return new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE);
                     }
                     if (left.isString() && right.isString()) {
-                        return new Value(!left.value.equals(right.value));
+                        return new Value(!removeAspas(left).equals(removeAspas(right)));
                     }
                     if (left.isDate() && right.isDate()) {
                         return new Value(!left.value.equals(right.value));
