@@ -40,6 +40,30 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValidationPass(GramaticaFormularioParser.ValidationPassContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInicializacaoIdent(GramaticaFormularioParser.InicializacaoIdentContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -83,6 +107,18 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

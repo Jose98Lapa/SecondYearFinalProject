@@ -115,9 +115,9 @@ public class RequestServiceUI extends AbstractUI {
 					question.nome + ".\n" + "Descricao:\t" + question.desc );
 
 			answer = new AttributeDTO(
+					question.nome,
 					Utils.readLineFromConsole( "Introduza a sua resposta: " ),
-					question.label,
-					Utils.readLineFromConsole( "Introduza a sua resposta completa: " ),
+					question.desc,
 					question.regex,
 					question.tipo,
 					UUID.randomUUID().toString(),

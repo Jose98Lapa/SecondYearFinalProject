@@ -23,6 +23,20 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstrucao(GramaticaFormularioParser.InstrucaoContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code validationFail}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code inicializacaoIdent}
 	 * labeled alternative in {@link GramaticaFormularioParser#inicializacao}.
 	 * @param ctx the parse tree
@@ -49,6 +63,13 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code match_regex}
+	 * labeled alternative in {@link GramaticaFormularioParser#matchregex}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code variavelExpr}
 	 * labeled alternative in {@link GramaticaFormularioParser#atribuicao}.

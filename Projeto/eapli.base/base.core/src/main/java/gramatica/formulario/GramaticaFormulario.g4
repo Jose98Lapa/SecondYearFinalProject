@@ -11,7 +11,14 @@ instrucao: inicializacao
    | if_stat
    | atribuicao
    | atribuicao_atributo
+   | fail
+   | matchregex
+   | matchregexatribut
    ;
+
+fail:FAIL #validationFail
+| PASS  #validationPass
+;
 
 inicializacao: TIPODADOS identidade     #inicializacaoIdent
    | TIPODADOS atribuicao               #inicializacaoAtribuicao
@@ -21,6 +28,12 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
+
+matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex =  REGEX ']' #match_regex
+;
+
+matchregexatribut :MATCHREGEX '[' atri=get_atributo ',' regex = REGEX ']' #match_regex_atribut
+;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
     | identidade OPERADORATRIBUICAO identidade '(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
@@ -67,7 +80,7 @@ condition_block
  ;
 
 stat_block
- :  instrucao*
+ : instrucao*
  ;
 
 fragment DIGITO     : [0-9];
@@ -90,6 +103,9 @@ DIV : '/';
 MOD : '%';
 POW : '^';
 NOT : '!';
+FAIL : 'FAIL';
+PASS : 'PASS';
+MATCHREGEX : 'matchRegex';
 OPERADORATRIBUICAO  : '->';
 
 VARIAVEL            : '$' (TEXTO) [_]? (TEXTO | NUMERO )*;
@@ -108,7 +124,7 @@ REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 STRING              : '"' ~('"')+ '"';
-
+REGEX               :'@@' .*? '@@';
 
 DATA_DIA            : [0]?[1-9]|[12][0-9]|[3][01];
 DATA_MES            : [0]?[1-9]|[1][012];

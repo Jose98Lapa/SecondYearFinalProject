@@ -31,6 +31,20 @@ public class GramaticaFormularioBaseVisitor<T> extends AbstractParseTreeVisitor<
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitInicializacaoIdent(GramaticaFormularioParser.InicializacaoIdentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -53,6 +67,13 @@ public class GramaticaFormularioBaseVisitor<T> extends AbstractParseTreeVisitor<
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

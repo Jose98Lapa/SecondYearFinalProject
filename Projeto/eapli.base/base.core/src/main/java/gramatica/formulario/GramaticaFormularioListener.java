@@ -28,6 +28,30 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 */
 	void exitInstrucao(GramaticaFormularioParser.InstrucaoContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code validationFail}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void enterValidationFail(GramaticaFormularioParser.ValidationFailContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code validationFail}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void exitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void enterValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void exitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code inicializacaoIdent}
 	 * labeled alternative in {@link GramaticaFormularioParser#inicializacao}.
 	 * @param ctx the parse tree
@@ -73,6 +97,18 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code match_regex}
+	 * labeled alternative in {@link GramaticaFormularioParser#matchregex}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatch_regex(GramaticaFormularioParser.Match_regexContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code match_regex}
+	 * labeled alternative in {@link GramaticaFormularioParser#matchregex}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code variavelExpr}
 	 * labeled alternative in {@link GramaticaFormularioParser#atribuicao}.
