@@ -1,4 +1,4 @@
-// Generated from S:/data/2ano/2Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -109,6 +109,18 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code match_regex_atribut}
+	 * labeled alternative in {@link GramaticaFormularioParser#matchregexatribut}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatch_regex_atribut(GramaticaFormularioParser.Match_regex_atributContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code match_regex_atribut}
+	 * labeled alternative in {@link GramaticaFormularioParser#matchregexatribut}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatch_regex_atribut(GramaticaFormularioParser.Match_regex_atributContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code variavelExpr}
 	 * labeled alternative in {@link GramaticaFormularioParser#atribuicao}.

@@ -9,14 +9,13 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.yaml.snakeyaml.parser.ParserException;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GramaticaFormulario {
     public static void main(String[] args) {
@@ -63,9 +62,28 @@ public class GramaticaFormulario {
         System.out.println(eval.visit(tree));
     }
 
+    public static void parseWithListener(String file,Form form){
+        GramaticaFormularioLexer lexer = null;
+        try {
+            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+        ParseTree tree = parser.gramatica();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        EvalListener eval = new EvalListener();
+
+        eval.defineForm(form);
+        walker.walk(eval,tree);
+    }
+
     static class EvalListener extends GramaticaFormularioBaseListener {
         Form form;
         private Map<String, Value> memory = new HashMap<>();
+        private Stack<Value> valueStack = new Stack<>();
         public void defineForm(Form form) {
             this.form = form;
         }
@@ -79,15 +97,35 @@ public class GramaticaFormulario {
                 throw new ParseCancellationException("Regex Inválido");
             }
         }
+        @Override
+        public void enterGramatica(GramaticaFormularioParser.GramaticaContext ctx){
+
+        }
 
         @Override
         public void enterAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) {
             for (Attribute atr : form.atributes()) {
                 if (atr.number() == Integer.parseInt(ctx.numero.getText())) {
-                    //return memory.put(ctx., new Value(atr.toDTO().label);
+                    valueStack.push(new Value(atr.toDTO().label));
                 }
             }
+        }
 
+        @Override
+        public void enterAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
+            ctx.get_atributo();
+            String id = ctx.inicializacao().getText();
+            memory.put(id,valueStack.pop());
+        }
+
+        @Override
+        public void exitMatch_regex_atribut(GramaticaFormularioParser.Match_regex_atributContext ctx){
+            String toCheck = valueStack.pop().toString();
+            String regexBefore = ctx.regex.getText();
+            String regex = regexBefore.substring(2, regexBefore.length() - 2);
+            if (!toCheck.matches(regex)) {
+                throw new ParseCancellationException("Regex Inválido");
+            }
         }
 
 
