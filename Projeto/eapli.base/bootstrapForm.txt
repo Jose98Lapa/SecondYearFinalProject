@@ -1,5 +1,5 @@
 BEGIN
-TEXTO $a -> atr[1]
+TEXTO $a -> atr[2]
 se "arrouz" = $a entao FAIL
 es
 END
