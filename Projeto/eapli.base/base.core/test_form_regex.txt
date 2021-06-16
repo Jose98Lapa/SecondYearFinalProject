@@ -1,0 +1,4 @@
+BEGIN
+matchRegex[atr[1],@@[a-zA-Z]+@@]
+matchRegex[atr[2],@@[A-Z][0-9]{3}@@]
+END
