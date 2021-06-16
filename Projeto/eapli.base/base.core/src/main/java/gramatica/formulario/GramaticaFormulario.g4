@@ -11,7 +11,11 @@ instrucao: inicializacao
    | if_stat
    | atribuicao
    | atribuicao_atributo
+   | fail
+   | matchregex
    ;
+
+fail:FAIL #validationFail;
 
 inicializacao: TIPODADOS identidade     #inicializacaoIdent
    | TIPODADOS atribuicao               #inicializacaoAtribuicao
@@ -21,6 +25,9 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
+
+matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex = STRING ']' #match_regex
+;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
     | identidade OPERADORATRIBUICAO identidade '(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
@@ -67,7 +74,7 @@ condition_block
  ;
 
 stat_block
- :  instrucao*
+ : instrucao*
  ;
 
 fragment DIGITO     : [0-9];
@@ -90,6 +97,8 @@ DIV : '/';
 MOD : '%';
 POW : '^';
 NOT : '!';
+FAIL : 'FAIL';
+MATCHREGEX : 'matchRegex';
 OPERADORATRIBUICAO  : '->';
 
 VARIAVEL            : '$' (TEXTO) [_]? (TEXTO | NUMERO )*;
