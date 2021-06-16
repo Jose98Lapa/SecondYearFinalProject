@@ -8,6 +8,7 @@ import eapli.base.form.domain.attribute.*;
 import gramatica.atividadeAutomatica.GramaticaAtividadeAutomaticaParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
@@ -20,21 +21,6 @@ import java.util.Set;
 public class GramaticaFormulario {
     public static void main(String[] args) {
         System.out.println("Result with Visitor : ");
-        parseWithVisitor();
-    }
-
-    public static void parseWithVisitor() {
-        GramaticaFormularioLexer lexer = null;
-        try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName("teste_formulario.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
-        ParseTree tree = parser.gramatica();
-        EvalVisitor eval = new EvalVisitor();
-
         Set<Attribute> attributeSet = new HashSet<>();
 
         attributeSet.add(new Attribute(
@@ -57,6 +43,21 @@ public class GramaticaFormulario {
         );
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
+        parseWithVisitor("teste_formulario.txt",form);
+    }
+
+    public static void parseWithVisitor(String file,Form form) {
+        GramaticaFormularioLexer lexer = null;
+        try {
+            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+        ParseTree tree = parser.gramatica();
+        EvalVisitor eval = new EvalVisitor();
+
         eval.defineForm(form);
         System.out.println(eval.visit(tree));
     }
@@ -302,8 +303,7 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
-            System.out.println("FAIL");
-            return Value.VOID;
+            throw new ParseCancellationException("FAIL Detected");
         }
 
         @Override
@@ -314,8 +314,7 @@ public class GramaticaFormulario {
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                System.out.println(toCheck+ "Does not match regex");
-                return Value.VOID;
+                throw new ParseCancellationException(toCheck+ "Does not match regex");
             }
         }
 
