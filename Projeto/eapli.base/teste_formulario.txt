@@ -4,5 +4,5 @@ DATA $dataFim -> atr[1]
 NUMERO $result
 se $dataFim = $dataInicio entao FAIL
 es
-matchRegex[$dataInicio,"([0-9]|1[0-9])[/]0[0-9][/][0-9]{4}"]
+matchRegex[$dataInicio,@@([0-9]|1[0-9])[/]0[0-9][/][0-9]{4}@@]
 END

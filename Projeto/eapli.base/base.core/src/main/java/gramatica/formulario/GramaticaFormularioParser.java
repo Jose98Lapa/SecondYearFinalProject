@@ -22,8 +22,8 @@ public class GramaticaFormularioParser extends Parser {
 		MULT=20, DIV=21, MOD=22, POW=23, NOT=24, FAIL=25, PASS=26, MATCHREGEX=27, 
 		OPERADORATRIBUICAO=28, VARIAVEL=29, SE=30, ENTAO=31, SENAO=32, END_SE=33, 
 		TIPODADOS=34, ELEMENTO=35, NUMERO=36, REAL=37, NOME_FICHEIRO=38, TEXTO=39, 
-		STRING=40, DATA_DIA=41, DATA_MES=42, DATA_ANO=43, DATAREGEX=44, COMMENT=45, 
-		COMMENTLINE=46, ESPACO=47;
+		STRING=40, REGEX=41, DATA_DIA=42, DATA_MES=43, DATA_ANO=44, DATAREGEX=45, 
+		COMMENT=46, COMMENTLINE=47, ESPACO=48;
 	public static final int
 		RULE_gramatica = 0, RULE_instrucao = 1, RULE_fail = 2, RULE_inicializacao = 3, 
 		RULE_atribuicao_atributo = 4, RULE_get_atributo = 5, RULE_matchregex = 6, 
@@ -54,8 +54,8 @@ public class GramaticaFormularioParser extends Parser {
 			"EQ", "NEQ", "GT", "LT", "GTEQ", "LTEQ", "MAIS", "MENOS", "MULT", "DIV", 
 			"MOD", "POW", "NOT", "FAIL", "PASS", "MATCHREGEX", "OPERADORATRIBUICAO", 
 			"VARIAVEL", "SE", "ENTAO", "SENAO", "END_SE", "TIPODADOS", "ELEMENTO", 
-			"NUMERO", "REAL", "NOME_FICHEIRO", "TEXTO", "STRING", "DATA_DIA", "DATA_MES", 
-			"DATA_ANO", "DATAREGEX", "COMMENT", "COMMENTLINE", "ESPACO"
+			"NUMERO", "REAL", "NOME_FICHEIRO", "TEXTO", "STRING", "REGEX", "DATA_DIA", 
+			"DATA_MES", "DATA_ANO", "DATAREGEX", "COMMENT", "COMMENTLINE", "ESPACO"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -585,7 +585,7 @@ public class GramaticaFormularioParser extends Parser {
 		public Token regex;
 		public TerminalNode MATCHREGEX() { return getToken(GramaticaFormularioParser.MATCHREGEX, 0); }
 		public TerminalNode VARIAVEL() { return getToken(GramaticaFormularioParser.VARIAVEL, 0); }
-		public TerminalNode STRING() { return getToken(GramaticaFormularioParser.STRING, 0); }
+		public TerminalNode REGEX() { return getToken(GramaticaFormularioParser.REGEX, 0); }
 		public Match_regexContext(MatchregexContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -618,7 +618,7 @@ public class GramaticaFormularioParser extends Parser {
 			setState(73);
 			match(T__5);
 			setState(74);
-			((Match_regexContext)_localctx).regex = match(STRING);
+			((Match_regexContext)_localctx).regex = match(REGEX);
 			setState(75);
 			match(T__4);
 			}
@@ -1775,7 +1775,7 @@ public class GramaticaFormularioParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u00ab\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\62\u00ab\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\6\2\'\n\2\r\2\16\2(\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\64"+
@@ -1800,7 +1800,7 @@ public class GramaticaFormularioParser extends Parser {
 		"\3\2\2\29:\7$\2\2:>\5\34\17\2;<\7$\2\2<>\5\20\t\2=9\3\2\2\2=;\3\2\2\2"+
 		">\t\3\2\2\2?@\5\b\5\2@A\7\36\2\2AB\5\f\7\2B\13\3\2\2\2CD\7\5\2\2DE\7\6"+
 		"\2\2EF\7&\2\2FG\7\7\2\2G\r\3\2\2\2HI\7\35\2\2IJ\7\6\2\2JK\7\37\2\2KL\7"+
-		"\b\2\2LM\7*\2\2MN\7\7\2\2N\17\3\2\2\2OP\5\34\17\2PQ\7\36\2\2QR\5\22\n"+
+		"\b\2\2LM\7+\2\2MN\7\7\2\2N\17\3\2\2\2OP\5\34\17\2PQ\7\36\2\2QR\5\22\n"+
 		"\2Rc\3\2\2\2ST\5\34\17\2TU\7\36\2\2UV\5\34\17\2VX\7\t\2\2WY\t\2\2\2XW"+
 		"\3\2\2\2YZ\3\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\\\3\2\2\2\\]\7\n\2\2]c\3\2\2\2"+
 		"^_\5\34\17\2_`\7\36\2\2`a\5\f\7\2ac\3\2\2\2bO\3\2\2\2bS\3\2\2\2b^\3\2"+
@@ -1816,7 +1816,7 @@ public class GramaticaFormularioParser extends Parser {
 		"\2\u0088\u008a\7\25\2\2\u0089\u0088\3\2\2\2\u0089\u008a\3\2\2\2\u008a"+
 		"\u008b\3\2\2\2\u008b\u008c\7&\2\2\u008c\27\3\2\2\2\u008d\u008f\7\25\2"+
 		"\2\u008e\u008d\3\2\2\2\u008e\u008f\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0091"+
-		"\7\'\2\2\u0091\31\3\2\2\2\u0092\u0093\7\13\2\2\u0093\u0094\7.\2\2\u0094"+
+		"\7\'\2\2\u0091\31\3\2\2\2\u0092\u0093\7\13\2\2\u0093\u0094\7/\2\2\u0094"+
 		"\u0095\7\13\2\2\u0095\33\3\2\2\2\u0096\u0097\7\37\2\2\u0097\35\3\2\2\2"+
 		"\u0098\u0099\7 \2\2\u0099\u009c\5 \21\2\u009a\u009b\7\"\2\2\u009b\u009d"+
 		"\5\"\22\2\u009c\u009a\3\2\2\2\u009c\u009d\3\2\2\2\u009d\u009e\3\2\2\2"+
