@@ -310,11 +310,11 @@ public class GramaticaFormulario {
         public Value visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
             String toCheck =memory.get( ctx.var.getText()).toString();
             String regexBefore = ctx.regex.getText();
-            String regex = regexBefore.substring(1,regexBefore.length()-1);
+            String regex = regexBefore.substring(2,regexBefore.length()-2);
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                System.out.println("Does not match regex");
+                System.out.println(toCheck+ "Does not match regex");
                 return Value.VOID;
             }
         }

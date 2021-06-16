@@ -28,7 +28,7 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
 
-matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex = STRING']' #match_regex
+matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex =  REGEX ']' #match_regex
 ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
@@ -120,6 +120,7 @@ REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 STRING              : '"' ~('"')+ '"';
+REGEX               :'@@' .*? '@@';
 
 DATA_DIA            : [0]?[1-9]|[12][0-9]|[3][01];
 DATA_MES            : [0]?[1-9]|[1][012];
