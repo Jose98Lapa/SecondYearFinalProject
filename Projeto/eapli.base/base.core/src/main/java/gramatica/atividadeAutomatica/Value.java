@@ -77,4 +77,11 @@ public class Value {
     public String toString() {
         return String.valueOf(value);
     }
+
+    enum Tipo{
+        TEXTO,
+        NUMERO,
+        REAL
+
+    }
 }

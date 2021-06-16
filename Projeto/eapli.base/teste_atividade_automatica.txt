@@ -2,6 +2,7 @@ BEGIN
     XML $file -> "exemplo.xml"
         ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
     LMX
+    4
     TEXTO $price -> $specificProduct(preco)
   //NUMERO $price -> $specificProduct(price)
   //TEXTO $status
@@ -16,7 +17,7 @@ BEGIN
     TEXTO $destinatario-> "guili@isep.ipp.pt"
     TEXTO $assunto -> "Teste 1"
 
-    se $price<5 entao
+    se $destinatario="Teste 1" entao
         TEXTO $corpo-> "O preço é menor que 5 : " + $price + "$."
     senao
         TEXTO $corpo-> "O preço é maior que 5 : " + $price + "$."
