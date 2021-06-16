@@ -39,6 +39,10 @@ public class AttributeType implements ValueObject, Serializable {
         return new AttributeType(string);
     }
 
+    public String tipo () {
+        return tipo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

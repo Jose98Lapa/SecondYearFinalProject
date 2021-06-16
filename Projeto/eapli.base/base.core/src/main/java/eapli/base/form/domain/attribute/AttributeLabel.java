@@ -45,6 +45,11 @@ public class AttributeLabel implements ValueObject, Serializable {
         return Objects.equals(label, that.label) && Objects.equals(regex, that.regex);
     }
 
+    public String label ( ) {
+
+        return label;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(label, regex);

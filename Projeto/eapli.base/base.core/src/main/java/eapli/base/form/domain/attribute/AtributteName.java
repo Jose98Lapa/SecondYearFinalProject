@@ -46,6 +46,10 @@ public class AtributteName implements ValueObject, Comparable<AtributteName> , S
         return Objects.equals(nome, that.nome) && Objects.equals(regex, that.regex);
     }
 
+    public String nome ( ) {
+
+        return nome;
+    }
 
     @Override
     public int hashCode() {

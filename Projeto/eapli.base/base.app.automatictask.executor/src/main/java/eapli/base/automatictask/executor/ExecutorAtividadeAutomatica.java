@@ -1,16 +1,11 @@
-package gramatica.atividadeAutomatica;
+package eapli.base.automatictask.executor;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.antlr.v4.runtime.*;
+import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,15 +15,22 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GramaticaAtividadeAutomatica {
+public class ExecutorAtividadeAutomatica {
     public static void main(String[] args) throws IOException {
-        System.out.println("Result with Visitor : ");
-        parseWithVisitor();
+        //System.out.println("Result with Visitor : ");
+        //parseWithVisitor("teste_atividade_automatica.txt");
     }
 
-    public static void parseWithVisitor() throws IOException {
-        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName("teste_atividade_automatica.txt"));
+    public static void parseWithVisitor(String script) throws IOException {
+        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
         try {
@@ -38,7 +40,10 @@ public class GramaticaAtividadeAutomatica {
             EvalVisitor eval = new EvalVisitor();
             System.out.println(eval.visit(tree));
         } catch (ParseCancellationException e) {
-            System.out.println(e.getMessage());
+            String errorMessage = e.getMessage();
+            if (errorMessage == null)
+                errorMessage = "grammar";
+            System.out.printf("Not Succesfull : %s%n", errorMessage);
         }
         //ParseTreeWalker walker = new ParseTreeWalker();
         //EvalListener eval = new EvalListener();
@@ -266,6 +271,12 @@ public class GramaticaAtividadeAutomatica {
         private Map<String, Value> memory = new HashMap<>();
 
         @Override
+        public Value visitGramatica(GramaticaAtividadeAutomaticaParser.GramaticaContext ctx) {
+            visitChildren(ctx);
+            return new Value("Ok");
+        }
+
+        @Override
         public Value visitInicializacaoIdent(GramaticaAtividadeAutomaticaParser.InicializacaoIdentContext ctx) {
             String id = ctx.identidade().getText();
             return memory.put(id, Value.VOID);
@@ -276,29 +287,41 @@ public class GramaticaAtividadeAutomatica {
             String id = ctx.identidade().getText();
             Value value = this.visit(ctx.expr());
             String cameFrom = ctx.getParent().getRuleContext().getChild(0).getText();
-            if (!memory.containsKey(id) && verifyInitialization(cameFrom))
+            if (!memory.containsKey(id) && !verifyInitialization(cameFrom))
                 throw new ParseCancellationException(String.format("Variavel %s não inicializada", id));
             return memory.put(id, value);
         }
 
         public boolean verifyInitialization(String where) {
-            //return !where.equalsIgnoreCase(GramaticaAtividadeAutomaticaParser.TIPODADOS));
+            try {
+                Value.Tipo value = Value.Tipo.valueOf(where);
+            } catch (IllegalArgumentException e) {
+                return false;
+            }
             return true;
         }
 
         @Override
         public Value visitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
-            Element element = this.visit(ctx.nomeElemento).asElement();
-            String what = ctx.what.getText();
-            Node node = element.getElementsByTagName(what).item(0);
-            Element resultElement = (Element) node;
-            Value result = new Value(resultElement.getTextContent());
-            return memory.put(ctx.nomeVar.getText(), result);
+            try {
+                Element element = this.visit(ctx.nomeElemento).asElement();
+                String what = ctx.what.getText();
+                Node node = element.getElementsByTagName(what).item(0);
+                Element resultElement = (Element) node;
+                Value result = new Value(resultElement.getTextContent());
+                return memory.put(ctx.nomeVar.getText(), result);
+            } catch (Exception e) {
+                throw new ParseCancellationException("Elemento xml não encontrado");
+            }
         }
 
         @Override
         public Value visitIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx) {
-            return memory.get(ctx.getText());
+            String id = ctx.getText();
+            Value temp = memory.get(id);
+            if (temp == null)
+                throw new ParseCancellationException(String.format("Variavel %s não inicializada", id));
+            return temp;
         }
 
         @Override
@@ -309,7 +332,10 @@ public class GramaticaAtividadeAutomatica {
         @Override
         public Value visitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx) {
             String id = ctx.identidade().getText();
-            return memory.get(id);
+            Value temp = memory.get(id);
+            if (temp == null)
+                throw new ParseCancellationException(String.format("Variavel %s não inicializada", id));
+            return temp;
         }
 
         @Override
@@ -326,6 +352,10 @@ public class GramaticaAtividadeAutomatica {
         public Value visitPowExpr(GramaticaAtividadeAutomaticaParser.PowExprContext ctx) {
             Value left = this.visit(ctx.left);
             Value right = this.visit(ctx.right);
+
+            if (left.isString() || right.isString())
+                throw new ParseCancellationException("Não foi possivel fazer a operação");
+
             return new Value(Math.pow(left.asDouble(), right.asDouble()));
         }
 
@@ -333,6 +363,9 @@ public class GramaticaAtividadeAutomatica {
         public Value visitMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) {
             Value left = this.visit(ctx.left);
             Value right = this.visit(ctx.right);
+
+            if (left.isString() || right.isString())
+                throw new ParseCancellationException("Não foi possivel fazer a operação");
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MULT:
@@ -364,6 +397,10 @@ public class GramaticaAtividadeAutomatica {
 
                     throw new ParseCancellationException("Não foi possivel fazer a operação");
                 case GramaticaAtividadeAutomaticaParser.MENOS:
+
+                    if (left.isString() || right.isString())
+                        throw new ParseCancellationException("Não foi possivel fazer a operação");
+
                     return left.isDouble() && right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
                             new Value(left.asInteger() - right.asInteger());
@@ -378,6 +415,8 @@ public class GramaticaAtividadeAutomatica {
             Value left = this.visit(ctx.left);
             Value right = this.visit(ctx.right);
 
+            if (left.isString() || right.isString())
+                throw new ParseCancellationException("Não foi possivel fazer a operação");
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.LT:

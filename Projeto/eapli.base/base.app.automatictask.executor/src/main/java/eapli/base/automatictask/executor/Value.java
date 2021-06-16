@@ -1,4 +1,4 @@
-package gramatica.atividadeAutomatica;
+package eapli.base.automatictask.executor;
 
 import org.w3c.dom.Element;
 
@@ -76,5 +76,12 @@ public class Value {
 
     public String toString() {
         return String.valueOf(value);
+    }
+
+    enum Tipo{
+        TEXTO,
+        NUMERO,
+        REAL
+
     }
 }

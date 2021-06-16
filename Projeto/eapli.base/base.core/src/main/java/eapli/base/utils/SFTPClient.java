@@ -1,14 +1,11 @@
-package eapli.base.app.backoffice.console.presentation;
+package eapli.base.utils;
 
 import com.jcraft.jsch.*;
 import eapli.base.Application;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
 
 public class SFTPClient {
 

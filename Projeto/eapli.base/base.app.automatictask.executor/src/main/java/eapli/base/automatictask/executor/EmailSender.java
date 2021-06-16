@@ -1,4 +1,4 @@
-package gramatica.atividadeAutomatica;
+package eapli.base.automatictask.executor;
 
 
 import javax.mail.*;
@@ -38,15 +38,20 @@ class EmailSender {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.port", "2525");
+        props.put("mail.smtp.ssl.trust", "smtp.mailtrap.io");
+
+        props.put("mail.smtp.ssl.protocols","TLSv1.2");
 
         //create the Session object
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
                 });
+
+        session.getProperties().put("mail.smtp.starttls.enable", "true");
 
         try {
             //create a MimeMessage object

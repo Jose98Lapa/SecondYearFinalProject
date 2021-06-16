@@ -11,6 +11,7 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -116,20 +117,19 @@ class TcpServerThread implements Runnable {
             if (code != 21)
                 scriptName = scriptName.substring(7);
             SFTPClient scriptClient = new SFTPClient();
-            String script = scriptClient.getScriptToString(scriptName);
-            String[] data = script.split("\n");
+            File script = scriptClient.getScript(scriptName);
 
             Calendar calendar = Calendar.getInstance();
-            System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), scriptName);
+            System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
 
-            for (String line : data) {
-                System.out.println(line);
-                Thread.sleep(1000);
-            }
+            ExecutorAtividadeAutomatica.parseWithVisitor(script.getName());
+
+            script.delete();
+
             calendar = Calendar.getInstance();
             System.out.printf("[%s] - %s executed.%n", calendar.getTime(), scriptName);
 
-        } catch (IOException | InterruptedException | JSchException | SftpException ex) {
+        } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
             return false;
         }

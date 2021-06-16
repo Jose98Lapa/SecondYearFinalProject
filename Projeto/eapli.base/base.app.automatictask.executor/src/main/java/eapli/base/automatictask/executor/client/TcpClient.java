@@ -1,6 +1,7 @@
 package eapli.base.automatictask.executor.client;
 
 import eapli.base.Application;
+import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.utils.SplitInfo;
 import eapli.framework.io.util.Console;
 import org.apache.commons.lang3.ArrayUtils;
@@ -139,7 +140,8 @@ class TcpClient {
                     cycle = false;
                     break;
                 case 20:
-                    tcpExecuterClient.executeAutomaticTask("bootstrap.txt");
+
+                    tcpExecuterClient.executeAutomaticTask("teste_atividade_automatica2.txt");
                     break;
                 default:
                     System.out.println("Invalid Option");

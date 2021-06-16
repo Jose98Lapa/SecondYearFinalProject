@@ -33,6 +33,10 @@ public class AttributeID implements ValueObject, Comparable<AttributeID>, Serial
         return new AttributeID(string);
     }
 
+    public String id () {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

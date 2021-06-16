@@ -5,7 +5,6 @@ import eapli.base.form.domain.FormID;
 import eapli.base.form.domain.FormName;
 import eapli.base.form.domain.FormScript;
 import eapli.base.form.domain.attribute.*;
-import gramatica.atividadeAutomatica.GramaticaAtividadeAutomaticaParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -238,7 +237,7 @@ public class GramaticaFormulario {
             Value right = new Value(this.visit(ctx.right));
 
             switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.MAIS:
+                case GramaticaFormularioParser.MAIS:
                     if (left.isDouble() && right.isDouble())
                         return new Value(left.asDouble() + right.asDouble());
 
@@ -248,13 +247,13 @@ public class GramaticaFormulario {
                     if (left.isString() || right.isString())
                         return new Value(left.asString() + right.asString());
 
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
-                case GramaticaAtividadeAutomaticaParser.MENOS:
+                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
+                case GramaticaFormularioParser.MENOS:
                     return left.isDouble() && right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
                             new Value(left.asInteger() - right.asInteger());
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaAtividadeAutomaticaParser.tokenNames[ctx.op.getType()]);
+                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
             }
         }
 

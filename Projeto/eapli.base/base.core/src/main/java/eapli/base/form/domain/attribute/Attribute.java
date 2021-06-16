@@ -69,7 +69,7 @@ public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDT
 
     @Override
     public AttributeDTO toDTO() {
-        return new AttributeDTO(nome.toString(), label.toString(), desc.toString(), regex.toString(), tipo.toString(), AttributeID.toString(), number);
+        return new AttributeDTO( nome.nome(), label.label(), desc.descricao(), regex.regex(), tipo.tipo(), AttributeID.id(), number);
     }
 
     public int number() {
