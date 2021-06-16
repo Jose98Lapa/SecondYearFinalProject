@@ -76,6 +76,7 @@
 <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 <property name="javax.persistence.schema-generation.database.action" value="create"/>
 <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.connection.pool_size" value="100"/>
 <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
       <!-- <property name = "hibernate.show_sql" value = "true" /> -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
