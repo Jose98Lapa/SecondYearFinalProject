@@ -15,7 +15,9 @@ instrucao: inicializacao
    | matchregex
    ;
 
-fail:FAIL #validationFail;
+fail:FAIL #validationFail
+| PASS  #validationPass
+;
 
 inicializacao: TIPODADOS identidade     #inicializacaoIdent
    | TIPODADOS atribuicao               #inicializacaoAtribuicao
@@ -26,7 +28,7 @@ atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
 get_atributo: 'atr' '[' numero=NUMERO ']' #atr_atributo
   ;
 
-matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex = STRING ']' #match_regex
+matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex = STRING']' #match_regex
 ;
 
 atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
@@ -98,6 +100,7 @@ MOD : '%';
 POW : '^';
 NOT : '!';
 FAIL : 'FAIL';
+PASS : 'PASS';
 MATCHREGEX : 'matchRegex';
 OPERADORATRIBUICAO  : '->';
 
@@ -117,7 +120,6 @@ REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 STRING              : '"' ~('"')+ '"';
-
 
 DATA_DIA            : [0]?[1-9]|[12][0-9]|[3][01];
 DATA_MES            : [0]?[1-9]|[1][012];

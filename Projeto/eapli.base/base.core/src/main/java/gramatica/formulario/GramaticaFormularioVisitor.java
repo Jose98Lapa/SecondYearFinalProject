@@ -30,6 +30,13 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code inicializacaoIdent}
 	 * labeled alternative in {@link GramaticaFormularioParser#inicializacao}.
 	 * @param ctx the parse tree

@@ -40,6 +40,18 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 */
 	void exitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void enterValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code validationPass}
+	 * labeled alternative in {@link GramaticaFormularioParser#fail}.
+	 * @param ctx the parse tree
+	 */
+	void exitValidationPass(GramaticaFormularioParser.ValidationPassContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code inicializacaoIdent}
 	 * labeled alternative in {@link GramaticaFormularioParser#inicializacao}.
 	 * @param ctx the parse tree

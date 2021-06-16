@@ -19,10 +19,11 @@ public class GramaticaFormularioParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		OU=10, E=11, EQ=12, NEQ=13, GT=14, LT=15, GTEQ=16, LTEQ=17, MAIS=18, MENOS=19, 
-		MULT=20, DIV=21, MOD=22, POW=23, NOT=24, FAIL=25, MATCHREGEX=26, OPERADORATRIBUICAO=27, 
-		VARIAVEL=28, SE=29, ENTAO=30, SENAO=31, END_SE=32, TIPODADOS=33, ELEMENTO=34, 
-		NUMERO=35, REAL=36, NOME_FICHEIRO=37, TEXTO=38, STRING=39, DATA_DIA=40, 
-		DATA_MES=41, DATA_ANO=42, DATAREGEX=43, COMMENT=44, COMMENTLINE=45, ESPACO=46;
+		MULT=20, DIV=21, MOD=22, POW=23, NOT=24, FAIL=25, PASS=26, MATCHREGEX=27, 
+		OPERADORATRIBUICAO=28, VARIAVEL=29, SE=30, ENTAO=31, SENAO=32, END_SE=33, 
+		TIPODADOS=34, ELEMENTO=35, NUMERO=36, REAL=37, NOME_FICHEIRO=38, TEXTO=39, 
+		STRING=40, DATA_DIA=41, DATA_MES=42, DATA_ANO=43, DATAREGEX=44, COMMENT=45, 
+		COMMENTLINE=46, ESPACO=47;
 	public static final int
 		RULE_gramatica = 0, RULE_instrucao = 1, RULE_fail = 2, RULE_inicializacao = 3, 
 		RULE_atribuicao_atributo = 4, RULE_get_atributo = 5, RULE_matchregex = 6, 
@@ -42,8 +43,8 @@ public class GramaticaFormularioParser extends Parser {
 		return new String[] {
 			null, "'BEGIN'", "'END'", "'atr'", "'['", "']'", "','", "'('", "')'", 
 			"'\"'", "'ou'", "'e'", "'='", "'!='", "'>'", "'<'", "'>='", "'<='", "'+'", 
-			"'-'", "'*'", "'/'", "'%'", "'^'", "'!'", "'FAIL'", "'matchRegex'", "'->'", 
-			null, "'se'", "'entao'", "'senao'", "'es'", null, "'ELEMENTO'"
+			"'-'", "'*'", "'/'", "'%'", "'^'", "'!'", "'FAIL'", "'PASS'", "'matchRegex'", 
+			"'->'", null, "'se'", "'entao'", "'senao'", "'es'", null, "'ELEMENTO'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -51,10 +52,10 @@ public class GramaticaFormularioParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, "OU", "E", 
 			"EQ", "NEQ", "GT", "LT", "GTEQ", "LTEQ", "MAIS", "MENOS", "MULT", "DIV", 
-			"MOD", "POW", "NOT", "FAIL", "MATCHREGEX", "OPERADORATRIBUICAO", "VARIAVEL", 
-			"SE", "ENTAO", "SENAO", "END_SE", "TIPODADOS", "ELEMENTO", "NUMERO", 
-			"REAL", "NOME_FICHEIRO", "TEXTO", "STRING", "DATA_DIA", "DATA_MES", "DATA_ANO", 
-			"DATAREGEX", "COMMENT", "COMMENTLINE", "ESPACO"
+			"MOD", "POW", "NOT", "FAIL", "PASS", "MATCHREGEX", "OPERADORATRIBUICAO", 
+			"VARIAVEL", "SE", "ENTAO", "SENAO", "END_SE", "TIPODADOS", "ELEMENTO", 
+			"NUMERO", "REAL", "NOME_FICHEIRO", "TEXTO", "STRING", "DATA_DIA", "DATA_MES", 
+			"DATA_ANO", "DATAREGEX", "COMMENT", "COMMENTLINE", "ESPACO"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -156,7 +157,7 @@ public class GramaticaFormularioParser extends Parser {
 				setState(38); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << MENOS) | (1L << FAIL) | (1L << MATCHREGEX) | (1L << VARIAVEL) | (1L << SE) | (1L << TIPODADOS) | (1L << NUMERO) | (1L << REAL) | (1L << STRING))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << MENOS) | (1L << FAIL) | (1L << PASS) | (1L << MATCHREGEX) | (1L << VARIAVEL) | (1L << SE) | (1L << TIPODADOS) | (1L << NUMERO) | (1L << REAL) | (1L << STRING))) != 0) );
 			setState(40);
 			match(T__1);
 			}
@@ -293,6 +294,23 @@ public class GramaticaFormularioParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ValidationPassContext extends FailContext {
+		public TerminalNode PASS() { return getToken(GramaticaFormularioParser.PASS, 0); }
+		public ValidationPassContext(FailContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).enterValidationPass(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).exitValidationPass(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GramaticaFormularioVisitor ) return ((GramaticaFormularioVisitor<? extends T>)visitor).visitValidationPass(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class ValidationFailContext extends FailContext {
 		public TerminalNode FAIL() { return getToken(GramaticaFormularioParser.FAIL, 0); }
 		public ValidationFailContext(FailContext ctx) { copyFrom(ctx); }
@@ -315,11 +333,27 @@ public class GramaticaFormularioParser extends Parser {
 		FailContext _localctx = new FailContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_fail);
 		try {
-			_localctx = new ValidationFailContext(_localctx);
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(51);
-			match(FAIL);
+			setState(53);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case FAIL:
+				_localctx = new ValidationFailContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(51);
+				match(FAIL);
+				}
+				break;
+			case PASS:
+				_localctx = new ValidationPassContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(52);
+				match(PASS);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -389,16 +423,16 @@ public class GramaticaFormularioParser extends Parser {
 		InicializacaoContext _localctx = new InicializacaoContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_inicializacao);
 		try {
-			setState(57);
+			setState(59);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				_localctx = new InicializacaoIdentContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(53);
+				setState(55);
 				match(TIPODADOS);
-				setState(54);
+				setState(56);
 				identidade();
 				}
 				break;
@@ -406,9 +440,9 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new InicializacaoAtribuicaoContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(55);
+				setState(57);
 				match(TIPODADOS);
-				setState(56);
+				setState(58);
 				atribuicao();
 				}
 				break;
@@ -458,11 +492,11 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(59);
-			inicializacao();
-			setState(60);
-			match(OPERADORATRIBUICAO);
 			setState(61);
+			inicializacao();
+			setState(62);
+			match(OPERADORATRIBUICAO);
+			setState(63);
 			get_atributo();
 			}
 		}
@@ -514,13 +548,13 @@ public class GramaticaFormularioParser extends Parser {
 			_localctx = new Atr_atributoContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63);
-			match(T__2);
-			setState(64);
-			match(T__3);
 			setState(65);
-			((Atr_atributoContext)_localctx).numero = match(NUMERO);
+			match(T__2);
 			setState(66);
+			match(T__3);
+			setState(67);
+			((Atr_atributoContext)_localctx).numero = match(NUMERO);
+			setState(68);
 			match(T__4);
 			}
 		}
@@ -575,17 +609,17 @@ public class GramaticaFormularioParser extends Parser {
 			_localctx = new Match_regexContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68);
-			match(MATCHREGEX);
-			setState(69);
-			match(T__3);
 			setState(70);
-			((Match_regexContext)_localctx).var = match(VARIAVEL);
+			match(MATCHREGEX);
 			setState(71);
-			match(T__5);
+			match(T__3);
 			setState(72);
-			((Match_regexContext)_localctx).regex = match(STRING);
+			((Match_regexContext)_localctx).var = match(VARIAVEL);
 			setState(73);
+			match(T__5);
+			setState(74);
+			((Match_regexContext)_localctx).regex = match(STRING);
+			setState(75);
 			match(T__4);
 			}
 		}
@@ -694,18 +728,18 @@ public class GramaticaFormularioParser extends Parser {
 		enterRule(_localctx, 14, RULE_atribuicao);
 		int _la;
 		try {
-			setState(94);
+			setState(96);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				_localctx = new VariavelExprContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(75);
-				identidade();
-				setState(76);
-				match(OPERADORATRIBUICAO);
 				setState(77);
+				identidade();
+				setState(78);
+				match(OPERADORATRIBUICAO);
+				setState(79);
 				expr(0);
 				}
 				break;
@@ -713,21 +747,21 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new VariavelVariavelContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(79);
-				identidade();
-				setState(80);
-				match(OPERADORATRIBUICAO);
 				setState(81);
 				identidade();
 				setState(82);
+				match(OPERADORATRIBUICAO);
+				setState(83);
+				identidade();
+				setState(84);
 				match(T__6);
-				setState(84); 
+				setState(86); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(83);
+					setState(85);
 					_la = _input.LA(1);
 					if ( !(_la==NUMERO || _la==TEXTO) ) {
 					_errHandler.recoverInline(this);
@@ -739,11 +773,11 @@ public class GramaticaFormularioParser extends Parser {
 					}
 					}
 					}
-					setState(86); 
+					setState(88); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==NUMERO || _la==TEXTO );
-				setState(88);
+				setState(90);
 				match(T__7);
 				}
 				break;
@@ -751,11 +785,11 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new VariavelAtrContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(90);
-				identidade();
-				setState(91);
-				match(OPERADORATRIBUICAO);
 				setState(92);
+				identidade();
+				setState(93);
+				match(OPERADORATRIBUICAO);
+				setState(94);
 				get_atributo();
 				}
 				break;
@@ -1011,31 +1045,31 @@ public class GramaticaFormularioParser extends Parser {
 			_ctx = _localctx;
 			_prevctx = _localctx;
 
-			setState(97);
+			setState(99);
 			((AtomExprContext)_localctx).atom = tipo_dados();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(122);
+			setState(124);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(120);
+					setState(122);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
 						_localctx = new PowExprContext(new ExprContext(_parentctx, _parentState));
 						((PowExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(99);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(100);
-						match(POW);
 						setState(101);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(102);
+						match(POW);
+						setState(103);
 						((PowExprContext)_localctx).right = expr(9);
 						}
 						break;
@@ -1044,9 +1078,9 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new MulDivModExprContext(new ExprContext(_parentctx, _parentState));
 						((MulDivModExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(102);
+						setState(104);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(103);
+						setState(105);
 						((MulDivModExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MULT) | (1L << DIV) | (1L << MOD))) != 0)) ) {
@@ -1057,7 +1091,7 @@ public class GramaticaFormularioParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(104);
+						setState(106);
 						((MulDivModExprContext)_localctx).right = expr(8);
 						}
 						break;
@@ -1066,9 +1100,9 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new SumDifExprContext(new ExprContext(_parentctx, _parentState));
 						((SumDifExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(105);
+						setState(107);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(106);
+						setState(108);
 						((SumDifExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==MAIS || _la==MENOS) ) {
@@ -1079,7 +1113,7 @@ public class GramaticaFormularioParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(107);
+						setState(109);
 						((SumDifExprContext)_localctx).right = expr(7);
 						}
 						break;
@@ -1088,9 +1122,9 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new RelationalExprContext(new ExprContext(_parentctx, _parentState));
 						((RelationalExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(108);
+						setState(110);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(109);
+						setState(111);
 						((RelationalExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << LT) | (1L << GTEQ) | (1L << LTEQ))) != 0)) ) {
@@ -1101,7 +1135,7 @@ public class GramaticaFormularioParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(110);
+						setState(112);
 						((RelationalExprContext)_localctx).right = expr(6);
 						}
 						break;
@@ -1110,9 +1144,9 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new EqualExprContext(new ExprContext(_parentctx, _parentState));
 						((EqualExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(111);
+						setState(113);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(112);
+						setState(114);
 						((EqualExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==EQ || _la==NEQ) ) {
@@ -1123,7 +1157,7 @@ public class GramaticaFormularioParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(113);
+						setState(115);
 						((EqualExprContext)_localctx).right = expr(5);
 						}
 						break;
@@ -1132,11 +1166,11 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new AndExprContext(new ExprContext(_parentctx, _parentState));
 						((AndExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(114);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(115);
-						match(E);
 						setState(116);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(117);
+						match(E);
+						setState(118);
 						((AndExprContext)_localctx).right = expr(4);
 						}
 						break;
@@ -1145,20 +1179,20 @@ public class GramaticaFormularioParser extends Parser {
 						_localctx = new OrExprContext(new ExprContext(_parentctx, _parentState));
 						((OrExprContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(117);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(118);
-						match(OU);
 						setState(119);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(120);
+						match(OU);
+						setState(121);
 						((OrExprContext)_localctx).right = expr(3);
 						}
 						break;
 					}
 					} 
 				}
-				setState(124);
+				setState(126);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
 			}
 		}
@@ -1282,14 +1316,14 @@ public class GramaticaFormularioParser extends Parser {
 		Tipo_dadosContext _localctx = new Tipo_dadosContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_tipo_dados);
 		try {
-			setState(130);
+			setState(132);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				_localctx = new Tp_identContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(125);
+				setState(127);
 				identidade();
 				}
 				break;
@@ -1297,7 +1331,7 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new Tp_integerContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(126);
+				setState(128);
 				integer();
 				}
 				break;
@@ -1305,7 +1339,7 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new Tp_floatContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(127);
+				setState(129);
 				floate();
 				}
 				break;
@@ -1313,7 +1347,7 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new Tp_stringeContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(128);
+				setState(130);
 				match(STRING);
 				}
 				break;
@@ -1321,7 +1355,7 @@ public class GramaticaFormularioParser extends Parser {
 				_localctx = new Tp_dataContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(129);
+				setState(131);
 				data();
 				}
 				break;
@@ -1367,17 +1401,17 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
+			setState(135);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==MENOS) {
 				{
-				setState(132);
+				setState(134);
 				match(MENOS);
 				}
 			}
 
-			setState(135);
+			setState(137);
 			match(NUMERO);
 			}
 		}
@@ -1421,17 +1455,17 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(138);
+			setState(140);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==MENOS) {
 				{
-				setState(137);
+				setState(139);
 				match(MENOS);
 				}
 			}
 
-			setState(140);
+			setState(142);
 			match(REAL);
 			}
 		}
@@ -1473,11 +1507,11 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(142);
-			match(T__8);
-			setState(143);
-			match(DATAREGEX);
 			setState(144);
+			match(T__8);
+			setState(145);
+			match(DATAREGEX);
+			setState(146);
 			match(T__8);
 			}
 		}
@@ -1519,7 +1553,7 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(146);
+			setState(148);
 			match(VARIAVEL);
 			}
 		}
@@ -1570,23 +1604,23 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(148);
+			setState(150);
 			match(SE);
-			setState(149);
+			setState(151);
 			condition_block();
-			setState(152);
+			setState(154);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==SENAO) {
 				{
-				setState(150);
+				setState(152);
 				match(SENAO);
-				setState(151);
+				setState(153);
 				stat_block();
 				}
 			}
 
-			setState(154);
+			setState(156);
 			match(END_SE);
 			}
 		}
@@ -1634,11 +1668,11 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(156);
-			expr(0);
-			setState(157);
-			match(ENTAO);
 			setState(158);
+			expr(0);
+			setState(159);
+			match(ENTAO);
+			setState(160);
 			stat_block();
 			}
 		}
@@ -1686,17 +1720,17 @@ public class GramaticaFormularioParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(163);
+			setState(165);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << MENOS) | (1L << FAIL) | (1L << MATCHREGEX) | (1L << VARIAVEL) | (1L << SE) | (1L << TIPODADOS) | (1L << NUMERO) | (1L << REAL) | (1L << STRING))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << MENOS) | (1L << FAIL) | (1L << PASS) | (1L << MATCHREGEX) | (1L << VARIAVEL) | (1L << SE) | (1L << TIPODADOS) | (1L << NUMERO) | (1L << REAL) | (1L << STRING))) != 0)) {
 				{
 				{
-				setState(160);
+				setState(162);
 				instrucao();
 				}
 				}
-				setState(165);
+				setState(167);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1741,55 +1775,56 @@ public class GramaticaFormularioParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\60\u00a9\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u00ab\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\6\2\'\n\2\r\2\16\2(\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\64"+
-		"\n\3\3\4\3\4\3\5\3\5\3\5\3\5\5\5<\n\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7"+
-		"\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\6"+
-		"\tW\n\t\r\t\16\tX\3\t\3\t\3\t\3\t\3\t\3\t\5\ta\n\t\3\n\3\n\3\n\3\n\3\n"+
+		"\n\3\3\4\3\4\5\48\n\4\3\5\3\5\3\5\3\5\5\5>\n\5\3\6\3\6\3\6\3\6\3\7\3\7"+
+		"\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3"+
+		"\t\3\t\6\tY\n\t\r\t\16\tZ\3\t\3\t\3\t\3\t\3\t\3\t\5\tc\n\t\3\n\3\n\3\n"+
 		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3"+
-		"\n\3\n\7\n{\n\n\f\n\16\n~\13\n\3\13\3\13\3\13\3\13\3\13\5\13\u0085\n\13"+
-		"\3\f\5\f\u0088\n\f\3\f\3\f\3\r\5\r\u008d\n\r\3\r\3\r\3\16\3\16\3\16\3"+
-		"\16\3\17\3\17\3\20\3\20\3\20\3\20\5\20\u009b\n\20\3\20\3\20\3\21\3\21"+
-		"\3\21\3\21\3\22\7\22\u00a4\n\22\f\22\16\22\u00a7\13\22\3\22\2\3\22\23"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\7\4\2%%((\3\2\26\30\3\2\24"+
-		"\25\3\2\20\23\3\2\16\17\2\u00b1\2$\3\2\2\2\4\63\3\2\2\2\6\65\3\2\2\2\b"+
-		";\3\2\2\2\n=\3\2\2\2\fA\3\2\2\2\16F\3\2\2\2\20`\3\2\2\2\22b\3\2\2\2\24"+
-		"\u0084\3\2\2\2\26\u0087\3\2\2\2\30\u008c\3\2\2\2\32\u0090\3\2\2\2\34\u0094"+
-		"\3\2\2\2\36\u0096\3\2\2\2 \u009e\3\2\2\2\"\u00a5\3\2\2\2$&\7\3\2\2%\'"+
-		"\5\4\3\2&%\3\2\2\2\'(\3\2\2\2(&\3\2\2\2()\3\2\2\2)*\3\2\2\2*+\7\4\2\2"+
-		"+\3\3\2\2\2,\64\5\b\5\2-\64\5\22\n\2.\64\5\36\20\2/\64\5\20\t\2\60\64"+
-		"\5\n\6\2\61\64\5\6\4\2\62\64\5\16\b\2\63,\3\2\2\2\63-\3\2\2\2\63.\3\2"+
-		"\2\2\63/\3\2\2\2\63\60\3\2\2\2\63\61\3\2\2\2\63\62\3\2\2\2\64\5\3\2\2"+
-		"\2\65\66\7\33\2\2\66\7\3\2\2\2\678\7#\2\28<\5\34\17\29:\7#\2\2:<\5\20"+
-		"\t\2;\67\3\2\2\2;9\3\2\2\2<\t\3\2\2\2=>\5\b\5\2>?\7\35\2\2?@\5\f\7\2@"+
-		"\13\3\2\2\2AB\7\5\2\2BC\7\6\2\2CD\7%\2\2DE\7\7\2\2E\r\3\2\2\2FG\7\34\2"+
-		"\2GH\7\6\2\2HI\7\36\2\2IJ\7\b\2\2JK\7)\2\2KL\7\7\2\2L\17\3\2\2\2MN\5\34"+
-		"\17\2NO\7\35\2\2OP\5\22\n\2Pa\3\2\2\2QR\5\34\17\2RS\7\35\2\2ST\5\34\17"+
-		"\2TV\7\t\2\2UW\t\2\2\2VU\3\2\2\2WX\3\2\2\2XV\3\2\2\2XY\3\2\2\2YZ\3\2\2"+
-		"\2Z[\7\n\2\2[a\3\2\2\2\\]\5\34\17\2]^\7\35\2\2^_\5\f\7\2_a\3\2\2\2`M\3"+
-		"\2\2\2`Q\3\2\2\2`\\\3\2\2\2a\21\3\2\2\2bc\b\n\1\2cd\5\24\13\2d|\3\2\2"+
-		"\2ef\f\n\2\2fg\7\31\2\2g{\5\22\n\13hi\f\t\2\2ij\t\3\2\2j{\5\22\n\nkl\f"+
-		"\b\2\2lm\t\4\2\2m{\5\22\n\tno\f\7\2\2op\t\5\2\2p{\5\22\n\bqr\f\6\2\2r"+
-		"s\t\6\2\2s{\5\22\n\7tu\f\5\2\2uv\7\r\2\2v{\5\22\n\6wx\f\4\2\2xy\7\f\2"+
-		"\2y{\5\22\n\5ze\3\2\2\2zh\3\2\2\2zk\3\2\2\2zn\3\2\2\2zq\3\2\2\2zt\3\2"+
-		"\2\2zw\3\2\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\23\3\2\2\2~|\3\2\2\2\177"+
-		"\u0085\5\34\17\2\u0080\u0085\5\26\f\2\u0081\u0085\5\30\r\2\u0082\u0085"+
-		"\7)\2\2\u0083\u0085\5\32\16\2\u0084\177\3\2\2\2\u0084\u0080\3\2\2\2\u0084"+
-		"\u0081\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0083\3\2\2\2\u0085\25\3\2\2"+
-		"\2\u0086\u0088\7\25\2\2\u0087\u0086\3\2\2\2\u0087\u0088\3\2\2\2\u0088"+
-		"\u0089\3\2\2\2\u0089\u008a\7%\2\2\u008a\27\3\2\2\2\u008b\u008d\7\25\2"+
-		"\2\u008c\u008b\3\2\2\2\u008c\u008d\3\2\2\2\u008d\u008e\3\2\2\2\u008e\u008f"+
-		"\7&\2\2\u008f\31\3\2\2\2\u0090\u0091\7\13\2\2\u0091\u0092\7-\2\2\u0092"+
-		"\u0093\7\13\2\2\u0093\33\3\2\2\2\u0094\u0095\7\36\2\2\u0095\35\3\2\2\2"+
-		"\u0096\u0097\7\37\2\2\u0097\u009a\5 \21\2\u0098\u0099\7!\2\2\u0099\u009b"+
-		"\5\"\22\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2\2\2\u009b\u009c\3\2\2\2"+
-		"\u009c\u009d\7\"\2\2\u009d\37\3\2\2\2\u009e\u009f\5\22\n\2\u009f\u00a0"+
-		"\7 \2\2\u00a0\u00a1\5\"\22\2\u00a1!\3\2\2\2\u00a2\u00a4\5\4\3\2\u00a3"+
-		"\u00a2\3\2\2\2\u00a4\u00a7\3\2\2\2\u00a5\u00a3\3\2\2\2\u00a5\u00a6\3\2"+
-		"\2\2\u00a6#\3\2\2\2\u00a7\u00a5\3\2\2\2\16(\63;X`z|\u0084\u0087\u008c"+
-		"\u009a\u00a5";
+		"\n\3\n\3\n\3\n\7\n}\n\n\f\n\16\n\u0080\13\n\3\13\3\13\3\13\3\13\3\13\5"+
+		"\13\u0087\n\13\3\f\5\f\u008a\n\f\3\f\3\f\3\r\5\r\u008f\n\r\3\r\3\r\3\16"+
+		"\3\16\3\16\3\16\3\17\3\17\3\20\3\20\3\20\3\20\5\20\u009d\n\20\3\20\3\20"+
+		"\3\21\3\21\3\21\3\21\3\22\7\22\u00a6\n\22\f\22\16\22\u00a9\13\22\3\22"+
+		"\2\3\22\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\7\4\2&&))\3\2\26"+
+		"\30\3\2\24\25\3\2\20\23\3\2\16\17\2\u00b4\2$\3\2\2\2\4\63\3\2\2\2\6\67"+
+		"\3\2\2\2\b=\3\2\2\2\n?\3\2\2\2\fC\3\2\2\2\16H\3\2\2\2\20b\3\2\2\2\22d"+
+		"\3\2\2\2\24\u0086\3\2\2\2\26\u0089\3\2\2\2\30\u008e\3\2\2\2\32\u0092\3"+
+		"\2\2\2\34\u0096\3\2\2\2\36\u0098\3\2\2\2 \u00a0\3\2\2\2\"\u00a7\3\2\2"+
+		"\2$&\7\3\2\2%\'\5\4\3\2&%\3\2\2\2\'(\3\2\2\2(&\3\2\2\2()\3\2\2\2)*\3\2"+
+		"\2\2*+\7\4\2\2+\3\3\2\2\2,\64\5\b\5\2-\64\5\22\n\2.\64\5\36\20\2/\64\5"+
+		"\20\t\2\60\64\5\n\6\2\61\64\5\6\4\2\62\64\5\16\b\2\63,\3\2\2\2\63-\3\2"+
+		"\2\2\63.\3\2\2\2\63/\3\2\2\2\63\60\3\2\2\2\63\61\3\2\2\2\63\62\3\2\2\2"+
+		"\64\5\3\2\2\2\658\7\33\2\2\668\7\34\2\2\67\65\3\2\2\2\67\66\3\2\2\28\7"+
+		"\3\2\2\29:\7$\2\2:>\5\34\17\2;<\7$\2\2<>\5\20\t\2=9\3\2\2\2=;\3\2\2\2"+
+		">\t\3\2\2\2?@\5\b\5\2@A\7\36\2\2AB\5\f\7\2B\13\3\2\2\2CD\7\5\2\2DE\7\6"+
+		"\2\2EF\7&\2\2FG\7\7\2\2G\r\3\2\2\2HI\7\35\2\2IJ\7\6\2\2JK\7\37\2\2KL\7"+
+		"\b\2\2LM\7*\2\2MN\7\7\2\2N\17\3\2\2\2OP\5\34\17\2PQ\7\36\2\2QR\5\22\n"+
+		"\2Rc\3\2\2\2ST\5\34\17\2TU\7\36\2\2UV\5\34\17\2VX\7\t\2\2WY\t\2\2\2XW"+
+		"\3\2\2\2YZ\3\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\\\3\2\2\2\\]\7\n\2\2]c\3\2\2\2"+
+		"^_\5\34\17\2_`\7\36\2\2`a\5\f\7\2ac\3\2\2\2bO\3\2\2\2bS\3\2\2\2b^\3\2"+
+		"\2\2c\21\3\2\2\2de\b\n\1\2ef\5\24\13\2f~\3\2\2\2gh\f\n\2\2hi\7\31\2\2"+
+		"i}\5\22\n\13jk\f\t\2\2kl\t\3\2\2l}\5\22\n\nmn\f\b\2\2no\t\4\2\2o}\5\22"+
+		"\n\tpq\f\7\2\2qr\t\5\2\2r}\5\22\n\bst\f\6\2\2tu\t\6\2\2u}\5\22\n\7vw\f"+
+		"\5\2\2wx\7\r\2\2x}\5\22\n\6yz\f\4\2\2z{\7\f\2\2{}\5\22\n\5|g\3\2\2\2|"+
+		"j\3\2\2\2|m\3\2\2\2|p\3\2\2\2|s\3\2\2\2|v\3\2\2\2|y\3\2\2\2}\u0080\3\2"+
+		"\2\2~|\3\2\2\2~\177\3\2\2\2\177\23\3\2\2\2\u0080~\3\2\2\2\u0081\u0087"+
+		"\5\34\17\2\u0082\u0087\5\26\f\2\u0083\u0087\5\30\r\2\u0084\u0087\7*\2"+
+		"\2\u0085\u0087\5\32\16\2\u0086\u0081\3\2\2\2\u0086\u0082\3\2\2\2\u0086"+
+		"\u0083\3\2\2\2\u0086\u0084\3\2\2\2\u0086\u0085\3\2\2\2\u0087\25\3\2\2"+
+		"\2\u0088\u008a\7\25\2\2\u0089\u0088\3\2\2\2\u0089\u008a\3\2\2\2\u008a"+
+		"\u008b\3\2\2\2\u008b\u008c\7&\2\2\u008c\27\3\2\2\2\u008d\u008f\7\25\2"+
+		"\2\u008e\u008d\3\2\2\2\u008e\u008f\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0091"+
+		"\7\'\2\2\u0091\31\3\2\2\2\u0092\u0093\7\13\2\2\u0093\u0094\7.\2\2\u0094"+
+		"\u0095\7\13\2\2\u0095\33\3\2\2\2\u0096\u0097\7\37\2\2\u0097\35\3\2\2\2"+
+		"\u0098\u0099\7 \2\2\u0099\u009c\5 \21\2\u009a\u009b\7\"\2\2\u009b\u009d"+
+		"\5\"\22\2\u009c\u009a\3\2\2\2\u009c\u009d\3\2\2\2\u009d\u009e\3\2\2\2"+
+		"\u009e\u009f\7#\2\2\u009f\37\3\2\2\2\u00a0\u00a1\5\22\n\2\u00a1\u00a2"+
+		"\7!\2\2\u00a2\u00a3\5\"\22\2\u00a3!\3\2\2\2\u00a4\u00a6\5\4\3\2\u00a5"+
+		"\u00a4\3\2\2\2\u00a6\u00a9\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a8\3\2"+
+		"\2\2\u00a8#\3\2\2\2\u00a9\u00a7\3\2\2\2\17(\63\67=Zb|~\u0086\u0089\u008e"+
+		"\u009c\u00a7";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
