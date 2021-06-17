@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class GramaticaFormulario {
     public static void main(String[] args) {
         System.out.println("Result with Visitor : ");
@@ -75,7 +77,7 @@ public class GramaticaFormulario {
         ParseTree tree = parser.gramatica();
         ParseTreeWalker walker = new ParseTreeWalker();
         EvalListener eval = new EvalListener();
-
+        //GramaticaFormularioBaseListener eval = new GramaticaFormularioBaseListener();
         eval.defineForm(form);
         walker.walk(eval, tree);
     }
@@ -118,7 +120,8 @@ public class GramaticaFormulario {
         public void exitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
             String id = ctx.identidade().getText();
             Value value = valueStack.pop();
-            memory.put(id, value);
+            addToMemory(id, value);
+            valueStack.push(new Value(id));
         }
 
         @Override
@@ -129,23 +132,13 @@ public class GramaticaFormulario {
         @Override
         public void exitInicializacaoAtribuicao(GramaticaFormularioParser.InicializacaoAtribuicaoContext ctx) {
             Value var = valueStack.pop();
-            String dataType = ctx.tipoDados.getText();
-            if (memory.containsKey(var.toString())) {
-                Value result = memory.get(var.toString());
-                if (dataType.equals("NUMERO")) {
-                    String res = result.toString().replaceAll("[.][0-9]+", "");
-                    result = new Value(res);
-                    memory.put(var.toString(), result);
-                }
-            }
             attributeAndTypeMap.put(var.toString(), ctx.tipoDados.getText());
+            addToMemory(var.toString(), memory.get(var.toString()));
         }
 
 
-        @Override
-        public void enterVariavel(GramaticaFormularioParser.VariavelContext ctx) {
-            valueStack.push(new Value(ctx.var.getText()));
-        }
+
+
 
         @Override
         public void exitAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
@@ -189,32 +182,43 @@ public class GramaticaFormulario {
         public void exitRelationalExpr(GramaticaFormularioParser.RelationalExprContext ctx) {
         }
 
+        boolean addVariable = false;
+
+
+
         @Override
         public void exitMulDivModExpr(GramaticaFormularioParser.MulDivModExprContext ctx) {
             String typeLeft = attributeAndTypeMap.get(ctx.left.getText());
             String typeRight = attributeAndTypeMap.get(ctx.right.getText());
-            if ("TEXTO".equals(typeLeft) || "DATA".equals(typeLeft) || "TEXTO".equals(typeRight) || "DATA".equals(typeRight) || ctx.left.getText().matches(".*[^0-9.]+.*") || ctx.right.getText().matches(".*[^0-9.]+.*")) {
+
+
+            if ("TEXTO".equals(typeLeft) || "DATA".equals(typeLeft) || "TEXTO".equals(typeRight) || "DATA".equals(typeRight) || ctx.right.getText().matches(".*[^0-9.]+.*")) {
                 throw new ParseCancellationException("Só pode fazer-se operacao em numeros");
             }
-            Value left = memory.get(ctx.left.getText());
+            String number = ctx.left.getText();
+
+            Value left = memory.get(number);
             if (left == null)
                 left = new Value(ctx.left.getText());
+            else
+                number = left.toString();
             Value right = memory.get(ctx.right.getText());
             if (right == null)
                 right = new Value(ctx.right.getText());
-
+            if (number.matches(".*[^0-9.]+.*") && valueStack.size() > 1) {
+                left = valueStack.pop();
+            }
 
             switch (ctx.op.getType()) {
-                case GramaticaFormularioParser.MULT:
-                    valueStack.push(new Value(left.asDouble() * right.asDouble()));
-                    break;
-                case GramaticaFormularioParser.DIV:
-                    valueStack.push(new Value(left.asDouble() / right.asDouble()));
-                    break;
-                case GramaticaFormularioParser.MOD:
-                    valueStack.push(new Value(left.asDouble() % right.asDouble()));
-                    break;
+                case GramaticaFormularioParser.MULT -> valueStack.push(new Value(left.asDouble() * right.asDouble()));
+                case GramaticaFormularioParser.DIV -> valueStack.push(new Value(left.asDouble() / right.asDouble()));
+                case GramaticaFormularioParser.MOD -> valueStack.push(new Value(left.asDouble() % right.asDouble()));
             }
+        }
+
+        @Override
+        public void enterVariavelExpr(GramaticaFormularioParser.VariavelExprContext ctx) {
+            valueStack.push(new Value(ctx.iden.getText()));
         }
 
         @Override
@@ -229,14 +233,69 @@ public class GramaticaFormulario {
                 result = new Value(res);
                 memory.put(var.toString(), result);
             }
-            valueStack.push(var);
+            if (!attributeAndTypeMap.containsKey(var.toString()))
+                valueStack.push(var);
             memory.put(var.toString(), result);
         }
 
         @Override
         public void exitSumDifExpr(GramaticaFormularioParser.SumDifExprContext ctx) {
+            String typeLeft = attributeAndTypeMap.get(ctx.left.getText());
+            String typeRight = attributeAndTypeMap.get(ctx.right.getText());
+
+            Value left = memory.get(ctx.left.getText());
+            if (left == null)
+                left = new Value(ctx.left.getText());
+            Value right = memory.get(ctx.right.getText());
+            if (right == null)
+                right = new Value(ctx.right.getText());
+
+
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.MAIS -> valueStack.push(new Value(left.asDouble() * right.asDouble()));
+                case GramaticaFormularioParser.MENOS -> {
+                    if ("TEXTO".equals(typeLeft) || "TEXTO".equals(typeRight))
+                        throw new ParseCancellationException("Não se pode subtrair texto");
+                    if (Value.isValidDate(left.toString()) && Value.isValidDate(right.toString())) {
+                        LocalDate localDateLeft = left.asDate();
+                        LocalDate localDateRight = right.asDate();
+                        valueStack.push(new Value(DAYS.between(localDateLeft, localDateRight)));
+                    } else if ((Value.isValidDate(left.toString()) && Value.isValidNumber(right.toString())) || (Value.isValidDate(right.toString()) && Value.isValidNumber(left.toString()))) {
+                        if (Value.isValidNumber(right.toString())) {
+                            String rightString = right.asString();
+                            valueStack.push(new Value(Value.localDate(left.asDate().minusDays(new Value(rightString.replaceAll("[.][0-9]+", "")).asInteger())).toString()));
+                        } else {
+                            valueStack.push(new Value(right.asDate().minusDays(new Value(left.toString().replaceAll("[.][0-9]+", "")).asInteger())));
+                        }
+                    } else
+                        valueStack.push(new Value(left.asDouble() / right.asDouble()));
+                }
+            }
+        }
+
+        private void clearStack() {
 
         }
+
+        private void addToMemory(String var, Value value) {
+            if (attributeAndTypeMap.containsKey(var)) {
+                String type = attributeAndTypeMap.get(var);
+                if (type.equals("DATA") && !value.isDate())
+                    throw new ParseCancellationException("Data invalida");
+                if (type.equals("NUMERO") && !value.toString().matches("^[0-9]+([.][0-9]+)?$")) {
+                    throw new ParseCancellationException("Numero invalido");
+                } else {
+                    if (type.equals("NUMERO"))
+                        value = new Value(value.toString().replaceAll("[.][0-9]+", ""));
+                }
+
+                if (type.equals("REAL") && value.toString().matches("^[0-9]+([.][0-9]+)?$"))
+                    throw new ParseCancellationException("Real invalido");
+            }
+            memory.put(var, value);
+
+        }
+
 
     }
 
@@ -384,8 +443,8 @@ public class GramaticaFormulario {
                         return new Value(left.asDouble() < right.asDouble());
                     if (left.isDate() && right.isDate())
                         return new Value(left.asDate().isBefore(right.asDate()));
-                    if ( left.isDouble() && right.isDouble() ) {
-                        return new Value( left.asDouble() < right.asDouble( ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asDouble() < right.asDouble());
                     }
                     break;
 
@@ -398,8 +457,8 @@ public class GramaticaFormulario {
                         } else {
                             return new Value(left.asDate().isBefore(right.asDate()));
                         }
-                    if ( left.isDouble() && right.isDouble() ) {
-                        return new Value( left.asDouble() <= right.asDouble( ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asDouble() <= right.asDouble());
                     }
                     break;
 
@@ -409,8 +468,8 @@ public class GramaticaFormulario {
                         return new Value(left.asDouble() > right.asDouble());
                     if (left.isDate() && right.isDate())
                         return new Value(left.asDate().isAfter(right.asDate()));
-                    if ( left.isDouble() && right.isDouble() ) {
-                        return new Value( left.asDouble() > right.asDouble( ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asDouble() > right.asDouble());
                     }
                     break;
 
@@ -423,8 +482,8 @@ public class GramaticaFormulario {
                         } else {
                             return new Value(left.asDate().isAfter(right.asDate()));
                         }
-                    if ( left.isDouble() && right.isDouble() ) {
-                        return new Value( left.asDouble() >= right.asDouble( ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asDouble() >= right.asDouble());
                     }
                     break;
 
@@ -451,8 +510,8 @@ public class GramaticaFormulario {
                     if (left.isDate() && right.isDate()) {
                         return new Value(left.value.equals(right.value));
                     }
-                    if ( left.isDouble( ) && right.isDouble( ) ) {
-                        return new Value( left.asDouble().equals( right.asDouble() ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asDouble().equals(right.asDouble()));
                     }
                 case GramaticaFormularioParser.NEQ:
                     if (left.isDouble() && right.isDouble()) {
@@ -464,11 +523,11 @@ public class GramaticaFormulario {
                     if (left.isDate() && right.isDate()) {
                         return new Value(!left.value.equals(right.value));
                     }
-                    if ( left.isDouble( ) && right.isDouble( ) ) {
-                        return new Value( !left.asDouble().equals( right.asDouble() ) );
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(!left.asDouble().equals(right.asDouble()));
                     }
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ ctx.op.getType() ] );
+                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
             }
         }
 

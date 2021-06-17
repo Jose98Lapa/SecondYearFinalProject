@@ -33,8 +33,12 @@ public class Value {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // create a LocalDate object and
-        LocalDate dt = LocalDate.parse(this.value.toString(), formatter);
-        return dt ;
+        return LocalDate.parse(this.value.toString(), formatter);
+    }
+
+    public static String localDate (LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
     }
 
 
@@ -71,6 +75,10 @@ public class Value {
             return false;
         }
         return true;
+    }
+
+    public static boolean isValidNumber(String numberToTest){
+        return numberToTest.matches("^[0-9]+([.][0-9]+)?$");
     }
 
     @Override

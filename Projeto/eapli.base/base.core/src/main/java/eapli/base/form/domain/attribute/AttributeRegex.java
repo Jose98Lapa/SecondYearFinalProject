@@ -35,7 +35,7 @@ public class AttributeRegex implements ValueObject, Serializable {
     }
 
     public String regex () {
-        return regex();
+        return this.RegString;
     }
 
     @Override
