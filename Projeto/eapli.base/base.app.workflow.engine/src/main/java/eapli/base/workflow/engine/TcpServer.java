@@ -71,6 +71,13 @@ public class TcpServer implements Runnable {
                 finalString = compileString(finalString, "Lavar as janelas do escriotio do 5º andar");
                 finalString = compileString(finalString, "4");
                 sendData(finalString);
+                String finalString2 = "5";
+                finalString2 = compileString(finalString2, "31/06/2021 23:34");
+                finalString2 = compileString(finalString2, "Lavar portas");
+                finalString2 = compileString(finalString2, "http://192.168.1.92/bootstrap.jpg");
+                finalString2 = compileString(finalString2, "Lavar as portas do escriotio do 5º andar");
+                finalString2 = compileString(finalString2, "3");
+                sendData(finalString2);
                 byte[] finalPackage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
                 sOut.write(finalPackage);
                 sOut.flush();
@@ -145,7 +152,7 @@ public class TcpServer implements Runnable {
                 sOut.flush();
             } else {
                 byte[] finalInfo = {(byte) 0, (byte) 254, (byte) splitByteArray.length};
-                byte[] fullPackage = ArrayUtils.addAll(info, splitByteArray);
+                byte[] fullPackage = ArrayUtils.addAll(finalInfo, splitByteArray);
                 sOut.write(fullPackage);
                 sOut.flush();
             }
