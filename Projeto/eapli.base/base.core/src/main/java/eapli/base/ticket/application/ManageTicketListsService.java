@@ -1,5 +1,6 @@
 package eapli.base.ticket.application;
 
+import eapli.base.ticket.domain.Constants;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
 import org.fusesource.jansi.Ansi;
@@ -21,7 +22,7 @@ public class ManageTicketListsService {
         for (Ticket ticket:sortedInput) {
             Ansi line =null;
             String str = "";
-            if(ticket.status().equals(TicketStatus.valueOf("CONCLUDED"))){
+            if(ticket.status().equals(TicketStatus.valueOf( Constants.COMPLETE ))){
                 str=ticket.displayInfoForList();
                 line = ansi().fg(GREEN).a(str).reset();
             }else{

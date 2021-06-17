@@ -71,16 +71,16 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
     }
 
     @Override
-    public List<Ticket> getTicketsByClient(String client) {
-        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.client = :client", Ticket.class);
-        q.setParameter("client", client);
+    public List<Ticket> getTicketsByClient(String requestedBy) {
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.requestedBy = :requestedBy", Ticket.class);
+        q.setParameter("requestedBy", requestedBy);
         return q.getResultList();
     }
 
     @Override
-    public List<Ticket> getFeedbackBetweenDatesFromAClient(String client, LocalDate localDateStart, LocalDate localDateEnd) {
-        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.client=:id and e.completedOn between :localDateStart and :localDateEnd and e.status = :status ", Ticket.class);
-        q.setParameter("id",client);
+    public List<Ticket> getFeedbackBetweenDatesFromAClient(String requestedBy, LocalDate localDateStart, LocalDate localDateEnd) {
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.requestedBy=:id and e.completedOn between :localDateStart and :localDateEnd and e.status = :status ", Ticket.class);
+        q.setParameter("id",requestedBy);
         q.setParameter("localDateStart",localDateStart);
         q.setParameter("localDateEnd",localDateEnd);
         q.setParameter("status",TicketStatus.valueOf("CONCLUDED"));
