@@ -24,7 +24,7 @@ public class TicketApprovalTask extends TicketManualTask implements DTOable< Tic
 
 	public TicketApprovalTask (Transition transition, Task mainReference, Form form,
 							   LocalDate deadline ) {
-		super( transition,mainReference, form, deadline );
+		super( transition,mainReference, form, deadline, "APPROVAL" );
 	}
 
 	public Form form(){
