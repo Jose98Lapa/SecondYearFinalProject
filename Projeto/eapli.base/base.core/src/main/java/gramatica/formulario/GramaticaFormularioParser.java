@@ -390,10 +390,11 @@ public class GramaticaFormularioParser extends Parser {
 		}
 	}
 	public static class InicializacaoIdentContext extends InicializacaoContext {
-		public TerminalNode TIPODADOS() { return getToken(GramaticaFormularioParser.TIPODADOS, 0); }
+		public Token tipoDados;
 		public IdentidadeContext identidade() {
 			return getRuleContext(IdentidadeContext.class,0);
 		}
+		public TerminalNode TIPODADOS() { return getToken(GramaticaFormularioParser.TIPODADOS, 0); }
 		public InicializacaoIdentContext(InicializacaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -410,10 +411,11 @@ public class GramaticaFormularioParser extends Parser {
 		}
 	}
 	public static class InicializacaoAtribuicaoContext extends InicializacaoContext {
-		public TerminalNode TIPODADOS() { return getToken(GramaticaFormularioParser.TIPODADOS, 0); }
+		public Token tipoDados;
 		public AtribuicaoContext atribuicao() {
 			return getRuleContext(AtribuicaoContext.class,0);
 		}
+		public TerminalNode TIPODADOS() { return getToken(GramaticaFormularioParser.TIPODADOS, 0); }
 		public InicializacaoAtribuicaoContext(InicializacaoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -442,7 +444,7 @@ public class GramaticaFormularioParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(58);
-				match(TIPODADOS);
+				((InicializacaoIdentContext)_localctx).tipoDados = match(TIPODADOS);
 				setState(59);
 				identidade();
 				}
@@ -452,7 +454,7 @@ public class GramaticaFormularioParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(60);
-				match(TIPODADOS);
+				((InicializacaoAtribuicaoContext)_localctx).tipoDados = match(TIPODADOS);
 				setState(61);
 				atribuicao();
 				}
@@ -1604,22 +1606,31 @@ public class GramaticaFormularioParser extends Parser {
 	}
 
 	public static class IdentidadeContext extends ParserRuleContext {
-		public TerminalNode VARIAVEL() { return getToken(GramaticaFormularioParser.VARIAVEL, 0); }
 		public IdentidadeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_identidade; }
+	 
+		public IdentidadeContext() { }
+		public void copyFrom(IdentidadeContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class VariavelContext extends IdentidadeContext {
+		public Token var;
+		public TerminalNode VARIAVEL() { return getToken(GramaticaFormularioParser.VARIAVEL, 0); }
+		public VariavelContext(IdentidadeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).enterIdentidade(this);
+			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).enterVariavel(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).exitIdentidade(this);
+			if ( listener instanceof GramaticaFormularioListener ) ((GramaticaFormularioListener)listener).exitVariavel(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaFormularioVisitor ) return ((GramaticaFormularioVisitor<? extends T>)visitor).visitIdentidade(this);
+			if ( visitor instanceof GramaticaFormularioVisitor ) return ((GramaticaFormularioVisitor<? extends T>)visitor).visitVariavel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1628,10 +1639,11 @@ public class GramaticaFormularioParser extends Parser {
 		IdentidadeContext _localctx = new IdentidadeContext(_ctx, getState());
 		enterRule(_localctx, 28, RULE_identidade);
 		try {
+			_localctx = new VariavelContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(158);
-			match(VARIAVEL);
+			((VariavelContext)_localctx).var = match(VARIAVEL);
 			}
 		}
 		catch (RecognitionException re) {

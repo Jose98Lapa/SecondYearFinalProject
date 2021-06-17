@@ -344,15 +344,17 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 */
 	void exitData(GramaticaFormularioParser.DataContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaFormularioParser#identidade}.
+	 * Enter a parse tree produced by the {@code variavel}
+	 * labeled alternative in {@link GramaticaFormularioParser#identidade}.
 	 * @param ctx the parse tree
 	 */
-	void enterIdentidade(GramaticaFormularioParser.IdentidadeContext ctx);
+	void enterVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaFormularioParser#identidade}.
+	 * Exit a parse tree produced by the {@code variavel}
+	 * labeled alternative in {@link GramaticaFormularioParser#identidade}.
 	 * @param ctx the parse tree
 	 */
-	void exitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx);
+	void exitVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree

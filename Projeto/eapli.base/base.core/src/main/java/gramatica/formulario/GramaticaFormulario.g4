@@ -20,8 +20,8 @@ fail:FAIL #validationFail
 | PASS  #validationPass
 ;
 
-inicializacao: TIPODADOS identidade     #inicializacaoIdent
-   | TIPODADOS atribuicao               #inicializacaoAtribuicao
+inicializacao: tipoDados = TIPODADOS identidade     #inicializacaoIdent
+   | tipoDados = TIPODADOS atribuicao               #inicializacaoAtribuicao
    ;
 
 atribuicao_atributo: inicializacao OPERADORATRIBUICAO get_atributo;
@@ -69,7 +69,7 @@ data
    : '"' DATAREGEX '"'
    ;
 
-identidade: VARIAVEL
+identidade: var=VARIAVEL #variavel
    ;
 
 if_stat: SE condition_block (SENAO stat_block)? END_SE
