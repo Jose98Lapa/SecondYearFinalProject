@@ -109,14 +109,19 @@ public class RequestServiceUI extends AbstractUI {
 		AttributeDTO answer;
 		int answerNumber = 0;
 
-		for ( AttributeDTO question : serviceFormDTO.atrDTO ) {
+		ArrayList< AttributeDTO > attributeDTOList = new ArrayList<>( serviceFormDTO.atrDTO );
+		attributeDTOList.sort( Comparator.comparing( attributeDTO -> attributeDTO.number ) );
 
-			System.out.println( question.number + ":\t" +
-					question.nome + ".\n" + "Descricao:\t" + question.desc );
+		for ( AttributeDTO question : attributeDTOList ) {
+
+			System.out.println( "+=====================================================================================+" );
+			System.out.println( "\tQuestão " + question.number + ":\t" + question.nome + "\n"
+							  + "\tDescrição:\t" + question.desc );
+			System.out.println( "*-------------------------------------------------------------------------------------*" );
 
 			answer = new AttributeDTO(
 					question.nome,
-					Utils.readLineFromConsole( "Introduza a sua resposta: " ),
+					Utils.readLineFromConsole( "\tIntroduza a sua resposta: " ),
 					question.desc,
 					question.regex,
 					question.tipo,
