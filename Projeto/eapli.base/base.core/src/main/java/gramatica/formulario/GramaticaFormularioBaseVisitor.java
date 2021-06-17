@@ -220,7 +220,7 @@ public class GramaticaFormularioBaseVisitor<T> extends AbstractParseTreeVisitor<
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariavel(GramaticaFormularioParser.VariavelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

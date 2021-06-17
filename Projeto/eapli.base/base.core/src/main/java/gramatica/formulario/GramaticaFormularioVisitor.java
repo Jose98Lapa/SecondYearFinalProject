@@ -208,11 +208,12 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitData(GramaticaFormularioParser.DataContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaFormularioParser#identidade}.
+	 * Visit a parse tree produced by the {@code variavel}
+	 * labeled alternative in {@link GramaticaFormularioParser#identidade}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx);
+	T visitVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree

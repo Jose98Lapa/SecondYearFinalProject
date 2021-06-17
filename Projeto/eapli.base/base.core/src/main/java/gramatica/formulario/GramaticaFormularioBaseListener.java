@@ -364,13 +364,13 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) { }
+	@Override public void enterVariavel(GramaticaFormularioParser.VariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) { }
+	@Override public void exitVariavel(GramaticaFormularioParser.VariavelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
