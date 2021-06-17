@@ -65,7 +65,7 @@
             <Wtipo>M</Wtipo>
             <Waprov>S</Waprov>
             <Wservice>1</Wservice>
-            <Wscript>1</Wscript>
+            <Wscript>1</Wscript>  <!--script atv automatica-->
             <Wfunc>1</Wfunc>
 
             <WAfId>200</WAfId> <!--aprovacao-->
@@ -74,7 +74,7 @@
 
             <WMfId>201</WMfId> <!--atividade manual-->
             <WMfnome>Formulario Resolucao</WMfnome>
-            <WMfscript>https://192.168.1.92/bootstrapFormAprov1.txt</WMfscript>
+            <WMfscript>https://192.168.1.92/bootstrapAtManual.txt</WMfscript>
 
             <atributes>
                 <WAtributo>
