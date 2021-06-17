@@ -14,7 +14,7 @@ public class Title implements ValueObject, Serializable {
     private String catalogTitle;
 
     @Transient
-    private String regex = "^[ a-zA-Z0-9À-ú!?]{1,20}$";
+    private String regex = "^[ a-zA-Z0-9À-ú!?]{1,50}$";
 
     public Title(String catalogTitle) {
         if (StringPredicates.isNullOrEmpty(catalogTitle) || catalogTitle.trim().isEmpty()) {

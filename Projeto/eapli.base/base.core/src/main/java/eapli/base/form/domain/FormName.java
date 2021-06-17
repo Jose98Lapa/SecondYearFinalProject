@@ -26,7 +26,7 @@ public class FormName implements ValueObject, Serializable {
         if (m.matches()) {
             this.nome = nome;
         } else {
-            throw new IllegalArgumentException("Nome Title does not fit the criteria");
+            throw new IllegalArgumentException("Nome "+nome+" does not fit the criteria");
         }
     }
 

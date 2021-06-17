@@ -111,15 +111,30 @@ public class CatalogosEServicosBootstraper implements Action {
                         Node nodeService = services.item(sizeInside);
                         if (nodeService.getNodeType() == Node.ELEMENT_NODE) {
                             Element elementService = (Element) nodeService;
+
+                            final Set<AttributeDTO> lstAtributos = new HashSet<>();
+
                             String fId = elementService.getElementsByTagName("fId").item(0).getTextContent();
                             String fnome = elementService.getElementsByTagName("fnome").item(0).getTextContent();
                             String fscript = elementService.getElementsByTagName("fscript").item(0).getTextContent();
-                            String Alabel = elementService.getElementsByTagName("Alabel").item(0).getTextContent();
-                            String Adescricao = elementService.getElementsByTagName("Adescricao").item(0).getTextContent();
-                            String Atipo = elementService.getElementsByTagName("Atipo").item(0).getTextContent();
-                            String Aregex = elementService.getElementsByTagName("Aregex").item(0).getTextContent();
-                            String Anome = elementService.getElementsByTagName("Anome").item(0).getTextContent();
-                            String aID = elementService.getElementsByTagName("aID").item(0).getTextContent();
+
+                            NodeList atributes = element.getElementsByTagName("SAtributo");
+                            for (sizeInside = 0; sizeInside < atributes.getLength(); sizeInside++) {
+                                Node nodeAtributes = atributes.item(sizeInside);
+                                if (nodeAtributes.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element elementAtributes = (Element) nodeAtributes;
+                                    String Alabel = elementAtributes.getElementsByTagName("Alabel").item(0).getTextContent();
+                                    String Adescricao = elementAtributes.getElementsByTagName("Adescricao").item(0).getTextContent();
+                                    String Atipo = elementAtributes.getElementsByTagName("Atipo").item(0).getTextContent();
+                                    String Aregex = elementAtributes.getElementsByTagName("Aregex").item(0).getTextContent();
+                                    String Anome = elementAtributes.getElementsByTagName("Anome").item(0).getTextContent();
+                                    String aID = elementAtributes.getElementsByTagName("aID").item(0).getTextContent();
+                                    int number = 0;
+                                    AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID, number++);
+                                    lstAtributos.add(at);
+                                }
+                            }
+
                             String descricaoBreve = elementService.getElementsByTagName("descricaoBreve").item(0).getTextContent();
                             String descricaoCompleta = elementService.getElementsByTagName("descricaoCompleta").item(0).getTextContent();
                             String ServicoID = elementService.getElementsByTagName("ServicoID").item(0).getTextContent();
@@ -135,10 +150,6 @@ public class CatalogosEServicosBootstraper implements Action {
                             lstkeyWords.add(keyWords);
                             ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null);
                             servicoController.create(dto);
-                            final Set<AttributeDTO> lstAtributos = new HashSet<>();
-                            int number = 0;
-                            AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID, number);
-                            lstAtributos.add(at);
                             FormDTO fdto = new FormDTO(fscript, fId, fnome, lstAtributos);
                             formController.registerForm(fdto);
                             formController.save();
@@ -171,31 +182,41 @@ public class CatalogosEServicosBootstraper implements Action {
                             String Wservice = elementWorkflow.getElementsByTagName("Wservice").item(0).getTextContent();
                             String Wscript = elementWorkflow.getElementsByTagName("Wscript").item(0).getTextContent();
                             String Wfunc = elementWorkflow.getElementsByTagName("Wfunc").item(0).getTextContent();
-                            String Wteam = elementWorkflow.getElementsByTagName("Wteam").item(0).getTextContent();
+                            final Set<AttributeDTO> lstAtributosAprov = new HashSet<>();
+                            final Set<AttributeDTO> lstAtributosM = new HashSet<>();
+
 
                             //form aprovacao
 
                             String WAfId = elementWorkflow.getElementsByTagName("WAfId").item(0).getTextContent();
                             String WAfnome = elementWorkflow.getElementsByTagName("WAfnome").item(0).getTextContent();
                             String WAfscript = elementWorkflow.getElementsByTagName("WAfscript").item(0).getTextContent();
-                            String WAAlabel = elementWorkflow.getElementsByTagName("WAAlabel").item(0).getTextContent();
-                            String WAAdescricao = elementWorkflow.getElementsByTagName("WAAdescricao").item(0).getTextContent();
-                            String WAAtipo = elementWorkflow.getElementsByTagName("WAAtipo").item(0).getTextContent();
-                            String WAAregex = elementWorkflow.getElementsByTagName("WAAregex").item(0).getTextContent();
-                            String WAAnome = elementWorkflow.getElementsByTagName("WAAnome").item(0).getTextContent();
-                            String WAaID = elementWorkflow.getElementsByTagName("WAaID").item(0).getTextContent();
 
-                            //form manual
-
+                            String WMfscript = elementWorkflow.getElementsByTagName("WMfscript").item(0).getTextContent();
                             String WMfId = elementWorkflow.getElementsByTagName("WMfId").item(0).getTextContent();
                             String WMfnome = elementWorkflow.getElementsByTagName("WMfnome").item(0).getTextContent();
-                            String WMfscript = elementWorkflow.getElementsByTagName("WMfscript").item(0).getTextContent();
-                            String WMAlabel = elementWorkflow.getElementsByTagName("WMAlabel").item(0).getTextContent();
-                            String WMAdescricao = elementWorkflow.getElementsByTagName("WMAdescricao").item(0).getTextContent();
-                            String WMAtipo = elementWorkflow.getElementsByTagName("WMAtipo").item(0).getTextContent();
-                            String WMAregex = elementWorkflow.getElementsByTagName("WMAregex").item(0).getTextContent();
-                            String WMAnome = elementWorkflow.getElementsByTagName("WMAnome").item(0).getTextContent();
-                            String WMaID = elementWorkflow.getElementsByTagName("WMaID").item(0).getTextContent();
+
+                            NodeList atributes = element.getElementsByTagName("WAtributo");
+                            for (sizeInside = 0; sizeInside < atributes.getLength(); sizeInside++) {
+                                Node nodeAtributes = atributes.item(sizeInside);
+                                if (nodeAtributes.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element elementAtributes = (Element) nodeAtributes;
+                                    String WAtributeForm = elementAtributes.getElementsByTagName("WAtributeForm").item(0).getTextContent();
+                                    String WAlabel = elementAtributes.getElementsByTagName("WAlabel").item(0).getTextContent();
+                                    String WAdescricao = elementAtributes.getElementsByTagName("WAdescricao").item(0).getTextContent();
+                                    String WAtipo = elementAtributes.getElementsByTagName("WAtipo").item(0).getTextContent();
+                                    String WAregex = elementAtributes.getElementsByTagName("WAregex").item(0).getTextContent();
+                                    String WAnome = elementAtributes.getElementsByTagName("WAnome").item(0).getTextContent();
+                                    String WaID = elementAtributes.getElementsByTagName("WaID").item(0).getTextContent();
+                                    int number = 0;
+                                    AttributeDTO at = new AttributeDTO(WAnome, WAlabel, WAdescricao, WAregex, WAtipo, WaID, number++);
+                                    if (WAtributeForm.equals("Aprov")){
+                                        lstAtributosAprov.add(at);
+                                    }else{
+                                        lstAtributosM.add(at);
+                                    }
+                                }
+                            }
 
                             ServiceRepository serviceRepository = PersistenceContext.repositories().servico();
                             CreateTaskController createTaskController = new CreateTaskController();
@@ -210,11 +231,8 @@ public class CatalogosEServicosBootstraper implements Action {
                             FunctionDTO functionDTO = null;
 
                             if (Waprov.equals("S")) {  //aprovavcao
-                                final Set<AttributeDTO> lstAtributos = new HashSet<>();
                                 int number = 0;
-                                AttributeDTO at = new AttributeDTO(WAAnome, WAAlabel, WAAdescricao, WAAregex, WAAtipo, WAaID, number);
-                                lstAtributos.add(at);
-                                FormDTO fdto = new FormDTO(WAfscript, WAfId, WAfnome, lstAtributos);
+                                FormDTO fdto = new FormDTO(WAfscript, WAfId, WAfnome, lstAtributosAprov);
                                 formController.registerForm(fdto);
                                 formController.save();
                                 List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
@@ -223,14 +241,8 @@ public class CatalogosEServicosBootstraper implements Action {
                                 taskIDList.add(createTaskController.registerApprovalTask(approvalTaskDTO));
                             }
                             if (Wtipo.equals("M")) {  //manual/automatica
-
                                 //form
-
-                                final Set<AttributeDTO> lstAtributos = new HashSet<>();
-                                int number = 0;
-                                AttributeDTO at = new AttributeDTO(WMAnome, WMAlabel, WMAdescricao, WMAregex, WMAtipo, WMaID, number);
-                                lstAtributos.add(at);
-                                FormDTO fdto = new FormDTO(WMfscript, WMfId, WMfnome, lstAtributos);
+                                FormDTO fdto = new FormDTO(WMfscript, WMfId, WMfnome, lstAtributosM);
                                 formController.registerForm(fdto);
                                 formController.save();
 
