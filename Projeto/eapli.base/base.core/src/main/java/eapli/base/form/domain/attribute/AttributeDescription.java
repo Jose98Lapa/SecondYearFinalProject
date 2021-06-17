@@ -13,11 +13,11 @@ import java.util.regex.Pattern;
 public class AttributeDescription implements ValueObject , Serializable {
     private String descricao;
     @Transient
-    private String regex = "^[a-zA-Z0-9,!? \n\t]{1,50}$";
+    private String regex = "^[a-zA-Z0-9,!? \n\t]{1,100}$";
 
     public AttributeDescription(String descricao) {
         if (StringPredicates.isNullOrEmpty(descricao)) {
-            throw new IllegalArgumentException("Service title should neither be null nor empty");
+            throw new IllegalArgumentException("Attribute Description should neither be null nor empty");
         }
 
         Pattern p = Pattern.compile(regex);
@@ -26,7 +26,7 @@ public class AttributeDescription implements ValueObject , Serializable {
         if (m.matches()) {
             this.descricao = descricao;
         } else {
-            throw new IllegalArgumentException("Service Title does not fit the criteria");
+            throw new IllegalArgumentException("Attribute Description does not fit the criteria");
         }
     }
 

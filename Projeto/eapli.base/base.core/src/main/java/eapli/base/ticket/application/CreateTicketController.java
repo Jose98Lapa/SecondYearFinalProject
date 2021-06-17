@@ -28,7 +28,9 @@ import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import gramatica.formulario.GramaticaFormulario;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +41,7 @@ public class CreateTicketController {
 	private final TicketBuilder builder;
 	private final TicketRepository ticketRepository;
 	private Service service;
+	private TicketService ticketService = new TicketService();
 
 	public CreateTicketController ( ) {
 
@@ -83,6 +86,9 @@ public class CreateTicketController {
 	public void answeringForm ( FormDTO formDTO ) {
 
 		Form form = new FormDTOParser( ).valueOf( formDTO );
+		File script =ticketService.getFIleFromServer(service.form());
+		GramaticaFormulario.parseWithVisitor(script.getName(), form);
+		script.delete();
 		this.builder.withForm( form );
 	}
 

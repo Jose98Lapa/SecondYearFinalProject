@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class BriefDescription implements ValueObject, Serializable {
     private String briefDesc;
     @Transient
-    private String regex = "^[a-zA-Z ]{1,30}$";
+    private String regex = "^[a-zA-Z ]{1,60}$";
 
     public BriefDescription(String desc) {
         if (StringPredicates.isNullOrEmpty(desc)) {

@@ -123,7 +123,8 @@ NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
-STRING              : '"' ~('"')+ '"';
+STRING              : '"' STR  '"';
+fragment STR        : ~('"')+ | ;
 REGEX               :'@@' .*? '@@';
 
 DATA_DIA            : [0]?[1-9]|[12][0-9]|[3][01];

@@ -355,14 +355,16 @@ public class GramaticaFormulario {
                     if (left.isInteger() && right.isInteger())
                         return new Value(left.asInteger() + right.asInteger());
 
-                    if (left.isString() || right.isString())
+                    if (left.isString() && right.isString())
                         return new Value(left.asString() + right.asString());
 
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
+
                 case GramaticaFormularioParser.MENOS:
                     return left.isDouble() && right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
                             new Value(left.asInteger() - right.asInteger());
+
                 default:
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
             }
@@ -382,6 +384,9 @@ public class GramaticaFormulario {
                         return new Value(left.asDouble() < right.asDouble());
                     if (left.isDate() && right.isDate())
                         return new Value(left.asDate().isBefore(right.asDate()));
+                    if ( left.isDouble() && right.isDouble() ) {
+                        return new Value( left.asDouble() < right.asDouble( ) );
+                    }
                     break;
 
                 case GramaticaFormularioParser.LTEQ:
@@ -393,6 +398,9 @@ public class GramaticaFormulario {
                         } else {
                             return new Value(left.asDate().isBefore(right.asDate()));
                         }
+                    if ( left.isDouble() && right.isDouble() ) {
+                        return new Value( left.asDouble() <= right.asDouble( ) );
+                    }
                     break;
 
 
@@ -401,6 +409,9 @@ public class GramaticaFormulario {
                         return new Value(left.asDouble() > right.asDouble());
                     if (left.isDate() && right.isDate())
                         return new Value(left.asDate().isAfter(right.asDate()));
+                    if ( left.isDouble() && right.isDouble() ) {
+                        return new Value( left.asDouble() > right.asDouble( ) );
+                    }
                     break;
 
                 case GramaticaFormularioParser.GTEQ:
@@ -412,6 +423,9 @@ public class GramaticaFormulario {
                         } else {
                             return new Value(left.asDate().isAfter(right.asDate()));
                         }
+                    if ( left.isDouble() && right.isDouble() ) {
+                        return new Value( left.asDouble() >= right.asDouble( ) );
+                    }
                     break;
 
                 default:
@@ -437,18 +451,24 @@ public class GramaticaFormulario {
                     if (left.isDate() && right.isDate()) {
                         return new Value(left.value.equals(right.value));
                     }
+                    if ( left.isDouble( ) && right.isDouble( ) ) {
+                        return new Value( left.asDouble().equals( right.asDouble() ) );
+                    }
                 case GramaticaFormularioParser.NEQ:
                     if (left.isDouble() && right.isDouble()) {
                         return new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE);
                     }
                     if (left.isString() && right.isString()) {
-                        return new Value(!left.value.equals(right.value));
+                        return new Value(!removeAspas(left).equals(removeAspas(right)));
                     }
                     if (left.isDate() && right.isDate()) {
                         return new Value(!left.value.equals(right.value));
                     }
+                    if ( left.isDouble( ) && right.isDouble( ) ) {
+                        return new Value( !left.asDouble().equals( right.asDouble() ) );
+                    }
                 default:
-                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
+                    throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ ctx.op.getType() ] );
             }
         }
 

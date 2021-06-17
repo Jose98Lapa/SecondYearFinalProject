@@ -76,7 +76,7 @@ public class MainMenu extends AbstractUI {
     private static final int REQUEST_SERVICE = 5;
 
     // SETTINGS
-    private static final int CRIAR_COR = 2;
+    private static final int CRIAR_COR = 5;
 
     //RRH
     private static final int ESPECIFICAR_COLLABORADOR_OPTION = 2;
