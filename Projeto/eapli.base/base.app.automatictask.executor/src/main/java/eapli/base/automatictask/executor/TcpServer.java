@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 class TcpServer {
 
@@ -94,38 +96,56 @@ class TcpServerThread implements Runnable {
             sOut.flush();
 
             //Recives script
-            byte[] scriptByteArray = null;
-            byte[] scriptInfo = sIn.readNBytes(3);
-            int code = (scriptInfo[1] & 0xff);
+            byte[] dataByteArray = null;
+            byte[] dataInfo = sIn.readNBytes(3);
+            int code = (dataInfo[1] & 0xff);
             if (code == 21)
-                scriptByteArray = sIn.readNBytes(scriptInfo[2] & 0xff);
+                dataByteArray = sIn.readNBytes(dataInfo[2] & 0xff);
             else if (code == 255) {
-                byte[][] splitScript = new byte[10][250];
+                byte[][] splitData = new byte[10][250];
                 int index = 0;
                 while (code != 254) {
-                    code = scriptInfo[1] & 0xff;
-                    splitScript[index] = sIn.readNBytes(scriptInfo[2] & 0xff);
+                    code = dataInfo[1] & 0xff;
+                    splitData[index] = sIn.readNBytes(dataInfo[2] & 0xff);
                     if (code != 254)
-                        scriptInfo = sIn.readNBytes(3);
+                        dataInfo = sIn.readNBytes(3);
                     index++;
                 }
-                scriptByteArray = SplitInfo.serializeObject(SplitInfo.joinSplitInfo(splitScript));
+                dataByteArray = SplitInfo.serializeObject(SplitInfo.joinSplitInfo(splitData));
             }
-            if (scriptByteArray == null)
+
+            if (dataByteArray == null)
                 return false;
-            String scriptName = new String(scriptByteArray, StandardCharsets.UTF_8);
+
+            String dataString = new String(dataByteArray, StandardCharsets.UTF_8);
             if (code != 21)
-                scriptName = scriptName.substring(7);
+                dataString = dataString.substring(7);
+
+            String[] data = dataString.split("\\|");
+
+            String email = data[0];
+            String scriptName = data[1];
+            String answerString = data[2];
+            String approvalString = data[2];
+
+            System.out.println(email);
+            System.out.println(scriptName);
+            System.out.println(answerString);
+            System.out.println(approvalString);
+
+            List<String> answerData = Arrays.asList(answerString.split(";;;"));
+
+            List<String> approvalData = Arrays.asList(approvalString.split(";;;"));
+
             SFTPClient scriptClient = new SFTPClient();
             File script = scriptClient.getScript(scriptName);
 
             Calendar calendar = Calendar.getInstance();
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
 
-            ExecutorAtividadeAutomatica.parseWithVisitor(script.getName());
+            ExecutorAtividadeAutomatica.parseWithVisitor(email,script.getName(),answerData,approvalData);
 
             script.delete();
-
             calendar = Calendar.getInstance();
             System.out.printf("[%s] - %s executed.%n", calendar.getTime(), scriptName);
 

@@ -119,6 +119,10 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         return ID;
     }
 
+    public String requestedBy() {
+        return requestedBy;
+    }
+
     @Override
     public TicketDTO toDTO() {
         return new TicketDTO(solicitedOn.toString(), deadLine.toString(),
