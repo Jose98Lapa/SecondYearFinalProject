@@ -70,7 +70,10 @@ public class TcpClient {
         return true;
     }
 
-    public void stopConnection() {
+    public boolean stopConnection() {
+
+        boolean stopped = false;
+
         try {
             byte[] clientRequest = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
             sOut.write(clientRequest);
@@ -81,10 +84,13 @@ public class TcpClient {
             sIn.close();
             sOut.close();
             socket.close();
+            stopped = true;
+
         } catch (IOException e) {
             System.out.println("Failed to close DataOutputStream, DataInputStream or client socket");
-            System.exit(1);
         }
+
+        return stopped;
     }
 
     public List<String> TaskInfoList(String email) throws IOException {
@@ -140,7 +146,7 @@ public class TcpClient {
 
     public boolean dispatchTicket(String ticketID) {
 
-        byte version = 1, code = 4, payloadSize = 0;
+        byte version = 1, code = 10, payloadSize = 0;
         byte[] payload = ticketID.getBytes(StandardCharsets.UTF_8);
         payloadSize = (byte) payload.length;
         byte[] headers = {version, code, payloadSize};
@@ -149,7 +155,7 @@ public class TcpClient {
         try {
 
             sOut.write(packet);
-            byte[] response = sIn.readNBytes(3);
+            byte[] response = sIn.readNBytes(4);
             return response[1] == 2;
 
         } catch (IOException exception) {
