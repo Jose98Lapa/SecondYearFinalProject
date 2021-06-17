@@ -1,12 +1,14 @@
 package eapli.base.ticket.application;
 
 
+import eapli.base.Application;
 import eapli.base.catalogue.application.ListCatalogueService;
 import eapli.base.catalogue.domain.Catalogue;
 import eapli.base.catalogue.dto.CatalogueDTO;
 import eapli.base.catalogue.dto.CatalogueDTOParser;
 import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.dasboard.application.TcpClient;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.FormDTOParser;
 import eapli.base.form.application.FormService;
@@ -42,11 +44,13 @@ public class CreateTicketController {
 	private final TicketRepository ticketRepository;
 	private Service service;
 	private TicketService ticketService = new TicketService();
+	private TcpClient tcpClient;
 
 	public CreateTicketController ( ) {
 
 		this.builder = new TicketBuilder( );
 		ticketRepository = PersistenceContext.repositories( ).tickets( );
+		tcpClient = new TcpClient( );
 	}
 
 	public List< CatalogueDTO > requestableCatalogues ( ) {
@@ -107,8 +111,11 @@ public class CreateTicketController {
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
-		PersistenceContext.repositories().tickets().save( ticket );
-		return true;
+		this.ticketRepository.save( ticket );
+
+		return this.tcpClient.startConnection( Application.settings().getIpWorkflow() )
+				&& this.tcpClient.dispatchTicket( ticket.identity() )
+				&& this.tcpClient.stopConnection();
 	}
 
 	//TODO: Devia estar no FormController
