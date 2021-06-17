@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from S:/data/2ano/2Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -220,7 +220,7 @@ public class GramaticaFormularioBaseVisitor<T> extends AbstractParseTreeVisitor<
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariavel(GramaticaFormularioParser.VariavelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

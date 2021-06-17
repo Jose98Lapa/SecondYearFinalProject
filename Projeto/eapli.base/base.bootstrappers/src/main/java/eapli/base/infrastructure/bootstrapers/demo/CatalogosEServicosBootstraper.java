@@ -113,6 +113,8 @@ public class CatalogosEServicosBootstraper implements Action {
                             Element elementService = (Element) nodeService;
 
                             final Set<AttributeDTO> lstAtributos = new HashSet<>();
+                            int number = 0;
+
 
                             String fId = elementService.getElementsByTagName("fId").item(0).getTextContent();
                             String fnome = elementService.getElementsByTagName("fnome").item(0).getTextContent();
@@ -129,7 +131,6 @@ public class CatalogosEServicosBootstraper implements Action {
                                     String Aregex = elementAtributes.getElementsByTagName("Aregex").item(0).getTextContent();
                                     String Anome = elementAtributes.getElementsByTagName("Anome").item(0).getTextContent();
                                     String aID = elementAtributes.getElementsByTagName("aID").item(0).getTextContent();
-                                    int number = 0;
                                     AttributeDTO at = new AttributeDTO(Anome, Alabel, Adescricao, Aregex, Atipo, aID, number++);
                                     lstAtributos.add(at);
                                 }
@@ -184,6 +185,8 @@ public class CatalogosEServicosBootstraper implements Action {
                             String Wfunc = elementWorkflow.getElementsByTagName("Wfunc").item(0).getTextContent();
                             final Set<AttributeDTO> lstAtributosAprov = new HashSet<>();
                             final Set<AttributeDTO> lstAtributosM = new HashSet<>();
+                            int number = 0;
+
 
 
                             //form aprovacao
@@ -208,7 +211,6 @@ public class CatalogosEServicosBootstraper implements Action {
                                     String WAregex = elementAtributes.getElementsByTagName("WAregex").item(0).getTextContent();
                                     String WAnome = elementAtributes.getElementsByTagName("WAnome").item(0).getTextContent();
                                     String WaID = elementAtributes.getElementsByTagName("WaID").item(0).getTextContent();
-                                    int number = 0;
                                     AttributeDTO at = new AttributeDTO(WAnome, WAlabel, WAdescricao, WAregex, WAtipo, WaID, number++);
                                     if (WAtributeForm.equals("Aprov")){
                                         lstAtributosAprov.add(at);
@@ -231,7 +233,6 @@ public class CatalogosEServicosBootstraper implements Action {
                             FunctionDTO functionDTO = null;
 
                             if (Waprov.equals("S")) {  //aprovavcao
-                                int number = 0;
                                 FormDTO fdto = new FormDTO(WAfscript, WAfId, WAfnome, lstAtributosAprov);
                                 formController.registerForm(fdto);
                                 formController.save();

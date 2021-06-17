@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from S:/data/2ano/2Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -208,11 +208,12 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitData(GramaticaFormularioParser.DataContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaFormularioParser#identidade}.
+	 * Visit a parse tree produced by the {@code variavel}
+	 * labeled alternative in {@link GramaticaFormularioParser#identidade}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx);
+	T visitVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree

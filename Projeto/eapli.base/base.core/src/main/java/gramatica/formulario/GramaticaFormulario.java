@@ -43,10 +43,10 @@ public class GramaticaFormulario {
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
         //parseWithVisitor("teste_formulario.txt",form);
-        parseWithVisitor("bootstrapForm.txt",form);
+        parseWithVisitor("bootstrapForm.txt", form);
     }
 
-    public static void parseWithVisitor(String file,Form form) {
+    public static void parseWithVisitor(String file, Form form) {
         GramaticaFormularioLexer lexer = null;
         try {
             lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
@@ -62,7 +62,7 @@ public class GramaticaFormulario {
         System.out.println(eval.visit(tree));
     }
 
-    public static void parseWithListener(String file,Form form){
+    public static void parseWithListener(String file, Form form) {
         GramaticaFormularioLexer lexer = null;
         try {
             lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
@@ -77,13 +77,15 @@ public class GramaticaFormulario {
         EvalListener eval = new EvalListener();
 
         eval.defineForm(form);
-        walker.walk(eval,tree);
+        walker.walk(eval, tree);
     }
 
     static class EvalListener extends GramaticaFormularioBaseListener {
         Form form;
         private Map<String, Value> memory = new HashMap<>();
+        private Map<String, String> attributeAndTypeMap = new HashMap<>();
         private Stack<Value> valueStack = new Stack<>();
+
         public void defineForm(Form form) {
             this.form = form;
         }
@@ -97,8 +99,9 @@ public class GramaticaFormulario {
                 throw new ParseCancellationException("Regex Inválido");
             }
         }
+
         @Override
-        public void enterGramatica(GramaticaFormularioParser.GramaticaContext ctx){
+        public void enterGramatica(GramaticaFormularioParser.GramaticaContext ctx) {
 
         }
 
@@ -119,13 +122,40 @@ public class GramaticaFormulario {
         }
 
         @Override
-        public void enterAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
-            String id = ctx.inicializacao().getText();
-            memory.put(id,valueStack.pop());
+        public void exitInicializacaoIdent(GramaticaFormularioParser.InicializacaoIdentContext ctx) {
+            attributeAndTypeMap.put(valueStack.pop().toString(), ctx.tipoDados.getText());
         }
 
         @Override
-        public void exitMatch_regex_atribut(GramaticaFormularioParser.Match_regex_atributContext ctx){
+        public void exitInicializacaoAtribuicao(GramaticaFormularioParser.InicializacaoAtribuicaoContext ctx) {
+            Value var = valueStack.pop();
+            String dataType = ctx.tipoDados.getText();
+            if (memory.containsKey(var.toString())) {
+                Value result = memory.get(var.toString());
+                if (dataType.equals("NUMERO")) {
+                    String res = result.toString().replaceAll("[.][0-9]+", "");
+                    result = new Value(res);
+                    memory.put(var.toString(), result);
+                }
+            }
+            attributeAndTypeMap.put(var.toString(), ctx.tipoDados.getText());
+        }
+
+
+        @Override
+        public void enterVariavel(GramaticaFormularioParser.VariavelContext ctx) {
+            valueStack.push(new Value(ctx.var.getText()));
+        }
+
+        @Override
+        public void exitAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
+            String id = ctx.inicializacao().getText();
+            memory.put(id, valueStack.pop());
+            valueStack.push(new Value(id));
+        }
+
+        @Override
+        public void exitMatch_regex_atribut(GramaticaFormularioParser.Match_regex_atributContext ctx) {
             String toCheck = valueStack.pop().toString();
             String regexBefore = ctx.regex.getText();
             String regex = regexBefore.substring(2, regexBefore.length() - 2);
@@ -138,15 +168,14 @@ public class GramaticaFormulario {
         public void exitEqualExpr(GramaticaFormularioParser.EqualExprContext ctx) {
             Value left = memory.get(ctx.left.getText());
             Value right = memory.get(ctx.right.getText());
-            switch (ctx.op.getText()){
-                case "="-> {
+            switch (ctx.op.getText()) {
+                case "=" -> {
                     if (left.equals(right))
                         System.out.println("Passou");
                     else
                         System.out.println("Nao passou");
                 }
-
-                case "!=" ->{
+                case "!=" -> {
                     if (!left.equals(right))
                         System.out.println("Passou");
                     else
@@ -156,10 +185,58 @@ public class GramaticaFormulario {
 
         }
 
+        @Override
+        public void exitRelationalExpr(GramaticaFormularioParser.RelationalExprContext ctx) {
+        }
+
+        @Override
+        public void exitMulDivModExpr(GramaticaFormularioParser.MulDivModExprContext ctx) {
+            String typeLeft = attributeAndTypeMap.get(ctx.left.getText());
+            String typeRight = attributeAndTypeMap.get(ctx.right.getText());
+            if ("TEXTO".equals(typeLeft) || "DATA".equals(typeLeft) || "TEXTO".equals(typeRight) || "DATA".equals(typeRight) || ctx.left.getText().matches(".*[^0-9.]+.*") || ctx.right.getText().matches(".*[^0-9.]+.*")) {
+                throw new ParseCancellationException("Só pode fazer-se operacao em numeros");
+            }
+            Value left = memory.get(ctx.left.getText());
+            if (left == null)
+                left = new Value(ctx.left.getText());
+            Value right = memory.get(ctx.right.getText());
+            if (right == null)
+                right = new Value(ctx.right.getText());
 
 
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.MULT:
+                    valueStack.push(new Value(left.asDouble() * right.asDouble()));
+                    break;
+                case GramaticaFormularioParser.DIV:
+                    valueStack.push(new Value(left.asDouble() / right.asDouble()));
+                    break;
+                case GramaticaFormularioParser.MOD:
+                    valueStack.push(new Value(left.asDouble() % right.asDouble()));
+                    break;
+            }
+        }
+
+        @Override
+        public void exitVariavelExpr(GramaticaFormularioParser.VariavelExprContext ctx) {
+            Value result = valueStack.pop();
+            Value var = valueStack.pop();
+            String dataType = attributeAndTypeMap.get(var.toString());
 
 
+            if ("NUMERO".equals(dataType)) {
+                String res = result.toString().replaceAll("[.][0-9]+", "");
+                result = new Value(res);
+                memory.put(var.toString(), result);
+            }
+            valueStack.push(var);
+            memory.put(var.toString(), result);
+        }
+
+        @Override
+        public void exitSumDifExpr(GramaticaFormularioParser.SumDifExprContext ctx) {
+
+        }
 
     }
 
@@ -214,10 +291,10 @@ public class GramaticaFormulario {
             return memory.put(id, value);
         }
 
-        @Override
+       /* @Override
         public Value visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) {
             return memory.get(ctx.getText());
-        }
+        }*/
 
         @Override
         public Value visitTp_integer(GramaticaFormularioParser.Tp_integerContext ctx) {
@@ -394,9 +471,10 @@ public class GramaticaFormulario {
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ ctx.op.getType() ] );
             }
         }
-        public String removeAspas(Value val){
-            if (val.toString().contains("\"")){
-                return val.toString().substring(1,val.toString().length()-1);
+
+        public String removeAspas(Value val) {
+            if (val.toString().contains("\"")) {
+                return val.toString().substring(1, val.toString().length() - 1);
             }
             return val.toString();
         }
@@ -440,13 +518,13 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
-            String toCheck =memory.get( ctx.var.getText()).toString();
+            String toCheck = memory.get(ctx.var.getText()).toString();
             String regexBefore = ctx.regex.getText();
-            String regex = regexBefore.substring(2,regexBefore.length()-2);
+            String regex = regexBefore.substring(2, regexBefore.length() - 2);
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                throw new ParseCancellationException(toCheck+ "Does not match regex");
+                throw new ParseCancellationException(toCheck + "Does not match regex");
             }
         }
 
