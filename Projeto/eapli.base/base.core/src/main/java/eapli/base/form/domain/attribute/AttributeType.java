@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class AttributeType implements ValueObject, Serializable {
     private String tipo;
     @Transient
-    private String regex = "String|int|boolean|char|float|double|Date";
+    private final String regex = "String|int|double|Date";
     
     public AttributeType(String tipo) {
         if (StringPredicates.isNullOrEmpty(tipo)) {
