@@ -86,9 +86,11 @@ public class CreateTicketController {
 	public void answeringForm ( FormDTO formDTO ) {
 
 		Form form = new FormDTOParser( ).valueOf( formDTO );
-		File script =ticketService.getFIleFromServer( service.form() );
+		//File script =ticketService.getFIleFromServer(service.form());
+		File script = new File("bootstrapForm.txt");
+		//File script =ticketService.getFIleFromServer( service.form() );
 		GramaticaFormulario.parseWithVisitor(script.getName(), form);
-		script.delete();
+		//script.delete();
 		this.builder.withForm( form );
 	}
 

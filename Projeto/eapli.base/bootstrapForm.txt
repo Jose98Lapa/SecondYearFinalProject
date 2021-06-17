@@ -3,10 +3,9 @@ DATA $dataInicio -> atr[3]
 DATA $dataFim -> atr[1]
 TEXTO $tipodeAusencia ->atr[4]
 TEXTO $just -> atr[2]
-NUMERO $result
 se $dataFim < $dataInicio entao FAIL
 es
-se $tipodeAusencia != "Ferias" ou $tipodeAusencia != "Justificada" ou $tipodeAusencia !="Nao Justificada" entao FAIL es
+se $tipodeAusencia = "Ferias" ou $tipodeAusencia = "Justificada" ou $tipodeAusencia = "Nao Justificada" entao PASS senao FAIL es
 se $tipodeAusencia e $just = "" entao FAIL es
 matchRegex[$dataInicio,@@^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]((19|2[0-9])[0-9]{2})$@@]
 matchRegex[$dataFim,@@^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]((19|2[0-9])[0-9]{2})$@@] 
