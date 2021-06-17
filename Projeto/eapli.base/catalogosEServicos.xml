@@ -5,57 +5,59 @@
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
             <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
-            <tituloCatalogoC>Restauros</tituloCatalogoC>
-            <descricaoBreveC>descricao breve restauros</descricaoBreveC>
-            <descricaoCompletaC>Catalogo de restuaros</descricaoCompletaC>
-            <criticality>1</criticality>
+            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
+            <criticality>2</criticality>
         </catalogue>
 
         <Servico>
             <Formulario>
                 <fId>1</fId>
-                <fnome>Formulario Bicicleta</fnome>
-                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
-                <Atributo>
-                    <Alabel>Opcao</Alabel>
-                    <Adescricao>Qual o tipo</Adescricao>
-                    <Atipo>String</Atipo>
-                    <Aregex>[a-z]</Aregex>
-                    <Anome>tipoRestauro</Anome>
-                    <aID>1</aID>
-                </Atributo>
+                <fnome>Formulario Servico de pedir ausencia</fnome>
+                <fscript>https://192.168.1.92/bootstrapForm.txt</fscript>
+                <atributes>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Data de Inicio</Adescricao>
+                        <Atipo>Date</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>dataInicio</Anome>
+                        <aID>1</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Data de FIm</Adescricao>
+                        <Atipo>Date</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>dataFim</Anome>
+                        <aID>2</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Qual o tipo de Ausencia</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>tipoAusencia</Anome>
+                        <aID>3</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Qual a Justificacao</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>justificacao</Anome>
+                        <aID>4</aID>
+                    </SAtributo>
+                </atributes>
             </Formulario>
-            <descricaoBreve>Restauro de uma bicicleta</descricaoBreve>
-            <descricaoCompleta>Restauro de uma bicicleta mas mais completo</descricaoCompleta>
+            <descricaoBreve>Pedido de Ausencia Futura</descricaoBreve>
+            <descricaoCompleta>Pedido de Ausencia Futura para todos os colaboradores</descricaoCompleta>
             <ServicoID>1</ServicoID>
-            <keyWords>bicileta</keyWords>
-            <statusServico>INCOMPLETO</statusServico>
+            <keyWords>ausencia</keyWords>
+            <statusServico>ATIVO</statusServico>
             <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
-            <tituloServico>Restauro Bicileta</tituloServico>
-            <catalogoS>1</catalogoS>
-        </Servico>
-
-        <Servico>
-            <Formulario>
-                <fId>2</fId>
-                <fnome>Formulario Porta</fnome>
-                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
-                <Atributo>
-                    <Alabel>Opcao</Alabel>
-                    <Adescricao>Qual o tipo</Adescricao>
-                    <Atipo>String</Atipo>
-                    <Aregex>[a-z]</Aregex>
-                    <Anome>tipoRestauro</Anome>
-                    <aID>2</aID>
-                </Atributo>
-            </Formulario>
-            <descricaoBreve>Restauro de uma porta</descricaoBreve>
-            <descricaoCompleta>Restauro de uma porta mas mais completo</descricaoCompleta>
-            <ServicoID>2</ServicoID>
-            <keyWords>porta</keyWords>
-            <statusServico>INCOMPLETO</statusServico>
-            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
-            <tituloServico>Restauro Porta</tituloServico>
+            <tituloServico>Pedido de Ausencia Futura</tituloServico>
             <catalogoS>1</catalogoS>
         </Servico>
 
@@ -65,88 +67,117 @@
             <Wservice>1</Wservice>
             <Wscript>1</Wscript>
             <Wfunc>1</Wfunc>
-            <Wteam>1</Wteam>
-            <!--       -&#45;&#45;&#45;&#45;-->
-            <WAfId>100</WAfId>
-            <WAfnome>Form</WAfnome>
-            <WAfscript>1</WAfscript>
-            <WAAlabel>OLA</WAAlabel>
-            <WAAdescricao>ADEUS</WAAdescricao>
-            <WAAtipo>String</WAAtipo>
-            <WAAregex>olaololaoaloala</WAAregex>
-            <WAAnome>nome</WAAnome>
-            <WAaID>100</WAaID>
-     <!--       -&#45;&#45;&#45;&#45;-->
-            <WMfId>200</WMfId>
-            <WMfnome>Form</WMfnome>
-            <WMfscript>1</WMfscript>
-            <WMAlabel>OLA</WMAlabel>
-            <WMAdescricao>ADEUS</WMAdescricao>
-            <WMAtipo>String</WMAtipo>
-            <WMAregex>ololaolaola</WMAregex>
-            <WMAnome>Nome</WMAnome>
-            <WMaID>2001</WMaID>
+
+            <WAfId>200</WAfId> <!--aprovacao-->
+            <WAfnome>Formulario Aprovacao</WAfnome>
+            <WAfscript>https://192.168.1.92/bootstrapFormAprov1.txt</WAfscript>
+
+            <WMfId>201</WMfId> <!--atividade manual-->
+            <WMfnome>Formulario Resolucao</WMfnome>
+            <WMfscript>https://192.168.1.92/bootstrapFormAprov1.txt</WMfscript>
+
+            <atributes>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Texto de fundamentacao</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>fundamentacao</WAnome>
+                    <WaID>5</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de ferias ja gozados no ano</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>feriasGozadasAno</WAnome>
+                    <WaID>6</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de ferias gozados do periodo solicitado</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>feriasGozadasPeriodo</WAnome>
+                    <WaID>7</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de ferias totais</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>feriasTotais</WAnome>
+                    <WaID>8</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de falta justificadas ja ocorridas no ano</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasJustAno</WAnome>
+                    <WaID>9</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de faltas justificadas do periodo solicitado</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasJustPeriodo</WAnome>
+                    <WaID>10</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de faltas justificadas totais</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasJustTotal</WAnome>
+                    <WaID>11</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao> Dias de falta nao justificadas ja ocorridas no ano</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasAno</WAnome>
+                    <WaID>12</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao> Dias de faltas nao justificadas do periodo solicitado</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasNJustPeriodo</WAnome>
+                    <WaID>13</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Dias de faltas nao justificadas totais</WAdescricao>
+                    <WAtipo>int</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>faltasNJustTotal</WAnome>
+                    <WaID>14</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Comentario</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>comentario</WAnome>
+                    <WaID>15</WaID>
+                </WAtributo>
+            </atributes>
         </Workflow>
     </class1>
-
-<!--    <class1>
-        <catalogue>
-            <criteriosdeAcesso>1</criteriosdeAcesso>
-            <responsaveis>1</responsaveis>
-            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
-            <tituloCatalogoC>Instalações</tituloCatalogoC>
-            <descricaoBreveC>descricao breve instalações</descricaoBreveC>
-            <descricaoCompletaC>Catalogo de instalações</descricaoCompletaC>
-            <criticality>2</criticality>
-        </catalogue>
-
-        <Servico>
-            <Formulario>
-                <fId>3</fId>
-                <fnome>Formulario OS</fnome>
-                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
-                <Atributo>
-                    <Alabel>Opcao</Alabel>
-                    <Adescricao>Qual o OS</Adescricao>
-                    <Atipo>String</Atipo>
-                    <Aregex>[a-z]</Aregex>
-                    <Anome>tipoRestauro</Anome>
-                    <aID>3</aID>
-                </Atributo>
-            </Formulario>
-            <descricaoBreve>Instalacaoo OS</descricaoBreve>
-            <descricaoCompleta>Instalacao de um OS mas mais completo</descricaoCompleta>
-            <ServicoID>3</ServicoID>
-            <keyWords>porta</keyWords>
-            <statusServico>INCOMPLETO</statusServico>
-            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
-            <tituloServico>Instalacao OS</tituloServico>
-            <catalogoS>2</catalogoS>
-        </Servico>
-
-        <Servico>
-            <Formulario>
-                <fId>4</fId>
-                <fnome>Formulario Computador</fnome>
-                <fscript>https://192.168.1.92/bootstrap.txt</fscript>
-                <Atributo>
-                    <Alabel>Opcao</Alabel>
-                    <Adescricao>Qual o Computador</Adescricao>
-                    <Atipo>String</Atipo>
-                    <Aregex>[a-z]</Aregex>
-                    <Anome>tipoComputador</Anome>
-                    <aID>4</aID>
-                </Atributo>
-            </Formulario>
-            <descricaoBreve>Instalacaoo Computador</descricaoBreve>
-            <descricaoCompleta>Instalacao de um Computador mas mais completo</descricaoCompleta>
-            <ServicoID>4</ServicoID>
-            <keyWords>porta</keyWords>
-            <statusServico>INCOMPLETO</statusServico>
-            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
-            <tituloServico>Instalacao Computador</tituloServico>
-            <catalogoS>2</catalogoS>
-        </Servico>
-    </class1>-->
-
 </class>
+
