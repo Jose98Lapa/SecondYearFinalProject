@@ -264,7 +264,6 @@ public class GramaticaFormulario {
         public Value visitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
             String id = ctx.identidade().getText();
             Value value = this.visit(ctx.get_atributo());
-            System.out.println(id +"->>" +value);
             return memory.put(id, value);
         }
 
@@ -375,9 +374,6 @@ public class GramaticaFormulario {
 
             Value left = new Value(this.visit(ctx.left));
             Value right = new Value(this.visit(ctx.right));
-            System.out.println(" ");
-            System.out.println("left :"+left);
-            System.out.println("right :"+right);
 
 
             switch (ctx.op.getType()) {
