@@ -108,7 +108,7 @@ PASS : 'PASS';
 MATCHREGEX : 'matchRegex';
 OPERADORATRIBUICAO  : '->';
 
-VARIAVEL            : '$' (TEXTO) [_]? (TEXTO | NUMERO )*;
+VARIAVEL            : '$' ([a-zA-Z_]+) [_]? ([a-zA-Z_]+ | NUMERO )*;
 
 // RESERVED KEYWORDS
 SE                  : 'se';
