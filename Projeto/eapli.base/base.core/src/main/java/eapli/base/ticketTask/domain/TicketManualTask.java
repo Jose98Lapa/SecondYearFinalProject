@@ -24,8 +24,8 @@ public abstract class TicketManualTask extends TicketTask implements Serializabl
 	protected TicketManualTask ( ) {
 	}
 
-	public TicketManualTask (Transition transition, Task mainReference, Form form, LocalDate deadline ) {
-		super( transition, mainReference );
+	public TicketManualTask (Transition transition, Task mainReference, Form form, LocalDate deadline, String type ) {
+		super( transition, mainReference, type );
 		this.form = form;
 		this.deadline = deadline;
 	}

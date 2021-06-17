@@ -20,7 +20,7 @@ public class TicketAutomaticTask extends TicketTask implements DTOable< TicketAu
 	}
 
 	public TicketAutomaticTask (Transition transition, Task mainReference, ScriptPath scriptPath ) {
-		super( transition, mainReference );
+		super( transition, mainReference, "AUTOMATIC" );
 		this.scriptPath = scriptPath;
 	}
 

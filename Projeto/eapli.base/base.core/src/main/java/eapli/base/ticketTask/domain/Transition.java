@@ -1,7 +1,5 @@
 package eapli.base.ticketTask.domain;
 
-import eapli.base.task.domain.Task;
-import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
