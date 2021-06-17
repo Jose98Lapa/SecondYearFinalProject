@@ -76,6 +76,10 @@ public class Attribute implements DomainEntity<AttributeID>, DTOable<AttributeDT
         return number;
     }
 
+    public AttributeLabel label() {
+        return label;
+    }
+
     @Override
     public AttributeID identity() {
         return AttributeID;

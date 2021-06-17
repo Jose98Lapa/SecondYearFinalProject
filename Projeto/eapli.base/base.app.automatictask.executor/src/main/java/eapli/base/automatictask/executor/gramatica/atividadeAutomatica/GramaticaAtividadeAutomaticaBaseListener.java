@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -143,6 +143,18 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -400,6 +412,30 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -407,6 +443,30 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

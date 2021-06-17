@@ -21,6 +21,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ExecutorAtividadeAutomatica {
@@ -29,7 +31,7 @@ public class ExecutorAtividadeAutomatica {
         //parseWithVisitor("teste_atividade_automatica.txt");
     }
 
-    public static void parseWithVisitor(String script) throws IOException {
+    public static void parseWithVisitor(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
         GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
@@ -37,7 +39,7 @@ public class ExecutorAtividadeAutomatica {
             parser.removeErrorListeners();
             parser.setErrorHandler(new BailErrorStrategy());
             ParseTree tree = parser.gramatica(); // parse
-            EvalVisitor eval = new EvalVisitor();
+            EvalVisitor eval = new EvalVisitor(userEmail, formAnswers, formApproval);
             System.out.println(eval.visit(tree));
         } catch (ParseCancellationException e) {
             String errorMessage = e.getMessage();
@@ -269,6 +271,15 @@ public class ExecutorAtividadeAutomatica {
         public static final double SMALL_VALUE = 0.00000000001;
 
         private Map<String, Value> memory = new HashMap<>();
+        private String userEmail;
+        List<String> formAnswers;
+        List<String> formApproved;
+
+        public EvalVisitor(String userEmail, List<String> formAnswers, List<String> formApproved) {
+            this.userEmail = userEmail;
+            this.formAnswers = formAnswers;
+            this.formApproved = formApproved;
+        }
 
         @Override
         public Value visitGramatica(GramaticaAtividadeAutomaticaParser.GramaticaContext ctx) {
@@ -313,6 +324,32 @@ public class ExecutorAtividadeAutomatica {
             } catch (Exception e) {
                 throw new ParseCancellationException("Elemento xml não encontrado");
             }
+        }
+
+        @Override
+        public Value visitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx) {
+            String id = ctx.identidade().getText();
+            Value value = this.visit(ctx.formulario_informacao());
+            String cameFrom = ctx.getParent().getRuleContext().getChild(0).getText();
+            if (!memory.containsKey(id) && !verifyInitialization(cameFrom))
+                throw new ParseCancellationException(String.format("Variavel %s não inicializada", id));
+            return memory.put(id, value);
+        }
+
+        @Override
+        public Value visitFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx) {
+            int index = Integer.parseInt(ctx.dados.getText()) - 1;
+            if (index >= this.formApproved.size())
+                throw new ParseCancellationException(String.format("Indice fora dos limites: %d", index));
+            return new Value(this.formApproved.get(index));
+        }
+
+        @Override
+        public Value visitFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
+            int index = Integer.parseInt(ctx.dados.getText()) - 1;
+            if (index >= this.formAnswers.size())
+                throw new ParseCancellationException(String.format("Indice fora dos limites: %d", index));
+            return new Value(this.formAnswers.get(index));
         }
 
         @Override
@@ -499,6 +536,22 @@ public class ExecutorAtividadeAutomatica {
             String assunto = ctx.assunto.getText().replaceAll("\"", "");
             String corpo = ctx.corpo.getText().replaceAll("\"", "");
             EmailSender.sendEmail(destinatario, assunto, corpo);
+            return Value.VOID;
+        }
+
+        @Override
+        public Value visitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx) {
+            String assunto = this.visit(ctx.assunto).asString().replaceAll("\"", "");
+            String corpo = this.visit(ctx.corpo).asString().replaceAll("\"", "");
+            EmailSender.sendEmail(this.userEmail, assunto, corpo);
+            return Value.VOID;
+        }
+
+        @Override
+        public Value visitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) {
+            String assunto = ctx.assunto.getText().replaceAll("\"", "");
+            String corpo = ctx.corpo.getText().replaceAll("\"", "");
+            EmailSender.sendEmail(this.userEmail, assunto, corpo);
             return Value.VOID;
         }
 

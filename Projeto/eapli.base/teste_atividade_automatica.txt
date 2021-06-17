@@ -13,7 +13,7 @@ BEGIN
         $status-> 2
     es
 */
-    TEXTO $destinatario-> "guili@isep.ipp.pt"
+    TEXTO $destinatario-> "apex@isep.ipp.pt"
     TEXTO $assunto -> "Teste 1"
 
     se $destinatario="Teste 1" entao
@@ -24,6 +24,7 @@ BEGIN
 
     //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
+    ENVIAR_EMAIL($assunto,$corpo)
 
     TEXTO $nome -> "INATIVO"
     ATUALIZAR(service,status,"Teste") -> (status,$nome)

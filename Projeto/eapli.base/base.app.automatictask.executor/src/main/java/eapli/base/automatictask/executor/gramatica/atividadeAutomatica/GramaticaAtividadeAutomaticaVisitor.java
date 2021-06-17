@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -82,6 +82,13 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 * @return the visitor result
 	 */
 	T visitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code atr_variavelForm}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
 	 * @param ctx the parse tree
@@ -223,9 +230,37 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code emailAtributosDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code emailStringDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#update_informacao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code formApprov}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code formAnswer}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx);
 }
