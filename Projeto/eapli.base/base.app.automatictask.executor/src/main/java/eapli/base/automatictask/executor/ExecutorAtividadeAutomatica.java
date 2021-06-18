@@ -94,112 +94,125 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx){
-            Value identidade =stack.pop();
-            String stringFicheiro=ctx.stringficheiro.getText();
-            memory.put(identidade.toString(),new Value(stringFicheiro));
+        public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                String stringFicheiro = ctx.stringficheiro.getText();
+                memory.put(identidade.toString(), new Value(stringFicheiro));
+            }
         }
 
         @Override
-        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx){
-            stack.push(new Value(ctx.var.getText()));
+        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx) {
+            if (doInstruction) {
+                stack.push(new Value(ctx.var.getText()));
+            }
         }
 
         @Override
-        public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx){
-            Value identidade =stack.pop();
-            memory.put(identidade.toString(),null);
+        public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                memory.put(identidade.toString(), null);
+            }
         }
 
         @Override
-        public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx){
-            Value identidade =stack.pop();
-            String what = ctx.what.getText();
-            String file = ctx.file.getText();
-            String id = ctx.id.getText();
-            String idValue = ctx.idvalue.getText();
+        public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                String what = ctx.what.getText();
+                String file = ctx.file.getText();
+                String id = ctx.id.getText();
+                String idValue = ctx.idvalue.getText();
 
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder;
-            Document doc = null;
-            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setNamespaceAware(true);
+                DocumentBuilder builder;
+                Document doc = null;
+                try {
 
-                builder = factory.newDocumentBuilder();
-                doc = builder.parse(file);
-                XPathFactory xpathFactory = XPathFactory.newInstance();
-                XPath xpath = xpathFactory.newXPath();
+                    builder = factory.newDocumentBuilder();
+                    doc = builder.parse(file);
+                    XPathFactory xpathFactory = XPathFactory.newInstance();
+                    XPath xpath = xpathFactory.newXPath();
 
-                memory.put(identidade.toString(),new Value(getSomethingByID(doc, xpath, what, id, idValue)));
+                    memory.put(identidade.toString(), new Value(getSomethingByID(doc, xpath, what, id, idValue)));
 
-            } catch (ParserConfigurationException | SAXException | IOException e) {
-                throw new ParseCancellationException("Ficheiro xml não reconhecido");
+                } catch (ParserConfigurationException | SAXException | IOException e) {
+                    throw new ParseCancellationException("Ficheiro xml não reconhecido");
+                }
             }
         }
 
         private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
-            try {
-                XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
-                Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
-                Element element = (Element) node;
-                return element;
-            } catch (XPathExpressionException e) {
-                throw new ParseCancellationException("Atributo xml não encontrado");
+                try {
+                    XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                    Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                    Element element = (Element) node;
+                    return element;
+                } catch (XPathExpressionException e) {
+                    throw new ParseCancellationException("Atributo xml não encontrado");
+                }
+        }
+
+        @Override
+        public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
+            if (doInstruction) {
+                try {
+                    Value identidade = stack.pop();
+                    Element element = stack.pop().asElement();
+                    String what = ctx.what.getText();
+                    Node node = element.getElementsByTagName(what).item(0);
+                    Element resultElement = (Element) node;
+                    Value result = new Value(resultElement.getTextContent());
+                    memory.put(ctx.nomeVar.getText(), result);
+                } catch (Exception e) {
+                    throw new ParseCancellationException("Elemento xml não encontrado");
+                }
             }
         }
 
         @Override
-        public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx){
-            try {
-            Value identidade = stack.pop();
-            Element element = stack.pop().asElement();
-            String what = ctx.what.getText();
-            Node node = element.getElementsByTagName(what).item(0);
-            Element resultElement = (Element) node;
-            Value result = new Value(resultElement.getTextContent());
-            memory.put(ctx.nomeVar.getText(), result);
-        } catch (Exception e) {
-            throw new ParseCancellationException("Elemento xml não encontrado");
-        }
-        }
-
-        @Override
         public void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx){
-            Value identidade=stack.pop();
-            Value value=stack.pop();
-            memory.put(identidade.toString(),value);
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                Value value = stack.pop();
+                memory.put(identidade.toString(), value);
+            }
         }
 
         @Override
         public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx){
-            stack.push(new Value(ctx.atom.getText()));
+            if (doInstruction) {
+                stack.push(new Value(ctx.atom.getText()));
+            }
         }
 
         @Override
-        public void exitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx){
-            Value identidade=stack.pop();
-            int index = stack.pop().asInteger();
+        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
 
-            if (index >= this.formAnswers.size())
-                throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
-            Value dados = new Value(formAnswers.get(index-1));
-            memory.put(identidade.toString(),dados);
+                if (index >= this.formAnswers.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formAnswers.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
         }
 
         @Override
-        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx){
-            Value dados = new Value(ctx.dados.getText());
-            stack.push(dados);
-        }
+        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx){
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
 
-        @Override
-        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
-
-        }
-
-        @Override
-        public void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx){
-
+                if (index >= this.formApproved.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formApproved.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
         }
 
         @Override
@@ -228,69 +241,110 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx){
-            if (doInstruction){
+        public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx){
+            doInstruction=!doInstruction;
+        }
 
+        @Override
+        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
+            doInstruction=true;
+        }
+        @Override
+        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
             }
         }
 
         @Override
-        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx){
-            Value identidade = stack.pop();
-        }
-
-        @Override
-        public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx){
-            Value left = stack.pop();
-            Value right = new Value(ctx.right);
-            switch (ctx.op.getType()){
-                case GramaticaFormularioParser.MAIS:
-                    if (left.isDouble() && right.isDouble())
-                        stack.push(new Value(left.asDouble()+right.asDouble()));
-                    if (left.isInteger() && right.isInteger())
-                        stack.push(new Value(left.asInteger()+right.asInteger()));
-                    if (left.isString() || right.isString())
-                        stack.push(new Value(left.asString()+right.asString()));
-                    break;
-                case GramaticaFormularioParser.MENOS:
-                    if (left.isDouble() && right.isDouble())
-                        stack.push(new Value(left.asDouble()-right.asDouble()));
-                    if (left.isInteger() && right.isInteger())
-                        stack.push(new Value(left.asInteger()-right.asInteger()));
-                    if (left.isString() || right.isString())
-                        throw new ParseCancellationException("Não foi possivel fazer a operação");
-                    break;
+        public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
+            if (doInstruction) {
+                Value left = stack.pop();
+                Value right = new Value(ctx.right);
+                switch (ctx.op.getType()) {
+                    case GramaticaFormularioParser.MAIS:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() + right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() + right.asInteger()));
+                        if (left.isString() || right.isString())
+                            stack.push(new Value(left.asString() + right.asString()));
+                        break;
+                    case GramaticaFormularioParser.MENOS:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() - right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() - right.asInteger()));
+                        if (left.isString() || right.isString())
+                            throw new ParseCancellationException("Não foi possivel fazer a operação");
+                        break;
+                }
             }
         }
 
         @Override
-        public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx){
-            Value destinatario = stack.pop();
-            Value assunto = stack.pop();
-            Value corpo = stack.pop();
-            EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+        public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
+            if (doInstruction) {
+                Value destinatario = stack.pop();
+                Value assunto = stack.pop();
+                Value corpo = stack.pop();
+                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+            }
         }
 
         @Override
-        public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx){
-            Value destinatario =stack.pop();
-            String assunto = ctx.assunto.getText();
-            String corpo = ctx.corpo.getText();
-            EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+        public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) {
+            if (doInstruction) {
+                Value destinatario = stack.pop();
+                String assunto = ctx.assunto.getText();
+                String corpo = ctx.corpo.getText();
+                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+            }
         }
 
         @Override
         public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
-            Value assunto = stack.pop();
-            Value corpo = stack.pop();
-            EmailSender.sendEmail(userEmail,assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+            if (doInstruction) {
+                Value assunto = stack.pop();
+                Value corpo = stack.pop();
+                EmailSender.sendEmail(userEmail, assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+            }
         }
 
         @Override
-        public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx){
-            String assunto = ctx.assunto.getText();
-            String corpo = ctx.corpo.getText();
-            EmailSender.sendEmail(userEmail, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+        public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) {
+            if (doInstruction) {
+                String assunto = ctx.assunto.getText();
+                String corpo = ctx.corpo.getText();
+                EmailSender.sendEmail(userEmail, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+            }
+        }
+
+        @Override
+        public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
+            if (doInstruction){
+                String what = ctx.what.getText().replaceAll("\"", "");
+                String id = ctx.id.getText().replaceAll("\"", "");
+                String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
+                String whatToUpdate = ctx.updatevalue.getText().replaceAll("\"", "");
+                String updatevalue = stack.pop().toString().replaceAll("\"", "");
+                String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
+                String user = "admin";
+                String passwd = "eapli";
+
+                String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s'", what, whatToUpdate, updatevalue, id, idvalue);
+                try {
+                    Class.forName("org.h2.Driver");
+
+                    Connection conn = DriverManager.getConnection(url, user, passwd);
+                    Statement stmt = conn.createStatement();
+                    stmt.executeUpdate(query);
+                    stmt.close();
+                    conn.close();
+                } catch (ClassNotFoundException | SQLException e) {
+                    throw new ParseCancellationException("Update não executado");
+                }
+            }
         }
     }
 

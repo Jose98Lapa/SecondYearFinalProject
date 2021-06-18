@@ -220,6 +220,18 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
