@@ -55,8 +55,7 @@ public class Value {
     }
 
     public boolean isString() {
-        String string = value.toString().substring(1,value.toString().length()-1);
-        return string instanceof java.lang.String;
+        return removeAspas(value) instanceof java.lang.String;
     }
 
     public boolean isElemento() {
@@ -81,6 +80,12 @@ public class Value {
         return numberToTest.matches("^[0-9]+([.][0-9]+)?$");
     }
 
+    public String removeAspas(Object val) {
+        if (val.toString().contains("\"")) {
+            return val.toString().substring(1, val.toString().length() - 1);
+        }
+        return val.toString();
+    }
     @Override
     public int hashCode() {
 

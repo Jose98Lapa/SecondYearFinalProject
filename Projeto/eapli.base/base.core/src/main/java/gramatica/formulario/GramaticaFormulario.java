@@ -60,7 +60,7 @@ public class GramaticaFormulario {
         EvalVisitor eval = new EvalVisitor();
 
         eval.defineForm(form);
-        System.out.println(eval.visit(tree));
+        eval.visit(tree);
     }
 
     public static void parseWithListener(String file, Form form) {
@@ -690,7 +690,7 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
-            throw new ParseCancellationException("FAIL Detected");
+            throw new ParseCancellationException("FAIL Detected: "+ ctx.getParent().getParent().getParent().getText());
         }
 
         @Override

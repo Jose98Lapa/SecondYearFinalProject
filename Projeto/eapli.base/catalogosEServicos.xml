@@ -201,7 +201,7 @@
             <Formulario>
                 <fId>2</fId>
                 <fnome>Autorizacao para Aplicacao de Desconto</fnome>
-                <fscript>https://192.168.1.92/bootstrapFormAut2.txt</fscript>
+                <fscript>https://192.168.1.92/bootstrapForm2.txt</fscript>
                 <atributes>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
