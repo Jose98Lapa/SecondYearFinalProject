@@ -43,13 +43,16 @@ if_stat: SE condition_block (SENAO stat_block)? END_SE
     ;
 
 condition_block
-    : expr ENTAO stat_block
+    : expr entao stat_block
     ;
 
 stat_block
     :  instrucao*
     ;
 
+entao
+    : ENTAO
+    ;
 
 expr: atom  = tipo_dados                                   #atomExpr
     | left=expr POW right=expr                             #powExpr
