@@ -17,274 +17,352 @@ import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.domain.*;
+import eapli.base.workflow.engine.client.TcpExecuterClient;
 
+import java.io.IOException;
 import java.util.*;
 
 public class EngineV2 {
 
-	private final TicketRepository ticketRepository;
-	private final TaskRepository taskRepository;
-	private final CreateTaskController ticketTaskController;
-	static TreeMap< Date, Collaborator > historyExecution = new TreeMap<>( );
-	static TreeMap< Date, Collaborator > historyApproval = new TreeMap<>( );
+    private final TicketRepository ticketRepository;
+    private final TaskRepository taskRepository;
+    private final CreateTaskController ticketTaskController;
+    static TreeMap<Date, Collaborator> historyExecution = new TreeMap<>();
+    static TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
+    static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
 
-	public EngineV2 ( ) {
+    public EngineV2() {
 
-		this.ticketRepository = PersistenceContext.repositories( ).tickets( );
-		this.taskRepository = PersistenceContext.repositories( ).tasks( );
-		this.ticketTaskController = new CreateTaskController( );
-	}
+        this.ticketRepository = PersistenceContext.repositories().tickets();
+        this.taskRepository = PersistenceContext.repositories().tasks();
+        this.ticketTaskController = new CreateTaskController();
+    }
 
-	public void processIncomingTicket ( byte[] payload ) {
+    public void processIncomingTicket(byte[] payload) {
 
-		Optional< Ticket > ticketOptional = ticketRepository.ofIdentity( Arrays.toString( payload ) );
-		Ticket ticket;
+        Optional<Ticket> ticketOptional = ticketRepository.ofIdentity(Arrays.toString(payload));
+        Ticket ticket;
 
-		if ( ticketOptional.isPresent( ) ) {
+        if (ticketOptional.isPresent()) {
 
-			ticket = ticketOptional.get( );
-			createWorkFlow( ticket );
-			processStatusChange( ticket, ticket.status().toString() );
-		}
-	}
+            ticket = ticketOptional.get();
+            createWorkFlow(ticket);
+            processStatusChange(ticket, ticket.status().toString());
+        }
+    }
 
-	public void processStatusChange ( Ticket ticket, String action ) {
+    public void processStatusChange(Ticket ticket, String action) {
 
-		Optional< Ticket > processedTicket = Optional.empty();
+        Optional<Ticket> processedTicket = Optional.empty();
 
-		switch ( action ) {
-			case "PENDING":
-				ticket.statusPending( );
-				processedTicket = Optional.of( delegateTask( ticket ) );
-				break;
-			case "APPROVED":
-				ticket.statusApproved( );
-				processedTicket = Optional.of( delegateTask( ticket ) );
-				break;
-			case "NOT_APPROVED":
-				ticket.statusNotApproved( );
-				break;
-			case "CONCLUDED":
-				ticket.statusConcluded( );
-				break;
-			case "FAILED":
-				ticket.statusFailed( );
-				break;
-		}
+        switch (action) {
+            case "PENDING":
+                ticket.statusPending();
+                processedTicket = Optional.of(delegateTask(ticket));
+                break;
+            case "APPROVED":
+                ticket.statusApproved();
+                processedTicket = Optional.of(delegateTask(ticket));
+                break;
+            case "NOT_APPROVED":
+                ticket.statusNotApproved();
+                break;
+            case "CONCLUDED":
+                ticket.statusConcluded();
+                break;
+            case "FAILED":
+                ticket.statusFailed();
+                break;
+        }
 
-		processedTicket.ifPresent( ticketRepository::save );
-	}
+        processedTicket.ifPresent(ticketRepository::save);
+    }
 
-	private void createWorkFlow ( Ticket ticket ) {
+    private void createWorkFlow(Ticket ticket) {
 
-		List< Task > taskList = taskRepository.serviceTasks( ticket.service( ) );
-		TicketTaskPair ticketTaskPair;
-		TicketWorkflow workflow;
+        List<Task> taskList = taskRepository.serviceTasks(ticket.service());
+        TicketTaskPair ticketTaskPair;
+        TicketWorkflow workflow;
 
-		if ( taskList.size( ) == 2 ) {
+        if (taskList.size() == 2) {
 
-			ticketTaskPair = TicketTaskPair.of( createTask( ticket, taskList.get( 0 ) ), createTask( ticket, taskList.get( 1 ) ) );
-			TicketApprovalTask approvalTask = ticketTaskPair.ticketApprovalTask( );
+            ticketTaskPair = TicketTaskPair.of(createTask(ticket, taskList.get(0)), createTask(ticket, taskList.get(1)));
+            TicketApprovalTask approvalTask = ticketTaskPair.ticketApprovalTask();
 
-			if ( ticketTaskPair.hasAutomaticTask( ) ) {
+            if (ticketTaskPair.hasAutomaticTask()) {
 
-				approvalTask.addAfterTask( ticketTaskPair.ticketAutomaticTask( ) );
-				ticketTaskController.registerTicketTask( approvalTask );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
+                approvalTask.addAfterTask(ticketTaskPair.ticketAutomaticTask());
+                ticketTaskController.registerTicketTask(approvalTask);
+                ticketTaskController.registerTicketTask(ticketTaskPair.ticketAutomaticTask());
 
-			} else {
+            } else {
 
-				approvalTask.addAfterTask( ticketTaskPair.ticketExecutionTask( ) );
-				ticketTaskController.registerTicketTask( approvalTask );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
+                approvalTask.addAfterTask(ticketTaskPair.ticketExecutionTask());
+                ticketTaskController.registerTicketTask(approvalTask);
+                ticketTaskController.registerTicketTask(ticketTaskPair.ticketExecutionTask());
 
-			}
+            }
 
-			workflow = new TicketWorkflow( approvalTask );
+            workflow = new TicketWorkflow(approvalTask);
 
-		} else {
+        } else {
 
-			ticketTaskPair = TicketTaskPair.of( createTask( ticket, taskList.get( 0 ) ), null );
+            ticketTaskPair = TicketTaskPair.of(createTask(ticket, taskList.get(0)), null);
 
-			if ( ticketTaskPair.hasAutomaticTask( ) ) {
+            if (ticketTaskPair.hasAutomaticTask()) {
 
-				workflow = new TicketWorkflow( ticketTaskPair.ticketAutomaticTask( ) );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
+                workflow = new TicketWorkflow(ticketTaskPair.ticketAutomaticTask());
+                ticketTaskController.registerTicketTask(ticketTaskPair.ticketAutomaticTask());
 
-			} else {
-				workflow = new TicketWorkflow( ticketTaskPair.ticketExecutionTask( ) );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
+            } else {
+                workflow = new TicketWorkflow(ticketTaskPair.ticketExecutionTask());
+                ticketTaskController.registerTicketTask(ticketTaskPair.ticketExecutionTask());
 
-			}
-		}
+            }
+        }
 
-		ticket.setWorkflow( workflow );
-		ticketRepository.save( ticket );
-	}
+        ticket.setWorkflow(workflow);
+        ticketRepository.save(ticket);
+    }
 
-	private TicketTask createTask ( Ticket ticket, Task task ) {
+    private TicketTask createTask(Ticket ticket, Task task) {
 
-		TicketTask ticketTask;
+        TicketTask ticketTask;
 
-		if ( task instanceof ApprovalTask ) {
+        if (task instanceof ApprovalTask) {
 
-			ApprovalTask approvalTask = ( ApprovalTask ) task;
+            ApprovalTask approvalTask = (ApprovalTask) task;
 
-			ticketTask = new TicketApprovalTask(
-					new Transition( null, null ),
-					approvalTask,
-					approvalTask.form( ),
-					ticket.deadline( )
-			);
-		} else if ( task instanceof AutomaticTask ) {
+            ticketTask = new TicketApprovalTask(
+                    new Transition(null, null),
+                    approvalTask,
+                    approvalTask.form(),
+                    ticket.deadline()
+            );
+        } else if (task instanceof AutomaticTask) {
 
-			AutomaticTask automaticTask = ( AutomaticTask ) task;
+            AutomaticTask automaticTask = (AutomaticTask) task;
 
-			ticketTask = new TicketAutomaticTask(
-					new Transition( null, null ),
-					automaticTask,
-					automaticTask.scriptPath( )
-			);
-		} else {
+            ticketTask = new TicketAutomaticTask(
+                    new Transition(null, null),
+                    automaticTask,
+                    automaticTask.scriptPath()
+            );
+        } else {
 
-			ExecutionTask executionTask = ( ExecutionTask ) task;
+            ExecutionTask executionTask = (ExecutionTask) task;
 
-			ticketTask = new TicketExecutionTask(
-					new Transition( null, null ),
-					executionTask,
-					executionTask.form( ),
-					null,
-					ticket.deadline( )
-			);
+            ticketTask = new TicketExecutionTask(
+                    new Transition(null, null),
+                    executionTask,
+                    executionTask.form(),
+                    null,
+                    ticket.deadline()
+            );
 
-		}
+        }
 
-		return ticketTask;
-	}
+        return ticketTask;
+    }
 
-	private Ticket delegateTask ( Ticket ticket ) {
+    private Ticket delegateTask(Ticket ticket) {
 
-		Ticket delegated = ticket;
+        Ticket delegated = ticket;
 
-		switch ( Application.settings( ).getCollaboratorAssignerAlgorithm( ) ) {
-			case "FCFS":
-				delegated = FCFS( ticket );
-				break;
-				//TODO: CHANGE NAMING
-			case "COMPLEX":
-				break;
-		}
+        switch (Application.settings().getCollaboratorAssignerAlgorithm()) {
+            case "FCFS":
+                delegated = FCFSTicket(ticket);
+                break;
+            //TODO: CHANGE NAMING
+            case "COMPLEX":
+                break;
+        }
 
-		return delegated;
-	}
+        return delegated;
+    }
 
-	public Ticket FCFS ( Ticket ticket ) {
+    public Ticket FCFSTicket(Ticket ticket) {
 
-		Collaborator selected = null;
+        Collaborator selected = null;
 
-		if ( ticket.status().toString().equals( "PENDING" ) ) {
+        if (ticket.status().toString().equals("PENDING")) {
 
-			if ( ticket.workflow( ).starterTask( ) instanceof TicketApprovalTask ) {
-				selected = assignCollaboratorApproval( ticket );
-				( ( TicketApprovalTask ) ticket.workflow( ).starterTask( ) ).setApprovedBy( selected );
-			}
-			if ( ticket.workflow( ).starterTask( ).transition().nextTask() instanceof TicketApprovalTask ) {
-				selected = assignCollaboratorApproval( ticket );
-				( ( TicketApprovalTask ) ticket.workflow( ).starterTask( ) ).setApprovedBy( selected );
-			}
-		}
+            if (ticket.workflow().starterTask() instanceof TicketApprovalTask) {
+                selected = assignCollaboratorApproval(ticket);
+                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
+            }
+            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketApprovalTask) {
+                selected = assignCollaboratorApproval(ticket);
+                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
+            }
+        }
 
-		if ( ticket.status().toString().equals( "APPROVED" ) ) {
+        if (ticket.status().toString().equals("APPROVED")) {
 
-			if ( ticket.workflow( ).starterTask( ) instanceof TicketExecutionTask ) {
-				selected = assignCollaboratorExecution( ticket );
-				( ( TicketExecutionTask ) ticket.workflow( ).starterTask( ) ).setExecutedBy( selected );
-			}
-			if ( ticket.workflow( ).starterTask( ).transition().nextTask() instanceof TicketExecutionTask ) {
-				selected = assignCollaboratorExecution( ticket );
-				( ( TicketExecutionTask ) ticket.workflow( ).starterTask( ) ).setExecutedBy( selected );
-			}
-		}
+            if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
+                selected = assignCollaboratorExecution(ticket);
+                ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
+            }
+            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
+                selected = assignCollaboratorExecution(ticket);
+                ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
+            }
+        }
 
-		return ticket;
-	}
+        return ticket;
+    }
 
-	public synchronized Collaborator assignCollaboratorExecution ( Ticket ticket ) {
+    public Ticket FCFSAutomaticTask(Ticket ticket) {
 
-		TeamRepository teamRepository = PersistenceContext.repositories( ).teams( );
+        String selected = "";
+        try {
+            if (ticket.status().toString().equals("PENDING")) {
+                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
+                    selected = assignServer();
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(selected);
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                }
+                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
+                    selected = assignServer();
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(selected);
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                }
+            }
 
-		Collaborator theChosenOne = null;
-		ArrayList< Collaborator > collaborators = new ArrayList<>( );
-		ArrayList< Team > execTeams = new ArrayList<>( );
-		ArrayList< Team > execTeamsUpdated = new ArrayList<>( );
-		Service svr = ticket.service( );
+            if (ticket.status().toString().equals("APPROVED")) {
+                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(selected);
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                }
+                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(selected);
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error ocorred");
+        }
 
-		if ( svr.workflow( ).starterTask( ) instanceof ExecutionTask ) {
-			execTeams.addAll( ( ( ExecutionTask ) svr.workflow( ).starterTask( ) ).executingTeams( ) );
-		}
-		for ( Team t : execTeams ) { //update teams
-			execTeamsUpdated.add( teamRepository.ofIdentity( t.identity( ) ).get( ) );
-		}
-		execTeams.clear( );// delete old list
-		for ( Team t : execTeamsUpdated ) { //save updated collaborators
-			collaborators.addAll( t.teamMembers( ) );
-		}
-		for ( Date date : historyExecution.keySet( ) ) {
-			if ( !collaborators.contains( historyExecution.get( date ) ) ) {//se algum colaborador for removido retira do historico
-				historyExecution.remove( date );
-			}
-		}
-		for ( Collaborator collab : collaborators ) { //verificar se existe algum que ainda nao tenha feito nada
-			if ( !historyExecution.containsValue( collab ) ) {
-				theChosenOne = collab;
-				historyExecution.put( new Date( ), collab );
-			}
-		}
-		if ( theChosenOne == null ) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-			for ( Date date : historyExecution.keySet( ) ) {
-				if ( collaborators.contains( historyExecution.get( date ) ) ) {
-					theChosenOne = historyExecution.get( date );
-					historyExecution.put( new Date( ), historyExecution.remove( date ) );
-				}
-			}
-		}
-		return theChosenOne;
-	}
+        return ticket;
+    }
 
-	public synchronized Collaborator assignCollaboratorApproval ( Ticket ticket ) {
+    public synchronized String assignServer() {
 
-		CollaboratorRepository collaboratorRepository = PersistenceContext.repositories( ).collaborators( );
+        String theChosenOne = "";
+        List<String> serverList = new LinkedList<>();
+        serverList.add("172.17.0.3");
+        serverList.add("172.17.0.4");
+        serverList.add("172.17.0.5");
+        serverList.add("172.17.0.6");
 
-		Collaborator theChosenOne = null;
-		ArrayList< Collaborator > collaborators = new ArrayList<>( );
-		Service svr = ticket.service( );
+        for (Date date : historyAutomaticTask.keySet()) {
+            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum colaborador for removido retira do historico
+                historyAutomaticTask.remove(date);
+            }
+        }
 
-		if ( svr.workflow( ).starterTask( ) instanceof ApprovalTask ) {
-			collaborators.addAll( ( Collection< ? extends Collaborator > ) collaboratorRepository.getCollaboratorsByRole(
-					( ( ApprovalTask ) svr.workflow( ).starterTask( ) ).necessaryRoleForApproval( ) )
-			); // base de dados colab by role
-		}
+        for (String server : serverList) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyAutomaticTask.containsValue(server)) {
+                theChosenOne = server;
+                historyAutomaticTask.put(new Date(), server);
+            }
+        }
 
-		for ( Date date : historyApproval.keySet( ) ) {
-			if ( !collaborators.contains( historyApproval.get( date ) ) ) {//se algum colaborador for removido retira do historico
-				historyApproval.remove( date );
-			}
-		}
-		for ( Collaborator collab : collaborators ) { //verificar se existe algum que ainda nao tenha feito nada
-			if ( !historyApproval.containsValue( collab ) ) {
-				theChosenOne = collab;
-				historyApproval.put( new Date( ), collab );
-			}
-		}
-		if ( theChosenOne == null ) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo que tem permissoes
-			for ( Date date : historyApproval.keySet( ) ) {
-				if ( collaborators.contains( historyApproval.get( date ) ) ) {
-					theChosenOne = historyApproval.get( date );
-					historyApproval.put( new Date( ), historyApproval.remove( date ) );
-				}
-			}
-		}
-		return theChosenOne;
-	}
+        if (theChosenOne.equals("")) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+            for (Date date : historyAutomaticTask.keySet()) {
+                if (serverList.contains(historyAutomaticTask.get(date))) {
+                    theChosenOne = historyAutomaticTask.get(date);
+                    historyAutomaticTask.put(new Date(), historyAutomaticTask.remove(date));
+                }
+            }
+        }
+        return theChosenOne;
+    }
+
+    public synchronized Collaborator assignCollaboratorExecution(Ticket ticket) {
+
+        TeamRepository teamRepository = PersistenceContext.repositories().teams();
+
+        Collaborator theChosenOne = null;
+        ArrayList<Collaborator> collaborators = new ArrayList<>();
+        ArrayList<Team> execTeams = new ArrayList<>();
+        ArrayList<Team> execTeamsUpdated = new ArrayList<>();
+        Service svr = ticket.service();
+
+        if (svr.workflow().starterTask() instanceof ExecutionTask) {
+            execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
+        }
+        for (Team t : execTeams) { //update teams
+            execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
+        }
+        execTeams.clear();// delete old list
+        for (Team t : execTeamsUpdated) { //save updated collaborators
+            collaborators.addAll(t.teamMembers());
+        }
+        for (Date date : historyExecution.keySet()) {
+            if (!collaborators.contains(historyExecution.get(date))) {//se algum colaborador for removido retira do historico
+                historyExecution.remove(date);
+            }
+        }
+        for (Collaborator collab : collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyExecution.containsValue(collab)) {
+                theChosenOne = collab;
+                historyExecution.put(new Date(), collab);
+            }
+        }
+        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
+            for (Date date : historyExecution.keySet()) {
+                if (collaborators.contains(historyExecution.get(date))) {
+                    theChosenOne = historyExecution.get(date);
+                    historyExecution.put(new Date(), historyExecution.remove(date));
+                }
+            }
+        }
+        return theChosenOne;
+    }
+
+    public synchronized Collaborator assignCollaboratorApproval(Ticket ticket) {
+
+        CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
+
+        Collaborator theChosenOne = null;
+        ArrayList<Collaborator> collaborators = new ArrayList<>();
+        Service svr = ticket.service();
+
+        if (svr.workflow().starterTask() instanceof ApprovalTask) {
+            collaborators.addAll((Collection<? extends Collaborator>) collaboratorRepository.getCollaboratorsByRole(
+                    ((ApprovalTask) svr.workflow().starterTask()).necessaryRoleForApproval())
+            ); // base de dados colab by role
+        }
+
+        for (Date date : historyApproval.keySet()) {
+            if (!collaborators.contains(historyApproval.get(date))) {//se algum colaborador for removido retira do historico
+                historyApproval.remove(date);
+            }
+        }
+        for (Collaborator collab : collaborators) { //verificar se existe algum que ainda nao tenha feito nada
+            if (!historyApproval.containsValue(collab)) {
+                theChosenOne = collab;
+                historyApproval.put(new Date(), collab);
+            }
+        }
+        if (theChosenOne == null) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo que tem permissoes
+            for (Date date : historyApproval.keySet()) {
+                if (collaborators.contains(historyApproval.get(date))) {
+                    theChosenOne = historyApproval.get(date);
+                    historyApproval.put(new Date(), historyApproval.remove(date));
+                }
+            }
+        }
+        return theChosenOne;
+    }
 
 }
