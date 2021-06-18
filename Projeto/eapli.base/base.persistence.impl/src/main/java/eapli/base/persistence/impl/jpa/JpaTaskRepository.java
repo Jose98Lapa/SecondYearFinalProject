@@ -35,7 +35,7 @@ public class JpaTaskRepository extends JpaAutoTxRepository<Task,Long, Long> impl
                 "Select task From eapli.base.task.domain.Task task where task.", Task.class
         );
 
-        query.setParameter( "id", service.identity() );
+        query.setParameter( "serviceId", service.identity() );
         return query.getResultList();
     }
 
