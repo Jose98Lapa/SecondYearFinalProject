@@ -94,10 +94,11 @@ public class CreateTicketController {
 		//File script = new File("bootstrapForm.txt");
 		File script =ticketService.getFIleFromServer( service.form() );
 		String type = Application.settings().getGRAMMARFORMTYPE();
+		boolean result;
 		if( type.equals("VISITOR")){
-			GramaticaFormulario.parseWithVisitor(script.getName(), form);
+			result=GramaticaFormulario.parseWithVisitor(script.getName(), form).equals("");
 		}else{
-			GramaticaFormulario.parseWithListener(script.getName(), form);
+			result=GramaticaFormulario.parseWithListener(script.getName(), form).equals("");
 		}
 		script.delete();
 		this.builder.withForm( form );

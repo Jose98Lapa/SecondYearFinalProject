@@ -47,38 +47,52 @@ public class GramaticaFormulario {
         parseWithVisitor("testemain.txt", form);
     }
 
-    public static void parseWithVisitor(String file, Form form) {
-        GramaticaFormularioLexer lexer = null;
+    public static String parseWithVisitor(String file, Form form) {
         try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
-        ParseTree tree = parser.gramatica();
-        EvalVisitor eval = new EvalVisitor();
+            GramaticaFormularioLexer lexer = null;
+            try {
+                lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+            ParseTree tree = parser.gramatica();
+            EvalVisitor eval = new EvalVisitor();
 
-        eval.defineForm(form);
-        eval.visit(tree);
+            eval.defineForm(form);
+            eval.visit(tree);
+        } catch (RuntimeException e) {
+            System.out.println("\nValidacao de formulario falhou:");
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "";
     }
 
-    public static void parseWithListener(String file, Form form) {
-        GramaticaFormularioLexer lexer = null;
+    public static String parseWithListener(String file, Form form) {
         try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+            GramaticaFormularioLexer lexer = null;
+            try {
+                lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+            ParseTree tree = parser.gramatica();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            EvalListener eval = new EvalListener();
+
+            eval.defineForm(form);
+            walker.walk(eval, tree);
+        } catch (RuntimeException e) {
+            System.out.println("Validacao de formulario falhou:");
+            System.out.println(e.getMessage());
+            return e.getMessage();
         }
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
-        ParseTree tree = parser.gramatica();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        EvalListener eval = new EvalListener();
-
-        eval.defineForm(form);
-        walker.walk(eval, tree);
+        return "";
     }
 
     static class EvalListener extends GramaticaFormularioBaseListener {
@@ -690,7 +704,7 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
-            throw new ParseCancellationException("FAIL Detected: "+ ctx.getParent().getParent().getParent().getText());
+            throw new ParseCancellationException("FAIL Detected: " + ctx.getParent().getParent().getParent().getText());
         }
 
         @Override
@@ -701,7 +715,7 @@ public class GramaticaFormulario {
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                throw new ParseCancellationException(toCheck + "Does not match regex");
+                throw new ParseCancellationException(toCheck + " Does not match regex");
             }
         }
 
