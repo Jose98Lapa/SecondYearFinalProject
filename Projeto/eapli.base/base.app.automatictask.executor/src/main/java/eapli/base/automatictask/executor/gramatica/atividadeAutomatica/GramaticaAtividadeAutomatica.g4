@@ -21,11 +21,11 @@ estrutura_xml: tipo_ficheiro
                ;
 
 tipo_ficheiro: TIPOFICHEIRO identidade                   #ficheiroIdent
-    | TIPOFICHEIRO identidade OPERADORATRIBUICAO STRING  #ficheiroNomeFicheiro
+    | TIPOFICHEIRO identidade OPERADORATRIBUICAO stringficheiro=STRING  #ficheiroNomeFicheiro
     ;
 
-elemento: ELEMENTO identidade
-    | ELEMENTO  atribuicao_elemento;
+elemento: ELEMENTO identidade #elem_idt
+    | ELEMENTO  atribuicao_elemento #elem_atr;
 
 atribuicao_elemento: nomeVar=identidade OPERADORATRIBUICAO 'FIND' '[' what=(TEXTO|NUMERO)+',' file=identidade ']' 'where' '(' id=(TEXTO|NUMERO)+ ',' idvalue=(TEXTO|NUMERO)+ ')'
     ;
@@ -75,9 +75,8 @@ floate
     : '-'? REAL
     ;
 
-identidade
-    : VARIAVEL
-    ;
+identidade: var=VARIAVEL
+   ;
 
 string
     : STRING
