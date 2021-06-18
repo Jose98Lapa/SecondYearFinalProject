@@ -119,9 +119,11 @@ public class CreateTicketController {
 
 		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
-		return this.tcpClient.startConnection( Application.settings().getIpWorkflow() )
-				&& this.tcpClient.dispatchTicket( persistedTicket.identity() )
-				&& this.tcpClient.stopConnection();
+		this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
+		this.tcpClient.dispatchTicket( persistedTicket.identity() );
+		this.tcpClient.stopConnection();
+
+		return true;
 	}
 
 	//TODO: Devia estar no FormController

@@ -73,7 +73,7 @@ public class AppSettings {
         this.applicationProperties.setProperty(SSH_USER, "user");
         this.applicationProperties.setProperty(SSH_PASSWORD, "password");
         this.applicationProperties.setProperty(PORT_WORKFLOW, "10283");
-        this.applicationProperties.setProperty(IP_WORKFLOW, "172.17.0.2");
+        this.applicationProperties.setProperty(IP_WORKFLOW, "127.0.0.1");
         this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
         this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
         this.applicationProperties.setProperty( COLLABORATOR_ASSIGNER_ALGORITHM, "FCFS" );

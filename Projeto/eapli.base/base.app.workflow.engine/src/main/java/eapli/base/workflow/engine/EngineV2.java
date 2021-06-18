@@ -17,6 +17,9 @@ import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.domain.*;
+import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.util.*;
 
@@ -33,6 +36,8 @@ public class EngineV2 {
 		this.ticketRepository = PersistenceContext.repositories( ).tickets( );
 		this.taskRepository = PersistenceContext.repositories( ).tasks( );
 		this.ticketTaskController = new CreateTaskController( );
+
+		AuthzRegistry.configure( PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder() );
 	}
 
 	public void processIncomingTicket ( byte[] payload ) {
@@ -45,10 +50,12 @@ public class EngineV2 {
 
 			ticket = ticketOptional.get( );
 			createWorkFlow( ticket );
+			ticket.workflow().approvalTask().ifPresent( System.out::println );
+			ticket.workflow().automaticTask().ifPresent( System.out::println );
+			ticket.workflow().executionTask().ifPresent( System.out::println );
 			processStatusChange( ticket, ticket.status().toString() );
 		}
 
-		System.out.println( "ENDING PROCESS - TICKET" );
 
 	}
 
@@ -96,6 +103,7 @@ public class EngineV2 {
 			if ( ticketTaskPair.hasAutomaticTask( ) ) {
 
 				approvalTask.addAfterTask( ticketTaskPair.ticketAutomaticTask( ) );
+				System.out.println( "tried to save approval with automatic" );
 				ticketTaskController.registerTicketTask( approvalTask );
 				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
 
@@ -104,7 +112,7 @@ public class EngineV2 {
 				approvalTask.addAfterTask( ticketTaskPair.ticketExecutionTask( ) );
 				ticketTaskController.registerTicketTask( approvalTask );
 				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
-
+				System.out.println( "tried to save approval with execution" );
 			}
 
 			workflow = new TicketWorkflow( approvalTask );
@@ -117,9 +125,11 @@ public class EngineV2 {
 
 				workflow = new TicketWorkflow( ticketTaskPair.ticketAutomaticTask( ) );
 				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
+				System.out.println( "tried to save automatic" );
 
 			} else {
 				workflow = new TicketWorkflow( ticketTaskPair.ticketExecutionTask( ) );
+				System.out.println( "tried to save execution" );
 				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
 
 			}
@@ -137,7 +147,7 @@ public class EngineV2 {
 		if ( task instanceof ApprovalTask ) {
 
 			ApprovalTask approvalTask = ( ApprovalTask ) task;
-
+			System.out.println( "isApproval" );
 			ticketTask = new TicketApprovalTask(
 					new Transition( null, null ),
 					approvalTask,
@@ -147,7 +157,7 @@ public class EngineV2 {
 		} else if ( task instanceof AutomaticTask ) {
 
 			AutomaticTask automaticTask = ( AutomaticTask ) task;
-
+			System.out.println( "is automatic" );
 			ticketTask = new TicketAutomaticTask(
 					new Transition( null, null ),
 					automaticTask,
@@ -156,7 +166,7 @@ public class EngineV2 {
 		} else {
 
 			ExecutionTask executionTask = ( ExecutionTask ) task;
-
+			System.out.println( "is execution" );
 			ticketTask = new TicketExecutionTask(
 					new Transition( null, null ),
 					executionTask,
