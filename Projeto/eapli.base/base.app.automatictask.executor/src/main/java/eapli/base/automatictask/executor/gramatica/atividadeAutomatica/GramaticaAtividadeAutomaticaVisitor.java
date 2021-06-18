@@ -116,6 +116,12 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.
 	 * @param ctx the parse tree

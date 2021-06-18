@@ -208,6 +208,18 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

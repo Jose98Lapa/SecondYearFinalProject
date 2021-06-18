@@ -2,6 +2,7 @@ package eapli.base.automatictask.executor;
 
 import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
 import gramatica.formulario.GramaticaFormulario;
+import gramatica.formulario.GramaticaFormularioParser;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -62,7 +63,7 @@ public class ExecutorAtividadeAutomatica {
             parser.setErrorHandler(new BailErrorStrategy());
             ParseTree tree = parser.gramatica(); // parse
             ParseTreeWalker walker = new ParseTreeWalker();
-            EvalListener eval = new EvalListener();
+            EvalListener eval = new EvalListener(userEmail, formAnswers, formApproval);
             walker.walk(eval, tree);
         } catch (ParseCancellationException e) {
             String errorMessage = e.getMessage();
@@ -75,14 +76,21 @@ public class ExecutorAtividadeAutomatica {
 
 
     static class EvalListener extends GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtividadeAutomaticaListener {
+        private String userEmail;
+        List<String> formAnswers;
+        List<String> formApproved;
         public static final double SMALL_VALUE = 0.00000000001;
-
         private Map<String, Value> memory = new HashMap<String, Value>();
-
         private final Stack<Value> stack = new Stack<>();
-
         public Value getResult() {
             return stack.peek();
+        }
+        boolean doInstruction=true;
+
+        public EvalListener(String userEmail, List<String> formAnswers, List<String> formApproved) {
+            this.userEmail = userEmail;
+            this.formAnswers = formAnswers;
+            this.formApproved = formApproved;
         }
 
         @Override
@@ -140,6 +148,150 @@ public class ExecutorAtividadeAutomatica {
             }
         }
 
+        @Override
+        public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx){
+            try {
+            Value identidade = stack.pop();
+            Element element = stack.pop().asElement();
+            String what = ctx.what.getText();
+            Node node = element.getElementsByTagName(what).item(0);
+            Element resultElement = (Element) node;
+            Value result = new Value(resultElement.getTextContent());
+            memory.put(ctx.nomeVar.getText(), result);
+        } catch (Exception e) {
+            throw new ParseCancellationException("Elemento xml não encontrado");
+        }
+        }
+
+        @Override
+        public void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx){
+            Value identidade=stack.pop();
+            Value value=stack.pop();
+            memory.put(identidade.toString(),value);
+        }
+
+        @Override
+        public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx){
+            stack.push(new Value(ctx.atom.getText()));
+        }
+
+        @Override
+        public void exitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx){
+            Value identidade=stack.pop();
+            int index = stack.pop().asInteger();
+
+            if (index >= this.formAnswers.size())
+                throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+            Value dados = new Value(formAnswers.get(index-1));
+            memory.put(identidade.toString(),dados);
+        }
+
+        @Override
+        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx){
+            Value dados = new Value(ctx.dados.getText());
+            stack.push(dados);
+        }
+
+        @Override
+        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
+
+        }
+
+        @Override
+        public void exitCondition_block(GramaticaAtividadeAutomaticaParser.Condition_blockContext ctx){
+
+        }
+
+        @Override
+        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
+            Value identidade = stack.pop();
+            if(!memory.containsKey(identidade.toString()))
+                throw new ParseCancellationException("Variável não inicializada");
+            Value left=memory.get(identidade.toString());
+            Value right=new Value(ctx.right);
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.EQ:
+                    stack.push(new Value(left.equals(right)));
+                    break;
+                case GramaticaFormularioParser.NEQ:
+                    stack.push(new Value(!left.equals(right)));
+                    break;
+            }
+        }
+
+        @Override
+        public void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) {
+            if (doInstruction) {
+                Value bool = stack.pop();
+                doInstruction = bool.asBoolean();
+            }
+        }
+
+        @Override
+        public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx){
+            if (doInstruction){
+
+            }
+        }
+
+        @Override
+        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx){
+            Value identidade = stack.pop();
+        }
+
+        @Override
+        public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx){
+            Value left = stack.pop();
+            Value right = new Value(ctx.right);
+            switch (ctx.op.getType()){
+                case GramaticaFormularioParser.MAIS:
+                    if (left.isDouble() && right.isDouble())
+                        stack.push(new Value(left.asDouble()+right.asDouble()));
+                    if (left.isInteger() && right.isInteger())
+                        stack.push(new Value(left.asInteger()+right.asInteger()));
+                    if (left.isString() || right.isString())
+                        stack.push(new Value(left.asString()+right.asString()));
+                    break;
+                case GramaticaFormularioParser.MENOS:
+                    if (left.isDouble() && right.isDouble())
+                        stack.push(new Value(left.asDouble()-right.asDouble()));
+                    if (left.isInteger() && right.isInteger())
+                        stack.push(new Value(left.asInteger()-right.asInteger()));
+                    if (left.isString() || right.isString())
+                        throw new ParseCancellationException("Não foi possivel fazer a operação");
+                    break;
+            }
+        }
+
+        @Override
+        public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx){
+            Value destinatario = stack.pop();
+            Value assunto = stack.pop();
+            Value corpo = stack.pop();
+            EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+        }
+
+        @Override
+        public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx){
+            Value destinatario =stack.pop();
+            String assunto = ctx.assunto.getText();
+            String corpo = ctx.corpo.getText();
+            EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+        }
+
+        @Override
+        public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
+            Value assunto = stack.pop();
+            Value corpo = stack.pop();
+            EmailSender.sendEmail(userEmail,assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+        }
+
+        @Override
+        public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx){
+            String assunto = ctx.assunto.getText();
+            String corpo = ctx.corpo.getText();
+            EmailSender.sendEmail(userEmail, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+        }
     }
 
     static class EvalVisitor extends GramaticaAtividadeAutomaticaBaseVisitor<Value> {

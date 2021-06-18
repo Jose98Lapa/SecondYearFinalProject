@@ -186,6 +186,16 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 */
+	void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 */
+	void exitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.
 	 * @param ctx the parse tree
