@@ -158,6 +158,7 @@ public class TcpClient {
             sOut.flush();
             System.out.println("sent packet" );
             byte[] response = sIn.readNBytes(4);
+            System.out.println("response read" );
             return response[1] == 2;
 
         } catch (IOException exception) {

@@ -189,6 +189,7 @@ public class TcpServer implements Runnable {
                         System.out.println("escolhido 10 -> ticket" );
                         engine.processIncomingTicket( sIn.readNBytes( clientRequest[3] ) );
                         stopConnection( clientIP );
+                        System.out.println("closing connection" );
                         break;
                     case 11:
                         stopConnection( clientIP );
