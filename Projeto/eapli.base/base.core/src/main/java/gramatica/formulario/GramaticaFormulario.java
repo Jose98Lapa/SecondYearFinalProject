@@ -159,16 +159,10 @@ public class GramaticaFormulario {
             Value right = memory.get(ctx.right.getText());
             switch (ctx.op.getText()) {
                 case "=" -> {
-                    if (left.equals(right))
-                        System.out.println("Passou");
-                    else
-                        System.out.println("Nao passou");
+                    valueStack.push(new Value(left.equals(right)));
                 }
                 case "!=" -> {
-                    if (!left.equals(right))
-                        System.out.println("Passou");
-                    else
-                        System.out.println("Nao passou");
+                    valueStack.push(new Value(!left.equals(right)));
                 }
             }
 
@@ -176,6 +170,50 @@ public class GramaticaFormulario {
 
         @Override
         public void exitRelationalExpr(GramaticaFormularioParser.RelationalExprContext ctx) {
+
+            Value left = memory.get(ctx.left.getText());
+            if (left == null)
+                left = new Value(ctx.left.getText());
+            Value right = memory.get(ctx.right.getText());
+            if (right == null)
+                right = new Value(ctx.right.getText());
+
+            final int compareString = left.toString().compareTo(right.toString());
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.LT -> {
+                    if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
+                        valueStack.push(new Value(left.asDouble() < right.asDouble()));
+                    else if (left.isDate() && right.isDate())
+                        valueStack.push(new Value(left.asDate().isBefore(right.asDate())));
+                    else
+                        valueStack.push(new Value(compareString < 0));
+                }
+                case GramaticaFormularioParser.LTEQ -> {
+                    if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
+                        valueStack.push(new Value(left.asDouble() <= right.asDouble()));
+                    else if (left.isDate() && right.isDate())
+                        valueStack.push(new Value(left.asDate().isBefore(right.asDate()) || left.toString().equals(right.toString())));
+                    else
+                        valueStack.push(new Value(compareString <= 0));
+                }
+                case GramaticaFormularioParser.GT -> {
+                    if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
+                        valueStack.push(new Value(left.asDouble() > right.asDouble()));
+                    else if (left.isDate() && right.isDate())
+                        valueStack.push(new Value(left.asDate().isAfter(right.asDate())));
+                    else
+                        valueStack.push(new Value(compareString > 0));
+                }
+                case GramaticaFormularioParser.GTEQ -> {
+                    if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
+                        valueStack.push(new Value(left.asDouble() >= right.asDouble()));
+                    else if (left.isDate() && right.isDate())
+                        valueStack.push(new Value(left.asDate().isAfter(right.asDate())|| left.toString().equals(right.toString())));
+                    else
+                        valueStack.push(new Value(compareString >=0));
+                }
+                default -> throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
+            }
         }
 
 
@@ -246,7 +284,7 @@ public class GramaticaFormulario {
 
             switch (ctx.op.getType()) {
                 case GramaticaFormularioParser.MAIS -> {
-                    if (Value.isValidNumber(left.toString())&&Value.isValidNumber(right.toString()))
+                    if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
                         valueStack.push(new Value(left.asDouble() * right.asDouble()));
                     else if ((Value.isValidDate(left.toString()) && Value.isValidNumber(right.toString())) || (Value.isValidDate(right.toString()) && Value.isValidNumber(left.toString()))) {
                         if (Value.isValidNumber(right.toString())) {
@@ -255,9 +293,8 @@ public class GramaticaFormulario {
                         } else {
                             valueStack.push(new Value(right.asDate().plusDays(new Value(left.toString().replaceAll("[.][0-9]+", "")).asInteger())));
                         }
-                    }
-                    else
-                        valueStack.push(new Value(left.toString()+right));
+                    } else
+                        valueStack.push(new Value(left.toString() + right));
                 }
                 case GramaticaFormularioParser.MENOS -> {
                     if ("TEXTO".equals(typeLeft) || "TEXTO".equals(typeRight))
