@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/ROOT/Universidade/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class GramaticaAtividadeAutomaticaParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -378,6 +378,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 		}
 	}
 	public static class FicheiroNomeFicheiroContext extends Tipo_ficheiroContext {
+		public Token stringficheiro;
 		public TerminalNode TIPOFICHEIRO() { return getToken(GramaticaAtividadeAutomaticaParser.TIPOFICHEIRO, 0); }
 		public IdentidadeContext identidade() {
 			return getRuleContext(IdentidadeContext.class,0);
@@ -428,7 +429,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				setState(69);
 				match(OPERADORATRIBUICAO);
 				setState(70);
-				match(STRING);
+				((FicheiroNomeFicheiroContext)_localctx).stringficheiro = match(STRING);
 				}
 				break;
 			}
@@ -445,28 +446,53 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 	}
 
 	public static class ElementoContext extends ParserRuleContext {
-		public TerminalNode ELEMENTO() { return getToken(GramaticaAtividadeAutomaticaParser.ELEMENTO, 0); }
-		public IdentidadeContext identidade() {
-			return getRuleContext(IdentidadeContext.class,0);
-		}
-		public Atribuicao_elementoContext atribuicao_elemento() {
-			return getRuleContext(Atribuicao_elementoContext.class,0);
-		}
 		public ElementoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elemento; }
+	 
+		public ElementoContext() { }
+		public void copyFrom(ElementoContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class Elem_atrContext extends ElementoContext {
+		public TerminalNode ELEMENTO() { return getToken(GramaticaAtividadeAutomaticaParser.ELEMENTO, 0); }
+		public Atribuicao_elementoContext atribuicao_elemento() {
+			return getRuleContext(Atribuicao_elementoContext.class,0);
+		}
+		public Elem_atrContext(ElementoContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterElemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterElem_atr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitElemento(this);
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitElem_atr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitElemento(this);
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitElem_atr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class Elem_idtContext extends ElementoContext {
+		public TerminalNode ELEMENTO() { return getToken(GramaticaAtividadeAutomaticaParser.ELEMENTO, 0); }
+		public IdentidadeContext identidade() {
+			return getRuleContext(IdentidadeContext.class,0);
+		}
+		public Elem_idtContext(ElementoContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).enterElem_idt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GramaticaAtividadeAutomaticaListener ) ((GramaticaAtividadeAutomaticaListener)listener).exitElem_idt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GramaticaAtividadeAutomaticaVisitor ) return ((GramaticaAtividadeAutomaticaVisitor<? extends T>)visitor).visitElem_idt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -479,6 +505,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
+				_localctx = new Elem_idtContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(74);
@@ -488,6 +515,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new Elem_atrContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(76);
@@ -1758,6 +1786,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 	}
 
 	public static class IdentidadeContext extends ParserRuleContext {
+		public Token var;
 		public TerminalNode VARIAVEL() { return getToken(GramaticaAtividadeAutomaticaParser.VARIAVEL, 0); }
 		public IdentidadeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1785,7 +1814,7 @@ public class GramaticaAtividadeAutomaticaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(197);
-			match(VARIAVEL);
+			((IdentidadeContext)_localctx).var = match(VARIAVEL);
 			}
 		}
 		catch (RecognitionException re) {

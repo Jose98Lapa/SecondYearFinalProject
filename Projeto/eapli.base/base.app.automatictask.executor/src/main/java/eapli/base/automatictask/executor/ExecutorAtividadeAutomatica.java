@@ -1,12 +1,14 @@
 package eapli.base.automatictask.executor;
 
 import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
+import gramatica.formulario.GramaticaFormulario;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.Pair;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +26,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class ExecutorAtividadeAutomatica {
     public static void main(String[] args) throws IOException {
@@ -50,9 +53,29 @@ public class ExecutorAtividadeAutomatica {
         return new Pair<>(true,"Succesfull");
     }
 
+    public static Pair<Boolean,String> parseWithListener(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
+        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
+        try {
+            parser.removeErrorListeners();
+            parser.setErrorHandler(new BailErrorStrategy());
+            ParseTree tree = parser.gramatica(); // parse
+            ParseTreeWalker walker = new ParseTreeWalker();
+            EvalListener eval = new EvalListener();
+            walker.walk(eval, tree);
+        } catch (ParseCancellationException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage == null)
+                errorMessage = "Lexical error";
+            return new Pair<>(false,errorMessage);
+        }
+        return new Pair<>(true,"Succesfull");
+    }
+
 
     static class EvalListener extends GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtividadeAutomaticaListener {
-       /* public static final double SMALL_VALUE = 0.00000000001;
+        public static final double SMALL_VALUE = 0.00000000001;
 
         private Map<String, Value> memory = new HashMap<String, Value>();
 
@@ -63,205 +86,60 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) {
-            //stack.push(new Value(ctx.atom.getText()));
+        public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx){
+            Value identidade =stack.pop();
+            String stringFicheiro=ctx.stringficheiro.getText();
+            memory.put(identidade.toString(),new Value(stringFicheiro));
         }
 
         @Override
-        public void enterOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
+        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx){
+            stack.push(new Value(ctx.var.getText()));
         }
 
         @Override
-        public void exitOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
+        public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx){
+            Value identidade =stack.pop();
+            memory.put(identidade.toString(),null);
+        }
 
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.MULT:
-                    stack.push(new Value(left.asDouble() * right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.DIV:
-                    stack.push(new Value(left.asDouble() / right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.MOD:
-                    stack.push(new Value(left.asDouble() % right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
+        @Override
+        public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx){
+            Value identidade =stack.pop();
+            String what = ctx.what.getText();
+            String file = ctx.file.getText();
+            String id = ctx.id.getText();
+            String idValue = ctx.idvalue.getText();
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder;
+            Document doc = null;
+            try {
+
+                builder = factory.newDocumentBuilder();
+                doc = builder.parse(file);
+                XPathFactory xpathFactory = XPathFactory.newInstance();
+                XPath xpath = xpathFactory.newXPath();
+
+                memory.put(identidade.toString(),new Value(getSomethingByID(doc, xpath, what, id, idValue)));
+
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                throw new ParseCancellationException("Ficheiro xml não reconhecido");
             }
         }
 
-        @Override
-        public void enterRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
-        }
-
-        @Override
-        public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.LT:
-                    stack.push(new Value(left.asDouble() < right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.LTEQ:
-                    stack.push(new Value(left.asDouble() <= right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.GT:
-                    stack.push(new Value(left.asDouble() > right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.GTEQ:
-                    stack.push(new Value(left.asDouble() >= right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
+        private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
+            try {
+                XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                Element element = (Element) node;
+                return element;
+            } catch (XPathExpressionException e) {
+                throw new ParseCancellationException("Atributo xml não encontrado");
             }
         }
 
-
-        @Override
-        public void enterEqualityExpr(GramaticaAtividadeAutomaticaParser.EqualityExprContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
-        }
-
-        @Override
-        public void exitEqualityExpr(GramaticaAtividadeAutomaticaParser.EqualityExprContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.EQ:
-                    if (left.isDouble() && right.isDouble()) {
-                        stack.push(new Value(Math.abs(left.asDouble() - right.asDouble()) < SMALL_VALUE));
-                    } else {
-                        stack.push(new Value(left.equals(right)));
-                    }
-                    break;
-                case GramaticaAtividadeAutomaticaParser.NEQ:
-                    if (left.isDouble() && right.isDouble()) {
-                        stack.push(new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE));
-                    } else {
-                        stack.push(new Value(!left.equals(right)));
-                    }
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
-            }
-        }
-
-        @Override
-        public void exitOpExprSumDif(GramaticaAtividadeAutomaticaParser.OpExprSumDifContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.PLUS:
-                    if (left.isDouble() && right.isDouble())
-                        stack.push(new Value(left.asDouble() + right.asDouble()));
-                    else
-                        stack.push(new Value(left.asString() + right.asString()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.MINUS:
-                    stack.push(new Value(left.asDouble() - right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
-            }
-        }
-
-        @Override
-        public void enterEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) {
-            List<GramaticaAtividadeAutomaticaParser.CondicaoContext> conditions = ctx.ife().condicao();
-
-            boolean evaluatedBlock = true;
-
-            for (GramaticaAtividadeAutomaticaParser.CondicaoContext condition : conditions) {
-                condition.expr().enterRule(this);
-                condition.expr().exitRule(this);
-                Value evaluated = stack.pop();
-
-                if (!evaluated.asBoolean()) {
-                    evaluatedBlock = false;
-                    break;
-                }
-            }
-
-            stack.push(new Value(evaluatedBlock));
-
-        }
-
-        @Override
-        public void exitEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) {
-            Value evaluatedBlock = stack.pop();
-
-            if (evaluatedBlock.asBoolean()) {
-                List<GramaticaAtividadeAutomaticaParser.InstrucaoContext> instrucoes = ctx.ife().instrucao();
-                for (GramaticaAtividadeAutomaticaParser.InstrucaoContext instrucao : instrucoes) {
-                    instrucao.expr().enterRule(this);
-                    instrucao.expr().exitRule(this);
-                }
-            }
-
-            if (!evaluatedBlock.asBoolean() && ctx.elsee() != null) {
-                List<GramaticaAtividadeAutomaticaParser.InstrucaoContext> instrucoes = ctx.elsee().instrucao();
-                for (GramaticaAtividadeAutomaticaParser.InstrucaoContext instrucao : instrucoes) {
-                    instrucao.expr().enterRule(this);
-                    instrucao.expr().exitRule(this);
-                }
-            }
-        }
-
-        @Override
-        public void enterIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) {
-        }
-
-        @Override
-        public void exitIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) {
-        }
-
-        @Override
-        public void enterElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) {
-        }
-
-        @Override
-        public void exitElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) {
-        }
-
-        @Override
-        public void enterCondicao(GramaticaAtividadeAutomaticaParser.CondicaoContext ctx) {
-        }
-
-        @Override
-        public void exitCondicao(GramaticaAtividadeAutomaticaParser.CondicaoContext ctx) {
-        }
-
-        @Override
-        public void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) {
-
-            GramaticaAtividadeAutomaticaParser.Condition_blockContext condition = ctx.condition_block();
-
-            boolean evaluatedBlock = false;
-            condition.expr().enterRule(this);
-            condition.expr().exitRule(this);
-            Value evaluated = stack.pop();
-
-            if (evaluated.asBoolean()) {
-                evaluatedBlock = true;
-                condition.stat_block().enterRule(this);
-            }
-
-            if (!evaluatedBlock && ctx.stat_block() != null) {
-                // evaluate the else-stat_block (if present == not null)
-                ctx.stat_block().enterRule(this);
-            }
-
-        }
-        */
     }
 
     static class EvalVisitor extends GramaticaAtividadeAutomaticaBaseVisitor<Value> {
