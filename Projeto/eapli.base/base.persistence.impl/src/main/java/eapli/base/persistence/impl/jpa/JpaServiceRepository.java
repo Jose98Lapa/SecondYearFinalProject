@@ -8,6 +8,7 @@ import eapli.base.service.domain.ServiceID;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.domain.ServiceStatus;
 import eapli.base.service.domain.ServiceTitle;
+import eapli.base.task.domain.Task;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -96,7 +97,6 @@ public class JpaServiceRepository extends JpaAutoTxRepository<Service, ServiceID
         q.setParameter("formId", formId);
         return q.getResultStream().findFirst();
     }
-
 
 
    /* public Servico updateServicoForm(String idServ,String idForm){

@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/ROOT/Universidade/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -43,11 +43,19 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 */
 	T visitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * Visit a parse tree produced by the {@code elem_idt}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx);
+	T visitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code elem_atr}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElem_atr(GramaticaAtividadeAutomaticaParser.Elem_atrContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#atribuicao_elemento}.
 	 * @param ctx the parse tree
@@ -107,6 +115,18 @@ public interface GramaticaAtividadeAutomaticaVisitor<T> extends ParseTreeVisitor
 	 * @return the visitor result
 	 */
 	T visitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#senao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.

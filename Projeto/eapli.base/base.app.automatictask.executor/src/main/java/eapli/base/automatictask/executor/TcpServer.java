@@ -158,6 +158,7 @@ class TcpServerThread implements Runnable {
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
 
             Pair<Boolean, String> wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
+            Pair<Boolean, String> wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
 
             script.delete();
             calendar = Calendar.getInstance();
@@ -165,8 +166,12 @@ class TcpServerThread implements Runnable {
                 System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
             else
                 System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
+            if (wasItSuccessfull2.a)
+                System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
+            else
+                System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull2.b);
 
-            return wasItSuccessfull.a;
+            return wasItSuccessfull.a ;
         } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
             return false;

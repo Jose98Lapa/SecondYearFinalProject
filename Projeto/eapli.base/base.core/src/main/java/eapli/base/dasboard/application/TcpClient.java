@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TcpClient {
@@ -146,7 +147,7 @@ public class TcpClient {
 
     public boolean dispatchTicket(String ticketID) {
 
-        byte version = 1, code = 10, payloadSize = 0;
+        byte version = 1, code = 10, payloadSize;
         byte[] payload = ticketID.getBytes(StandardCharsets.UTF_8);
         payloadSize = (byte) payload.length;
         byte[] headers = {version, code, payloadSize};
@@ -155,8 +156,8 @@ public class TcpClient {
         try {
 
             sOut.write(packet);
-            byte[] response = sIn.readNBytes(4);
-            return response[1] == 2;
+            sOut.flush();
+            return true;
 
         } catch (IOException exception) {
             return false;

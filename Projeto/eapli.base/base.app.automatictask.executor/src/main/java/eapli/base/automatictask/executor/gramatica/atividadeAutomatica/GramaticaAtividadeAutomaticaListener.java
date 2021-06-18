@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/ROOT/Universidade/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -62,15 +62,29 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * Enter a parse tree produced by the {@code elem_idt}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
 	 * @param ctx the parse tree
 	 */
-	void enterElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx);
+	void enterElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * Exit a parse tree produced by the {@code elem_idt}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
 	 * @param ctx the parse tree
 	 */
-	void exitElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx);
+	void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code elem_atr}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * @param ctx the parse tree
+	 */
+	void enterElem_atr(GramaticaAtividadeAutomaticaParser.Elem_atrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code elem_atr}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#elemento}.
+	 * @param ctx the parse tree
+	 */
+	void exitElem_atr(GramaticaAtividadeAutomaticaParser.Elem_atrContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#atribuicao_elemento}.
 	 * @param ctx the parse tree
@@ -171,6 +185,26 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 * @param ctx the parse tree
 	 */
 	void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 */
+	void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#entao}.
+	 * @param ctx the parse tree
+	 */
+	void exitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#senao}.
+	 * @param ctx the parse tree
+	 */
+	void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#senao}.
+	 * @param ctx the parse tree
+	 */
+	void exitSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#expr}.

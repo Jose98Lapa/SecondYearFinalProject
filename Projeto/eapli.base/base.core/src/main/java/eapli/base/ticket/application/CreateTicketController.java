@@ -91,14 +91,16 @@ public class CreateTicketController {
 
 		Form form = new FormDTOParser( ).valueOf( formDTO );
 		//File script =ticketService.getFIleFromServer(service.form());
-		//File script = new File("bootstrapForm.txt");
-		File script =ticketService.getFIleFromServer( service.form() );
-		if( Application.settings().getGRAMMARFORMTYPE().equals("VISITOR")){
-			GramaticaFormulario.parseWithVisitor(script.getName(), form);
+		/**File script = new File("bootstrapForm.txt");
+		//File script =ticketService.getFIleFromServer( service.form() );
+		String type = Application.settings().getGRAMMARFORMTYPE();
+		boolean result;
+		if( type.equals("VISITOR")){
+			result=GramaticaFormulario.parseWithVisitor(script.getName(), form).equals("");
 		}else{
-			GramaticaFormulario.parseWithListener(script.getName(), form);
+			result=GramaticaFormulario.parseWithListener(script.getName(), form).equals("");
 		}
-		script.delete();
+		script.delete();**/
 		this.builder.withForm( form );
 	}
 
@@ -115,11 +117,13 @@ public class CreateTicketController {
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
-		this.ticketRepository.save( ticket );
+		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
-		return this.tcpClient.startConnection( Application.settings().getIpWorkflow() )
-				&& this.tcpClient.dispatchTicket( ticket.identity() )
-				&& this.tcpClient.stopConnection();
+		this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
+		this.tcpClient.dispatchTicket( persistedTicket.identity() );
+		this.tcpClient.stopConnection();
+
+		return true;
 	}
 
 	//TODO: Devia estar no FormController

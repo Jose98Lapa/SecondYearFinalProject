@@ -14,7 +14,9 @@ import org.yaml.snakeyaml.parser.ParserException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -44,41 +46,55 @@ public class GramaticaFormulario {
         );
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
-        parseWithVisitor("testemain.txt", form);
+        parseWithVisitor("teste_formulario.txt", form);
     }
 
-    public static void parseWithVisitor(String file, Form form) {
-        GramaticaFormularioLexer lexer = null;
+    public static String parseWithVisitor(String file, Form form) {
         try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
-        ParseTree tree = parser.gramatica();
-        EvalVisitor eval = new EvalVisitor();
+            GramaticaFormularioLexer lexer = null;
+            try {
+                lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+            ParseTree tree = parser.gramatica();
+            EvalVisitor eval = new EvalVisitor();
 
-        eval.defineForm(form);
-        System.out.println(eval.visit(tree));
+            eval.defineForm(form);
+            eval.visit(tree);
+        } catch (RuntimeException e) {
+            System.out.println("\nValidacao de formulario falhou:");
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "";
     }
 
-    public static void parseWithListener(String file, Form form) {
-        GramaticaFormularioLexer lexer = null;
+    public static String parseWithListener(String file, Form form) {
         try {
-            lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
+            GramaticaFormularioLexer lexer = null;
+            try {
+                lexer = new GramaticaFormularioLexer(CharStreams.fromFileName(file));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
+            ParseTree tree = parser.gramatica();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            EvalListener eval = new EvalListener();
+
+            eval.defineForm(form);
+            walker.walk(eval, tree);
+        } catch (RuntimeException e) {
+            System.out.println("Validacao de formulario falhou:");
+            System.out.println(e.getMessage());
+            return e.getMessage();
         }
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        GramaticaFormularioParser parser = new GramaticaFormularioParser(tokens);
-        ParseTree tree = parser.gramatica();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        EvalListener eval = new EvalListener();
-
-        eval.defineForm(form);
-        walker.walk(eval, tree);
+        return "";
     }
 
     static class EvalListener extends GramaticaFormularioBaseListener {
@@ -538,21 +554,34 @@ public class GramaticaFormulario {
 
             switch (ctx.op.getType()) {
                 case GramaticaFormularioParser.MAIS:
-                    if (left.isDouble() && right.isDouble())
-                        return new Value(left.asDouble() + right.asDouble());
-
                     if (left.isInteger() && right.isInteger())
                         return new Value(left.asInteger() + right.asInteger());
 
+                    if (left.isDouble() && right.isDouble())
+                        return new Value(left.asDouble() + right.asDouble());
+
+                    if (left.isString() && right.isDate())
+                        return new Value(removeAspas(left) + right.asString());
+
                     if (left.isString() && right.isString())
-                        return new Value(left.asString() + right.asString());
+                        return new Value(removeAspas(left) + removeAspas(right));
+
+                    if(left.isDate() && right.isInteger()){
+                        return new Value(left.asDate().plusDays(right.asInteger()));
+                    }
 
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
 
                 case GramaticaFormularioParser.MENOS:
-                    return left.isDouble() && right.isDouble() ?
-                            new Value(left.asDouble() - right.asDouble()) :
-                            new Value(left.asInteger() - right.asInteger());
+                    if (left.isDouble() && right.isDouble()){
+                        return new Value(left.asDouble() - right.asDouble());
+                    }
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asInteger() - right.asInteger());
+                    }
+                    if (left.isDate() && right.isDate()) {
+                        return new Value(ChronoUnit.DAYS.between(right.asDate(), left.asDate()));
+                    }
 
                 default:
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
@@ -706,7 +735,7 @@ public class GramaticaFormulario {
 
         @Override
         public Value visitValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
-            throw new ParseCancellationException("FAIL Detected");
+            throw new ParseCancellationException("FAIL Detected: " + ctx.getParent().getParent().getParent().getText());
         }
 
         @Override
@@ -717,7 +746,7 @@ public class GramaticaFormulario {
             if (toCheck.matches(regex)) {
                 return Value.VOID;
             } else {
-                throw new ParseCancellationException(toCheck + "Does not match regex");
+                throw new ParseCancellationException(toCheck + " Does not match regex");
             }
         }
 

@@ -1,8 +1,10 @@
 BEGIN
 DATA $dataInicio -> atr[1]
-DATA $dataFim -> atr[1]
-NUMERO $result
-se $dataFim = $dataInicio entao FAIL
-es
-matchRegex[$dataInicio,@@([0-9]|1[0-9])[/]0[0-9][/][0-9]{4}@@]
+DATA $dataFim -> atr[2]
+NUMERO $result ->5
+NUMERO $result2 -> 6
+TEXTO $text -> "oalolaoloa"
+TEXTO $text2 -> "olaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+TEXTO $conta -> $dataFim - $dataInicio
+matchRegex[$conta,@@dfg@@]
 END

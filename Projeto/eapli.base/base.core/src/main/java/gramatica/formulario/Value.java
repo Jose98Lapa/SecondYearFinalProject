@@ -47,16 +47,31 @@ public class Value {
     }
 
     public boolean isDouble() {
-        return value instanceof Double;
+        if (value.toString() == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(value.toString());
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isInteger() {
-        return value instanceof Integer;
+        if (value.toString() == null) {
+            return false;
+        }
+        try {
+            double d = Integer.parseInt(value.toString());
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isString() {
-        String string = value.toString().substring(1,value.toString().length()-1);
-        return string instanceof java.lang.String;
+        return removeAspas(value) instanceof java.lang.String;
     }
 
     public boolean isElemento() {
@@ -81,6 +96,12 @@ public class Value {
         return numberToTest.matches("^[0-9]+([.][0-9]+)?$");
     }
 
+    public String removeAspas(Object val) {
+        if (val.toString().contains("\"")) {
+            return val.toString().substring(1, val.toString().length() - 1);
+        }
+        return val.toString();
+    }
     @Override
     public int hashCode() {
 

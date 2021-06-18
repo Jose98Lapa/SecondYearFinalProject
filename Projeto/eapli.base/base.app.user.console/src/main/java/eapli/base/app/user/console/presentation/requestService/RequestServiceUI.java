@@ -125,7 +125,7 @@ public class RequestServiceUI extends AbstractUI {
 					question.regex,
 					question.tipo,
 					UUID.randomUUID().toString(),
-					++answerNumber
+					question.number
 			);
 
 			answers.add( answer );

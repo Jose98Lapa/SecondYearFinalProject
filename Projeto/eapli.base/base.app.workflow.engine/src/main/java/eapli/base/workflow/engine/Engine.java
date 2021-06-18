@@ -35,7 +35,7 @@ public class Engine {
     TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
 
 
-    public static void main(String[] args) {
+    public static void pain(String[] args) {
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(),
@@ -110,26 +110,18 @@ public class Engine {
             case Constants.EXECUTING:
                 System.out.println("exe");
                 if (currentStateTicket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                    try {
-                        TcpExecuterClient client = new TcpExecuterClient();
-                        client.startConnection(Application.settings().getIpAutomatictaskExecutor());
-                        client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
-                        client.stopConnection();
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(Application.settings().getIpAutomatictaskExecutor());
+                    //client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
+                    client.stopConnection();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 } else if (currentStateTicket.workflow().starterTask().transition().hasNextTask()
                         && currentStateTicket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
-                    try {
-                        TcpExecuterClient client = new TcpExecuterClient();
-                        client.startConnection(Application.settings().getIpAutomatictaskExecutor());
-                        client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
-                        client.stopConnection();
+                    TcpExecuterClient client = new TcpExecuterClient();
+                    client.startConnection(Application.settings().getIpAutomatictaskExecutor());
+                    //client.executeAutomaticTask(((TicketAutomaticTask) currentStateTicket.workflow().starterTask()).scriptPath().toString());
+                    client.stopConnection();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
                 break;
         }

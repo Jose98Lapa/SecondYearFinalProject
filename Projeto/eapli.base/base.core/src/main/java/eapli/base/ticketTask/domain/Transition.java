@@ -2,6 +2,7 @@ package eapli.base.ticketTask.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
@@ -9,10 +10,10 @@ import java.io.Serializable;
 @Embeddable
 public class Transition implements ValueObject, Comparable< Transition >, Serializable {
 
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL )
 	private TicketTask previousTask;
 
-	@OneToOne
+	@OneToOne( cascade = CascadeType.ALL )
 	private TicketTask nextTask;
 
 	protected Transition ( ) {
