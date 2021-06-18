@@ -215,11 +215,26 @@ public interface GramaticaFormularioVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
+	 * Visit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIf_stat(GramaticaFormularioParser.If_statContext ctx);
+	T visitIf(GramaticaFormularioParser.IfContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code senao}
+	 * labeled alternative in {@link GramaticaFormularioParser#senao_rule}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSenao(GramaticaFormularioParser.SenaoContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code entao}
+	 * labeled alternative in {@link GramaticaFormularioParser#entao_rule}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntao(GramaticaFormularioParser.EntaoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GramaticaFormularioParser#condition_block}.
 	 * @param ctx the parse tree
