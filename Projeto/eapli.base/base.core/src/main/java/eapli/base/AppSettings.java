@@ -36,6 +36,7 @@ public class AppSettings {
     private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
     private static final String COLLABORATOR_ASSIGNER_ALGORITHM = "COLLABORATOR_ASSIGNER_ALGORITHM";
     private static final String GRAMMARFORMTYPE = "GRAMMARFORMTYPE";
+    private static final String GRAMMARAUTOMATICTYPE = "GRAMMARAUTOMATICTYPE";
 
     private final Properties applicationProperties = new Properties();
 
@@ -76,7 +77,8 @@ public class AppSettings {
         this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
         this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
         this.applicationProperties.setProperty( COLLABORATOR_ASSIGNER_ALGORITHM, "FCFS" );
-        this.applicationProperties.setProperty( GRAMMARFORMTYPE, "FCFS" );
+        this.applicationProperties.setProperty( GRAMMARFORMTYPE, "VISITOR" );
+        this.applicationProperties.setProperty( GRAMMARAUTOMATICTYPE, "VISITOR" );
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -122,6 +124,11 @@ public class AppSettings {
     public String getPortAutomatictaskExecutor() {
         return this.applicationProperties.getProperty(PORT_AUTOMATICTASK_EXECUTOR);
     }
+
+    public static String getGRAMMARAUTOMATICTYPE() {
+        return GRAMMARAUTOMATICTYPE;
+    }
+
     public String getIpAutomatictaskExecutor() {
         return this.applicationProperties.getProperty(IP_AUTOMATICTASK_EXECUTOR);
     }
