@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TcpClient {
@@ -156,10 +157,7 @@ public class TcpClient {
 
             sOut.write(packet);
             sOut.flush();
-            System.out.println("sent packet" );
-            byte[] response = sIn.readNBytes(4);
-            System.out.println("response read" );
-            return response[1] == 2;
+            return true;
 
         } catch (IOException exception) {
             return false;

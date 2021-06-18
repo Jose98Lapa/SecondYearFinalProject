@@ -4,7 +4,9 @@ import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.domain.Service;
+import eapli.base.service.domain.ServiceID;
 import eapli.base.task.domain.ApprovalTask;
 import eapli.base.task.domain.AutomaticTask;
 import eapli.base.task.domain.ExecutionTask;
@@ -17,13 +19,16 @@ import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.domain.*;
+import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.util.*;
 
 public class EngineV2 {
 
 	private final TicketRepository ticketRepository;
-	private final TaskRepository taskRepository;
+	private final ServiceRepository serviceRepository;
 	private final CreateTaskController ticketTaskController;
 	static TreeMap< Date, Collaborator > historyExecution = new TreeMap<>( );
 	static TreeMap< Date, Collaborator > historyApproval = new TreeMap<>( );
@@ -31,24 +36,23 @@ public class EngineV2 {
 	public EngineV2 ( ) {
 
 		this.ticketRepository = PersistenceContext.repositories( ).tickets( );
-		this.taskRepository = PersistenceContext.repositories( ).tasks( );
+		this.serviceRepository = PersistenceContext.repositories( ).servico( );
 		this.ticketTaskController = new CreateTaskController( );
+
+		AuthzRegistry.configure( PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder() );
 	}
 
 	public void processIncomingTicket ( byte[] payload ) {
 
-		Optional< Ticket > ticketOptional = ticketRepository.ofIdentity( Arrays.toString( payload ) );
+		Optional< Ticket > ticketOptional = ticketRepository.ofIdentity( new String( payload ) );
 		Ticket ticket;
 
 		if ( ticketOptional.isPresent( ) ) {
-			System.out.println("ticket fetched from db" );
 
 			ticket = ticketOptional.get( );
 			createWorkFlow( ticket );
 			processStatusChange( ticket, ticket.status().toString() );
 		}
-
-		System.out.println( "ENDING PROCESS - TICKET" );
 
 	}
 
@@ -83,8 +87,16 @@ public class EngineV2 {
 
 	private void createWorkFlow ( Ticket ticket ) {
 
-		System.out.println( "CREATING WORKFLOW" );
-		List< Task > taskList = taskRepository.serviceTasks( ticket.service( ) );
+		System.out.println( ticket.service().identity().toString() );
+		Service service = serviceRepository.ofIdentity( ticket.service().identity() ).get();
+
+		List< Task > taskList = new ArrayList<>(  );
+		taskList.add( service.workflow().starterTask() );
+
+		if ( service.workflow().starterTask().hasAfterTask() ) {
+			taskList.add( service.workflow().starterTask().afterTask() );
+		}
+
 		TicketTaskPair ticketTaskPair;
 		TicketWorkflow workflow;
 
@@ -96,15 +108,14 @@ public class EngineV2 {
 			if ( ticketTaskPair.hasAutomaticTask( ) ) {
 
 				approvalTask.addAfterTask( ticketTaskPair.ticketAutomaticTask( ) );
-				ticketTaskController.registerTicketTask( approvalTask );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
+				ticketTaskController.registerApprovalTask( approvalTask );
+				ticketTaskController.registerAutomaticTask( ticketTaskPair.ticketAutomaticTask( ) );
 
 			} else {
 
 				approvalTask.addAfterTask( ticketTaskPair.ticketExecutionTask( ) );
-				ticketTaskController.registerTicketTask( approvalTask );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
-
+				ticketTaskController.registerApprovalTask( approvalTask );
+				ticketTaskController.registerExecutionTask( ticketTaskPair.ticketExecutionTask( ) );
 			}
 
 			workflow = new TicketWorkflow( approvalTask );
@@ -116,11 +127,11 @@ public class EngineV2 {
 			if ( ticketTaskPair.hasAutomaticTask( ) ) {
 
 				workflow = new TicketWorkflow( ticketTaskPair.ticketAutomaticTask( ) );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketAutomaticTask( ) );
+				ticketTaskController.registerAutomaticTask( ticketTaskPair.ticketAutomaticTask( ) );
 
 			} else {
 				workflow = new TicketWorkflow( ticketTaskPair.ticketExecutionTask( ) );
-				ticketTaskController.registerTicketTask( ticketTaskPair.ticketExecutionTask( ) );
+				ticketTaskController.registerExecutionTask( ticketTaskPair.ticketExecutionTask( ) );
 
 			}
 		}
@@ -137,7 +148,6 @@ public class EngineV2 {
 		if ( task instanceof ApprovalTask ) {
 
 			ApprovalTask approvalTask = ( ApprovalTask ) task;
-
 			ticketTask = new TicketApprovalTask(
 					new Transition( null, null ),
 					approvalTask,
@@ -147,7 +157,6 @@ public class EngineV2 {
 		} else if ( task instanceof AutomaticTask ) {
 
 			AutomaticTask automaticTask = ( AutomaticTask ) task;
-
 			ticketTask = new TicketAutomaticTask(
 					new Transition( null, null ),
 					automaticTask,
@@ -156,7 +165,6 @@ public class EngineV2 {
 		} else {
 
 			ExecutionTask executionTask = ( ExecutionTask ) task;
-
 			ticketTask = new TicketExecutionTask(
 					new Transition( null, null ),
 					executionTask,
