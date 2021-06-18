@@ -919,14 +919,15 @@ public class GramaticaFormularioParser extends Parser {
 	}
 	public static class OrExprContext extends ExprContext {
 		public ExprContext left;
+		public Token op;
 		public ExprContext right;
-		public TerminalNode OU() { return getToken(GramaticaFormularioParser.OU, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
+		public TerminalNode OU() { return getToken(GramaticaFormularioParser.OU, 0); }
 		public OrExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1080,14 +1081,15 @@ public class GramaticaFormularioParser extends Parser {
 	}
 	public static class AndExprContext extends ExprContext {
 		public ExprContext left;
+		public Token op;
 		public ExprContext right;
-		public TerminalNode E() { return getToken(GramaticaFormularioParser.E, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
+		public TerminalNode E() { return getToken(GramaticaFormularioParser.E, 0); }
 		public AndExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1249,7 +1251,7 @@ public class GramaticaFormularioParser extends Parser {
 						setState(126);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(127);
-						match(E);
+						((AndExprContext)_localctx).op = match(E);
 						setState(128);
 						((AndExprContext)_localctx).right = expr(4);
 						}
@@ -1262,7 +1264,7 @@ public class GramaticaFormularioParser extends Parser {
 						setState(129);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(130);
-						match(OU);
+						((OrExprContext)_localctx).op = match(OU);
 						setState(131);
 						((OrExprContext)_localctx).right = expr(3);
 						}

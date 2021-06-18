@@ -86,6 +86,7 @@ public class GramaticaFormulario {
         private Map<String, Value> memory = new HashMap<>();
         private Map<String, String> attributeAndTypeMap = new HashMap<>();
         private Stack<Value> valueStack = new Stack<>();
+        boolean doInstruction  =true;
 
         public void defineForm(Form form) {
             this.form = form;
@@ -213,6 +214,19 @@ public class GramaticaFormulario {
                         valueStack.push(new Value(compareString >=0));
                 }
                 default -> throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
+            }
+        }
+
+        @Override public void exitAndExpr(GramaticaFormularioParser.AndExprContext ctx) {
+            Value right = valueStack.pop();
+            Value left = valueStack.pop();
+            switch (ctx.op.getType()){
+                case GramaticaFormularioParser.E -> {
+                    valueStack.push(new Value(right.asBoolean()&&left.asBoolean()));
+                }
+                case GramaticaFormularioParser.OU ->{
+                    valueStack.push(new Value(right.asBoolean()||left.asBoolean()));
+                }
             }
         }
 
