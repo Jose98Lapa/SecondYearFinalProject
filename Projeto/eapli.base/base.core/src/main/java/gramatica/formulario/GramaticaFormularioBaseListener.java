@@ -376,13 +376,25 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf_stat(GramaticaFormularioParser.If_statContext ctx) { }
+	@Override public void enterIf(GramaticaFormularioParser.IfContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf_stat(GramaticaFormularioParser.If_statContext ctx) { }
+	@Override public void exitIf(GramaticaFormularioParser.IfContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEntao(GramaticaFormularioParser.EntaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEntao(GramaticaFormularioParser.EntaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
