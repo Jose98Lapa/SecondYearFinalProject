@@ -110,7 +110,7 @@ class TcpClient {
         }
     }
 
-    public void executeAutomaticTask(String data) throws IOException {
+    public boolean executeAutomaticTask(String data) throws IOException {
         //send initial request
         byte[] clientRequest = {(byte) 0, (byte) 20, (byte) 0, (byte) 0};
         sOut.write(clientRequest);
@@ -126,10 +126,15 @@ class TcpClient {
 
         //recives server's response
         serverResponse = sIn.readNBytes(4);
-        if ((serverResponse[1] & 0xff) == 22)
-            System.out.println("Script de atividade automática executado com sucesso.");
-        if ((serverResponse[1] & 0xff) == 253)
+        if ((serverResponse[1] & 0xff) == 253) {
             System.out.println("Não foi possivel executar o script de atividade automática com sucesso.");
+            return false;
+        }
+        if ((serverResponse[1] & 0xff) == 22) {
+            System.out.println("Script de atividade automática executado com sucesso.");
+            return true;
+        }
+        return false;
     }
 
     public void sendData(String data) throws IOException {
@@ -168,7 +173,8 @@ class TcpClient {
                     cycle = false;
                     break;
                 case 20:
-                    List<Ticket> currentState = new ArrayList<>();
+
+                    /*List<Ticket> currentState = new ArrayList<>();
                     TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
                     ticketRepository.findAll().forEach(currentState::add);
 
@@ -208,8 +214,11 @@ class TcpClient {
                             answers.append(";;;").append(at.label().toString());
                         }
                     }
+                    */
 
-                    data.append(email).append('|').append("teste_atividade_automatica2.txt").append('|').append(answers).append('|').append(approval);
+                    StringBuilder data = new StringBuilder();
+                    data.append("raf@isep.ipp.pt").append('|').append("teste_atividade_automatica2.txt").append('|').append("1;;;2;;;3;;;4")
+                            .append('|').append("");
 
                     tcpExecuterClient.executeAutomaticTask(data.toString());
                     break;

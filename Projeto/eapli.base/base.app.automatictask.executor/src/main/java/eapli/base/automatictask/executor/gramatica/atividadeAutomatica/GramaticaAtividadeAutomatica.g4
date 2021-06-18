@@ -141,8 +141,8 @@ NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
-APPROV              : '>aprov' | '>aprovação';
-ANSWER              : '>resp'  | '>resposta';
+APPROV              : '>aprov' | '>aprovação' | '>a';
+ANSWER              : '>resp'  | '>resposta'| '>r';
 STRING              : '"' ~('"')+ '"';
 
 COMMENT: '/*' .*? '*/' -> skip
