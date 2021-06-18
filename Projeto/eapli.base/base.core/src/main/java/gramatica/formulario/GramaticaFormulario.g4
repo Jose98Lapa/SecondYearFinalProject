@@ -35,7 +35,7 @@ matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex =  REGEX ']' #match_regex
 matchregexatribut :MATCHREGEX '[' get_atributo ',' regex = REGEX ']' #match_regex_atribut
 ;
 
-atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
+atribuicao: iden =identidade OPERADORATRIBUICAO expr                     #variavelExpr
     | identidade OPERADORATRIBUICAO identidade '(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
     | identidade OPERADORATRIBUICAO get_atributo                         #variavelAtr
    ;

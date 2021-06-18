@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ï¿½Ano/2ï¿½Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -32,7 +32,7 @@ public class GramaticaFormularioParser extends Parser {
 		RULE_if_stat = 15, RULE_condition_block = 16, RULE_stat_block = 17;
 	private static String[] makeRuleNames() {
 		return new String[] {
-                "gramatica", "instrucao", "fail", "inicializacao", "atribuicao_atributo",
+			"gramatica", "instrucao", "fail", "inicializacao", "atribuicao_atributo", 
 			"get_atributo", "matchregex", "matchregexatribut", "atribuicao", "expr", 
 			"tipo_dados", "integer", "floate", "data", "identidade", "if_stat", "condition_block", 
 			"stat_block"
@@ -748,12 +748,13 @@ public class GramaticaFormularioParser extends Parser {
 		}
 	}
 	public static class VariavelExprContext extends AtribuicaoContext {
-		public IdentidadeContext identidade() {
-			return getRuleContext(IdentidadeContext.class,0);
-		}
+		public IdentidadeContext iden;
 		public TerminalNode OPERADORATRIBUICAO() { return getToken(GramaticaFormularioParser.OPERADORATRIBUICAO, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
+		}
+		public IdentidadeContext identidade() {
+			return getRuleContext(IdentidadeContext.class,0);
 		}
 		public VariavelExprContext(AtribuicaoContext ctx) { copyFrom(ctx); }
 		@Override
@@ -815,7 +816,7 @@ public class GramaticaFormularioParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(87);
-				identidade();
+				((VariavelExprContext)_localctx).iden = identidade();
 				setState(88);
 				match(OPERADORATRIBUICAO);
 				setState(89);
