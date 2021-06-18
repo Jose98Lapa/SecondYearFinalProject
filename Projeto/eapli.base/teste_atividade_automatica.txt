@@ -13,20 +13,24 @@ BEGIN
         $status-> 2
     es
 */
-    TEXTO $destinatario-> "apex@isep.ipp.pt"
-    TEXTO $assunto -> "Teste 1"
+    TEXTO $destinatario-> "guili@isep.ipp.pt"
+    TEXTO $assunto -> "Comunicação com o formulario"
 
-    se $destinatario="Teste 1" entao
-        TEXTO $corpo-> "O preço é menor que 5 : " + $price + "$."
+    NUMERO $resposta -> FORM(>r,3)
+    se $resposta=3 entao
+        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então é igual a 3."
     senao
-        TEXTO $corpo-> "O preço é maior que 5 : " + $price + "$."
+        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então não é igual a 3."
     es
 
-    //TEXTO assunto -> 4 > O produto : {{$nome}} está agora em promoção com o status {{$status}}
+    //TEXTO assunto -> 4 > O produto : {{$nome}} estÃ¡ agora em promoÃ§Ã£o com o status {{$status}}
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
+
+    $price -> FORM(>a,1)
+    TEXTO $corpo-> "O preÃ§o Ã© menor que 5 : " + $price + "$."
     ENVIAR_EMAIL($assunto,$corpo)
 
-    TEXTO $nome -> "INATIVO"
-    ATUALIZAR(service,status,"Teste") -> (status,$nome)
+    NUMERO  $numero  -> 969090469
+    ATUALIZAR(collaborator,nickname,"Guilli") -> (contact,$numero)
 
 END

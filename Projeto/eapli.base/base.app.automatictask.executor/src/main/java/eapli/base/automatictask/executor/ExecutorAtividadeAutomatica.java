@@ -4,6 +4,7 @@ import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.Pair;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.w3c.dom.Document;
@@ -21,7 +22,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class ExecutorAtividadeAutomatica {
         //parseWithVisitor("teste_atividade_automatica.txt");
     }
 
-    public static void parseWithVisitor(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
+    public static Pair<Boolean,String> parseWithVisitor(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
         GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
@@ -40,16 +40,14 @@ public class ExecutorAtividadeAutomatica {
             parser.setErrorHandler(new BailErrorStrategy());
             ParseTree tree = parser.gramatica(); // parse
             EvalVisitor eval = new EvalVisitor(userEmail, formAnswers, formApproval);
-            System.out.println(eval.visit(tree));
+            eval.visit(tree);
         } catch (ParseCancellationException e) {
             String errorMessage = e.getMessage();
             if (errorMessage == null)
-                errorMessage = "grammar";
-            System.out.printf("Not Succesfull : %s%n", errorMessage);
+                errorMessage = "Lexical error";
+            return new Pair<>(false,errorMessage);
         }
-        //ParseTreeWalker walker = new ParseTreeWalker();
-        //EvalListener eval = new EvalListener();
-        //walker.walk(eval, tree);
+        return new Pair<>(true,"Succesfull");
     }
 
 
@@ -348,7 +346,7 @@ public class ExecutorAtividadeAutomatica {
         public Value visitFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
             int index = Integer.parseInt(ctx.dados.getText()) - 1;
             if (index >= this.formAnswers.size())
-                throw new ParseCancellationException(String.format("Indice fora dos limites: %d", index));
+                throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
             return new Value(this.formAnswers.get(index));
         }
 
