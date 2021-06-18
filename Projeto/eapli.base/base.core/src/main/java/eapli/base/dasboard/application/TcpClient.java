@@ -156,6 +156,7 @@ public class TcpClient {
 
             sOut.write(packet);
             sOut.flush();
+            System.out.println("sent packet" );
             byte[] response = sIn.readNBytes(4);
             return response[1] == 2;
 

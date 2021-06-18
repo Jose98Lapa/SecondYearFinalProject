@@ -172,7 +172,7 @@ public class TcpServer implements Runnable {
         }
 
         try {
-
+            System.out.println( "Escolhendo opcao" );
             EngineV2 engine = new EngineV2( );
             boolean cycle = true;
             while (cycle) {
@@ -186,6 +186,7 @@ public class TcpServer implements Runnable {
                         TaskList();
                         break;
                     case 10:
+                        System.out.println("escolhido 10 -> ticket" );
                         engine.processIncomingTicket( sIn.readNBytes( clientRequest[3] ) );
                         stopConnection( clientIP );
                         break;
