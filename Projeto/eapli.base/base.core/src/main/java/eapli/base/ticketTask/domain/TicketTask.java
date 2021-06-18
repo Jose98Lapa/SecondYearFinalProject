@@ -30,13 +30,16 @@ public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot<
 
 	private LocalDateTime dateStarted, dateEnded;
 
+	private String taskType;
+
 	protected TicketTask ( ) {
 	}
 
-	public TicketTask ( Transition transition, Task mainReference ) {
+	public TicketTask ( Transition transition, Task mainReference, String taskType ) {
 		this.transition = transition;
 		this.status = "INCOMPLETE";
 		this.mainReference = mainReference;
+		this.taskType = taskType;
 	}
 
 	@Override
@@ -100,5 +103,7 @@ public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot<
 		return dateStarted.until(dateEnded, ChronoUnit.MINUTES);
 	}
 
-
+	public String taskType () {
+		return taskType;
+	}
 }

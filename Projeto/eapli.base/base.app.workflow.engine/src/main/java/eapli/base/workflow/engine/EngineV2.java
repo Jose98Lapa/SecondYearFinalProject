@@ -62,7 +62,7 @@ public class EngineV2 {
 				processedTicket = Optional.of( delegateTask( ticket ) );
 				break;
 			case "NOT_APPROVED":
-				ticket.statusFailed( );
+				ticket.statusNotApproved( );
 				break;
 			case "CONCLUDED":
 				ticket.statusConcluded( );

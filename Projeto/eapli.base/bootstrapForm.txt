@@ -1,5 +1,0 @@
-BEGIN
-TEXTO $a -> atr[2]
-se "arrouz" = $a entao FAIL
-es
-END

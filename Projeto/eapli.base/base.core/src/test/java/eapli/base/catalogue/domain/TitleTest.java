@@ -24,8 +24,8 @@ public class TitleTest {
 
     @Test
     public void ensureTitleCannotBeToLong() {
-        System.out.println("Title can not be too long");
-        assertThrows(IllegalArgumentException.class,() -> new Title("Este titulo é demasiado grande"));
+        System.out.println("Title can not hjkkkkkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj be too long");
+        assertThrows(IllegalArgumentException.class,() -> new Title("Este titulo é demasiado grandeeeeeeeeeeeeeeeeeeeeeeeeee"));
     }
 
     @Test

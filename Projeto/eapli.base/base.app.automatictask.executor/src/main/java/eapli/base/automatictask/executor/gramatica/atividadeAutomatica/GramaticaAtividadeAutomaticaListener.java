@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -129,6 +129,18 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 * @param ctx the parse tree
 	 */
 	void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code atr_variavelForm}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code atr_variavelForm}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#atribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtr_variavelForm(GramaticaAtividadeAutomaticaParser.Atr_variavelFormContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#if_stat}.
 	 * @param ctx the parse tree
@@ -368,6 +380,30 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 */
 	void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code emailAtributosDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code emailAtributosDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code emailStringDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code emailStringDefaultEmail}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#enviar_email}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GramaticaAtividadeAutomaticaParser#update_informacao}.
 	 * @param ctx the parse tree
 	 */
@@ -377,4 +413,28 @@ public interface GramaticaAtividadeAutomaticaListener extends ParseTreeListener 
 	 * @param ctx the parse tree
 	 */
 	void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code formApprov}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 */
+	void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code formApprov}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 */
+	void exitFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code formAnswer}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 */
+	void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code formAnswer}
+	 * labeled alternative in {@link GramaticaAtividadeAutomaticaParser#formulario_informacao}.
+	 * @param ctx the parse tree
+	 */
+	void exitFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx);
 }

@@ -34,8 +34,9 @@ inicializacao: TIPODADOS identidade         #inicializacaoIdent
     | TIPODADOS atribuicao                  #inicializacaoAtribuicao
     ;
 
-atribuicao: identidade OPERADORATRIBUICAO expr                          #atr_variavelExpr
+atribuicao: identidade OPERADORATRIBUICAO expr                                                    #atr_variavelExpr
     | nomeVar=identidade OPERADORATRIBUICAO nomeElemento=identidade'(' what=(TEXTO|NUMERO)+ ')'   #atr_variavelVariavel
+    | nomeVar=identidade OPERADORATRIBUICAO formulario_informacao                                 #atr_variavelForm
     ;
 
 if_stat: SE condition_block (SENAO stat_block)? END_SE
@@ -85,9 +86,15 @@ string
 
 enviar_email: SEND_EMAIL '(' destinatario=identidade ',' assunto=identidade ',' corpo=identidade')'    #emailAtributos
             | SEND_EMAIL '(' destinatario=identidade ',' assunto=STRING ',' corpo=STRING')'            #emailString
+            | SEND_EMAIL '(' assunto=identidade ',' corpo=identidade')'                                #emailAtributosDefaultEmail
+            | SEND_EMAIL '(' assunto=STRING ',' corpo=STRING')'                                        #emailStringDefaultEmail
             ;
 
 update_informacao: UPDATE '(' what=(TEXTO|NUMERO)+  ','  id=(TEXTO|NUMERO)+ ',' idvalue=STRING ')' '->' '(' whatToUpdate=(TEXTO|NUMERO)+ ',' updatevalue=identidade ')'
+              ;
+
+formulario_informacao: FORM '('APPROV ',' dados=NUMERO ')'  #formApprov
+                    |  FORM '('ANSWER ',' dados=NUMERO ')'  #formAnswer
               ;
 
 
@@ -127,12 +134,15 @@ TIPOFICHEIRO           : 'XML';
 END_FICHEIRO           : 'LMX';
 SEND_EMAIL             : 'ENVIAR_EMAIL';
 UPDATE                 : 'ATUALIZAR';
+FORM                   : 'FORM';
 
 
 NUMERO              : DIGITO+;
 REAL                : DIGITO+ ( [.,] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
+APPROV              : '>aprov' | '>aprovação' | '>a';
+ANSWER              : '>resp'  | '>resposta'| '>r';
 STRING              : '"' ~('"')+ '"';
 
 COMMENT: '/*' .*? '*/' -> skip

@@ -26,26 +26,25 @@ public class GramaticaFormulario {
 
         attributeSet.add(new Attribute(
                 new AtributteName("tipoRestauro"),
-                new AttributeLabel("arroz"),
+                new AttributeLabel("22/05/2020"),
                 new AttributeDescription("Qual o tipo"),
                 new AttributeRegex("gboiua"),
-                new AttributeType("String"),
+                new AttributeType("Date"),
                 new AttributeID("88"),
                 1)
         );
         attributeSet.add(new Attribute(
                 new AtributteName("nomeum"),
-                new AttributeLabel("label2"),
+                new AttributeLabel("30/06/2021"),
                 new AttributeDescription("descricao2"),
                 new AttributeRegex("gboiua2"),
-                new AttributeType("int"),
+                new AttributeType("Date"),
                 new AttributeID("fnsaoi2"),
                 2)
         );
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
-        //parseWithVisitor("teste_formulario.txt",form);
-        parseWithVisitor("bootstrapForm.txt", form);
+        parseWithVisitor("testemain.txt", form);
     }
 
     public static void parseWithVisitor(String file, Form form) {
@@ -77,7 +76,7 @@ public class GramaticaFormulario {
         ParseTree tree = parser.gramatica();
         ParseTreeWalker walker = new ParseTreeWalker();
         EvalListener eval = new EvalListener();
-        //GramaticaFormularioBaseListener eval = new GramaticaFormularioBaseListener();
+
         eval.defineForm(form);
         walker.walk(eval, tree);
     }
@@ -331,7 +330,7 @@ public class GramaticaFormulario {
         public Value visitAtr_atributo(GramaticaFormularioParser.Atr_atributoContext ctx) {
             for (Attribute atr : form.atributes()) {
                 if (atr.number() == Integer.parseInt(ctx.numero.getText())) {
-                    return new Value(atr.toDTO().label);
+                    return new Value(atr.label());
                 }
             }
             return Value.VOID;
@@ -350,10 +349,10 @@ public class GramaticaFormulario {
             return memory.put(id, value);
         }
 
-       /* @Override
-        public Value visitIdentidade(GramaticaFormularioParser.IdentidadeContext ctx) {
-            return memory.get(ctx.getText());
-        }*/
+        @Override
+        public Value visitVariavel(GramaticaFormularioParser.VariavelContext ctx) {
+            return memory.get(ctx.var.getText());
+        }
 
         @Override
         public Value visitTp_integer(GramaticaFormularioParser.Tp_integerContext ctx) {
@@ -451,12 +450,13 @@ public class GramaticaFormulario {
                 case GramaticaFormularioParser.LTEQ:
                     if (left.isDouble() && right.isDouble())
                         return new Value(left.asDouble() <= right.asDouble());
-                    if (left.isDate() && right.isDate())
+                    if (left.isDate() && right.isDate()) {
                         if (left.asDate().equals(right.asDate())) {
                             return new Value(left.asDate().equals(right.asDate()));
                         } else {
                             return new Value(left.asDate().isBefore(right.asDate()));
                         }
+                    }
                     if (left.isDouble() && right.isDouble()) {
                         return new Value(left.asDouble() <= right.asDouble());
                     }
@@ -518,7 +518,10 @@ public class GramaticaFormulario {
                         return new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE);
                     }
                     if (left.isString() && right.isString()) {
-                        return new Value(!removeAspas(left).equals(removeAspas(right)));
+                        String lefte = removeAspas(left);
+                        String rightt=removeAspas(right);
+                        boolean b = !lefte.equals(rightt);
+                        return new Value(b);
                     }
                     if (left.isDate() && right.isDate()) {
                         return new Value(!left.value.equals(right.value));

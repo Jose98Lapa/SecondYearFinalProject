@@ -6,6 +6,7 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import java.util.LinkedList;
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
 public class HttpServerAjax extends Thread {
-   //static private final String BASE_FOLDER = "base.app.user.console/src/main/java/eapli/base/app/user/console/presentation/dashboard/www";
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dasboard/application/www";
     static private SSLServerSocket sock;
     static private DashboardController theController  = new DashboardController();
@@ -33,16 +33,14 @@ public class HttpServerAjax extends Thread {
         try {
             SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
             sock = (SSLServerSocket) sslF.createServerSocket(55128);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.err.println("Server failed to open local port " + 55128);
+        } catch (IOException ignored) {
+           // System.err.println("Server failed to open local port " + 55128);
         }
         while (true) {
 
             try {
                 cliSock = (SSLSocket) sock.accept();
             } catch (IOException e) {
-                e.printStackTrace();
             }
             HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
@@ -63,7 +61,7 @@ public class HttpServerAjax extends Thread {
         theController.receiveInfoFromServer(colab.email);
         LinkedList<DashboardInfoDTO> info = theController.infoByUrgency();
         for (DashboardInfoDTO dto :info) {
-            string.append("<tr>\n" +
+            string.append("<tr>" +
                     "                            <td>\n" +
                     "                                <br>\n" +
                     "                                <div class=\"tooltip\"><img src="+calculateImage(dto.time)+" width=\"40\" height=\"40\">\n" +
@@ -77,7 +75,6 @@ public class HttpServerAjax extends Thread {
                     "                            <td>"+dto.criticidade+"</td>\n" +
                     "                            <td>"+dto.urgency+"</td>\n" +
                     "                        </tr>");
-
         }
         return string.toString();
     }
@@ -87,7 +84,7 @@ public class HttpServerAjax extends Thread {
         theController.receiveInfoFromServer(colab.email);
         LinkedList<DashboardInfoDTO> info = theController.infoByCriticality();
         for (DashboardInfoDTO dto :info) {
-            string.append("<tr>\n" +
+            string.append("<tr>" +
                     "                            <td>\n" +
                     "                                <br>\n" +
                     "                                <div class=\"tooltip\"><img src="+calculateImage(dto.time)+" width=\"40\" height=\"40\">\n" +

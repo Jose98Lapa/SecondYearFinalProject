@@ -56,7 +56,6 @@
     <class>eapli.base.service.domain.Workflow</class>
     <class>eapli.base.ticket.domain.TicketWorkflow</class>
     <class>eapli.base.ticketTask.domain.TicketTask</class>
-    <class>eapli.base.ticketTask.domain.TicketTaskID</class>
     <class>eapli.base.ticketTask.domain.TicketApprovalTask</class>
     <class>eapli.base.ticketTask.domain.TicketAutomaticTask</class>
     <class>eapli.base.ticketTask.domain.TicketManualTask</class>
