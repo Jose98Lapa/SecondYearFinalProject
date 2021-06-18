@@ -63,9 +63,15 @@ public class LoginUI extends AbstractUI {
     protected boolean doShow() {
         int attempt = 1;
         while (attempt <= maxAttempts) {
-            final String userName = Console.readLine("Username:");
-            final String password = Console.readLine("Password:");
-
+            String userName = Console.readLine("Username:");
+            String password = Console.readLine("Password:");
+            while (password.isEmpty() || userName.isEmpty()) {
+                userName = Console.readLine("Username:");
+                password = Console.readLine("Password:");
+                attempt++;
+                if (maxAttempts==attempt)
+                    return false;
+            }
             if (authenticationService.authenticate(userName, password, onlyWithThis).isPresent()) {
                 return true;
             } else {
@@ -76,6 +82,7 @@ public class LoginUI extends AbstractUI {
         }
         System.out.println("Sorry, we are unable to authenticate you. Please contact your system admnistrator.");
         return false;
+
     }
 
     @Override

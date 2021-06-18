@@ -16,9 +16,9 @@ public class AttributeLabel implements ValueObject, Serializable {
     private String regex = "^[a-zA-Z0-9,!? \n\t]{1,50}$";
 
     public AttributeLabel(String label) {
-        if (StringPredicates.isNullOrEmpty(label)) {
+        /*if (StringPredicates.isNullOrEmpty(label)) {
             throw new IllegalArgumentException("Label should neither be null nor empty");
-        }
+        }*/
 
        /* Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(label);

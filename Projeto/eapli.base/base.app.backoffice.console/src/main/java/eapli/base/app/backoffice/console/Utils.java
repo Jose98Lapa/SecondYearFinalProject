@@ -26,7 +26,6 @@ public class Utils {
 
 	public void checkServers ( ) {
 		System.out.println( "+= Testing Servers ======================================================================+\n" );
-        checkServer(Application.settings().getDatabaseIp(),"DATABASE");
         checkServer(Application.settings().getImageServerIp(),"IMAGE SERVER");
         checkServer(Application.settings().getWorkflowServer(),"WORKFLOW ENGINE");
         checkServer(Application.settings().getExecutorServer(),"EXECUTOR ENGINE");
