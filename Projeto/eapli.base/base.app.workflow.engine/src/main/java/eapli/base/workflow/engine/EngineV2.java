@@ -188,7 +188,7 @@ public class EngineV2 {
 		switch ( Application.settings( ).getCollaboratorAssignerAlgorithm( ) ) {
 			case "FCFS":
 				System.out.println( "FCFS" );
-				delegated = FCFS( ticket );
+				delegated = FCFSTicket( ticket );
 				break;
 				//TODO: CHANGE NAMING
 			case "COMPLEX":
