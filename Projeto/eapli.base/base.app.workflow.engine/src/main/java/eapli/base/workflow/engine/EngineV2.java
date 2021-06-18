@@ -224,6 +224,14 @@ public class EngineV2 {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
             }
+
+			if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
+				FCFSAutomaticTask(ticket);
+			}
+
+			if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
+				FCFSAutomaticTask(ticket);
+			}
         }
 
         return ticket;
