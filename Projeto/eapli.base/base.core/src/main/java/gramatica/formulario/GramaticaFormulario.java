@@ -14,7 +14,9 @@ import org.yaml.snakeyaml.parser.ParserException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -44,7 +46,7 @@ public class GramaticaFormulario {
         );
 
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
-        parseWithVisitor("testemain.txt", form);
+        parseWithVisitor("teste_formulario.txt", form);
     }
 
     public static String parseWithVisitor(String file, Form form) {
@@ -536,21 +538,34 @@ public class GramaticaFormulario {
 
             switch (ctx.op.getType()) {
                 case GramaticaFormularioParser.MAIS:
-                    if (left.isDouble() && right.isDouble())
-                        return new Value(left.asDouble() + right.asDouble());
-
                     if (left.isInteger() && right.isInteger())
                         return new Value(left.asInteger() + right.asInteger());
 
+                    if (left.isDouble() && right.isDouble())
+                        return new Value(left.asDouble() + right.asDouble());
+
+                    if (left.isString() && right.isDate())
+                        return new Value(removeAspas(left) + right.asString());
+
                     if (left.isString() && right.isString())
-                        return new Value(left.asString() + right.asString());
+                        return new Value(removeAspas(left) + removeAspas(right));
+
+                    if(left.isDate() && right.isInteger()){
+                        return new Value(left.asDate().plusDays(right.asInteger()));
+                    }
 
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
 
                 case GramaticaFormularioParser.MENOS:
-                    return left.isDouble() && right.isDouble() ?
-                            new Value(left.asDouble() - right.asDouble()) :
-                            new Value(left.asInteger() - right.asInteger());
+                    if (left.isDouble() && right.isDouble()){
+                        return new Value(left.asDouble() - right.asDouble());
+                    }
+                    if (left.isDouble() && right.isDouble()) {
+                        return new Value(left.asInteger() - right.asInteger());
+                    }
+                    if (left.isDate() && right.isDate()) {
+                        return new Value(ChronoUnit.DAYS.between(right.asDate(), left.asDate()));
+                    }
 
                 default:
                     throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);

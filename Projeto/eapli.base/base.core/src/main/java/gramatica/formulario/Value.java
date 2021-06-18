@@ -47,11 +47,27 @@ public class Value {
     }
 
     public boolean isDouble() {
-        return value instanceof Double;
+        if (value.toString() == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(value.toString());
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isInteger() {
-        return value instanceof Integer;
+        if (value.toString() == null) {
+            return false;
+        }
+        try {
+            double d = Integer.parseInt(value.toString());
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isString() {
