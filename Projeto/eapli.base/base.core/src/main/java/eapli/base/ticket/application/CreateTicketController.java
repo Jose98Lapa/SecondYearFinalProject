@@ -93,7 +93,8 @@ public class CreateTicketController {
 		//File script =ticketService.getFIleFromServer(service.form());
 		//File script = new File("bootstrapForm.txt");
 		File script =ticketService.getFIleFromServer( service.form() );
-		if( Application.settings().getGRAMMARFORMTYPE().equals("VISITOR")){
+		String type = Application.settings().getGRAMMARFORMTYPE();
+		if( type.equals("VISITOR")){
 			GramaticaFormulario.parseWithVisitor(script.getName(), form);
 		}else{
 			GramaticaFormulario.parseWithListener(script.getName(), form);
@@ -115,10 +116,10 @@ public class CreateTicketController {
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
-		this.ticketRepository.save( ticket );
+		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
 		return this.tcpClient.startConnection( Application.settings().getIpWorkflow() )
-				&& this.tcpClient.dispatchTicket( ticket.identity() )
+				&& this.tcpClient.dispatchTicket(persistedTicket.identity() )
 				&& this.tcpClient.stopConnection();
 	}
 

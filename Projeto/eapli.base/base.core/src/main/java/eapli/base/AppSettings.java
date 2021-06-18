@@ -90,8 +90,8 @@ public class AppSettings {
         return this.applicationProperties.getProperty(PERSISTENCE_UNIT_KEY);
     }
 
-    public static String getGRAMMARFORMTYPE() {
-        return GRAMMARFORMTYPE;
+    public  String getGRAMMARFORMTYPE() {
+        return this.applicationProperties.getProperty(GRAMMARFORMTYPE);
     }
 
     public String getRepositoryFactory() {
@@ -125,8 +125,8 @@ public class AppSettings {
         return this.applicationProperties.getProperty(PORT_AUTOMATICTASK_EXECUTOR);
     }
 
-    public static String getGRAMMARAUTOMATICTYPE() {
-        return GRAMMARAUTOMATICTYPE;
+    public  String getGRAMMARAUTOMATICTYPE() {
+        return this.applicationProperties.getProperty(GRAMMARAUTOMATICTYPE);
     }
 
     public String getIpAutomatictaskExecutor() {

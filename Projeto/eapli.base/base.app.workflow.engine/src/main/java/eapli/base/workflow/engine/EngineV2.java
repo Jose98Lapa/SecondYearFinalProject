@@ -229,15 +229,15 @@ public class EngineV2 {
 		for ( Team t : execTeamsUpdated ) { //save updated collaborators
 			collaborators.addAll( t.teamMembers( ) );
 		}
-		for ( Date date : historyExecution.keySet( ) ) {
-			if ( !collaborators.contains( historyExecution.get( date ) ) ) {//se algum colaborador for removido retira do historico
-				historyExecution.remove( date );
-			}
-		}
 		for ( Collaborator collab : collaborators ) { //verificar se existe algum que ainda nao tenha feito nada
 			if ( !historyExecution.containsValue( collab ) ) {
 				theChosenOne = collab;
 				historyExecution.put( new Date( ), collab );
+			}
+		}
+		for ( Date date : historyExecution.keySet( ) ) {
+			if ( !collaborators.contains( historyExecution.get( date ) ) ) {//se algum colaborador for removido retira do historico
+				historyExecution.remove( date );
 			}
 		}
 		if ( theChosenOne == null ) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
