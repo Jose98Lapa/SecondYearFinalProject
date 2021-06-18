@@ -6,6 +6,7 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -32,16 +33,14 @@ public class HttpServerAjax extends Thread {
         try {
             SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
             sock = (SSLServerSocket) sslF.createServerSocket(55128);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.err.println("Server failed to open local port " + 55128);
+        } catch (IOException ignored) {
+           // System.err.println("Server failed to open local port " + 55128);
         }
         while (true) {
 
             try {
                 cliSock = (SSLSocket) sock.accept();
             } catch (IOException e) {
-                e.printStackTrace();
             }
             HttpAjaxRequest req = new HttpAjaxRequest(cliSock, BASE_FOLDER);
             req.start();
