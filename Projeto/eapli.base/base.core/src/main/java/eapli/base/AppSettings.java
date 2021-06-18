@@ -35,6 +35,7 @@ public class AppSettings {
     private static final String IP_WORKFLOW = "WORKFLOW_SERVER";
     private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
     private static final String COLLABORATOR_ASSIGNER_ALGORITHM = "COLLABORATOR_ASSIGNER_ALGORITHM";
+    private static final String GRAMMARFORMTYPE = "GRAMMARFORMTYPE";
 
     private final Properties applicationProperties = new Properties();
 
@@ -75,6 +76,7 @@ public class AppSettings {
         this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
         this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
         this.applicationProperties.setProperty( COLLABORATOR_ASSIGNER_ALGORITHM, "FCFS" );
+        this.applicationProperties.setProperty( GRAMMARFORMTYPE, "FCFS" );
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -84,6 +86,10 @@ public class AppSettings {
 
     public String getPersistenceUnitName() {
         return this.applicationProperties.getProperty(PERSISTENCE_UNIT_KEY);
+    }
+
+    public static String getGRAMMARFORMTYPE() {
+        return GRAMMARFORMTYPE;
     }
 
     public String getRepositoryFactory() {
@@ -135,6 +141,7 @@ public class AppSettings {
                 this.applicationProperties.getProperty(SCHEMA_GENERATION_KEY));
         return ret;
     }
+
 
 
     public String getProperty(String prop) {
