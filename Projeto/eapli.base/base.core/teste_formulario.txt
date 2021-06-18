@@ -4,6 +4,7 @@ DATA $dataFim -> atr[1]
 NUMERO $result -> 4 * 5 * 3
 $result -> $result / 2
 DATA $test -> $dataInicio - $result
+$test -> $test + $result
 se $dataFim = $dataInicio entao FAIL
 es
 matchRegex[$dataInicio,@@([0-9]|1[0-9])[/]0[0-9][/][0-9]{4}@@]

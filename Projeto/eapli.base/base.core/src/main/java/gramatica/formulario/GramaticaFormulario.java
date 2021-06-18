@@ -136,9 +136,6 @@ public class GramaticaFormulario {
         }
 
 
-
-
-
         @Override
         public void exitAtribuicao_atributo(GramaticaFormularioParser.Atribuicao_atributoContext ctx) {
             String id = ctx.inicializacao().getText();
@@ -180,9 +177,6 @@ public class GramaticaFormulario {
         @Override
         public void exitRelationalExpr(GramaticaFormularioParser.RelationalExprContext ctx) {
         }
-
-        boolean addVariable = false;
-
 
 
         @Override
@@ -251,7 +245,20 @@ public class GramaticaFormulario {
 
 
             switch (ctx.op.getType()) {
-                case GramaticaFormularioParser.MAIS -> valueStack.push(new Value(left.asDouble() * right.asDouble()));
+                case GramaticaFormularioParser.MAIS -> {
+                    if (Value.isValidNumber(left.toString())&&Value.isValidNumber(right.toString()))
+                        valueStack.push(new Value(left.asDouble() * right.asDouble()));
+                    else if ((Value.isValidDate(left.toString()) && Value.isValidNumber(right.toString())) || (Value.isValidDate(right.toString()) && Value.isValidNumber(left.toString()))) {
+                        if (Value.isValidNumber(right.toString())) {
+                            String rightString = right.asString();
+                            valueStack.push(new Value(Value.localDate(left.asDate().plusDays(new Value(rightString.replaceAll("[.][0-9]+", "")).asInteger()))));
+                        } else {
+                            valueStack.push(new Value(right.asDate().plusDays(new Value(left.toString().replaceAll("[.][0-9]+", "")).asInteger())));
+                        }
+                    }
+                    else
+                        valueStack.push(new Value(left.toString()+right));
+                }
                 case GramaticaFormularioParser.MENOS -> {
                     if ("TEXTO".equals(typeLeft) || "TEXTO".equals(typeRight))
                         throw new ParseCancellationException("Não se pode subtrair texto");
@@ -262,7 +269,7 @@ public class GramaticaFormulario {
                     } else if ((Value.isValidDate(left.toString()) && Value.isValidNumber(right.toString())) || (Value.isValidDate(right.toString()) && Value.isValidNumber(left.toString()))) {
                         if (Value.isValidNumber(right.toString())) {
                             String rightString = right.asString();
-                            valueStack.push(new Value(Value.localDate(left.asDate().minusDays(new Value(rightString.replaceAll("[.][0-9]+", "")).asInteger())).toString()));
+                            valueStack.push(new Value(Value.localDate(left.asDate().minusDays(new Value(rightString.replaceAll("[.][0-9]+", "")).asInteger()))));
                         } else {
                             valueStack.push(new Value(right.asDate().minusDays(new Value(left.toString().replaceAll("[.][0-9]+", "")).asInteger())));
                         }
@@ -272,9 +279,6 @@ public class GramaticaFormulario {
             }
         }
 
-        private void clearStack() {
-
-        }
 
         private void addToMemory(String var, Value value) {
             if (attributeAndTypeMap.containsKey(var)) {
@@ -519,7 +523,7 @@ public class GramaticaFormulario {
                     }
                     if (left.isString() && right.isString()) {
                         String lefte = removeAspas(left);
-                        String rightt=removeAspas(right);
+                        String rightt = removeAspas(right);
                         boolean b = !lefte.equals(rightt);
                         return new Value(b);
                     }
