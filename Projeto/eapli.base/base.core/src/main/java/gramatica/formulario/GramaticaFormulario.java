@@ -86,7 +86,7 @@ public class GramaticaFormulario {
         private Map<String, Value> memory = new HashMap<>();
         private Map<String, String> attributeAndTypeMap = new HashMap<>();
         private Stack<Value> valueStack = new Stack<>();
-        boolean doInstruction  =true;
+        boolean doInstruction = true;
 
         public void defineForm(Form form) {
             this.form = form;
@@ -227,9 +227,9 @@ public class GramaticaFormulario {
                         if (Value.isValidNumber(left.toString()) && Value.isValidNumber(right.toString()))
                             valueStack.push(new Value(left.asDouble() >= right.asDouble()));
                         else if (left.isDate() && right.isDate())
-                            valueStack.push(new Value(left.asDate().isAfter(right.asDate())|| left.toString().equals(right.toString())));
+                            valueStack.push(new Value(left.asDate().isAfter(right.asDate()) || left.toString().equals(right.toString())));
                         else
-                            valueStack.push(new Value(compareString >=0));
+                            valueStack.push(new Value(compareString >= 0));
                     }
                     default -> throw new RuntimeException("unknown operator: " + GramaticaFormularioParser.tokenNames[ctx.op.getType()]);
                 }
@@ -238,7 +238,7 @@ public class GramaticaFormulario {
 
         @Override
         public void enterValidationFail(GramaticaFormularioParser.ValidationFailContext ctx) {
-            if (doInstruction){
+            if (doInstruction) {
                 throw new ParseCancellationException("O script deu erro");
             }
         }
@@ -246,28 +246,32 @@ public class GramaticaFormulario {
 
         @Override
         public void enterEntao(GramaticaFormularioParser.EntaoContext ctx) {
-            if (doInstruction){
+            if (doInstruction) {
                 Value bool = valueStack.pop();
                 doInstruction = bool.asBoolean();
             }
         }
 
-        @Override public void exitAndExpr(GramaticaFormularioParser.AndExprContext ctx) {
+        @Override
+        public void exitAndExpr(GramaticaFormularioParser.AndExprContext ctx) {
             if (doInstruction) {
                 Value right = valueStack.pop();
                 Value left = valueStack.pop();
-                switch (ctx.op.getType()){
-                    case GramaticaFormularioParser.E -> {
-                        valueStack.push(new Value(right.asBoolean()&&left.asBoolean()));
-                    }
-                    case GramaticaFormularioParser.OU ->{
-                        valueStack.push(new Value(right.asBoolean()||left.asBoolean()));
-                    }
-                }
+                valueStack.push(new Value(right.asBoolean() && left.asBoolean()));
             }
         }
 
-        @Override public void exitIf(GramaticaFormularioParser.IfContext ctx) {
+        @Override
+        public void exitOrExpr(GramaticaFormularioParser.OrExprContext ctx) {
+            if (doInstruction) {
+                Value right = valueStack.pop();
+                Value left = valueStack.pop();
+                valueStack.push(new Value(right.asBoolean() || left.asBoolean()));
+            }
+        }
+
+        @Override
+        public void exitIf(GramaticaFormularioParser.IfContext ctx) {
             doInstruction = true;
         }
 
@@ -663,7 +667,7 @@ public class GramaticaFormulario {
 
 
         @Override
-        public Value visitIf(GramaticaFormularioParser.IfContext ctx)  {
+        public Value visitIf(GramaticaFormularioParser.IfContext ctx) {
             GramaticaFormularioParser.Condition_blockContext condition = ctx.condition_block();
             boolean evaluatedBlock = false;
             Value evaluated = this.visit(condition.expr());
