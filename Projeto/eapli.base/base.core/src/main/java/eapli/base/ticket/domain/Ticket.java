@@ -76,6 +76,7 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         this.workflow = workflow;
         this.ticketForm = ticketForm;
         this.requestedBy = requestedBy;
+        this.status = new TicketStatus( "PENDING" );
         this.builder = new TicketBuilder();
     }
 

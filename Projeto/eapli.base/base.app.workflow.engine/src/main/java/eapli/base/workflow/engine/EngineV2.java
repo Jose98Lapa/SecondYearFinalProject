@@ -41,12 +41,14 @@ public class EngineV2 {
 		Ticket ticket;
 
 		if ( ticketOptional.isPresent( ) ) {
+			System.out.println("ticket fetched from db" );
 
 			ticket = ticketOptional.get( );
 			createWorkFlow( ticket );
 			processStatusChange( ticket, ticket.status().toString() );
 		}
 
+		System.out.println( "ENDING PROCESS - TICKET" );
 
 	}
 
@@ -56,10 +58,12 @@ public class EngineV2 {
 
 		switch ( action ) {
 			case "PENDING":
+				System.out.println( "PENDING TICKET DELEGATION" );
 				ticket.statusPending( );
 				processedTicket = Optional.of( delegateTask( ticket ) );
 				break;
 			case "APPROVED":
+				System.out.println( "APPROVED TICKET DELEGATION" );
 				ticket.statusApproved( );
 				processedTicket = Optional.of( delegateTask( ticket ) );
 				break;
@@ -79,6 +83,7 @@ public class EngineV2 {
 
 	private void createWorkFlow ( Ticket ticket ) {
 
+		System.out.println( "CREATING WORKFLOW" );
 		List< Task > taskList = taskRepository.serviceTasks( ticket.service( ) );
 		TicketTaskPair ticketTaskPair;
 		TicketWorkflow workflow;
@@ -120,6 +125,7 @@ public class EngineV2 {
 			}
 		}
 
+		System.out.println( "SAVING WORKFLOW" );
 		ticket.setWorkflow( workflow );
 		ticketRepository.save( ticket );
 	}
@@ -170,6 +176,7 @@ public class EngineV2 {
 
 		switch ( Application.settings( ).getCollaboratorAssignerAlgorithm( ) ) {
 			case "FCFS":
+				System.out.println( "FCFS" );
 				delegated = FCFS( ticket );
 				break;
 				//TODO: CHANGE NAMING
