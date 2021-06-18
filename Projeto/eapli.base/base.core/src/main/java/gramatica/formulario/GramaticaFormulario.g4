@@ -35,7 +35,7 @@ matchregex: MATCHREGEX '[' var=VARIAVEL ',' regex =  REGEX ']' #match_regex
 matchregexatribut :MATCHREGEX '[' get_atributo ',' regex = REGEX ']' #match_regex_atribut
 ;
 
-atribuicao: identidade OPERADORATRIBUICAO expr                           #variavelExpr
+atribuicao: iden =identidade OPERADORATRIBUICAO expr                     #variavelExpr
     | identidade OPERADORATRIBUICAO identidade '(' (TEXTO|NUMERO)+ ')'   #variavelVariavel
     | identidade OPERADORATRIBUICAO get_atributo                         #variavelAtr
    ;
@@ -45,8 +45,8 @@ expr: left=expr POW right=expr                          #powExpr
  | left=expr op=(MAIS | MENOS) right=expr               #sumDifExpr
  | left=expr op=(LTEQ | GTEQ | LT | GT) right=expr      #relationalExpr
  | left=expr op=(EQ | NEQ) right=expr                   #equalExpr
- | left=expr E right=expr                               #andExpr
- | left=expr OU right=expr                              #orExpr
+ | left=expr op=E right=expr                               #andExpr
+ | left=expr op=OU right=expr                              #orExpr
  | atom  = tipo_dados                                   #atomExpr
  ;
 
@@ -72,11 +72,16 @@ data
 identidade: var=VARIAVEL #variavel
    ;
 
-if_stat: SE condition_block (SENAO stat_block)? END_SE
+if_stat: SE  condition_block (senao_rule stat_block)? END_SE #if
  ;
 
+senao_rule : SENAO #senao;
+
+entao_rule : ENTAO #entao
+;
+
 condition_block
- : expr ENTAO stat_block
+ : expr entao_rule stat_block
  ;
 
 stat_block

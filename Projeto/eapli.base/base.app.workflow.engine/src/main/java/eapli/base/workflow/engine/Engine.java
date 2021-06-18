@@ -35,7 +35,7 @@ public class Engine {
     TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
 
 
-    public static void main(String[] args) {
+    public static void pain(String[] args) {
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(),

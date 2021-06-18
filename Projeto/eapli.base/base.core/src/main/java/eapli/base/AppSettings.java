@@ -35,6 +35,8 @@ public class AppSettings {
     private static final String IP_WORKFLOW = "WORKFLOW_SERVER";
     private static final String IP_AUTOMATICTASK_EXECUTOR = "IP_AUTOMATICTASK_EXECUTOR";
     private static final String COLLABORATOR_ASSIGNER_ALGORITHM = "COLLABORATOR_ASSIGNER_ALGORITHM";
+    private static final String GRAMMARFORMTYPE = "GRAMMARFORMTYPE";
+    private static final String GRAMMARAUTOMATICTYPE = "GRAMMARAUTOMATICTYPE";
 
     private final Properties applicationProperties = new Properties();
 
@@ -71,10 +73,12 @@ public class AppSettings {
         this.applicationProperties.setProperty(SSH_USER, "user");
         this.applicationProperties.setProperty(SSH_PASSWORD, "password");
         this.applicationProperties.setProperty(PORT_WORKFLOW, "10283");
-        this.applicationProperties.setProperty(IP_WORKFLOW, "10.9.21.27");
+        this.applicationProperties.setProperty(IP_WORKFLOW, "127.0.0.1");
         this.applicationProperties.setProperty(PORT_AUTOMATICTASK_EXECUTOR, "10030");
         this.applicationProperties.setProperty(IP_AUTOMATICTASK_EXECUTOR, "172.17.0.3");
         this.applicationProperties.setProperty( COLLABORATOR_ASSIGNER_ALGORITHM, "FCFS" );
+        this.applicationProperties.setProperty( GRAMMARFORMTYPE, "VISITOR" );
+        this.applicationProperties.setProperty( GRAMMARAUTOMATICTYPE, "VISITOR" );
     }
 
     public Boolean isMenuLayoutHorizontal() {
@@ -84,6 +88,10 @@ public class AppSettings {
 
     public String getPersistenceUnitName() {
         return this.applicationProperties.getProperty(PERSISTENCE_UNIT_KEY);
+    }
+
+    public  String getGRAMMARFORMTYPE() {
+        return this.applicationProperties.getProperty(GRAMMARFORMTYPE);
     }
 
     public String getRepositoryFactory() {
@@ -116,6 +124,11 @@ public class AppSettings {
     public String getPortAutomatictaskExecutor() {
         return this.applicationProperties.getProperty(PORT_AUTOMATICTASK_EXECUTOR);
     }
+
+    public  String getGRAMMARAUTOMATICTYPE() {
+        return this.applicationProperties.getProperty(GRAMMARAUTOMATICTYPE);
+    }
+
     public String getIpAutomatictaskExecutor() {
         return this.applicationProperties.getProperty(IP_AUTOMATICTASK_EXECUTOR);
     }
@@ -135,6 +148,7 @@ public class AppSettings {
                 this.applicationProperties.getProperty(SCHEMA_GENERATION_KEY));
         return ret;
     }
+
 
 
     public String getProperty(String prop) {

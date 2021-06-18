@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <class>
+    <!--
+    Servico 1
+-->
     <class1>
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
@@ -143,7 +146,7 @@
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
                     <WAlabel>ignored</WAlabel>
-                    <WAdescricao> Dias de falta nao justificadas ja ocorridas no ano</WAdescricao>
+                    <WAdescricao>Dias de falta nao justificadas ja ocorridas no ano</WAdescricao>
                     <WAtipo>int</WAtipo>
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasAno</WAnome>
@@ -152,7 +155,7 @@
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
                     <WAlabel>ignored</WAlabel>
-                    <WAdescricao> Dias de faltas nao justificadas do periodo solicitado</WAdescricao>
+                    <WAdescricao>Dias de faltas nao justificadas do periodo solicitado</WAdescricao>
                     <WAtipo>int</WAtipo>
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasNJustPeriodo</WAnome>
@@ -175,6 +178,175 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>comentario</WAnome>
                     <WaID>15</WaID>
+                </WAtributo>
+            </atributes>
+        </Workflow>
+    </class1>
+
+    <!--
+        Servico 2
+    -->
+    <class1>
+        <catalogue>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
+            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
+            <criticality>2</criticality>
+        </catalogue>
+
+        <Servico>
+            <Formulario>
+                <fId>2</fId>
+                <fnome>Autorizacao para Aplicacao de Desconto</fnome>
+                <fscript>https://192.168.1.92/bootstrapForm2.txt</fscript>
+                <atributes>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Codigo de Cliente</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>codCliente</Anome>
+                        <aID>16</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Nome</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>nomeCliente</Anome>
+                        <aID>17</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Tipo de Desconto</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>tipoDesconto</Anome>
+                        <aID>18</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Recorrencia</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>recorrencia</Anome>
+                        <aID>19</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Percentagem de Desconto</Adescricao>
+                        <Atipo>double</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>percentagemDesconto</Anome>
+                        <aID>20</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Valor de Desconto</Adescricao>
+                        <Atipo>double</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>valorDesconto</Anome>
+                        <aID>21</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Identificacao da Fatura</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>codFatura</Anome>
+                        <aID>22</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Data Limite</Adescricao>
+                        <Atipo>Date</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>dataLimite</Anome>
+                        <aID>23</aID>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Fundamentacao Do Pedido</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>fundamentacao</Anome>
+                        <aID>24</aID>
+                    </SAtributo>
+                </atributes>
+            </Formulario>
+            <descricaoBreve>Autorizacao para Aplicacao de Desconto</descricaoBreve>
+            <descricaoCompleta>Autorizacao para Aplicacao de Desconto</descricaoCompleta>
+            <ServicoID>2</ServicoID>
+            <keyWords>desconto</keyWords>
+            <statusServico>ATIVO</statusServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
+            <tituloServico>Autorizacao para Aplicacao de Desconto</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+
+        <Workflow>
+            <Wtipo>A</Wtipo>
+            <Waprov>S</Waprov>
+            <Wservice>2</Wservice>
+            <Wscript>https://192.168.1.92/bootstrapFormAut2.txt</Wscript>
+            <Wfunc>1</Wfunc>
+
+            <WAfId>202</WAfId>
+            <WAfnome>Formulario Aprovacao</WAfnome>
+            <WAfscript>https://192.168.1.92/bootstrapFormAprov2.txt</WAfscript>
+
+            <WMfId>203</WMfId>
+            <WMfnome>Formulario Resolucao</WMfnome>
+            <WMfscript>https://192.168.1.92/bootstrapAtManual.txt</WMfscript>
+
+            <atributes>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Decisao</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>decisao</WAnome>
+                    <WaID>25</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>texto fundamentando a decisao</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>fundamentacao</WAnome>
+                    <WaID>26</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Percentagem</WAdescricao>
+                    <WAtipo>double</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>percentagem</WAnome>
+                    <WaID>27</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Valor</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>valor</WAnome>
+                    <WaID>28</WaID>
+                </WAtributo>
+                <WAtributo>
+                    <WAtributeForm>Aprov</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Data Limite</WAdescricao>
+                    <WAtipo>Date</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>dataLimite</WAnome>
+                    <WaID>29</WaID>
                 </WAtributo>
             </atributes>
         </Workflow>

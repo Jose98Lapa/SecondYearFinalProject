@@ -1,4 +1,4 @@
-// Generated from S:/data/2ano/2Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -356,15 +356,41 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 */
 	void exitVariavel(GramaticaFormularioParser.VariavelContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
+	 * Enter a parse tree produced by the {@code if}
+	 * labeled alternative in {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree
 	 */
-	void enterIf_stat(GramaticaFormularioParser.If_statContext ctx);
+	void enterIf(GramaticaFormularioParser.IfContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GramaticaFormularioParser#if_stat}.
+	 * Exit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link GramaticaFormularioParser#if_stat}.
 	 * @param ctx the parse tree
 	 */
-	void exitIf_stat(GramaticaFormularioParser.If_statContext ctx);
+	void exitIf(GramaticaFormularioParser.IfContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code senao}
+	 * labeled alternative in {@link GramaticaFormularioParser#senao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void enterSenao(GramaticaFormularioParser.SenaoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code senao}
+	 * labeled alternative in {@link GramaticaFormularioParser#senao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void exitSenao(GramaticaFormularioParser.SenaoContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code entao}
+	 * labeled alternative in {@link GramaticaFormularioParser#entao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void enterEntao(GramaticaFormularioParser.EntaoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code entao}
+	 * labeled alternative in {@link GramaticaFormularioParser#entao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void exitEntao(GramaticaFormularioParser.EntaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GramaticaFormularioParser#condition_block}.
 	 * @param ctx the parse tree
