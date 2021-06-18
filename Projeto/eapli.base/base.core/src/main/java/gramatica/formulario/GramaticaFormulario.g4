@@ -72,8 +72,10 @@ data
 identidade: var=VARIAVEL #variavel
    ;
 
-if_stat: SE  condition_block (SENAO stat_block)? END_SE #if
+if_stat: SE  condition_block (senao_rule stat_block)? END_SE #if
  ;
+
+senao_rule : SENAO #senao;
 
 entao_rule : ENTAO #entao
 ;

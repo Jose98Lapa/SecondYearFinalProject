@@ -368,6 +368,18 @@ public interface GramaticaFormularioListener extends ParseTreeListener {
 	 */
 	void exitIf(GramaticaFormularioParser.IfContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code senao}
+	 * labeled alternative in {@link GramaticaFormularioParser#senao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void enterSenao(GramaticaFormularioParser.SenaoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code senao}
+	 * labeled alternative in {@link GramaticaFormularioParser#senao_rule}.
+	 * @param ctx the parse tree
+	 */
+	void exitSenao(GramaticaFormularioParser.SenaoContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code entao}
 	 * labeled alternative in {@link GramaticaFormularioParser#entao_rule}.
 	 * @param ctx the parse tree

@@ -88,13 +88,13 @@ public class GramaticaFormulario {
         private Stack<Value> valueStack = new Stack<>();
         boolean doInstruction = true;
 
+
         public void defineForm(Form form) {
             this.form = form;
         }
 
         @Override
         public void exitMatch_regex(GramaticaFormularioParser.Match_regexContext ctx) {
-
             if (doInstruction) {
                 String toCheck = memory.get(ctx.var.getText()).toString();
                 String regexBefore = ctx.regex.getText();
@@ -268,6 +268,11 @@ public class GramaticaFormulario {
                 Value left = valueStack.pop();
                 valueStack.push(new Value(right.asBoolean() || left.asBoolean()));
             }
+        }
+
+        @Override
+        public void enterSenao(GramaticaFormularioParser.SenaoContext ctx) {
+            doInstruction = !doInstruction;
         }
 
         @Override

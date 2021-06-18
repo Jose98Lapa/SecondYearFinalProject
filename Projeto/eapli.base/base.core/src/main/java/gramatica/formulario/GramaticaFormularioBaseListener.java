@@ -388,6 +388,18 @@ public class GramaticaFormularioBaseListener implements GramaticaFormularioListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSenao(GramaticaFormularioParser.SenaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSenao(GramaticaFormularioParser.SenaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEntao(GramaticaFormularioParser.EntaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
