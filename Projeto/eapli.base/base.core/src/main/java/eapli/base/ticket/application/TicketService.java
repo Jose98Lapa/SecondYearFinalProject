@@ -11,18 +11,6 @@ import java.io.File;
 
 public class TicketService {
 
-	public static boolean sendToWorkflowServer ( String ticketID ) {
-
-		boolean sentSuccessfully = false;
-		TcpClient tcpClient = new TcpClient();
-
-		tcpClient.startConnection( Application.settings().getIpWorkflow() );
-		sentSuccessfully = tcpClient.dispatchTicket( ticketID );
-		tcpClient.stopConnection();
-
-		return sentSuccessfully;
-	}
-
 	public File getFIleFromServer(Form form){
 		String script = form.script().toString();
 		SFTPClient sftp = new SFTPClient();

@@ -146,7 +146,7 @@ public class TcpClient {
 
     public boolean dispatchTicket(String ticketID) {
 
-        byte version = 1, code = 10, payloadSize = 0;
+        byte version = 1, code = 10, payloadSize;
         byte[] payload = ticketID.getBytes(StandardCharsets.UTF_8);
         payloadSize = (byte) payload.length;
         byte[] headers = {version, code, payloadSize};
@@ -155,6 +155,7 @@ public class TcpClient {
         try {
 
             sOut.write(packet);
+            sOut.flush();
             byte[] response = sIn.readNBytes(4);
             return response[1] == 2;
 

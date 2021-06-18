@@ -174,7 +174,6 @@ public class TcpServer implements Runnable {
         try {
 
             EngineV2 engine = new EngineV2( );
-
             boolean cycle = true;
             while (cycle) {
                 byte[] clientRequest = sIn.readNBytes(4);
@@ -188,9 +187,10 @@ public class TcpServer implements Runnable {
                         break;
                     case 10:
                         engine.processIncomingTicket( sIn.readNBytes( clientRequest[3] ) );
-                        //TODO: Call engineV2 process Ticket
+                        stopConnection( clientIP );
                         break;
                     case 11:
+                        stopConnection( clientIP );
                         //TODO: Call engineV2 process status change
                         break;
                 }
