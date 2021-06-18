@@ -39,7 +39,7 @@ atribuicao: identidade OPERADORATRIBUICAO expr                                  
     | nomeVar=identidade OPERADORATRIBUICAO formulario_informacao                                 #atr_variavelForm
     ;
 
-if_stat: SE condition_block (SENAO stat_block)? END_SE
+if_stat: SE condition_block (senao stat_block)? END_SE
     ;
 
 condition_block
@@ -52,6 +52,10 @@ stat_block
 
 entao
     : ENTAO
+    ;
+
+senao
+    : SENAO
     ;
 
 expr: atom  = tipo_dados                                   #atomExpr
