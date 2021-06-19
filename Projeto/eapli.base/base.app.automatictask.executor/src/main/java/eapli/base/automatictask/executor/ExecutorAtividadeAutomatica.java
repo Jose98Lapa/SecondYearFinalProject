@@ -129,14 +129,6 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx) {
-            if (doInstruction) {
-                Value identidade = stack.pop();
-                memory.put(identidade.toString(), null);
-            }
-        }
-
-        @Override
         public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
             if (doInstruction) {
                 Value identidade2 = stack.pop();
