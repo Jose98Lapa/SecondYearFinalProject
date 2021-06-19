@@ -156,32 +156,22 @@ class TcpServerThread implements Runnable {
             Calendar calendar = Calendar.getInstance();
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
             Pair<Boolean, String> wasItSuccessfull = null;
-            Pair<Boolean, String> wasItSuccessfull2 = null;
 
-            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
+            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR"))
                 wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
-            } else {
-                wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
-            }
+            else
+                wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
 
             calendar = Calendar.getInstance();
-            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
-                if (wasItSuccessfull.a)
-                    System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
-                else
-                    System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
-            }
+            if (wasItSuccessfull.a)
+                System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
+            else
+                System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
 
-            if (!Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
-                if (wasItSuccessfull2.a)
-                    System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
-                else
-                    System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull2.b);
-            }
             return wasItSuccessfull.a;
         } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return false;
         }
     }

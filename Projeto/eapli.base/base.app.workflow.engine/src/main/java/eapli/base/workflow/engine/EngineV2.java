@@ -247,8 +247,6 @@ public class EngineV2 {
                     client.stopConnection();
                 }
             }
-
-
         } catch (IOException e) {
             System.out.println("An error ocorred");
         }
@@ -260,13 +258,13 @@ public class EngineV2 {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.2");
-        serverList.add("172.17.0.3");
-        serverList.add("172.17.0.4");
-        serverList.add("172.17.0.5");
+        serverList.add("172.17.0.2");   //executor
+        serverList.add("172.17.0.3");   //executor1
+        serverList.add("172.17.0.4");   //executor2
+        serverList.add("172.17.0.5");   //executor3
 
         for (Date date : historyAutomaticTask.keySet()) {
-            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum colaborador for removido retira do historico
+            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum servidor for removido retira do historico
                 historyAutomaticTask.remove(date);
             }
         }
