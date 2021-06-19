@@ -174,6 +174,7 @@ class TcpServerThread implements Runnable {
             return wasItSuccessfull.a ;
         } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
+            ex.printStackTrace();
             return false;
         }
     }
