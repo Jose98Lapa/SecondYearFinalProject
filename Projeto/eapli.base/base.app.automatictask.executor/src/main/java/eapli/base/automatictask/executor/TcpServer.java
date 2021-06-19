@@ -152,12 +152,7 @@ class TcpServerThread implements Runnable {
             }
 
             SFTPClient scriptClient = new SFTPClient();
-            File file = new File("rui");
-            file.createNewFile();
-            System.out.println(file.getAbsolutePath());
-            System.out.println(scriptName);
             File script = scriptClient.getScript(scriptName);
-            System.out.println(script.getAbsolutePath());
             Calendar calendar = Calendar.getInstance();
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
 
