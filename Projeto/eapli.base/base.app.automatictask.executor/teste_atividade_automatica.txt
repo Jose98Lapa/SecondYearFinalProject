@@ -17,7 +17,7 @@ BEGIN
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
 
     $price -> FORM(>a,1)
-    TEXTO $corpo-> "O preÃ§o Ã© menor que 5 : " + $price + "$."
+    TEXTO $corpo-> "O preco e menor que 5 : " + $price + "$."
     ENVIAR_EMAIL($assunto,$corpo)
 
     NUMERO  $numero  -> 969090469

@@ -1,7 +1,6 @@
 package eapli.base.automatictask.executor;
 
 import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
-import gramatica.formulario.GramaticaFormulario;
 import gramatica.formulario.GramaticaFormularioParser;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStreams;
@@ -99,8 +98,8 @@ public class ExecutorAtividadeAutomatica {
                 String what = ctx.what.getText().replaceAll("\"", "");
                 String id = ctx.id.getText().replaceAll("\"", "");
                 String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
-                String whatToUpdate = ctx.updatevalue.getText().replaceAll("\"", "");
-                String updatevalue = stack.pop().toString().replaceAll("\"", "");
+                String whatToUpdate = ctx.whatToUpdate.getText().replaceAll("\"", "");
+                String updatevalue = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
                 String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
                 String user = "admin";
                 String passwd = "eapli";
@@ -210,6 +209,33 @@ public class ExecutorAtividadeAutomatica {
         public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx){
             doInstruction=!doInstruction;
         }
+
+        @Override
+        public void exitMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) {
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+                switch (ctx.op.getType()) {
+                    case GramaticaFormularioParser.MULT:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() * right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() * right.asInteger()));
+                        if (left.isString() || right.isString())
+                            throw new ParseCancellationException("Não foi possivel fazer a operação");
+                        break;
+                    case GramaticaFormularioParser.DIV:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() / right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() / right.asInteger()));
+                        if (left.isString() || right.isString())
+                            throw new ParseCancellationException("Não foi possivel fazer a operação");
+                        break;
+                }
+            }
+        }
+
 
         @Override
         public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
@@ -334,7 +360,7 @@ public class ExecutorAtividadeAutomatica {
                 int index = new Value(ctx.dados.getText()).asInteger();
                 Value identidade = stack.pop();
 
-                if (index >= this.formApproved.size())
+                if (index > this.formApproved.size())
                     throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
                 Value dados = new Value(formApproved.get(index - 1));
                 memory.put(identidade.toString(), dados);
