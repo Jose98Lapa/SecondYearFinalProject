@@ -3,12 +3,10 @@ package eapli.base.app.user.console.presentation.taskUI;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.application.TicketTaskController;
-import eapli.base.ticketTask.domain.TicketExecutionTask;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.fusesource.jansi.Ansi;
 
-import javax.xml.stream.events.Characters;
 import java.util.List;
 
 public class PendingTasksUI extends AbstractUI {
@@ -40,17 +38,22 @@ public class PendingTasksUI extends AbstractUI {
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "|    Tarefas de Aprovacao                                                             |" );
 		System.out.println( "|                                                                                     |" );
-		displayApprovalTasks();
+		displayApprovalTasks( );
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "|    Tarefas de Execucao                                                              |" );
 		System.out.println( "|                                                                                     |" );
-		displayExecutionTasks();
+		displayExecutionTasks( );
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
 
-		return false;
+		try {
+			Thread.sleep( 6000 );
+		} catch ( InterruptedException ignored ) {
+		}
+
+		return true;
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class PendingTasksUI extends AbstractUI {
 		for ( TicketApprovalTaskDTO task : taskDTOList ) {
 
 			int length = task.ticketTaskID.length();
-			String spaces = new String( new char[ length ] ).replace('\0', ' ' );
+			String spaces = new String( new char[ 86 - 28 - length ] ).replace('\0', ' ' );
 			System.out.println( "|    Aprovacao para tarefa: " + task.ticketTaskID + spaces + "|");
 		}
 	}
@@ -82,7 +85,7 @@ public class PendingTasksUI extends AbstractUI {
 		for ( TicketExecutionTaskDTO task : taskDTOList ) {
 
 			int length = task.ticketTaskID.length();
-			String spaces = new String( new char[ length ] ).replace('\0', ' ' );
+			String spaces = new String( new char[ 86 - 27 - length ] ).replace('\0', ' ' );
 			System.out.println( "|    Execucao para tarefa: " + task.ticketTaskID + spaces + "|");
 		}
 	}

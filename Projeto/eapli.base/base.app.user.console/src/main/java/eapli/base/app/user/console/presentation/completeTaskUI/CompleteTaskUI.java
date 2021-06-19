@@ -75,11 +75,7 @@ public class CompleteTaskUI extends AbstractUI {
 
             }
 
-
         }
-
-
-
 
         FormDTO form = completeTaskController.getTaskFormDTO();
 
@@ -87,7 +83,10 @@ public class CompleteTaskUI extends AbstractUI {
 
         int number = 0;
 
-        for (AttributeDTO attribute : form.atrDTO) {
+        ArrayList< AttributeDTO > attributeDTOList = new ArrayList<>( form.atrDTO );
+        attributeDTOList.sort( Comparator.comparing( attributeDTO -> attributeDTO.number ) );
+
+        for (AttributeDTO attribute : attributeDTOList ) {
             System.out.println(attribute.label);
             AttributeDTO answerAttribute = new AttributeDTO(
                     "Resposta",
