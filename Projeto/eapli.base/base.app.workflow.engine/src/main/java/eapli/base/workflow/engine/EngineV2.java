@@ -25,6 +25,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import org.springframework.data.util.Pair;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -247,8 +249,6 @@ public class EngineV2 {
                     client.stopConnection();
                 }
             }
-
-
         } catch (IOException e) {
             System.out.println("An error ocorred");
         }
@@ -260,13 +260,21 @@ public class EngineV2 {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.3");
-        serverList.add("172.17.0.4");
-        serverList.add("172.17.0.5");
-        serverList.add("172.17.0.6");
+        try {
+            File myObj = new File("Executer_ip_list.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String ip = myReader.nextLine();
+                serverList.add(ip.trim());
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while trying to read the ip list.");
+            return null;
+        }
 
         for (Date date : historyAutomaticTask.keySet()) {
-            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum colaborador for removido retira do historico
+            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum servidor for removido retira do historico
                 historyAutomaticTask.remove(date);
             }
         }
@@ -388,8 +396,8 @@ public class EngineV2 {
                             historyExecution.put(team, teamHistory);
                             return theChosenOne;
                         } else {
-                            theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mais antigo
-                            teamHistory.pollFirstEntry();
+                            theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mai antigo
+                            teamHistory.remove(teamHistory.firstEntry());
                             teamHistory.put(new Date(), theChosenOne);
                             historyExecution.remove(team);
                             historyExecution.put(team, teamHistory);

@@ -190,8 +190,8 @@ public class TcpServer implements Runnable {
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
-                        stopConnection( clientIP );
-                        //TODO: Call engineV2 process status change
+                        //String[] parameters = new String( data ).split( ";" );
+                        //engine.processStatusChange( parameters[0], parameters[1] );
                         break;
                 }
             }
@@ -234,7 +234,7 @@ public class TcpServer implements Runnable {
         /*while (true){
             EngineV2 engineV2 = new EngineV2();
             for (Ticket ticket : PersistenceContext.repositories().tickets().getPendingTicket()){
-                engineV2.processStatusChange(ticket,ticket.status().toString());
+                engineV2.processStatusChange(ticket.identity(),ticket.status().toString());
                 System.out.println("Mexelhoes");
             }
 

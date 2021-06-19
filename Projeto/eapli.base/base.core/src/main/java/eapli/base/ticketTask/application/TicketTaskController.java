@@ -1,5 +1,9 @@
 package eapli.base.ticketTask.application;
 
+import eapli.base.collaborator.domain.Collaborator;
+import eapli.base.collaborator.domain.InstituionalEmail;
+import eapli.base.collaborator.domain.MecanographicNumber;
+import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
@@ -7,16 +11,19 @@ import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TicketTaskController {
 
 	private final TicketTaskRepository ticketTaskRepository;
+	private final CollaboratorRepository collaboratorRepository;
 
 	public TicketTaskController ( ) {
 
 		this.ticketTaskRepository = PersistenceContext.repositories( ).ticketTasks( );
+		this.collaboratorRepository = PersistenceContext.repositories( ).collaborators( );
 	}
 
 	public List< TicketApprovalTaskDTO > approvalTasksPending ( ) {
@@ -49,15 +56,19 @@ public class TicketTaskController {
 				.collect( Collectors.toList() );
 	}
 
-	private String sessionEmail ( ) {
+	private Collaborator sessionEmail ( ) {
 
 		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
 
-		return authorizationService
+		String email = authorizationService
 				.session( )
 				.get( )
 				.authenticatedUser( )
 				.email( )
 				.toString( );
+
+		return this.collaboratorRepository.
+				getColaboradorByEmail( InstituionalEmail.valueOf( email ) )
+				.get();
 	}
 }
