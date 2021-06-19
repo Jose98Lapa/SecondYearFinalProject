@@ -12,7 +12,7 @@ public class RedeemTaskController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public List<TicketDTO> getPendingTasks(){
-        return ticketTaskService.getPendingTasks();
+        return ticketTaskService.getPendingTasks(authz.session().get().authenticatedUser().email().toString());
     }
 
     public boolean redeemTask(TicketDTO ticketDTO){

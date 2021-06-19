@@ -17,6 +17,8 @@ public interface TicketTaskRepository extends DomainRepository< Long, TicketTask
 
     List<TicketTask> getCompleteApprovedTicketsByCollaborator(Collaborator collab);
 
+    List<TicketTask> getIncompleteUnassignedTickets();
+
     Optional< TicketApprovalTask > approvalTaskOf ( TicketDTO ticket );
 
     Optional< TicketAutomaticTask > automaticTaskOf ( TicketDTO ticket );

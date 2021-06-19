@@ -36,8 +36,8 @@ public class EngineV2 {
     private final TicketRepository ticketRepository;
     private final ServiceRepository serviceRepository;
     private final CreateTaskController ticketTaskController;
-	static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentSkipListMap<>();
-	static ConcurrentSkipListMap<Date, Collaborator> historyApproval = new ConcurrentSkipListMap<>();
+    static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentSkipListMap<>();
+    static ConcurrentSkipListMap<Date, Collaborator> historyApproval = new ConcurrentSkipListMap<>();
     static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
 
     public EngineV2() {
@@ -75,7 +75,7 @@ public class EngineV2 {
                 break;
             case "PENDING_EXECUTION":
                 System.out.println("APPROVED TICKET DELEGATION");
-                ticket.statusApproved();
+                ticket.statusPendingExecution();
                 processedTicket = Optional.of(delegateTask(ticket));
                 break;
             case "NOT_APPROVED":
@@ -95,7 +95,7 @@ public class EngineV2 {
     private void createWorkFlow(Ticket ticket) {
 
         Service service = serviceRepository.ofIdentity(ticket.service().identity()).get();
-        TicketWorkflow ticketWorkflow = new TicketWorkflow(new TicketTaskService().createTicketTask(ticket.deadline().toString(),service.workflow().starterTask()));
+        TicketWorkflow ticketWorkflow = new TicketWorkflow(new TicketTaskService().createTicketTask(ticket.deadline().toString(), service.workflow().starterTask()));
 
        /* if (service.workflow().starterTask().hasAfterTask()) {
             taskList.add(service.workflow().starterTask().afterTask());
@@ -203,24 +203,21 @@ public class EngineV2 {
 
         Collaborator selected = null;
 
-        if (ticket.status().toString().equals("PENDING")) {
 
-            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
-                selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
-            }
+        if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
+            selected = assignCollaboratorApproval(ticket);
+            ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
+        }
             /*if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
                 ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
             }*/
+
+
+        if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+            selected = assignCollaboratorExecution(ticket);
+            ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
         }
-
-        if (ticket.status().toString().equals("APPROVED")) {
-
-            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
-                selected = assignCollaboratorExecution(ticket);
-                ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
-            }
            /* if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
@@ -230,10 +227,10 @@ public class EngineV2 {
                 FCFSAutomaticTask(ticket);
             }*/
 
-            if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
-                FCFSAutomaticTask(ticket);
-            }
+        if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
+            FCFSAutomaticTask(ticket);
         }
+
 
         return ticket;
     }
@@ -242,37 +239,15 @@ public class EngineV2 {
 
         String selected = "";
         try {
-            if (ticket.status().toString().equals("PENDING")) {
-                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                    selected = assignServer();
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
-                    selected = assignServer();
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
+                selected = assignServer();
+                TcpExecuterClient client = new TcpExecuterClient();
+                client.startConnection(selected);
+                client.executeAutomaticTask(ticket);
+                client.stopConnection();
             }
 
-            if (ticket.status().toString().equals("APPROVED")) {
-                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-            }
+
         } catch (IOException e) {
             System.out.println("An error ocorred");
         }
@@ -375,30 +350,30 @@ public class EngineV2 {
     public Collaborator assignCollaboratorApproval(Ticket ticket) {
 
 
-		CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
-		Task app = ticket.workflow().starterTask().mainReference();
-		ApprovalTask aprov = (ApprovalTask) app;
-		ArrayList<Collaborator> col = (ArrayList<Collaborator>) collaboratorRepository.getCollaboratorListByFunction(((ApprovalTask) app).necessaryRoleForApproval());
+        CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
+        Task app = ticket.workflow().starterTask().mainReference();
+        ApprovalTask aprov = (ApprovalTask) app;
+        ArrayList<Collaborator> col = (ArrayList<Collaborator>) collaboratorRepository.getCollaboratorListByFunction(((ApprovalTask) app).necessaryRoleForApproval());
 
-		for (Date date : historyApproval.keySet()) { //remover colaboradores que foram removidos
-			if (!col.contains(historyApproval.get(date))) {
-				historyApproval.remove(date);
-			}
-		}
+        for (Date date : historyApproval.keySet()) { //remover colaboradores que foram removidos
+            if (!col.contains(historyApproval.get(date))) {
+                historyApproval.remove(date);
+            }
+        }
 
-		for (Collaborator collaborator : col) { //verificar se foram adicionados novos colaboradores
-			if (!historyApproval.containsValue(collaborator)) {
-				historyApproval.put(new Date(), collaborator);
-				return collaborator;
-			}
-		}
+        for (Collaborator collaborator : col) { //verificar se foram adicionados novos colaboradores
+            if (!historyApproval.containsValue(collaborator)) {
+                historyApproval.put(new Date(), collaborator);
+                return collaborator;
+            }
+        }
 
-		Collaborator collaborator = historyApproval.firstEntry().getValue();//escolher o mais antigo
-		historyApproval.remove(historyApproval.firstEntry().getKey());
-		historyApproval.put(new Date(), collaborator);
+        Collaborator collaborator = historyApproval.firstEntry().getValue();//escolher o mais antigo
+        historyApproval.remove(historyApproval.firstEntry().getKey());
+        historyApproval.put(new Date(), collaborator);
 
-		return collaborator;
-	}
+        return collaborator;
+    }
 
     public synchronized void assigningAlgorithm(Ticket ticket) {
         if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketApprovalTask.class) {
