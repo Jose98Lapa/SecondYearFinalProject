@@ -25,4 +25,13 @@ public class TicketApprovalTaskDTO {
 		this.form = form;
 		this.approvedBy = approvedBy;
 	}
+
+	@Override
+	public String toString() {
+		return 	"ticket Task ID=" + ticketTaskID  +
+				", previous Task='" + previousTask +
+				", next Task='" + nextTask +
+				", form=" + form +
+				", approved By=" + approvedBy;
+	}
 }
