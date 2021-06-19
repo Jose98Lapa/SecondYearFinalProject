@@ -27,6 +27,7 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class EngineV2 {
@@ -34,7 +35,7 @@ public class EngineV2 {
     private final TicketRepository ticketRepository;
     private final ServiceRepository serviceRepository;
     private final CreateTaskController ticketTaskController;
-    static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentSkipListMap<>();
+    static ConcurrentHashMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentHashMap<>();
     static ConcurrentSkipListMap<Date, Collaborator> historyApproval = new ConcurrentSkipListMap<>();
     static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
 
@@ -298,7 +299,7 @@ public class EngineV2 {
         Service svr = ticket.service();
 
         //if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
-        execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
+        execTeams.addAll(((ExecutionTask) ticket.workflow().getFirstIncompleteTask().mainReference()).executingTeams());
         //}
         for (Team t : execTeams) { //update teams
             execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
