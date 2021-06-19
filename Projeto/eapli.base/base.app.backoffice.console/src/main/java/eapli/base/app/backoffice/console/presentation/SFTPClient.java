@@ -65,20 +65,16 @@ public class SFTPClient {
     }
 
     public File getScript(String source) throws JSchException, SftpException {
-        int i = source.lastIndexOf('/');
-        String filename=source;
-        if (i > 0)
-            filename += source.substring(i + 1);
-
+        String filename=source.replace("https://192.168.1.92/","");
         this.connect();
         Channel channel = session.openChannel("sftp");
         channel.connect();
         System.out.println(source);
         System.out.println(filename);
-        System.out.println(localServerFolder+'/'+source);
+        System.out.println(filename+'/'+source);
         ChannelSftp sftpChannel = (ChannelSftp) channel;
         System.out.println(sftpChannel.pwd());
-        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+source);
+        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+filename);
         File file = new File(filename);
         try(OutputStream outputStream = new FileOutputStream(file)){
             IOUtils.copy(inputStream, outputStream);
