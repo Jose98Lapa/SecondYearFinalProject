@@ -484,7 +484,8 @@ public class EngineV2 {
 	}
 
 	private synchronized void chooseCollaborator(Ticket ticket, Map<Collaborator, Long> collaboratorAndTotalTaskTime, Map<Collaborator, Float> collaboratorAndFitnessMap, TicketTask ticketTask, long allCollaboratorTime, Collaborator collaborator) {
-		boolean add = allCollaboratorTime > (long) collaboratorAndTotalTaskTime.size() * 5 * 60;
+		int limitHours = Integer.parseInt(Application.settings().getProperty("LIMIT_HOURS_OF_TASKS"));
+		boolean add = allCollaboratorTime > (long) collaboratorAndTotalTaskTime.size() * limitHours * 60;
 
 		List<Map.Entry<Collaborator, Long>> list
 				= new LinkedList<>(
@@ -519,7 +520,7 @@ public class EngineV2 {
 				new TicketTaskService().addCollaborator(ticketTask, tempByFitness.entrySet().iterator().next().getKey());
 			} else {
 				for (Map.Entry<Collaborator, Float> entry : tempByFitness.entrySet()) {
-					if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
+					if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < limitHours * 60 && !entry.getKey().sameAs(collaborator)) {
 						new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
 						return;
 					} else {
@@ -551,7 +552,7 @@ public class EngineV2 {
 				new TicketTaskService().addCollaborator(ticketTask, tempByFitness.entrySet().iterator().next().getKey());
 			} else {
 				for (Map.Entry<Collaborator, Float> entry : tempByFitness.entrySet()) {
-					if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < 5 * 60 && !entry.getKey().sameAs(collaborator)) {
+					if (collaboratorAndTotalTaskTime.get(entry.getKey()) + ticketTask.mainReference().maxTimeOfExecution() < limitHours * 60 && !entry.getKey().sameAs(collaborator)) {
 						new TicketTaskService().addCollaborator(ticketTask, entry.getKey());
 						return;
 					}
