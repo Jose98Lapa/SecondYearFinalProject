@@ -29,14 +29,15 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class EngineV2 {
 
     private final TicketRepository ticketRepository;
     private final ServiceRepository serviceRepository;
     private final CreateTaskController ticketTaskController;
-    static TreeMap<Date, Collaborator> historyExecution = new TreeMap<>();
-    static TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
+	static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentSkipListMap<>();
+	static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyApproval = new ConcurrentSkipListMap<>();
     static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
 
 	public EngineV2 ( ) {
@@ -314,82 +315,123 @@ public class EngineV2 {
         return theChosenOne;
     }
 
-    public synchronized Collaborator assignCollaboratorExecution(Ticket ticket) {
+	public Collaborator assignCollaboratorExecution(Ticket ticket) {
 
-		TeamRepository teamRepository = PersistenceContext.repositories( ).teams( );
+		TeamRepository teamRepository = PersistenceContext.repositories().teams();
 
-		Collaborator theChosenOne = null;
-		ArrayList< Collaborator > collaborators = new ArrayList<>( );
-		ArrayList< Team > execTeams = new ArrayList<>( );
-		ArrayList< Team > execTeamsUpdated = new ArrayList<>( );
-		Service svr = ticket.service( );
+		Collaborator theChosenOne;
+		ArrayList<Collaborator> collaborators = new ArrayList<>();
+		ArrayList<Team> execTeams = new ArrayList<>();
+		ArrayList<Team> execTeamsUpdated = new ArrayList<>();
+		Service svr = ticket.service();
 
-		if ( svr.workflow( ).starterTask( ) instanceof ExecutionTask ) {
-			execTeams.addAll( ( ( ExecutionTask ) svr.workflow( ).starterTask( ) ).executingTeams( ) );
+		if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+			execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
 		}
-		for ( Team t : execTeams ) { //update teams
-			execTeamsUpdated.add( teamRepository.ofIdentity( t.identity( ) ).get( ) );
+		for (Team t : execTeams) { //update teams
+			execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
 		}
-		execTeams.clear( );// delete old list
-		for ( Team t : execTeamsUpdated ) { //save updated collaborators
-			collaborators.addAll( t.teamMembers( ) );
+		execTeams.clear();// delete old list
+
+		for (Team t : execTeamsUpdated) { //save updated collaborators
+			collaborators.addAll(t.teamMembers());
 		}
-		for ( Collaborator collab : collaborators ) { //verificar se existe algum que ainda nao tenha feito nada
-			if ( !historyExecution.containsValue( collab ) ) {
-				theChosenOne = collab;
-				historyExecution.put( new Date( ), collab );
+
+		for (Team t : execTeamsUpdated) {
+			if (!historyExecution.containsKey(t)) { //se a equipa nao esta no historico escolhe um elemento dessa equipa
+				TreeMap<Date, Collaborator> teamHistory = new TreeMap<>();
+				theChosenOne = t.teamMembers().iterator().next();
+				teamHistory.put(new Date(), theChosenOne);
+				historyExecution.put(t, teamHistory);
+				return theChosenOne;
 			}
 		}
-		for ( Date date : historyExecution.keySet( ) ) {
-			if ( !collaborators.contains( historyExecution.get( date ) ) ) {//se algum colaborador for removido retira do historico
-				historyExecution.remove( date );
-			}
-		}
-		if ( theChosenOne == null ) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-			for ( Date date : historyExecution.keySet( ) ) {
-				if ( collaborators.contains( historyExecution.get( date ) ) ) {
-					theChosenOne = historyExecution.get( date );
-					historyExecution.put( new Date( ), historyExecution.remove( date ) );
+
+		for (Team team : historyExecution.keySet()) {//se a equipa esta no historico mas nem todos os colaboradores ja foram selecionados
+			Collections.shuffle(execTeamsUpdated);
+			TreeMap<Date, Collaborator> teamHistory = historyExecution.get(team);
+			for (Team team2 : execTeamsUpdated) {
+				if (team2.equals(team)) {
+					for (Collaborator c : team2.teamMembers()) {
+						if (!teamHistory.containsValue(c)) {
+							theChosenOne = c;
+							teamHistory.put(new Date(), theChosenOne);
+							historyExecution.remove(team);
+							historyExecution.put(team, teamHistory);
+							return theChosenOne;
+						} else {
+							theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mai antigo
+							teamHistory.remove(teamHistory.firstEntry());
+							teamHistory.put(new Date(), theChosenOne);
+							historyExecution.remove(team);
+							historyExecution.put(team, teamHistory);
+							return theChosenOne;
+						}
+					}
 				}
 			}
 		}
-		return theChosenOne;
+		return null;
 	}
 
-	public synchronized Collaborator assignCollaboratorApproval ( Ticket ticket ) {
+	public Collaborator assignCollaboratorApproval(Ticket ticket) {
 
-		CollaboratorRepository collaboratorRepository = PersistenceContext.repositories( ).collaborators( );
 
-		Collaborator theChosenOne = null;
-		ArrayList< Collaborator > collaborators = new ArrayList<>( );
-		Service svr = ticket.service( );
+		TeamRepository teamRepository = PersistenceContext.repositories().teams();
 
-		if ( svr.workflow( ).starterTask( ) instanceof ApprovalTask ) {
-			collaborators.addAll( ( Collection< ? extends Collaborator > ) collaboratorRepository.getCollaboratorsByRole(
-					( ( ApprovalTask ) svr.workflow( ).starterTask( ) ).necessaryRoleForApproval( ) )
-			); // base de dados colab by role
+		Collaborator theChosenOne;
+		ArrayList<Collaborator> collaborators = new ArrayList<>();
+		ArrayList<Team> aprTeams = new ArrayList<>();
+		ArrayList<Team> aprTeamsUpdated = new ArrayList<>();
+		Service svr = ticket.service();
+
+		if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
+			aprTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
+		}
+		for (Team t : aprTeams) { //update teams
+			aprTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
+		}
+		aprTeams.clear();// delete old list
+
+		for (Team t : aprTeamsUpdated) { //save updated collaborators
+			collaborators.addAll(t.teamMembers());
 		}
 
-		for ( Date date : historyApproval.keySet( ) ) {
-			if ( !collaborators.contains( historyApproval.get( date ) ) ) {//se algum colaborador for removido retira do historico
-				historyApproval.remove( date );
+		for (Team t : aprTeamsUpdated) {
+			if (!historyApproval.containsKey(t)) { //se a equipa nao esta no historico escolhe um elemento dessa equipa
+				TreeMap<Date, Collaborator> teamHistory = new TreeMap<>();
+				theChosenOne = t.teamMembers().iterator().next();
+				teamHistory.put(new Date(), theChosenOne);
+				historyApproval.put(t, teamHistory);
+				return theChosenOne;
 			}
 		}
-		for ( Collaborator collab : collaborators ) { //verificar se existe algum que ainda nao tenha feito nada
-			if ( !historyApproval.containsValue( collab ) ) {
-				theChosenOne = collab;
-				historyApproval.put( new Date( ), collab );
-			}
-		}
-		if ( theChosenOne == null ) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo que tem permissoes
-			for ( Date date : historyApproval.keySet( ) ) {
-				if ( collaborators.contains( historyApproval.get( date ) ) ) {
-					theChosenOne = historyApproval.get( date );
-					historyApproval.put( new Date( ), historyApproval.remove( date ) );
+
+		for (Team team : historyApproval.keySet()) {//se a equipa esta no historico mas nem todos os colaboradores ja foram selecionados
+			Collections.shuffle(aprTeamsUpdated);
+			TreeMap<Date, Collaborator> teamHistory = historyApproval.get(team);
+			for (Team team2 : aprTeamsUpdated) {
+				if (team2.equals(team)) {
+					for (Collaborator c : team2.teamMembers()) {
+						if (!teamHistory.containsValue(c)) {
+							theChosenOne = c;
+							teamHistory.put(new Date(), theChosenOne);
+							historyApproval.remove(team);
+							historyApproval.put(team, teamHistory);
+							return theChosenOne;
+						} else {
+							theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mais antigo
+							teamHistory.remove(teamHistory.firstEntry());
+							teamHistory.put(new Date(), theChosenOne);
+							historyApproval.remove(team);
+							historyApproval.put(team, teamHistory);
+							return theChosenOne;
+						}
+					}
 				}
 			}
 		}
-		return theChosenOne;
+		return null;
 	}
 
 	public synchronized void assigningAlgorithm() {
