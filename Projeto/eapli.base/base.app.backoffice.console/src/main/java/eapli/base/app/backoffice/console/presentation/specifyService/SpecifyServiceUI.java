@@ -75,7 +75,7 @@ public class SpecifyServiceUI extends AbstractUI {
             if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {
                 System.out.println("Script");
                 SFTPClient sftp = new SFTPClient();
-                theController.automatic(sftp.choseAndUploadScript(ifo.id));
+                theController.automatic(sftp.choseAndUploadScript(ifo.id),null);
             } else if (ifo.type().equalsIgnoreCase("MANUAL")) {
                 FormUI servicoUi = new FormUI();
                 servicoUi.show();
