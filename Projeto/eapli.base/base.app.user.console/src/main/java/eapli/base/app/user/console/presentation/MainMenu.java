@@ -31,6 +31,7 @@ import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
 import eapli.base.app.user.console.presentation.dashboard.ShowDashboardUI;
 import eapli.base.app.user.console.presentation.redeemTaskUI.RedeemTaskUI;
+import eapli.base.app.user.console.presentation.taskUI.PendingTasksUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -108,8 +109,9 @@ class MainMenu extends ClientUserBaseUI {
     }
 
     private Menu builderCompleteTaskMenu(){
-        final Menu completeTaskMenu = new Menu("Completar Tarefa");
+        final Menu completeTaskMenu = new Menu("Consultar Tarefa");
         completeTaskMenu.addItem(1,"Completar Tarefa",()->new CompleteTaskUI().show());
+        completeTaskMenu.addItem( 2, "Consultar tarefas pendentes", ( ) -> new PendingTasksUI().show() );
         completeTaskMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return completeTaskMenu;
     }
