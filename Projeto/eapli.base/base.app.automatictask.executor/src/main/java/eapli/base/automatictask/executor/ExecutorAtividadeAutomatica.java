@@ -124,7 +124,7 @@ public class ExecutorAtividadeAutomatica {
         public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
             if (doInstruction) {
                 Value identidade = stack.pop();
-                String stringFicheiro = ctx.stringficheiro.getText().replaceAll("\"","");
+                String stringFicheiro = ctx.stringficheiro.getText();
                 memory.put(identidade.toString(), new Value(stringFicheiro));
             }
         }
@@ -143,7 +143,7 @@ public class ExecutorAtividadeAutomatica {
                 Value identidade2 = stack.pop();
                 Value identidade = stack.pop();
                 String what = ctx.what.getText();
-                String fileName = memory.get(identidade2.toString()).toString();
+                String fileName = memory.get(identidade2.toString()).toString().replaceAll("\"","");
                 String id = ctx.id.getText();
                 String idValue = ctx.idvalue.getText();
 
@@ -169,7 +169,7 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
             if (doInstruction) {
-                Value expr = stack.pop();
+                Value expr= stack.pop();
                 Value identidade = stack.pop();
                 memory.put(identidade.toString(),expr);
             }
@@ -222,8 +222,11 @@ public class ExecutorAtividadeAutomatica {
                             stack.push(new Value(left.asDouble() + right.asDouble()));
                         if (left.isInteger() && right.isInteger())
                             stack.push(new Value(left.asInteger() + right.asInteger()));
-                        if (left.isString() || right.isString())
-                            stack.push(new Value(left.asString() + right.asString()));
+                        if (left.isString() || right.isString()) {
+                            String result = (left.asString()+right.asString()).replaceAll("\"","");
+                            result = "\"" +result + "\"";
+                            stack.push(new Value(result));
+                        }
                         break;
                     case GramaticaFormularioParser.MENOS:
                         if (left.isDouble() && right.isDouble())
@@ -253,8 +256,17 @@ public class ExecutorAtividadeAutomatica {
 
         @Override
         public void exitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx){
-            Value identidade = stack.pop();
-            stack.push(memory.get(identidade.toString()));
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                stack.push(memory.get(identidade.toString()));
+            }
+        }
+
+        @Override
+        public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx){
+            if (doInstruction) {
+                stack.push(new Value(ctx.getText()));
+            }
         }
 
         @Override
@@ -265,9 +277,9 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx){
+        public void enterTp_float(GramaticaAtividadeAutomaticaParser.Tp_floatContext ctx){
             if (doInstruction) {
-                stack.push(new Value(ctx.getText().replaceAll("\"","")));
+                stack.push(new Value(ctx.getText()));
             }
         }
 
@@ -281,38 +293,38 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
             if (doInstruction) {
-                Value corpo = stack.pop();
-                Value assunto = stack.pop();
-                Value destinatario = stack.pop();
-                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+                String corpo = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                String assunto = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                String destinatario = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                EmailSender.sendEmail(destinatario, assunto, corpo);
             }
         }
 
         @Override
         public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) {
             if (doInstruction) {
-                Value destinatario = stack.pop();
-                String assunto = ctx.assunto.getText();
-                String corpo = ctx.corpo.getText();
-                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+                String destinatario = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                String assunto = ctx.assunto.getText().replaceAll("\"", "");
+                String corpo = ctx.corpo.getText().replaceAll("\"", "");
+                EmailSender.sendEmail(destinatario, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
             }
         }
 
         @Override
         public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
             if (doInstruction) {
-                Value corpo = stack.pop();
-                Value assunto = stack.pop();
-                EmailSender.sendEmail(userEmail, assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+                String corpo = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                String assunto = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
+                EmailSender.sendEmail(userEmail, assunto, corpo);
             }
         }
 
         @Override
         public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) {
             if (doInstruction) {
-                String assunto = ctx.assunto.getText();
-                String corpo = ctx.corpo.getText();
-                EmailSender.sendEmail(userEmail, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+                String assunto = ctx.assunto.getText().replaceAll("\"", "");
+                String corpo = ctx.corpo.getText().replaceAll("\"", "");
+                EmailSender.sendEmail(userEmail, assunto, corpo);
             }
         }
 
