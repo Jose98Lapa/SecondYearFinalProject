@@ -209,11 +209,11 @@ public class EngineV2 {
 
             if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
+                ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
             }
             if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
+                ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
             }
         }
 
