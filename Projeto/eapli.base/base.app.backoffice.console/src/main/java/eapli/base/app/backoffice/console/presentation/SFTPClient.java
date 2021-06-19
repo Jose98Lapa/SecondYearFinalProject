@@ -73,10 +73,12 @@ public class SFTPClient {
         this.connect();
         Channel channel = session.openChannel("sftp");
         channel.connect();
-        ChannelSftp sftpChannel = (ChannelSftp) channel;
-        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+source);
         System.out.println(source);
         System.out.println(filename);
+        System.out.println(localServerFolder+'/'+source);
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+        System.out.println(sftpChannel.pwd());
+        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+source);
         File file = new File(filename);
         try(OutputStream outputStream = new FileOutputStream(file)){
             IOUtils.copy(inputStream, outputStream);
