@@ -37,8 +37,8 @@ public class EngineV2 {
     private final CreateTaskController ticketTaskController;
     static ConcurrentHashMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentHashMap<>();
     static ConcurrentSkipListMap<Date, Collaborator> historyApproval = new ConcurrentSkipListMap<>();
-    static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
-    static TreeMap<String,Integer> serverQueueMap = new TreeMap<>();
+    static ConcurrentSkipListMap<Date, String> historyAutomaticTask = new ConcurrentSkipListMap<>();
+    static TreeMap<String, Integer> serverQueueMap = new TreeMap<>();
 
     public EngineV2() {
 
@@ -256,7 +256,7 @@ public class EngineV2 {
         return ticket;
     }
 
-    public synchronized String assignServer() {
+    public String assignServer() {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
@@ -314,7 +314,7 @@ public class EngineV2 {
     public synchronized String RRassignServer() {
 
         String theChosenOne = "";
-        int theChosenOneN=-1;
+        int theChosenOneN = -1;
         List<String> serverList = new LinkedList<>();
         serverList.add("172.17.0.3");
         serverList.add("172.17.0.4");
@@ -322,20 +322,20 @@ public class EngineV2 {
         serverList.add("172.17.0.6");
 
         //Adiciona o server ao mapa caso este não esteja lá
-        for (String server:serverList){
+        for (String server : serverList) {
             if (!serverQueueMap.containsKey(server))
-                serverQueueMap.put(server,0);
+                serverQueueMap.put(server, 0);
         }
 
         //Verifica a disponibilidade e carga de cada uma das instancias
-        for (String server : serverQueueMap.keySet()){
-            if (serverQueueMap.get(server)==0) {
+        for (String server : serverQueueMap.keySet()) {
+            if (serverQueueMap.get(server) == 0) {
                 serverQueueMap.put(server, serverQueueMap.get(server) + 1);
                 return server;
             }
-            if (serverQueueMap.get(server)<theChosenOneN){
-                theChosenOne=server;
-                theChosenOneN=serverQueueMap.get(server);
+            if (serverQueueMap.get(server) < theChosenOneN) {
+                theChosenOne = server;
+                theChosenOneN = serverQueueMap.get(server);
             }
         }
 
