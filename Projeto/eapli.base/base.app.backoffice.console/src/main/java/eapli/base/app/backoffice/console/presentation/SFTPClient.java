@@ -122,11 +122,11 @@ public class SFTPClient {
     }
 
     public String castLinkImage(String filename) {
-        return "http://"+Application.settings().getImageServerIp()+"/"+filename+".jpg";
+        return "https://"+Application.settings().getImageServerIp()+"/"+filename+".jpg";
     }
 
     public String castLinkScript(String filename) {
-        return "http://"+Application.settings().getImageServerIp()+"/"+filename+".txt";
+        return "https://"+Application.settings().getImageServerIp()+"/"+filename+".txt";
     }
 
     public String choseAndUploadImage(String filename) {

@@ -9,6 +9,7 @@ import eapli.base.form.domain.attribute.*;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.base.utils.SFTPClient;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
@@ -42,6 +43,9 @@ public class FormController {
     public Form save(){
         form=fmb.build();
         //authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.GSH,BaseRoles.POWER_USER);
+        form = repo.save(form);
+        String scriptPath = new SFTPClient().choseAndUploadScript(form.identity().toString());
+        form.changeScript(scriptPath);
         return repo.save(form);
     }
    /* public void atributo(String nome, String desc, String label, String tipo, String regex){
