@@ -298,7 +298,7 @@ public class EngineV2 {
         Service svr = ticket.service();
 
         //if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
-        execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
+        execTeams.addAll(((ExecutionTask) ticket.workflow().getFirstIncompleteTask().mainReference()).executingTeams());
         //}
         for (Team t : execTeams) { //update teams
             execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
