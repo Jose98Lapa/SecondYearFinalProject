@@ -165,11 +165,12 @@ class TcpServerThread implements Runnable {
             }
 
             calendar = Calendar.getInstance();
-            if (wasItSuccessfull.a)
+            if (wasItSuccessfull.a && Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR"))
                 System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
             else
                 System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
-            if (wasItSuccessfull2.a)
+
+            if (wasItSuccessfull2.a && !Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR"))
                 System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
             else
                 System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull2.b);
