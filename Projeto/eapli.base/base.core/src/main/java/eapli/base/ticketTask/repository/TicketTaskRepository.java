@@ -2,6 +2,7 @@ package eapli.base.ticketTask.repository;
 
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.ticket.DTO.TicketDTO;
+import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketAutomaticTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
@@ -17,10 +18,8 @@ public interface TicketTaskRepository extends DomainRepository< Long, TicketTask
 
     List<TicketTask> getCompleteApprovedTicketsByCollaborator(Collaborator collab);
 
-    Optional< TicketApprovalTask > approvalTaskOf ( TicketDTO ticket );
+    List< TicketApprovalTask > pendingApproval ( String collaboratorEmail );
 
-    Optional< TicketAutomaticTask > automaticTaskOf ( TicketDTO ticket );
-
-    Optional< TicketExecutionTask > executionTaskOf ( TicketDTO ticket );
+    List< TicketExecutionTask > pendingExecution ( String collaboratorEmail );
 
 }
