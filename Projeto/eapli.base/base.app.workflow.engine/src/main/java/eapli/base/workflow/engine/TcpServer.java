@@ -190,8 +190,8 @@ public class TcpServer implements Runnable {
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
-                        String[] parameters = new String( data ).split( ";" );
-                        engine.processStatusChange( parameters[0], parameters[1] );
+                        //String[] parameters = new String( data ).split( ";" );
+                        //engine.processStatusChange( parameters[0], parameters[1] );
                         break;
                 }
             }
