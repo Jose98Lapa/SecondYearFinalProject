@@ -164,6 +164,26 @@ public class TcpClient {
         }
     }
 
+    public boolean statusChange ( String ticketID , String newStatus ) {
+
+        byte version = 1, code = 11, payloadSize;
+        String data = ticketID + ";" + newStatus;
+        byte[] payload = data.getBytes( StandardCharsets.UTF_8 ) ;
+        payloadSize = (byte) payload.length;
+        byte[] headers = {version, code, payloadSize};
+        byte[] packet = buildPacket(headers, payload);
+
+        try {
+
+            sOut.write(packet);
+            sOut.flush();
+            return true;
+
+        } catch (IOException exception) {
+            return false;
+        }
+    }
+
     private byte[] buildPacket(byte[] headers, byte[] payload) {
 
         return ArrayUtils.addAll(headers, payload);

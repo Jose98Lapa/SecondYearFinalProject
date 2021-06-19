@@ -177,6 +177,7 @@ public class TcpServer implements Runnable {
             boolean cycle = true;
             while (cycle) {
                 byte[] clientRequest = sIn.readNBytes( 3 );
+                byte data[] = sIn.readNBytes( clientRequest[2] );
                 switch (clientRequest[1]) {
                     case 1:
                         stopConnection(clientIP);
@@ -186,12 +187,11 @@ public class TcpServer implements Runnable {
                         TaskList();
                         break;
                     case 10:
-                        byte data[] = sIn.readNBytes( clientRequest[2] );
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
-                        stopConnection( clientIP );
-                        //TODO: Call engineV2 process status change
+                        String[] parameters = new String( data ).split( ";" );
+                        engine.processStatusChange( parameters[0], parameters[1] );
                         break;
                 }
             }
@@ -234,7 +234,7 @@ public class TcpServer implements Runnable {
         /*while (true){
             EngineV2 engineV2 = new EngineV2();
             for (Ticket ticket : PersistenceContext.repositories().tickets().getPendingTicket()){
-                engineV2.processStatusChange(ticket,ticket.status().toString());
+                engineV2.processStatusChange(ticket.identity(),ticket.status().toString());
                 System.out.println("Mexelhoes");
             }
 
