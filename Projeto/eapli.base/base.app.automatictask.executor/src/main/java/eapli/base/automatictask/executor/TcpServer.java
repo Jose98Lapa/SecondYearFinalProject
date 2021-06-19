@@ -153,14 +153,17 @@ class TcpServerThread implements Runnable {
 
             SFTPClient scriptClient = new SFTPClient();
             File script = scriptClient.getScript(scriptName);
-
             Calendar calendar = Calendar.getInstance();
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
+            Pair<Boolean, String> wasItSuccessfull = null;
+            Pair<Boolean, String> wasItSuccessfull2 = null;
 
-            Pair<Boolean, String> wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
-            Pair<Boolean, String> wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
+            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")){
+               wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
+            }else{
+                wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
+            }
 
-            script.delete();
             calendar = Calendar.getInstance();
             if (wasItSuccessfull.a)
                 System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
@@ -174,6 +177,7 @@ class TcpServerThread implements Runnable {
             return wasItSuccessfull.a ;
         } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
+            ex.printStackTrace();
             return false;
         }
     }

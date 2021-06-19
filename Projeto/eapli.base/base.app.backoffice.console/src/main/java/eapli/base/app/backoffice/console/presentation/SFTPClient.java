@@ -2,12 +2,11 @@ package eapli.base.app.backoffice.console.presentation;
 
 import com.jcraft.jsch.*;
 import eapli.base.Application;
+import org.apache.commons.io.IOUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.stream.Collectors;
 
 public class SFTPClient {
@@ -66,25 +65,23 @@ public class SFTPClient {
     }
 
     public File getScript(String source) throws JSchException, SftpException {
-        int i = source.lastIndexOf('/');
-        String filename=source;
-        if (i > 0)
-            filename += source.substring(i + 1);
-
+        String filename=source.replace("https://192.168.1.92/","");
         this.connect();
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
-        try {
-            sftpChannel.cd(localServerFolder);
-        } catch (SftpException e) {
-            sftpChannel.mkdir(localServerFolder);
-            sftpChannel.cd(localServerFolder);
+        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+filename);
+        File file = new File(filename);
+        try(OutputStream outputStream = new FileOutputStream(file)){
+            IOUtils.copy(inputStream, outputStream);
+        } catch (FileNotFoundException e) {
+            // handle exception here
+        } catch (IOException e) {
+            // handle exception here
         }
-        sftpChannel.get(source, filename);
         sftpChannel.exit();
         session.disconnect();
-        return new File(filename);
+        return file;
     }
 
     public String chooser(String type) {
