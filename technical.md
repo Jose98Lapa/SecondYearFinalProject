@@ -22,6 +22,10 @@ server workflow -» 172.17.0.2 -» docker container - responsável pelo servidor
 
 server executor -» 172.17.0.3 -» docker container - responsável pelo servidor do Executor de Tarefas Automáticas
 
+server executor1 -» 172.17.0.4 -» docker container
+server executor3 -» 172.17.0.5 -» docker container
+server executor2 -» 172.17.0.6 -» docker container
+
 Base de Dados - » cloud isep 
 
 Nota: os servidores, excepto o da base de dados, foram implementados pelo grupo e por isso nao utilizam a rede do isep. A equipa utilizou um servidor OpenVpn para trabalhar remotamente.
@@ -29,7 +33,7 @@ Nota: os servidores, excepto o da base de dados, foram implementados pelo grupo 
 ***
 
 Portas Utilizadas:
-server0 -» 55128
+Dashboard -» 55128
 server workflow -» 10020
 server executor -» 10030
 
