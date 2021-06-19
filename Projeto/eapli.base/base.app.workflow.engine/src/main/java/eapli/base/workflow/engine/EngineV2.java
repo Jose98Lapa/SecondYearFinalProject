@@ -396,8 +396,8 @@ public class EngineV2 {
                             historyExecution.put(team, teamHistory);
                             return theChosenOne;
                         } else {
-                            theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mais antigo
-                            teamHistory.pollFirstEntry();
+                            theChosenOne = teamHistory.firstEntry().getValue();//se nao escolhe o mai antigo
+                            teamHistory.remove(teamHistory.firstEntry());
                             teamHistory.put(new Date(), theChosenOne);
                             historyExecution.remove(team);
                             historyExecution.put(team, teamHistory);

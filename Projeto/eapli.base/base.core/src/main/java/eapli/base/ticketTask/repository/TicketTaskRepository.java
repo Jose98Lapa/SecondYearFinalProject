@@ -20,8 +20,8 @@ public interface TicketTaskRepository extends DomainRepository< Long, TicketTask
 
     List<TicketTask> getIncompleteUnassignedTickets();
 
-    List< TicketApprovalTask > pendingApproval ( String collaboratorEmail );
+    List< TicketApprovalTask > pendingApproval ( Collaborator collaboratorEmail );
 
-    List< TicketExecutionTask > pendingExecution ( String collaboratorEmail );
+    List< TicketExecutionTask > pendingExecution ( Collaborator collaboratorEmail );
 
 }

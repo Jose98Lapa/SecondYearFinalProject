@@ -17,4 +17,9 @@ public class FormDTO {
         this.atrDTO = atr;
     }
 
+    public FormDTO(String id, String nome, Set<AttributeDTO> atrDTO) {
+        this.id = id;
+        this.nome = nome;
+        this.atrDTO = atrDTO;
+    }
 }

@@ -35,8 +35,9 @@ public class FormUI extends AbstractUI {
                //atr.add(dto);
                 opt = Console.readLine("Informação relativa aos atributos ( Enter para continuar | Exit para sair )");
             }
-            FormDTO dto = new FormDTO(ifo.script(), ifo.id(), ifo.nome(), atr);
+            FormDTO dto = new FormDTO(ifo.id(), ifo.nome(), atr);
             theController.registerForm(dto);
+            System.out.println("SCRIPT");
             formId = theController.save().identity().toString();
         } catch (final IntegrityViolationException | ConcurrencyException | IllegalArgumentException e) {
             System.out.printf("Infelizmente ocorreu um erro na aplicação, por favor tente novamente: %s%n", e.getMessage());

@@ -35,6 +35,10 @@ public class Form implements AggregateRoot<FormID>, DTOable<FormDTO> , Serializa
         Preconditions.noneNull();
     }
 
+    public void changeScript(String script){
+        this.script = FormScript.valueOf(script);
+    }
+
     protected Form() {
     }
 

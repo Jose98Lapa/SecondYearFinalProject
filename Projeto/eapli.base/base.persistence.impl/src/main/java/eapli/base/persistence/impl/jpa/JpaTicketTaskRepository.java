@@ -17,6 +17,7 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Long, Long > implements TicketTaskRepository {
 
@@ -90,25 +91,25 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 	}
 
 	@Override
-	public List< TicketApprovalTask > pendingApproval ( String collaboratorEmail ) {
+	public List< TicketApprovalTask > pendingApproval ( Collaborator collaborator ) {
 
-		final TypedQuery< TicketApprovalTask > query = createQuery(
-				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.approvedBy:=approvedBy",
-				TicketApprovalTask.class )
+		final TypedQuery< TicketTask > query = createQuery(
+				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.approvedBy=:approvedBy",
+				TicketTask.class )
 				;
-		query.setParameter( "approvedBy", collaboratorEmail );
-		return query.getResultList();
+		query.setParameter( "approvedBy", collaborator );
+		return query.getResultList( ).stream( ).map( ticketTask -> ( TicketApprovalTask) ticketTask ).collect( Collectors.toList( ) );
 	}
 
 	@Override
-	public List< TicketExecutionTask > pendingExecution ( String collaboratorEmail ) {
+	public List< TicketExecutionTask > pendingExecution ( Collaborator collaborator ) {
 
-		final TypedQuery< TicketExecutionTask > query = createQuery(
-				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.executedBy:=executedBy",
-				TicketExecutionTask.class
+		final TypedQuery< TicketTask > query = createQuery(
+				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.executedBy=:executedBy",
+				TicketTask.class
 		);
-		query.setParameter( "executedBy", collaboratorEmail );
-		return query.getResultList();
+		query.setParameter( "executedBy", collaborator );
+		return query.getResultList( ).stream( ).map( ticketTask -> ( TicketExecutionTask ) ticketTask ).collect( Collectors.toList( ) );
 	}
 
 }
