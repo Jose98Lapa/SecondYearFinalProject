@@ -37,11 +37,24 @@ public class AppSettings {
     private static final String COLLABORATOR_ASSIGNER_ALGORITHM = "COLLABORATOR_ASSIGNER_ALGORITHM";
     private static final String GRAMMARFORMTYPE = "GRAMMARFORMTYPE";
     private static final String GRAMMARAUTOMATICTYPE = "GRAMMARAUTOMATICTYPE";
+    private static final String CONFIG_PROPERTIES = "config.properties";
 
     private final Properties applicationProperties = new Properties();
+    private final Properties configProperties = new Properties();
 
     public AppSettings() {
         loadProperties();
+    }
+
+    private void loadConfigProperties(){
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_PROPERTIES);
+
+        try {
+            configProperties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void loadProperties() {
@@ -153,6 +166,10 @@ public class AppSettings {
 
     public String getProperty(String prop) {
         return this.applicationProperties.getProperty(prop);
+    }
+
+    public String getConfigProperty(String prop){
+        return this.configProperties.getProperty(prop);
     }
 
 }
