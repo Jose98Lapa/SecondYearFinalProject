@@ -173,10 +173,10 @@ public class TcpServer implements Runnable {
         }
 
         try {
-            EngineV2 engine = new EngineV2( );
+            EngineV2 engine = new EngineV2();
             boolean cycle = true;
             while (cycle) {
-                byte[] clientRequest = sIn.readNBytes( 3 );
+                byte[] clientRequest = sIn.readNBytes( 4 );
                 switch (clientRequest[1]) {
                     case 1:
                         stopConnection(clientIP);
