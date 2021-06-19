@@ -53,6 +53,8 @@ public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot<
 	}
 
 	public Transition transition ( ) {
+		if (transition==null)
+			transition = new Transition();
 		return transition;
 	}
 

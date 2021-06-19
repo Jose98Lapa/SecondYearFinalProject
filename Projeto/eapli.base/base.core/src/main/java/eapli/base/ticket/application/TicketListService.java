@@ -52,7 +52,7 @@ public class TicketListService {
 
 
         for (Ticket ticket1 : ticketRepository.findAll()) {
-            if (ticket.service().catalogue().sameAs(ticket1.service().catalogue())) {
+            if (ticket.service().catalogue().sameAs(ticket1.service().catalogue())&&!ticket.sameAs(ticket1)) {
                 for (TicketTask ticketTask : ticketTaskList) {
                     if (ticket1.checkIfTicketTaskBelongsToTicket(ticketTask)) {
                         ticketTaskList.remove(ticketTask);
@@ -66,6 +66,9 @@ public class TicketListService {
                 }
             }
         }
+        if (numberOfTicketTasks == 0)
+            return 0;
+
         averagePercentageOfExecution = averagePercentageOfExecution / numberOfTicketTasks;
         averagePercentageOfExecution = 100 - averagePercentageOfExecution;
 
