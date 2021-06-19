@@ -55,7 +55,7 @@ public class CollaboratorDTO {
 
     @Override
     public String toString() {
-        return "Nome: " + fullName + " ID: " + mNumber + "\n";
+        return "Nome: " + fullName + " ID: " + mNumber ;
     }
 
 }

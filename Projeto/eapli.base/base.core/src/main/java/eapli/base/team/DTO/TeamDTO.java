@@ -34,10 +34,9 @@ public class TeamDTO {
 
     @Override
     public String toString() {
-        return "EquipaDTO{" +
-                "descricao='" + descricao + '\'' +
-                ", acronimo='" + acronimo + '\'' +
-                ", equipaID='" + teamID + '\'' +
-                '}';
+        return "Equipa" +
+                " descricao='" + descricao  +
+                " acronimo='" + acronimo +
+                " equipaID='" + teamID;
     }
 }

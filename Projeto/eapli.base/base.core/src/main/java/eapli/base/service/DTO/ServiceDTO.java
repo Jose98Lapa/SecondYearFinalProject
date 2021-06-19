@@ -37,15 +37,15 @@ public class ServiceDTO {
     @Override
     public String toString() {
         return "Servico \n" + title +
-                ",  \nID:" + id +
-                ",  \nicon:" + icon +
-                ",  \nkeywords:" + keywords +
-                ",  \nstatus:" + status  +
-                ",  \ntipo:" + tipo + '\'' +
-                ",  \nbriefDescription:" + briefDescription +
-                ",  \ncompleteDescription:" + completeDescription +
-                ",  \nscript:" + script +
-                ",  \ncatalogo:\n " + catalogo +
-                ", \nform:";
+                "\nID:" + id +
+                "\nicon:" + icon +
+                "\nkeywords:" + keywords +
+                "\nstatus:" + status  +
+                "\ntipo:" + tipo + '\'' +
+                "\nbriefDescription:" + briefDescription +
+                "\ncompleteDescription:" + completeDescription +
+                "\nscript:" + script +
+                "\ncatalogo:\n " + catalogo +
+                "\nform:";
     }
 }
