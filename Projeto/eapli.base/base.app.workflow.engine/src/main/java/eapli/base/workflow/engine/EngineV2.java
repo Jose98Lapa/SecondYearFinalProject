@@ -93,7 +93,6 @@ public class EngineV2 {
 
 	private void createWorkFlow ( Ticket ticket ) {
 
-		System.out.println( ticket.service().identity().toString() );
 		Service service = serviceRepository.ofIdentity( ticket.service().identity() ).get();
 
 		List< Task > taskList = new ArrayList<>(  );
@@ -104,7 +103,7 @@ public class EngineV2 {
 		}
 
 		TicketTaskPair ticketTaskPair;
-		TicketWorkflow workflow;
+		TicketWorkflow workflow = null;
 
 		if ( taskList.size( ) == 2 ) {
 
@@ -117,7 +116,7 @@ public class EngineV2 {
 				ticketTaskController.registerApprovalTask( approvalTask );
 				ticketTaskController.registerAutomaticTask( ticketTaskPair.ticketAutomaticTask( ) );
 
-			} else {
+			} else if ( ticketTaskPair.hasExecutionTask() ) {
 
 				approvalTask.addAfterTask( ticketTaskPair.ticketExecutionTask( ) );
 				ticketTaskController.registerApprovalTask( approvalTask );
@@ -135,7 +134,7 @@ public class EngineV2 {
 				workflow = new TicketWorkflow( ticketTaskPair.ticketAutomaticTask( ) );
 				ticketTaskController.registerAutomaticTask( ticketTaskPair.ticketAutomaticTask( ) );
 
-			} else {
+			} else if ( ticketTaskPair.hasExecutionTask() ) {
 				workflow = new TicketWorkflow( ticketTaskPair.ticketExecutionTask( ) );
 				ticketTaskController.registerExecutionTask( ticketTaskPair.ticketExecutionTask( ) );
 

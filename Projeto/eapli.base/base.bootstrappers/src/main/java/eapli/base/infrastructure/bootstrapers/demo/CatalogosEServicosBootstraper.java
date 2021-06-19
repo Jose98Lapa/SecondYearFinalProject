@@ -39,6 +39,7 @@ import java.util.*;
 
 public class CatalogosEServicosBootstraper implements Action {
     private static final String FILENAME = "catalogosEServicos.xml";
+    private boolean automatic = false;
 
     @Override
     public boolean execute() {
@@ -154,7 +155,14 @@ public class CatalogosEServicosBootstraper implements Action {
                             FormDTO fdto = new FormDTO(fscript, fId, fnome, lstAtributos);
                             formController.registerForm(fdto);
                             formController.save();
-                            servicoController.manual(fId);
+
+                            if (automatic) {
+                                servicoController.automatic("teste_atividade_automatica2.txt");
+                                automatic=false;
+                            }else {
+                                servicoController.manual(fId);
+                                automatic=true;
+                            }
                             servicoController.updateStatus();
                             servicoController.confirms();
 
@@ -188,7 +196,6 @@ public class CatalogosEServicosBootstraper implements Action {
                             int number = 0;
 
 
-
                             //form aprovacao
 
                             String WAfId = elementWorkflow.getElementsByTagName("WAfId").item(0).getTextContent();
@@ -212,9 +219,9 @@ public class CatalogosEServicosBootstraper implements Action {
                                     String WAnome = elementAtributes.getElementsByTagName("WAnome").item(0).getTextContent();
                                     String WaID = elementAtributes.getElementsByTagName("WaID").item(0).getTextContent();
                                     AttributeDTO at = new AttributeDTO(WAnome, WAlabel, WAdescricao, WAregex, WAtipo, WaID, number++);
-                                    if (WAtributeForm.equals("Aprov")){
+                                    if (WAtributeForm.equals("Aprov")) {
                                         lstAtributosAprov.add(at);
-                                    }else{
+                                    } else {
                                         lstAtributosM.add(at);
                                     }
                                 }
@@ -237,7 +244,7 @@ public class CatalogosEServicosBootstraper implements Action {
                                 formController.registerForm(fdto);
                                 formController.save();
                                 List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
-                                functionDTO = functionDTOList.get(Integer.parseInt(Wfunc)-1);
+                                functionDTO = functionDTOList.get(Integer.parseInt(Wfunc) - 1);
                                 ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(WAfId, functionDTO);
                                 taskIDList.add(createTaskController.registerApprovalTask(approvalTaskDTO));
                             }
@@ -252,14 +259,15 @@ public class CatalogosEServicosBootstraper implements Action {
                                     teamDTOList.add(teamDTO);
                                 }
                                 TeamDTO teamDTO = null;
-                                teamDTO = teamDTOList.get(Integer.parseInt(Wfunc)-1);
+                                teamDTO = teamDTOList.get(Integer.parseInt(Wfunc) - 1);
                                 ArrayList<TeamDTO> list = new ArrayList<>();
                                 list.add(teamDTO);
                                 ExecutionTaskDTO executionTaskDTO = new ExecutionTaskDTO(WMfId, list);
                                 taskIDList.add(createTaskController.registerManualTask(executionTaskDTO));
                             } else {
-                                AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("",Wscript);
-                                createTaskController.registerAutomaticTask(automaticTaskDTO);
+                                AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("", Wscript);
+                                taskIDList.add(createTaskController.registerAutomaticTask(automaticTaskDTO));
+
                             }
                             theController.addWorkflowToService(taskIDList, servDTO);
 
