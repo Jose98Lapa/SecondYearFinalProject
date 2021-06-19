@@ -157,7 +157,7 @@ public class CatalogosEServicosBootstraper implements Action {
                             formController.save();
 
                             if (automatic) {
-                                servicoController.automatic("teste_atividade_automatica2.txt");
+                                servicoController.automatic("teste_atividade_automatica2.txt",fId);
                                 automatic=false;
                             }else {
                                 servicoController.manual(fId);

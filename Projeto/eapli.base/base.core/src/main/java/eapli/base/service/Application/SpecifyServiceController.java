@@ -37,9 +37,16 @@ public class SpecifyServiceController {
 
     }
 
-    public void automatic(String script) {
-
-        service = builder.withScript(script).buildAutomatic();
+    public void automatic(String script,String id) {
+        if (id != null) {
+            FormRepository formularyRepository = PersistenceContext.repositories().form();
+            final Form form2 = formularyRepository.ofIdentity(FormID.valueOf(id))
+                    .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
+            formularyRepository.save(form2);
+            service = builder.withForm(form2).withScript(script).buildAutomatic();
+        } else {
+            service = builder.withScript(script).buildAutomatic();
+        }
     }
 
     public void manual(String id) {
