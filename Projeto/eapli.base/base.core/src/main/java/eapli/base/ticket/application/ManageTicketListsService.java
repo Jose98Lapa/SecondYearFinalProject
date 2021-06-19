@@ -34,12 +34,7 @@ public class ManageTicketListsService {
     }
 
     private LinkedList<Ticket> sortTicketsByDate(List<Ticket> list) {
-        list.sort(new Comparator<Ticket>() {
-            @Override
-            public int compare(Ticket o1, Ticket o2) {
-                return o1.compareBySolicitedOn(o2);
-            }
-        });
+        list.sort(Ticket::compareBySolicitedOn);
         Collections.reverse(list);
         return new LinkedList<>(list);
     }
