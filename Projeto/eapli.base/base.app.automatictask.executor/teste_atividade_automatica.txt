@@ -1,0 +1,26 @@
+BEGIN
+    XML $file -> "exemplo.xml"
+        ELEMENTO $specificProduct -> FIND [prod,$file] where (id,5)
+    LMX
+    TEXTO $price -> $specificProduct(preco)
+
+    TEXTO $destinatario-> "guili@isep.ipp.pt"
+    TEXTO $assunto -> "Comunicação com o formulario"
+
+    NUMERO $resposta -> FORM(>r,3)
+    se $resposta=3 entao
+        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então é igual a 3."
+    senao
+        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então não é igual a 3."
+    es
+
+    ENVIAR_EMAIL($destinatario,$assunto,$corpo)
+
+    $price -> FORM(>a,1)
+    TEXTO $corpo-> "O preÃ§o Ã© menor que 5 : " + $price + "$."
+    ENVIAR_EMAIL($assunto,$corpo)
+
+    NUMERO  $numero  -> 969090469
+    ATUALIZAR(collaborator,nickname,"Guilli") -> (contact,$numero)
+
+END
