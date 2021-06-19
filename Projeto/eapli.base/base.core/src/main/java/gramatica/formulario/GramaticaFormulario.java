@@ -1,5 +1,6 @@
 package gramatica.formulario;
 
+import eapli.base.AppSettings;
 import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.domain.FormName;
@@ -48,6 +49,16 @@ public class GramaticaFormulario {
         Form form = new Form(new FormScript("none"), new FormID("2345678"), new FormName("name"), attributeSet);
         parseWithVisitor("teste_formulario.txt", form);
     }
+    public static String parse(String file,Form form){
+        String parser = new AppSettings().getConfigProperty("parser");
+        if ("Visitor".equals(parser)){
+            return parseWithVisitor(file,form);
+        }else{
+            return parseWithListener(file,form);
+        }
+    }
+
+
 
     public static String parseWithVisitor(String file, Form form) {
         try {

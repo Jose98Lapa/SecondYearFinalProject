@@ -32,6 +32,13 @@ public class FormController {
         }
         fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
     }
+    public void registerAnswerForm(FormDTO formDTO){
+        registerForm(formDTO);
+        form = fmb.build();
+        new FormService().testForm(form);
+    }
+
+
     public Form save(){
         form=fmb.build();
         //authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.GSH,BaseRoles.POWER_USER);

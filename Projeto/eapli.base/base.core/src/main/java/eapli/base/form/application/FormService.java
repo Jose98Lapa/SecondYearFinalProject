@@ -5,6 +5,8 @@ import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import gramatica.formulario.GramaticaFormulario;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.Optional;
 
@@ -23,5 +25,13 @@ public class FormService {
 		if (form.isEmpty())
 			throw new IllegalArgumentException("O formulário não se encontra em sistema");
 		return form.get();
+	}
+
+	public void testForm(Form form){
+		try{
+			GramaticaFormulario.parse(form.script().toString(),form);
+		}catch (ParseCancellationException e){
+			e.printStackTrace();
+		}
 	}
 }
