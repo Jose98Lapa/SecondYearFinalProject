@@ -207,17 +207,17 @@ public class EngineV2 {
         if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
-        }
+        } else
             /*if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
                 ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
             }*/
 
 
-        if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
-            selected = assignCollaboratorExecution(ticket);
-            ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
-        }
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+                selected = assignCollaboratorExecution(ticket);
+                ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
+            } else
            /* if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
@@ -227,9 +227,9 @@ public class EngineV2 {
                 FCFSAutomaticTask(ticket);
             }*/
 
-        if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
-            FCFSAutomaticTask(ticket);
-        }
+                if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
+                    FCFSAutomaticTask(ticket);
+                }
 
 
         return ticket;
