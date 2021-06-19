@@ -31,7 +31,7 @@ public class FormController {
         for (AttributeDTO atr:dto.atrDTO) {
             atr2.add(new Attribute(AtributteName.valueOf(atr.nome), AttributeLabel.valueOf(atr.label), AttributeDescription.valueOf(atr.desc), AttributeRegex.valueOf(atr.regex), AttributeType.valueOf(atr.tipo), AttributeID.valueOf(atr.id), ++number ));
         }
-        fmb.setNome(dto.nome).setId(dto.id).setScript(dto.script).setAtr(atr2);
+        fmb.setNome(dto.nome).setId(dto.id).setAtr(atr2);
     }
     public void registerAnswerForm(FormDTO formDTO){
         registerForm(formDTO);
