@@ -173,11 +173,10 @@ public class TcpServer implements Runnable {
         }
 
         try {
-            EngineV2 engine = new EngineV2( );
+            EngineV2 engine = new EngineV2();
             boolean cycle = true;
             while (cycle) {
-                byte[] clientRequest = sIn.readNBytes( 3 );
-                byte data[] = sIn.readNBytes( clientRequest[2] );
+                byte[] clientRequest = sIn.readNBytes( 4 );
                 switch (clientRequest[1]) {
                     case 1:
                         stopConnection(clientIP);
@@ -187,11 +186,12 @@ public class TcpServer implements Runnable {
                         TaskList();
                         break;
                     case 10:
+                        byte data[] =ArrayUtils.addAll(new byte[]{clientRequest[3]},sIn.readNBytes( clientRequest[2]));
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
-                        String[] parameters = new String( data ).split( ";" );
-                        engine.processStatusChange( parameters[0], parameters[1] );
+                        //String[] parameters = new String( data ).split( ";" );
+                        //engine.processStatusChange( parameters[0], parameters[1] );
                         break;
                 }
             }
