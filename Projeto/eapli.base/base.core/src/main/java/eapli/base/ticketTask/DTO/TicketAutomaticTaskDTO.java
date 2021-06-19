@@ -15,4 +15,12 @@ public class TicketAutomaticTaskDTO {
 		this.nextTask = nextTask;
 	}
 
+	@Override
+	public String toString() {
+		return "TicketAutomaticTaskDTO{" +
+				"ticketTaskID='" + ticketTaskID + '\'' +
+				", scriptPath='" + scriptPath + '\'' +
+				", nextTask='" + nextTask + '\'' +
+				'}';
+	}
 }

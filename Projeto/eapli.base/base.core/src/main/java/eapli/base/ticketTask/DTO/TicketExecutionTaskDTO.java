@@ -25,4 +25,13 @@ public class TicketExecutionTaskDTO {
 		this.form = form;
 		this.executedBy = executedBy;
 	}
+
+	@Override
+	public String toString() {
+		return "TicketExecutionTaskDTO{" +
+				"ticketTaskID='" + ticketTaskID + '\'' +
+				", form=" + form +
+				", executedBy=" + executedBy +
+				'}';
+	}
 }
