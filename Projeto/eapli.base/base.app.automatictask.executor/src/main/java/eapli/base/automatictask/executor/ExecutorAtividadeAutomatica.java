@@ -97,7 +97,7 @@ public class ExecutorAtividadeAutomatica {
         public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
             if (doInstruction) {
                 Value identidade = stack.pop();
-                String stringFicheiro = ctx.stringficheiro.getText();
+                String stringFicheiro = ctx.stringficheiro.getText().replaceAll("\"","");
                 memory.put(identidade.toString(), new Value(stringFicheiro));
             }
         }
@@ -120,9 +120,10 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
             if (doInstruction) {
+                Value identidade2 = stack.pop();
                 Value identidade = stack.pop();
                 String what = ctx.what.getText();
-                String file = ctx.file.getText();
+                String fileName = memory.get(identidade2.toString()).toString();
                 String id = ctx.id.getText();
                 String idValue = ctx.idvalue.getText();
 
@@ -133,7 +134,7 @@ public class ExecutorAtividadeAutomatica {
                 try {
 
                     builder = factory.newDocumentBuilder();
-                    doc = builder.parse(file);
+                    doc = builder.parse(fileName);
                     XPathFactory xpathFactory = XPathFactory.newInstance();
                     XPath xpath = xpathFactory.newXPath();
 
@@ -160,13 +161,14 @@ public class ExecutorAtividadeAutomatica {
         public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
             if (doInstruction) {
                 try {
+                    Value identidade2 =stack.pop();
+                    Element element = memory.get(identidade2.toString()).asElement();
                     Value identidade = stack.pop();
-                    Element element = stack.pop().asElement();
                     String what = ctx.what.getText();
                     Node node = element.getElementsByTagName(what).item(0);
                     Element resultElement = (Element) node;
                     Value result = new Value(resultElement.getTextContent());
-                    memory.put(ctx.nomeVar.getText(), result);
+                    memory.put(identidade.toString(), result);
                 } catch (Exception e) {
                     throw new ParseCancellationException("Elemento xml não encontrado");
                 }
@@ -174,18 +176,9 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx){
-            if (doInstruction) {
-                Value identidade = stack.pop();
-                Value value = stack.pop();
-                memory.put(identidade.toString(), value);
-            }
-        }
-
-        @Override
         public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx){
             if (doInstruction) {
-                stack.push(new Value(ctx.atom.getText()));
+                stack.push(new Value(ctx.atom.getText().replaceAll("\"","")));
             }
         }
 
@@ -252,7 +245,9 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
             if (doInstruction) {
+                Value identidade2 = stack.pop();
                 Value identidade = stack.pop();
+                memory.put(identidade.toString(),identidade2);
             }
         }
 
@@ -285,9 +280,9 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
             if (doInstruction) {
-                Value destinatario = stack.pop();
-                Value assunto = stack.pop();
                 Value corpo = stack.pop();
+                Value assunto = stack.pop();
+                Value destinatario = stack.pop();
                 EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
             }
         }
@@ -305,8 +300,8 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
             if (doInstruction) {
-                Value assunto = stack.pop();
                 Value corpo = stack.pop();
+                Value assunto = stack.pop();
                 EmailSender.sendEmail(userEmail, assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
             }
         }
