@@ -18,6 +18,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class TcpExecuterClient {
@@ -135,7 +137,9 @@ public class TcpExecuterClient {
 
         Form ticketForm = ticket.ticketForm();
         StringBuilder answers = new StringBuilder();
-        for (Attribute at : ticketForm.atributes()) {
+        ArrayList<Attribute> attributeFormList = new ArrayList<>( ticketForm.atributes() );
+        attributeFormList.sort( Comparator.comparing(Attribute::number) );
+        for (Attribute at : attributeFormList) {
             if (isfirst) {
                 answers.append(at.label().toString());
                 isfirst = false;
@@ -149,7 +153,9 @@ public class TcpExecuterClient {
         if (opApprovalTask.isPresent()) {
             TicketApprovalTask approvalTask = opApprovalTask.get();
             isfirst = true;
-            for (Attribute at : approvalTask.form().atributes()) {
+            ArrayList< Attribute > attributeApprovalList = new ArrayList<>( approvalTask.form().atributes() );
+            attributeApprovalList.sort( Comparator.comparing(Attribute::number) );
+            for (Attribute at : attributeApprovalList) {
                 if (isfirst) {
                     approval.append(at.label().toString());
                     isfirst = false;
