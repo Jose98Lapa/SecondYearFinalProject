@@ -153,6 +153,7 @@ class TcpServerThread implements Runnable {
 
             SFTPClient scriptClient = new SFTPClient();
             File file = new File("rui");
+            file.createNewFile();
             System.out.println(file.getAbsolutePath());
             System.out.println(scriptName);
             File script = scriptClient.getScript(scriptName);
