@@ -13,7 +13,11 @@ class ExecutorAtividadeAutomaticaTest {
     void parseWithListener() throws IOException {
         String email="tiago@gmail.com";
         List<String> formAnswers = new ArrayList<>();
+        formAnswers.add("1");
+        formAnswers.add("2");
+        formAnswers.add("3");
         List<String> formApproved = new ArrayList<>();
+        formApproved.add("6.90");
         ExecutorAtividadeAutomatica.parseWithListener(email,"teste_atividade_automatica.txt",formAnswers,formApproved);
     }
 }

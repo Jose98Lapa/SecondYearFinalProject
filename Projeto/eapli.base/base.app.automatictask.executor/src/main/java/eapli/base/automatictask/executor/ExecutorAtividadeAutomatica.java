@@ -94,18 +94,38 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
+        public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
+            if (doInstruction){
+                String what = ctx.what.getText().replaceAll("\"", "");
+                String id = ctx.id.getText().replaceAll("\"", "");
+                String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
+                String whatToUpdate = ctx.updatevalue.getText().replaceAll("\"", "");
+                String updatevalue = stack.pop().toString().replaceAll("\"", "");
+                String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
+                String user = "admin";
+                String passwd = "eapli";
+
+                String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s'", what, whatToUpdate, updatevalue, id, idvalue);
+                try {
+                    Class.forName("org.h2.Driver");
+
+                    Connection conn = DriverManager.getConnection(url, user, passwd);
+                    Statement stmt = conn.createStatement();
+                    stmt.executeUpdate(query);
+                    stmt.close();
+                    conn.close();
+                } catch (ClassNotFoundException | SQLException e) {
+                    throw new ParseCancellationException("Update não executado");
+                }
+            }
+        }
+
+        @Override
         public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
             if (doInstruction) {
                 Value identidade = stack.pop();
                 String stringFicheiro = ctx.stringficheiro.getText().replaceAll("\"","");
                 memory.put(identidade.toString(), new Value(stringFicheiro));
-            }
-        }
-
-        @Override
-        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx) {
-            if (doInstruction) {
-                stack.push(new Value(ctx.var.getText()));
             }
         }
 
@@ -146,15 +166,13 @@ public class ExecutorAtividadeAutomatica {
             }
         }
 
-        private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
-                try {
-                    XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
-                    Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
-                    Element element = (Element) node;
-                    return element;
-                } catch (XPathExpressionException e) {
-                    throw new ParseCancellationException("Atributo xml não encontrado");
-                }
+        @Override
+        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
+            if (doInstruction) {
+                Value expr = stack.pop();
+                Value identidade = stack.pop();
+                memory.put(identidade.toString(),expr);
+            }
         }
 
         @Override
@@ -176,53 +194,8 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx){
-            if (doInstruction) {
-                stack.push(new Value(ctx.atom.getText().replaceAll("\"","")));
-            }
-        }
-
-        @Override
-        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
-            if (doInstruction) {
-                int index = new Value(ctx.dados.getText()).asInteger();
-                Value identidade = stack.pop();
-
-                if (index >= this.formAnswers.size())
-                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
-                Value dados = new Value(formAnswers.get(index - 1));
-                memory.put(identidade.toString(), dados);
-            }
-        }
-
-        @Override
-        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx){
-            if (doInstruction) {
-                int index = new Value(ctx.dados.getText()).asInteger();
-                Value identidade = stack.pop();
-
-                if (index >= this.formApproved.size())
-                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
-                Value dados = new Value(formApproved.get(index - 1));
-                memory.put(identidade.toString(), dados);
-            }
-        }
-
-        @Override
-        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
-            Value identidade = stack.pop();
-            if(!memory.containsKey(identidade.toString()))
-                throw new ParseCancellationException("Variável não inicializada");
-            Value left=memory.get(identidade.toString());
-            Value right=new Value(ctx.right);
-            switch (ctx.op.getType()) {
-                case GramaticaFormularioParser.EQ:
-                    stack.push(new Value(left.equals(right)));
-                    break;
-                case GramaticaFormularioParser.NEQ:
-                    stack.push(new Value(!left.equals(right)));
-                    break;
-            }
+        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
+            doInstruction=true;
         }
 
         @Override
@@ -239,23 +212,10 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
-            doInstruction=true;
-        }
-        @Override
-        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
-            if (doInstruction) {
-                Value identidade2 = stack.pop();
-                Value identidade = stack.pop();
-                memory.put(identidade.toString(),identidade2);
-            }
-        }
-
-        @Override
         public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
             if (doInstruction) {
-                Value left = stack.pop();
-                Value right = new Value(ctx.right);
+                Value right = stack.pop();
+                Value left =stack.pop();
                 switch (ctx.op.getType()) {
                     case GramaticaFormularioParser.MAIS:
                         if (left.isDouble() && right.isDouble())
@@ -274,6 +234,47 @@ public class ExecutorAtividadeAutomatica {
                             throw new ParseCancellationException("Não foi possivel fazer a operação");
                         break;
                 }
+            }
+        }
+
+        @Override
+        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
+            Value right = stack.pop();
+            Value left = stack.pop();
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.EQ:
+                    stack.push(new Value(left.equals(right)));
+                    break;
+                case GramaticaFormularioParser.NEQ:
+                    stack.push(new Value(!left.equals(right)));
+                    break;
+            }
+        }
+
+        @Override
+        public void exitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx){
+            Value identidade = stack.pop();
+            stack.push(memory.get(identidade.toString()));
+        }
+
+        @Override
+        public void enterTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx){
+            if (doInstruction) {
+                stack.push(new Value(ctx.getText()));
+            }
+        }
+
+        @Override
+        public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx){
+            if (doInstruction) {
+                stack.push(new Value(ctx.getText().replaceAll("\"","")));
+            }
+        }
+
+        @Override
+        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx) {
+            if (doInstruction) {
+                stack.push(new Value(ctx.var.getText()));
             }
         }
 
@@ -316,29 +317,40 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
-            if (doInstruction){
-                String what = ctx.what.getText().replaceAll("\"", "");
-                String id = ctx.id.getText().replaceAll("\"", "");
-                String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
-                String whatToUpdate = ctx.updatevalue.getText().replaceAll("\"", "");
-                String updatevalue = stack.pop().toString().replaceAll("\"", "");
-                String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
-                String user = "admin";
-                String passwd = "eapli";
+        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx){
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
 
-                String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s'", what, whatToUpdate, updatevalue, id, idvalue);
-                try {
-                    Class.forName("org.h2.Driver");
+                if (index >= this.formApproved.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formApproved.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
+        }
 
-                    Connection conn = DriverManager.getConnection(url, user, passwd);
-                    Statement stmt = conn.createStatement();
-                    stmt.executeUpdate(query);
-                    stmt.close();
-                    conn.close();
-                } catch (ClassNotFoundException | SQLException e) {
-                    throw new ParseCancellationException("Update não executado");
-                }
+
+        @Override
+        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
+
+                if (index > this.formAnswers.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formAnswers.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
+        }
+
+        private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
+            try {
+                XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                Element element = (Element) node;
+                return element;
+            } catch (XPathExpressionException e) {
+                throw new ParseCancellationException("Atributo xml não encontrado");
             }
         }
     }
@@ -549,8 +561,8 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public Value visitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx) {
 
-            Value left = this.visit(ctx.left);
             Value right = this.visit(ctx.right);
+            Value left = this.visit(ctx.left);
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.EQ:
