@@ -84,6 +84,7 @@ public class SFTPClient {
         }
         System.out.println(sftpChannel.pwd());
         sftpChannel.get(source, filename);
+        System.out.println("teste");
         sftpChannel.exit();
         session.disconnect();
         return new File(filename);
