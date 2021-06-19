@@ -74,14 +74,9 @@ public class SFTPClient {
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
-        try {
-            sftpChannel.cd(localServerFolder);
-        } catch (SftpException e) {
-            sftpChannel.mkdir(localServerFolder);
-            sftpChannel.cd(localServerFolder);
-        }
-        System.out.println(sftpChannel.pwd());
-        InputStream inputStream = sftpChannel.get(source);
+        InputStream inputStream = sftpChannel.get(localServerFolder+'/'+source);
+        System.out.println(source);
+        System.out.println(filename);
         File file = new File(filename);
         try(OutputStream outputStream = new FileOutputStream(file)){
             IOUtils.copy(inputStream, outputStream);

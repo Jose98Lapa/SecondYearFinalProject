@@ -159,7 +159,6 @@ class TcpServerThread implements Runnable {
             Pair<Boolean, String> wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
             Pair<Boolean, String> wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
 
-            script.delete();
             calendar = Calendar.getInstance();
             if (wasItSuccessfull.a)
                 System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
