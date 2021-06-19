@@ -106,16 +106,20 @@ public class CreateTicketController {
 
 	public boolean createTicket ( TicketDTO ticketDTO ) {
 
+		Service service = new ServiceListService().getServiceByID(ticketDTO.serviceDTO.id);
 		Ticket ticket = builder
 				.solicitedOn( ticketDTO.solicitedOn )
 				.withDeadLine( ticketDTO.deadLine )
 				.completedOn( ticketDTO.completedOn )
 				.withStatus( Constants.PENDING )
 				.withPossibleFile( ticketDTO.file )
+				.withService(service)
 				.withUrgency( ticketDTO.urgency )
-				.withWorkFlow( new TicketWorkflow( null ) )
+				.withWorkFlow( new TicketWorkflow( new TicketTaskService().createTicketTask(ticketDTO.deadLine,service.workflow().starterTask()) ) )
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
+
+
 
 		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
