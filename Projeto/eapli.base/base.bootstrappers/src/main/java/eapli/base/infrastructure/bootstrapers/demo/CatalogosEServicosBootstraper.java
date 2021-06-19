@@ -267,7 +267,6 @@ public class CatalogosEServicosBootstraper implements Action {
                             } else {
                                 AutomaticTaskDTO automaticTaskDTO = new AutomaticTaskDTO("", Wscript);
                                 taskIDList.add(createTaskController.registerAutomaticTask(automaticTaskDTO));
-
                             }
                             theController.addWorkflowToService(taskIDList, servDTO);
 
