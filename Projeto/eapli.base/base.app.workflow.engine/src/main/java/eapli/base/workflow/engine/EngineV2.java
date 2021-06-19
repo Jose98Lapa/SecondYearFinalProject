@@ -19,22 +19,19 @@ import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.domain.*;
-import eapli.base.workflow.engine.client.TcpExecuterClient;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
-import java.io.IOException;
 import java.util.*;
 
 public class EngineV2 {
 
-    private final TicketRepository ticketRepository;
-    private final ServiceRepository serviceRepository;
-    private final CreateTaskController ticketTaskController;
-    static TreeMap<Date, Collaborator> historyExecution = new TreeMap<>();
-    static TreeMap<Date, Collaborator> historyApproval = new TreeMap<>();
-    static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
+	private final TicketRepository ticketRepository;
+	private final ServiceRepository serviceRepository;
+	private final CreateTaskController ticketTaskController;
+	static TreeMap< Date, Collaborator > historyExecution = new TreeMap<>( );
+	static TreeMap< Date, Collaborator > historyApproval = new TreeMap<>( );
 
 	public EngineV2 ( ) {
 
@@ -85,10 +82,10 @@ public class EngineV2 {
 				break;
 		}
 
-        processedTicket.ifPresent(ticketRepository::save);
-    }
+		processedTicket.ifPresent( ticketRepository::save );
+	}
 
-    private void createWorkFlow(Ticket ticket) {
+	private void createWorkFlow ( Ticket ticket ) {
 
 		System.out.println( ticket.service().identity().toString() );
 		Service service = serviceRepository.ofIdentity( ticket.service().identity() ).get();
@@ -188,123 +185,48 @@ public class EngineV2 {
 		switch ( Application.settings( ).getCollaboratorAssignerAlgorithm( ) ) {
 			case "FCFS":
 				System.out.println( "FCFS" );
-				delegated = FCFSTicket( ticket );
+				delegated = FCFS( ticket );
 				break;
 				//TODO: CHANGE NAMING
 			case "COMPLEX":
 				break;
 		}
 
-        return delegated;
-    }
+		return delegated;
+	}
 
-    public Ticket FCFSTicket(Ticket ticket) {
+	public Ticket FCFS ( Ticket ticket ) {
 
-        Collaborator selected = null;
+		Collaborator selected = null;
 
-        if (ticket.status().toString().equals("PENDING")) {
+		if ( ticket.status().toString().equals( "PENDING" ) ) {
 
-            if (ticket.workflow().starterTask() instanceof TicketApprovalTask) {
-                selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
-            }
-            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketApprovalTask) {
-                selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
-            }
-        }
+			if ( ticket.workflow( ).starterTask( ) instanceof TicketApprovalTask ) {
+				selected = assignCollaboratorApproval( ticket );
+				( ( TicketApprovalTask ) ticket.workflow( ).starterTask( ) ).setApprovedBy( selected );
+			}
+			if ( ticket.workflow( ).starterTask( ).transition().nextTask() instanceof TicketApprovalTask ) {
+				selected = assignCollaboratorApproval( ticket );
+				( ( TicketApprovalTask ) ticket.workflow( ).starterTask( ) ).setApprovedBy( selected );
+			}
+		}
 
-        if (ticket.status().toString().equals("APPROVED")) {
+		if ( ticket.status().toString().equals( "APPROVED" ) ) {
 
-            if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
-                selected = assignCollaboratorExecution(ticket);
-                ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
-            }
-            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
-                selected = assignCollaboratorExecution(ticket);
-                ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
-            }
-        }
+			if ( ticket.workflow( ).starterTask( ) instanceof TicketExecutionTask ) {
+				selected = assignCollaboratorExecution( ticket );
+				( ( TicketExecutionTask ) ticket.workflow( ).starterTask( ) ).setExecutedBy( selected );
+			}
+			if ( ticket.workflow( ).starterTask( ).transition().nextTask() instanceof TicketExecutionTask ) {
+				selected = assignCollaboratorExecution( ticket );
+				( ( TicketExecutionTask ) ticket.workflow( ).starterTask( ) ).setExecutedBy( selected );
+			}
+		}
 
-        return ticket;
-    }
+		return ticket;
+	}
 
-    public Ticket FCFSAutomaticTask(Ticket ticket) {
-
-        String selected = "";
-        try {
-            if (ticket.status().toString().equals("PENDING")) {
-                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                    selected = assignServer();
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
-                    selected = assignServer();
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-            }
-
-            if (ticket.status().toString().equals("APPROVED")) {
-                if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-                if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
-                    TcpExecuterClient client = new TcpExecuterClient();
-                    client.startConnection(selected);
-                    client.executeAutomaticTask(ticket);
-                    client.stopConnection();
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("An error ocorred");
-        }
-
-        return ticket;
-    }
-
-    public synchronized String assignServer() {
-
-        String theChosenOne = "";
-        List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.3");
-        serverList.add("172.17.0.4");
-        serverList.add("172.17.0.5");
-        serverList.add("172.17.0.6");
-
-        for (Date date : historyAutomaticTask.keySet()) {
-            if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum colaborador for removido retira do historico
-                historyAutomaticTask.remove(date);
-            }
-        }
-
-        for (String server : serverList) { //verificar se existe algum que ainda nao tenha feito nada
-            if (!historyAutomaticTask.containsValue(server)) {
-                theChosenOne = server;
-                historyAutomaticTask.put(new Date(), server);
-            }
-        }
-
-        if (theChosenOne.equals("")) { //se todos ja tiverem feito pelo menos um, vai verificar o que fez ha mais tempo
-            for (Date date : historyAutomaticTask.keySet()) {
-                if (serverList.contains(historyAutomaticTask.get(date))) {
-                    theChosenOne = historyAutomaticTask.get(date);
-                    historyAutomaticTask.put(new Date(), historyAutomaticTask.remove(date));
-                }
-            }
-        }
-        return theChosenOne;
-    }
-
-    public synchronized Collaborator assignCollaboratorExecution(Ticket ticket) {
+	public synchronized Collaborator assignCollaboratorExecution ( Ticket ticket ) {
 
 		TeamRepository teamRepository = PersistenceContext.repositories( ).teams( );
 
