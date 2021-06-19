@@ -25,6 +25,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import org.springframework.data.util.Pair;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -258,10 +260,18 @@ public class EngineV2 {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.2");   //executor
-        serverList.add("172.17.0.3");   //executor1
-        serverList.add("172.17.0.4");   //executor2
-        serverList.add("172.17.0.5");   //executor3
+        try {
+            File myObj = new File("Executer_ip_list.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String ip = myReader.nextLine();
+                serverList.add(ip.trim());
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while trying to read the ip list.");
+            return null;
+        }
 
         for (Date date : historyAutomaticTask.keySet()) {
             if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum servidor for removido retira do historico
