@@ -186,7 +186,7 @@ public class TcpServer implements Runnable {
                         TaskList();
                         break;
                     case 10:
-                        byte data[] = sIn.readNBytes( clientRequest[2] );
+                        byte data[] =ArrayUtils.addAll(new byte[]{clientRequest[3]},sIn.readNBytes( clientRequest[2]));
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
