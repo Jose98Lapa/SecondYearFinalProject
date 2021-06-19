@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TicketTaskService {
+
     private final TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
     private final TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
     private final CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();

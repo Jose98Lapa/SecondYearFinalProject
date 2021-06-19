@@ -1,9 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
-
-import eapli.base.feedback.domain.Feedback;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.domain.TicketID;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
