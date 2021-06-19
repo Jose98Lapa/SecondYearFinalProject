@@ -5,6 +5,7 @@ import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.criticality.domain.Criticality;
 import eapli.base.team.domain.Team;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
@@ -82,18 +83,7 @@ public class Catalogue implements AggregateRoot<Long>, DTOable<CatalogueDTO>, Se
 
     @Override
     public boolean sameAs(final Object other) {
-        if (!(other instanceof Catalogue)) {
-            return false;
-        }
-
-        final Catalogue that = (Catalogue) other;
-        if (this == that) {
-            return true;
-        }
-
-        return identity().equals(that.identity()) && title.equals(that.title)
-                && icon.equals(that.icon) && briefDesc.equals(that.briefDesc)
-                && completeDesc == that.completeDesc && status == that.status;
+        return DomainEntities.areEqual(this, other);
     }
 
     private void addAccessCriteria(final Set<Team> accessCriteria) {
