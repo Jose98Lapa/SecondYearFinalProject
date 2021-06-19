@@ -83,7 +83,7 @@ public class SFTPClient {
             sftpChannel.cd(localServerFolder);
         }
         System.out.println(sftpChannel.pwd());
-        sftpChannel.get(source, filename);
+        sftpChannel.get(source, "~/teste.txt");
         System.out.println("teste");
         sftpChannel.exit();
         session.disconnect();
