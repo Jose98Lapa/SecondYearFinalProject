@@ -87,7 +87,7 @@ public class CompleteTaskUI extends AbstractUI {
         attributeDTOList.sort( Comparator.comparing( attributeDTO -> attributeDTO.number ) );
 
         for (AttributeDTO attribute : attributeDTOList ) {
-            System.out.println(attribute.label);
+            System.out.println(attribute.desc);
             AttributeDTO answerAttribute = new AttributeDTO(
                     "Resposta",
                     attribute.label,

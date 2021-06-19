@@ -33,10 +33,12 @@ public class FormController {
         }
         fmb.setNome(dto.nome).setId(dto.id).setAtr(atr2);
     }
-    public void registerAnswerForm(FormDTO formDTO){
+    public Form registerAnswerForm(FormDTO formDTO){
         registerForm(formDTO);
+        fmb.setScript(formDTO.script);
         form = fmb.build();
         new FormService().testForm(form);
+        return repo.save(form);
     }
 
 
