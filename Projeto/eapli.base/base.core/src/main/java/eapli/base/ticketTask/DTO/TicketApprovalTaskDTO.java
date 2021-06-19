@@ -28,10 +28,10 @@ public class TicketApprovalTaskDTO {
 
 	@Override
 	public String toString() {
-		return 	"ticket Task ID=" + ticketTaskID  +
-				", previous Task='" + previousTask +
-				", next Task='" + nextTask +
+		return "TicketApprovalTaskDTO{" +
+				"ticketTaskID='" + ticketTaskID + '\'' +
 				", form=" + form +
-				", approved By=" + approvedBy;
+				", approvedBy=" + approvedBy +
+				'}';
 	}
 }

@@ -17,10 +17,10 @@ public class TicketAutomaticTaskDTO {
 
 	@Override
 	public String toString() {
-		return
-				"ticket Task ID=" + ticketTaskID +
-				", script Path=" + scriptPath +
-				", previous Task=" + previousTask +
-				", next Task=" + nextTask;
+		return "TicketAutomaticTaskDTO{" +
+				"ticketTaskID='" + ticketTaskID + '\'' +
+				", scriptPath='" + scriptPath + '\'' +
+				", nextTask='" + nextTask + '\'' +
+				'}';
 	}
 }
