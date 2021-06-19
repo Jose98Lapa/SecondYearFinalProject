@@ -211,6 +211,18 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
+        public void exitPowExpr(GramaticaAtividadeAutomaticaParser.PowExprContext ctx) {
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+
+                if (left.isString() || right.isString())
+                    throw new ParseCancellationException("Não foi possivel fazer a operação");
+                stack.push(new Value(left.asInteger() / right.asInteger()));
+            }
+        }
+
+        @Override
         public void exitMulDivModExpr(GramaticaAtividadeAutomaticaParser.MulDivModExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
@@ -267,16 +279,60 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
+        public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx){
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+
+                if (left.isString() || right.isString())
+                    throw new ParseCancellationException("Não foi possivel fazer a operação");
+
+                switch (ctx.op.getType()) {
+                    case GramaticaAtividadeAutomaticaParser.LT:
+                       stack.push(new Value(left.asDouble() < right.asDouble()));
+                    case GramaticaAtividadeAutomaticaParser.LTEQ:
+                        stack.push(new Value(left.asDouble() <= right.asDouble()));
+                    case GramaticaAtividadeAutomaticaParser.GT:
+                        stack.push(new Value(left.asDouble() > right.asDouble()));
+                    case GramaticaAtividadeAutomaticaParser.GTEQ:
+                        stack.push(new Value(left.asDouble() >= right.asDouble()));
+                    default:
+                        throw new ParseCancellationException("Operação não reconhecida");
+                }
+            }
+        }
+
+        @Override
         public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
-            Value right = stack.pop();
-            Value left = stack.pop();
-            switch (ctx.op.getType()) {
-                case GramaticaFormularioParser.EQ:
-                    stack.push(new Value(left.equals(right)));
-                    break;
-                case GramaticaFormularioParser.NEQ:
-                    stack.push(new Value(!left.equals(right)));
-                    break;
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+                switch (ctx.op.getType()) {
+                    case GramaticaFormularioParser.EQ:
+                        stack.push(new Value(left.equals(right)));
+                        break;
+                    case GramaticaFormularioParser.NEQ:
+                        stack.push(new Value(!left.equals(right)));
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void exitAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx){
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+                stack.push(new Value(left.asBoolean() && right.asBoolean()));
+            }
+        }
+
+        @Override
+        public void exitOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx){
+            if (doInstruction) {
+                Value right = stack.pop();
+                Value left = stack.pop();
+                stack.push(new Value(left.asBoolean() || right.asBoolean()));
             }
         }
 
@@ -630,7 +686,6 @@ public class ExecutorAtividadeAutomatica {
             return new Value(left.asBoolean() || right.asBoolean());
         }
 
-
         @Override
         public Value visitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) {
             GramaticaAtividadeAutomaticaParser.Condition_blockContext condition = ctx.condition_block();
@@ -724,7 +779,6 @@ public class ExecutorAtividadeAutomatica {
             }
         }
 
-
         @Override
         public Value visitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
             String what = ctx.what.getText().replaceAll("\"", "");
@@ -751,7 +805,5 @@ public class ExecutorAtividadeAutomatica {
             }
             return Value.VOID;
         }
-
-
     }
 }
