@@ -207,11 +207,11 @@ public class EngineV2 {
 
         if (ticket.status().toString().equals("PENDING")) {
 
-            if (ticket.workflow().starterTask() instanceof TicketApprovalTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
                 ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
             }
-            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketApprovalTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
                 selected = assignCollaboratorApproval(ticket);
                 ((TicketApprovalTask) ticket.workflow().starterTask()).setApprovedBy(selected);
             }
@@ -325,9 +325,9 @@ public class EngineV2 {
 		ArrayList<Team> execTeamsUpdated = new ArrayList<>();
 		Service svr = ticket.service();
 
-		if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+		//if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
 			execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
-		}
+		//}
 		for (Team t : execTeams) { //update teams
 			execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
 		}
@@ -385,9 +385,9 @@ public class EngineV2 {
 		ArrayList<Team> aprTeamsUpdated = new ArrayList<>();
 		Service svr = ticket.service();
 
-		if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
+		//if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
 			aprTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
-		}
+		//}
 		for (Team t : aprTeams) { //update teams
 			aprTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
 		}
