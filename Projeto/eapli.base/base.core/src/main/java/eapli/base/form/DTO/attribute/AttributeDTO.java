@@ -18,4 +18,14 @@ public class AttributeDTO {
         this.id = id;
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return
+                "nome='" + nome +
+                ", label='" + label +
+                ", desc='" + desc +
+                ", tipo='" + tipo +
+                ", number=" + number;
+    }
 }

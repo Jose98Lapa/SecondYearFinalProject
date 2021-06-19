@@ -81,7 +81,7 @@ class EmailSender {
     }
 
     public static Boolean sendPassword(String email, String password) {
-        String invoice = "Your Invoice is here!";
+        String invoice = "Your password Arrived";
         String message = "Hello, you're password is:\n" + password;
 
         return sendEmail(email, invoice, message);

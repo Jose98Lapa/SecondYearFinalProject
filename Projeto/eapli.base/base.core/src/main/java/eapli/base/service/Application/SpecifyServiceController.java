@@ -29,7 +29,7 @@ public class SpecifyServiceController {
     private ServiceBuilder builder;
     private final ServiceListService serviceListService = new ServiceListService();
 
-    public void create(ServiceDTO dto) {
+    public void create (ServiceDTO dto) {
 
         builder = new ServiceBuilder();
         final Catalogue catalogue = catalogueRepository.ofIdentity(dto.catalogo.identity).orElseThrow(() -> new IllegalArgumentException("Unknown catalog: " + dto.id));
@@ -37,15 +37,16 @@ public class SpecifyServiceController {
 
     }
 
-    public void automatic(String script, String id) {
+    public void automatic(String script,String id) {
         if (id != null) {
             FormRepository formularyRepository = PersistenceContext.repositories().form();
             final Form form2 = formularyRepository.ofIdentity(FormID.valueOf(id))
                     .orElseThrow(() -> new IllegalArgumentException("Formulario desconhecido: " + id));
             formularyRepository.save(form2);
-            service = builder.withScript(script).withForm(form2).buildAutomatic();
-        } else
+            service = builder.withForm(form2).withScript(script).buildAutomatic();
+        } else {
             service = builder.withScript(script).buildAutomatic();
+        }
     }
 
     public void manual(String id) {
@@ -77,7 +78,7 @@ public class SpecifyServiceController {
         return new ServiceListService().allServices();
     }
 
-    public void updateStatus() {
+    public void updateStatus(){
         this.service.updateStatus();
     }
 
@@ -92,7 +93,7 @@ public class SpecifyServiceController {
         }
     }
 
-    public void deactivateService(ServiceDTO serviceDTO) {
+    public void deactivateService( ServiceDTO serviceDTO ) {
 
         Optional<Service> serviceOptional = serviceRepository.ofIdentity(ServiceID.valueOf(serviceDTO.id));
 
@@ -103,7 +104,7 @@ public class SpecifyServiceController {
         }
     }
 
-    public void update(ServiceDTO serviceDTO) {
+    public void update( ServiceDTO serviceDTO ) {
 
         Optional<Service> serviceOptional = serviceRepository.ofIdentity(ServiceID.valueOf(serviceDTO.id));
 
@@ -122,10 +123,11 @@ public class SpecifyServiceController {
     }
 
 
-    public void updateForm(String formId, ServiceDTO serv) {
+
+    public void updateForm( String formId, ServiceDTO serv ) {
         Optional<Form> serviceFormOptional = serviceRepository.getFormById(FormID.valueOf(formId));
 
-        if (serviceFormOptional.isPresent()) {
+        if (serviceFormOptional.isPresent()){
             Optional<Service> serviceOptional = serviceRepository.ofIdentity(ServiceID.valueOf(serv.id));
             Form serviceForm = serviceFormOptional.get();
 
@@ -137,14 +139,14 @@ public class SpecifyServiceController {
         }
     }
 
-    public void addWorkflowToService(List<String> tasksID, ServiceDTO serviceDTO) {
+    public void addWorkflowToService(List<String> tasksID,ServiceDTO serviceDTO){
         Service service = serviceListService.getServiceByID(serviceDTO.id);
         TaskListService taskListService = new TaskListService();
-        Task starterTask = taskListService.getTaskByStringList(tasksID);
+        Task starterTask= taskListService.getTaskByStringList(tasksID);
         CriticalityListService criticalityListService = new CriticalityListService();
-        starterTask = taskListService.addMaxExecutionTimeToTask(starterTask, criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().approvalObjective().tempoMaximo()), criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().resolutionObjective().tempoMaximo()), tasksID.size());
+        starterTask = taskListService.addMaxExecutionTimeToTask(starterTask, criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().approvalObjective().tempoMaximo()),criticalityListService.convertCriticalityValueInMinutes(service.catalogue().criticalityLevel().resolutionObjective().tempoMaximo()), tasksID.size());
         PersistenceContext.repositories().tasks().save(starterTask);
-        Workflow workflow = new Workflow(new Date(), starterTask);
+        Workflow workflow = new Workflow(new Date(),starterTask);
         service.setWorkflow(workflow);
         serviceRepository.save(service);
 
