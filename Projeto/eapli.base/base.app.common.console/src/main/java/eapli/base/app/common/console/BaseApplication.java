@@ -11,6 +11,12 @@ import org.apache.logging.log4j.Logger;
 import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
+
+import static org.fusesource.jansi.Ansi.Color.BLACK;
+import static org.fusesource.jansi.Ansi.Color.BLUE;
+import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  *
@@ -60,10 +66,27 @@ public abstract class BaseApplication {
     }
 
     protected void printHeader() {
-        System.out.println(SEPARATOR_HR);
+/*        System.out.println(SEPARATOR_HR);
         System.out.println(appTitle() + " " + Application.VERSION);
         System.out.println(Application.COPYRIGHT);
-        System.out.println(SEPARATOR_HR);
+        System.out.println(SEPARATOR_HR)*/;
+        System.setProperty("jansi.force", "true");
+        System.setProperty("jansi.passthrough", "true");
+        System.out.println("+==============================================================================+\n");
+        AnsiConsole.systemInstall();
+        Ansi ansi = ansi().fg(BLUE).a(" /$$   /$$           /$$                 /$$                     /$$      \n" +
+                "| $$  | $$          | $$                | $$                    | $$      \n" +
+                "| $$  | $$  /$$$$$$ | $$  /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$$| $$   /$$\n" +
+                "| $$$$$$$$ /$$__  $$| $$ /$$__  $$ /$$__  $$ /$$__  $$ /$$_____/| $$  /$$/\n" +
+                "| $$__  $$| $$$$$$$$| $$| $$  \\ $$| $$  | $$| $$$$$$$$|  $$$$$$ | $$$$$$/ \n" +
+                "| $$  | $$| $$_____/| $$| $$  | $$| $$  | $$| $$_____/ \\____  $$| $$_  $$ \n" +
+                "| $$  | $$|  $$$$$$$| $$| $$$$$$$/|  $$$$$$$|  $$$$$$$ /$$$$$$$/| $$ \\  $$\n" +
+                "|__/  |__/ \\_______/|__/| $$____/  \\_______/ \\_______/|_______/ |__/  \\__/\n" +
+                "                        | $$                                              \n" +
+                "                        | $$                                              \n" +
+                "                        |__/                                              \n" +
+                "\n").fg(BLACK).reset();
+        System.out.println(ansi);
     }
 
     private final void clearEventHandlers() {
