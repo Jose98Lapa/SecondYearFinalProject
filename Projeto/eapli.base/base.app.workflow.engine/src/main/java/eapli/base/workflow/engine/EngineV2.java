@@ -221,20 +221,20 @@ public class EngineV2 {
 
         if (ticket.status().toString().equals("APPROVED")) {
 
-            if (ticket.workflow().starterTask() instanceof TicketExecutionTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
             }
-            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
             }
 
-            if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
                 FCFSAutomaticTask(ticket);
             }
 
-            if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketAutomaticTask) {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
                 FCFSAutomaticTask(ticket);
             }
         }
@@ -327,9 +327,9 @@ public class EngineV2 {
         ArrayList<Team> execTeamsUpdated = new ArrayList<>();
         Service svr = ticket.service();
 
-        if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+       // if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
             execTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
-        }
+       // }
         for (Team t : execTeams) { //update teams
             execTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
         }
@@ -387,9 +387,9 @@ public class EngineV2 {
         ArrayList<Team> aprTeamsUpdated = new ArrayList<>();
         Service svr = ticket.service();
 
-        if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
+       // if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
             aprTeams.addAll(((ExecutionTask) svr.workflow().starterTask()).executingTeams());
-        }
+       // }
         for (Team t : aprTeams) { //update teams
             aprTeamsUpdated.add(teamRepository.ofIdentity(t.identity()).get());
         }
