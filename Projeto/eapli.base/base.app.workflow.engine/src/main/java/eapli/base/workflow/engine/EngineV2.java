@@ -242,9 +242,10 @@ public class EngineV2 {
             if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
                 selected = assignServer();
                 TcpExecuterClient client = new TcpExecuterClient();
-                client.startConnection(selected);
-                client.executeAutomaticTask(ticket);
-                client.stopConnection();
+                if (client.startConnection(selected)) {
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                }
             }
 
 
