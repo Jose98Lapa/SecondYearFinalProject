@@ -73,9 +73,15 @@ public class SpecifyServiceUI extends AbstractUI {
             }
 
             if (ifo.type().equalsIgnoreCase("AUTOMATICO")) {
-                System.out.println("Script");
-                SFTPClient sftp = new SFTPClient();
-                theController.automatic(sftp.choseAndUploadScript(ifo.id),null);
+                FormUI servicoUi = new FormUI();
+                if (Console.readLine("Deseja introduzir um Fomrulário? s/n").equalsIgnoreCase("s")){
+                    servicoUi.show();
+                    theController.automatic(ifo.id,servicoUi.formId);
+                } else {
+                    System.out.println("Script");
+                    SFTPClient sftp = new SFTPClient();
+                    theController.automatic(sftp.choseAndUploadScript(ifo.id), null);
+                }
             } else if (ifo.type().equalsIgnoreCase("MANUAL")) {
                 FormUI servicoUi = new FormUI();
                 servicoUi.show();

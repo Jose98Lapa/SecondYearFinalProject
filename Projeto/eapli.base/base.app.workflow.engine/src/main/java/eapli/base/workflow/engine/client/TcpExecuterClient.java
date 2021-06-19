@@ -55,7 +55,7 @@ public class TcpExecuterClient {
 
         try {
 
-            socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getIpAutomatictaskExecutor()));
+            socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
 
         } catch (IOException ex) {
 

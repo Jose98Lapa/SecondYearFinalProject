@@ -39,7 +39,7 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 
 	@Override
 	public List<TicketTask> getIncompleteTicketsByCollaborator(Collaborator collab) {
-		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.approvedBy=:approvedBy and e.dateStarted is null", TicketTask.class);
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy=:approvedBy and e.dateStarted is null", TicketTask.class);
 		q.setParameter("approvedBy", collab);
 
 		List<TicketTask> ticketTaskList = new ArrayList<>();
@@ -68,36 +68,47 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 	}
 
 	@Override
-	public Optional< TicketApprovalTask > approvalTaskOf ( TicketDTO ticket ) {
+	public List<TicketTask> getIncompleteUnassignedTickets() {
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy is null and e.dateStarted is null and e.status = :status", TicketTask.class);
+		q.setParameter("status","INCOMPLETE");
 
-		final String queryString =
-				"SELECT e " +
-				"FROM eapli.base.ticketTask.domain.TicketApprovalTask e" +
-				"WHERE e.";
-		final TypedQuery< TicketApprovalTask >  query = createQuery( queryString, TicketApprovalTask.class  );
-		query.setParameter( "id", ticket.id );
+		List<TicketTask> ticketTaskList = new ArrayList<>();
+		for (Iterator<TicketTask> it = q.getResultStream().iterator(); it.hasNext(); ) {
+			TicketTask ticketTask = it.next();
+			ticketTaskList.add(ticketTask);
+		}
 
-		return Optional.of( query.getSingleResult() );
+		final TypedQuery<TicketTask> p = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE e.executedBy is null and e.dateStarted is null and e.status = :status", TicketTask.class);
+		p.setParameter("status","INCOMPLETE");
+
+		for (Iterator<TicketTask> it = p.getResultStream().iterator(); it.hasNext(); ) {
+			TicketTask ticketTask = it.next();
+			ticketTaskList.add(ticketTask);
+		}
+
+		return ticketTaskList;
 	}
 
 	@Override
-	public Optional< TicketAutomaticTask > automaticTaskOf ( TicketDTO ticket ) {
+	public List< TicketApprovalTask > pendingApproval ( String collaboratorEmail ) {
 
-		final String queryString = "";
-		final TypedQuery< TicketAutomaticTask >  query = createQuery( queryString, TicketAutomaticTask.class  );
-		query.setParameter( "id", ticket.id );
-
-		return Optional.of( query.getSingleResult() );
+		final TypedQuery< TicketApprovalTask > query = createQuery(
+				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.approvedBy:=approvedBy",
+				TicketApprovalTask.class )
+				;
+		query.setParameter( "approvedBy", collaboratorEmail );
+		return query.getResultList();
 	}
 
 	@Override
-	public Optional< TicketExecutionTask > executionTaskOf ( TicketDTO ticket ) {
+	public List< TicketExecutionTask > pendingExecution ( String collaboratorEmail ) {
 
-		final String queryString = "";
-		final TypedQuery< TicketExecutionTask >  query = createQuery( queryString, TicketExecutionTask.class  );
-		query.setParameter( "id", ticket.id );
-
-		return Optional.of( query.getSingleResult() );
+		final TypedQuery< TicketExecutionTask > query = createQuery(
+				"SELECT e FROM eapli.base.ticketTask.domain.TicketTask e Where e.executedBy:=executedBy",
+				TicketExecutionTask.class
+		);
+		query.setParameter( "executedBy", collaboratorEmail );
+		return query.getResultList();
 	}
 
 }

@@ -1,5 +1,6 @@
 package eapli.base.ticketTask.application;
 
+import eapli.base.collaborator.application.ListCollaboratorService;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.collaborator.domain.InstituionalEmail;
 import eapli.base.collaborator.repositories.CollaboratorRepository;
@@ -30,11 +31,16 @@ public class TicketTaskService {
         return collaboratorRepository.getColaboradorByEmail(InstituionalEmail.valueOf(email));
     }
 
-    public List<TicketDTO> getPendingTasks() {
+    public List<TicketDTO> getPendingTasks(String emailCollaborator) {
         List<Ticket> ticketList = ticketRepository.getPendingTicket();
         List<TicketDTO> ticketDTOList = new ArrayList<>();
-        for (Ticket ticket : ticketList)
-            ticketDTOList.add(ticket.toDTO());
+        for (TicketTask ticketTask : ticketTaskRepository.getIncompleteTicketsByCollaborator(new ListCollaboratorService().getCollaboratorByEmail(emailCollaborator)))
+            if (ticketTask.getClass() != TicketAutomaticTask.class)
+                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+        for (TicketTask ticketTask : ticketTaskRepository.getIncompleteUnassignedTickets())
+            if (ticketTask.getClass() != TicketAutomaticTask.class)
+                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+
         return ticketDTOList;
     }
 
@@ -92,7 +98,7 @@ public class TicketTaskService {
                     new Transition(null, null),
                     starter,
                     ((ApprovalTask) starter).form(),
-                    LocalDate.parse(deadline,formatter)
+                    LocalDate.parse(deadline, formatter)
             );
 
             return ticketTaskController.registerTicketTask(approvalTask);
@@ -103,7 +109,7 @@ public class TicketTaskService {
                     new Transition(null, null), starter,
                     ((ExecutionTask) starter).form(),
                     null,
-                    LocalDate.parse(deadline,formatter)
+                    LocalDate.parse(deadline, formatter)
             );
 
             return ticketTaskController.registerTicketTask(executionTask);
@@ -140,11 +146,11 @@ public class TicketTaskService {
 
     }
 
-    public void addCollaborator (TicketTask ticketTask,Collaborator collaborator){
-        if (ticketTask.getClass()==TicketApprovalTask.class){
+    public void addCollaborator(TicketTask ticketTask, Collaborator collaborator) {
+        if (ticketTask.getClass() == TicketApprovalTask.class) {
             ((TicketApprovalTask) ticketTask).setApprovedBy(collaborator);
         }
-        if (ticketTask.getClass()==TicketExecutionTask.class){
+        if (ticketTask.getClass() == TicketExecutionTask.class) {
             ((TicketExecutionTask) ticketTask).setExecutedBy(collaborator);
         }
 
@@ -206,19 +212,19 @@ public class TicketTaskService {
         return time;
     }
 
-    public List<TicketTask> getPendingApprovalTasks(Collaborator collaborator){
+    public List<TicketTask> getPendingApprovalTasks(Collaborator collaborator) {
         return ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
     }
 
 
-    public List<TicketTask> getCompletedApprovalTasksByCollaborator(Collaborator collaborator){
+    public List<TicketTask> getCompletedApprovalTasksByCollaborator(Collaborator collaborator) {
         return ticketTaskRepository.getCompleteApprovedTicketsByCollaborator(collaborator);
     }
 
-    public Set<Collaborator> getCollaboratorByTicketTask(TicketTask ticketTask){
+    public Set<Collaborator> getCollaboratorByTicketTask(TicketTask ticketTask) {
         if (!(ticketTask instanceof TicketExecutionTask))
             throw new IllegalArgumentException("TicketTask inválida");
-        ExecutionTask executionTask = (ExecutionTask)  ticketTask.mainReference();
+        ExecutionTask executionTask = (ExecutionTask) ticketTask.mainReference();
         Set<Team> teams = new HashSet<>(executionTask.executingTeams());
         return new TeamListService().getCollaboratorByTeams(teams);
     }

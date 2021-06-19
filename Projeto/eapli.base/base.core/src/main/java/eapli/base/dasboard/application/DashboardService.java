@@ -3,6 +3,7 @@ package eapli.base.dasboard.application;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -47,11 +48,11 @@ public class DashboardService {
     }
 
     public LinkedList<DashboardInfoDTO> sortDashboardInfoByCriticality(LinkedList<DashboardInfoDTO> input){
-        input.sort((o1, o2) -> Integer.compare(Integer.parseInt(o1.criticidade), Integer.parseInt(o1.criticidade)));
+        input.sort( Comparator.comparingInt( o -> Integer.parseInt( o.criticidade ) ) );
         return input;
     }
     public LinkedList<DashboardInfoDTO> sortDashboardInfoByUrgency(LinkedList<DashboardInfoDTO> input){
-        input.sort((o1, o2) -> Integer.compare(Integer.parseInt(o1.urgency), Integer.parseInt(o1.urgency)));
+        input.sort( Comparator.comparingInt( o -> Integer.parseInt( o.urgency ) ) );
         return input;
     }
 }
