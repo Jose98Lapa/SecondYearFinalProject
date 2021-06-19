@@ -27,6 +27,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>dataInicio</Anome>
                         <aID>1</aID>
+                        <aNumber>1</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -35,6 +36,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>dataFim</Anome>
                         <aID>2</aID>
+                        <aNumber>2</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -43,6 +45,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>tipoAusencia</Anome>
                         <aID>3</aID>
+                        <aNumber>3</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -51,6 +54,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>justificacao</Anome>
                         <aID>4</aID>
+                        <aNumber>4</aNumber>
                     </SAtributo>
                 </atributes>
             </Formulario>
@@ -88,6 +92,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>fundamentacao</WAnome>
                     <WaID>5</WaID>
+                    <WaNumber>1</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -97,6 +102,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>feriasGozadasAno</WAnome>
                     <WaID>6</WaID>
+                    <WaNumber>2</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -106,6 +112,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>feriasGozadasPeriodo</WAnome>
                     <WaID>7</WaID>
+                    <WaNumber>3</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -115,6 +122,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>feriasTotais</WAnome>
                     <WaID>8</WaID>
+                    <WaNumber>4</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -124,6 +132,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasJustAno</WAnome>
                     <WaID>9</WaID>
+                    <WaNumber>5</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -133,6 +142,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasJustPeriodo</WAnome>
                     <WaID>10</WaID>
+                    <WaNumber>6</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -142,6 +152,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasJustTotal</WAnome>
                     <WaID>11</WaID>
+                    <WaNumber>7</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -151,6 +162,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasAno</WAnome>
                     <WaID>12</WaID>
+                    <WaNumber>8</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -160,6 +172,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasNJustPeriodo</WAnome>
                     <WaID>13</WaID>
+                    <WaNumber>9</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -169,6 +182,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>faltasNJustTotal</WAnome>
                     <WaID>14</WaID>
+                    <WaNumber>10</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Exec</WAtributeForm>
@@ -178,6 +192,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>comentario</WAnome>
                     <WaID>15</WaID>
+                    <WaNumber>11</WaNumber>
                 </WAtributo>
             </atributes>
         </Workflow>
@@ -210,6 +225,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>codCliente</Anome>
                         <aID>16</aID>
+                        <aNumber>1</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -218,6 +234,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>nomeCliente</Anome>
                         <aID>17</aID>
+                        <aNumber>2</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -226,6 +243,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>tipoDesconto</Anome>
                         <aID>18</aID>
+                        <aNumber>3</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -234,6 +252,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>recorrencia</Anome>
                         <aID>19</aID>
+                        <aNumber>4</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -242,6 +261,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>percentagemDesconto</Anome>
                         <aID>20</aID>
+                        <aNumber>5</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -250,6 +270,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>valorDesconto</Anome>
                         <aID>21</aID>
+                        <aNumber>6</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -258,6 +279,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>codFatura</Anome>
                         <aID>22</aID>
+                        <aNumber>7</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -266,6 +288,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>dataLimite</Anome>
                         <aID>23</aID>
+                        <aNumber>8</aNumber>
                     </SAtributo>
                     <SAtributo>
                         <Alabel>Opcao</Alabel>
@@ -274,6 +297,7 @@
                         <Aregex>ignored</Aregex>
                         <Anome>fundamentacao</Anome>
                         <aID>24</aID>
+                        <aNumber>9</aNumber>
                     </SAtributo>
                 </atributes>
             </Formulario>
@@ -311,6 +335,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>decisao</WAnome>
                     <WaID>25</WaID>
+                    <WaNumber>1</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Aprov</WAtributeForm>
@@ -320,6 +345,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>fundamentacao</WAnome>
                     <WaID>26</WaID>
+                    <WaNumber>2</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Aprov</WAtributeForm>
@@ -329,6 +355,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>percentagem</WAnome>
                     <WaID>27</WaID>
+                    <WaNumber>3</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Aprov</WAtributeForm>
@@ -338,6 +365,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>valor</WAnome>
                     <WaID>28</WaID>
+                    <WaNumber>4</WaNumber>
                 </WAtributo>
                 <WAtributo>
                     <WAtributeForm>Aprov</WAtributeForm>
@@ -347,6 +375,7 @@
                     <WAregex>ignored</WAregex>
                     <WAnome>dataLimite</WAnome>
                     <WaID>29</WaID>
+                    <WaNumber>5</WaNumber>
                 </WAtributo>
             </atributes>
         </Workflow>

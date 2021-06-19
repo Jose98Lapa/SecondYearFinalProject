@@ -10,17 +10,11 @@ import org.antlr.v4.runtime.misc.Pair;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 class TcpServer {
 
@@ -156,38 +150,29 @@ class TcpServerThread implements Runnable {
             Calendar calendar = Calendar.getInstance();
             System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
             Pair<Boolean, String> wasItSuccessfull = null;
-            Pair<Boolean, String> wasItSuccessfull2 = null;
 
-            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
+            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR"))
                 wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
-            } else {
-                wasItSuccessfull2 = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
-            }
+            else
+                wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
 
             calendar = Calendar.getInstance();
-            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
-                if (wasItSuccessfull.a)
-                    System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
-                else
-                    System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
-            }
+            if (wasItSuccessfull.a)
+                System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
+            else
+                System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
 
-            if (!Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR")) {
-                if (wasItSuccessfull2.a)
-                    System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
-                else
-                    System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull2.b);
-            }
             return wasItSuccessfull.a;
         } catch (IOException | JSchException | SftpException ex) {
             System.out.println("An error ocurred");
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return false;
         }
     }
 
 
     public void run() {
+
         InetAddress clientIP = clientSocket.getInetAddress();
         System.out.println("New client connection from " + clientIP.getHostAddress() + ", port number " + clientSocket.getPort());
 
