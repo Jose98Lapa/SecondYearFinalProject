@@ -1,4 +1,4 @@
-// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
+// Generated from C:/ROOT/Universidade/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.app.automatictask.executor/src/main/java/eapli/base/automatictask/executor/gramatica/atividadeAutomatica\GramaticaAtividadeAutomatica.g4 by ANTLR 4.9.1
 package eapli.base.automatictask.executor.gramatica.atividadeAutomatica;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -76,13 +76,25 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx) { }
+	@Override public void enterElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElemento(GramaticaAtividadeAutomaticaParser.ElementoContext ctx) { }
+	@Override public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElem_atr(GramaticaAtividadeAutomaticaParser.Elem_atrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElem_atr(GramaticaAtividadeAutomaticaParser.Elem_atrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -191,6 +203,30 @@ public class GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtivid
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStat_block(GramaticaAtividadeAutomaticaParser.Stat_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

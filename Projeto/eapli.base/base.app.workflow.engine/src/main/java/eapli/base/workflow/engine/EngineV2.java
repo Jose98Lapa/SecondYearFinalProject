@@ -19,12 +19,10 @@ import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.domain.*;
-import eapli.base.workflow.engine.client.TcpExecuterClient;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
-import java.io.IOException;
 import java.util.*;
 
 public class EngineV2 {
@@ -85,10 +83,10 @@ public class EngineV2 {
 				break;
 		}
 
-        processedTicket.ifPresent(ticketRepository::save);
-    }
+		processedTicket.ifPresent( ticketRepository::save );
+	}
 
-    private void createWorkFlow(Ticket ticket) {
+	private void createWorkFlow ( Ticket ticket ) {
 
 		System.out.println( ticket.service().identity().toString() );
 		Service service = serviceRepository.ofIdentity( ticket.service().identity() ).get();
@@ -195,8 +193,8 @@ public class EngineV2 {
 				break;
 		}
 
-        return delegated;
-    }
+		return delegated;
+	}
 
     public Ticket FCFSTicket(Ticket ticket) {
 

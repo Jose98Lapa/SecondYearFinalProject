@@ -1,12 +1,15 @@
 package eapli.base.automatictask.executor;
 
 import eapli.base.automatictask.executor.gramatica.atividadeAutomatica.*;
+import gramatica.formulario.GramaticaFormulario;
+import gramatica.formulario.GramaticaFormularioParser;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.Pair;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +27,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class ExecutorAtividadeAutomatica {
     public static void main(String[] args) throws IOException {
@@ -50,218 +54,298 @@ public class ExecutorAtividadeAutomatica {
         return new Pair<>(true,"Succesfull");
     }
 
+    public static Pair<Boolean,String> parseWithListener(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
+        GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
+        try {
+            parser.removeErrorListeners();
+            parser.setErrorHandler(new BailErrorStrategy());
+            ParseTree tree = parser.gramatica(); // parse
+            ParseTreeWalker walker = new ParseTreeWalker();
+            EvalListener eval = new EvalListener(userEmail, formAnswers, formApproval);
+            walker.walk(eval, tree);
+        } catch (ParseCancellationException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage == null)
+                errorMessage = "Lexical error";
+            return new Pair<>(false,errorMessage);
+        }
+        return new Pair<>(true,"Succesfull");
+    }
+
 
     static class EvalListener extends GramaticaAtividadeAutomaticaBaseListener implements GramaticaAtividadeAutomaticaListener {
-       /* public static final double SMALL_VALUE = 0.00000000001;
-
+        private String userEmail;
+        List<String> formAnswers;
+        List<String> formApproved;
+        public static final double SMALL_VALUE = 0.00000000001;
         private Map<String, Value> memory = new HashMap<String, Value>();
-
         private final Stack<Value> stack = new Stack<>();
-
         public Value getResult() {
             return stack.peek();
         }
+        boolean doInstruction=true;
 
-        @Override
-        public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx) {
-            //stack.push(new Value(ctx.atom.getText()));
+        public EvalListener(String userEmail, List<String> formAnswers, List<String> formApproved) {
+            this.userEmail = userEmail;
+            this.formAnswers = formAnswers;
+            this.formApproved = formApproved;
         }
 
         @Override
-        public void enterOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
-        }
-
-        @Override
-        public void exitOpExprMulDiv(GramaticaAtividadeAutomaticaParser.OpExprMulDivContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.MULT:
-                    stack.push(new Value(left.asDouble() * right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.DIV:
-                    stack.push(new Value(left.asDouble() / right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.MOD:
-                    stack.push(new Value(left.asDouble() % right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
+        public void exitFicheiroNomeFicheiro(GramaticaAtividadeAutomaticaParser.FicheiroNomeFicheiroContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                String stringFicheiro = ctx.stringficheiro.getText();
+                memory.put(identidade.toString(), new Value(stringFicheiro));
             }
         }
 
         @Override
-        public void enterRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
-        }
-
-        @Override
-        public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.LT:
-                    stack.push(new Value(left.asDouble() < right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.LTEQ:
-                    stack.push(new Value(left.asDouble() <= right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.GT:
-                    stack.push(new Value(left.asDouble() > right.asDouble()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.GTEQ:
-                    stack.push(new Value(left.asDouble() >= right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
-            }
-        }
-
-
-        @Override
-        public void enterEqualityExpr(GramaticaAtividadeAutomaticaParser.EqualityExprContext ctx) {
-            stack.push(new Value(ctx.right.getText()));
-            stack.push(new Value(ctx.left.getText()));
-        }
-
-        @Override
-        public void exitEqualityExpr(GramaticaAtividadeAutomaticaParser.EqualityExprContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.EQ:
-                    if (left.isDouble() && right.isDouble()) {
-                        stack.push(new Value(Math.abs(left.asDouble() - right.asDouble()) < SMALL_VALUE));
-                    } else {
-                        stack.push(new Value(left.equals(right)));
-                    }
-                    break;
-                case GramaticaAtividadeAutomaticaParser.NEQ:
-                    if (left.isDouble() && right.isDouble()) {
-                        stack.push(new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE));
-                    } else {
-                        stack.push(new Value(!left.equals(right)));
-                    }
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
+        public void enterIdentidade(GramaticaAtividadeAutomaticaParser.IdentidadeContext ctx) {
+            if (doInstruction) {
+                stack.push(new Value(ctx.var.getText()));
             }
         }
 
         @Override
-        public void exitOpExprSumDif(GramaticaAtividadeAutomaticaParser.OpExprSumDifContext ctx) {
-            Value right = stack.pop();
-            Value left = stack.pop();
-
-            switch (ctx.op.getType()) {
-                case GramaticaAtividadeAutomaticaParser.PLUS:
-                    if (left.isDouble() && right.isDouble())
-                        stack.push(new Value(left.asDouble() + right.asDouble()));
-                    else
-                        stack.push(new Value(left.asString() + right.asString()));
-                    break;
-                case GramaticaAtividadeAutomaticaParser.MINUS:
-                    stack.push(new Value(left.asDouble() - right.asDouble()));
-                    break;
-                default:
-                    throw new RuntimeException("unknown operator");
+        public void exitElem_idt(GramaticaAtividadeAutomaticaParser.Elem_idtContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                memory.put(identidade.toString(), null);
             }
         }
 
         @Override
-        public void enterEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) {
-            List<GramaticaAtividadeAutomaticaParser.CondicaoContext> conditions = ctx.ife().condicao();
+        public void exitAtribuicao_elemento(GramaticaAtividadeAutomaticaParser.Atribuicao_elementoContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                String what = ctx.what.getText();
+                String file = ctx.file.getText();
+                String id = ctx.id.getText();
+                String idValue = ctx.idvalue.getText();
 
-            boolean evaluatedBlock = true;
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setNamespaceAware(true);
+                DocumentBuilder builder;
+                Document doc = null;
+                try {
 
-            for (GramaticaAtividadeAutomaticaParser.CondicaoContext condition : conditions) {
-                condition.expr().enterRule(this);
-                condition.expr().exitRule(this);
-                Value evaluated = stack.pop();
+                    builder = factory.newDocumentBuilder();
+                    doc = builder.parse(file);
+                    XPathFactory xpathFactory = XPathFactory.newInstance();
+                    XPath xpath = xpathFactory.newXPath();
 
-                if (!evaluated.asBoolean()) {
-                    evaluatedBlock = false;
-                    break;
+                    memory.put(identidade.toString(), new Value(getSomethingByID(doc, xpath, what, id, idValue)));
+
+                } catch (ParserConfigurationException | SAXException | IOException e) {
+                    throw new ParseCancellationException("Ficheiro xml não reconhecido");
                 }
             }
+        }
 
-            stack.push(new Value(evaluatedBlock));
-
+        private Node getSomethingByID(Document doc, XPath xpath, String what, String id, String idValue) {
+                try {
+                    XPathExpression expr = xpath.compile("//" + what + "[@" + id + "='" + idValue + "']");
+                    Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                    Element element = (Element) node;
+                    return element;
+                } catch (XPathExpressionException e) {
+                    throw new ParseCancellationException("Atributo xml não encontrado");
+                }
         }
 
         @Override
-        public void exitEstrutura_condicional(GramaticaAtividadeAutomaticaParser.Estrutura_condicionalContext ctx) {
-            Value evaluatedBlock = stack.pop();
-
-            if (evaluatedBlock.asBoolean()) {
-                List<GramaticaAtividadeAutomaticaParser.InstrucaoContext> instrucoes = ctx.ife().instrucao();
-                for (GramaticaAtividadeAutomaticaParser.InstrucaoContext instrucao : instrucoes) {
-                    instrucao.expr().enterRule(this);
-                    instrucao.expr().exitRule(this);
-                }
-            }
-
-            if (!evaluatedBlock.asBoolean() && ctx.elsee() != null) {
-                List<GramaticaAtividadeAutomaticaParser.InstrucaoContext> instrucoes = ctx.elsee().instrucao();
-                for (GramaticaAtividadeAutomaticaParser.InstrucaoContext instrucao : instrucoes) {
-                    instrucao.expr().enterRule(this);
-                    instrucao.expr().exitRule(this);
+        public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
+            if (doInstruction) {
+                try {
+                    Value identidade = stack.pop();
+                    Element element = stack.pop().asElement();
+                    String what = ctx.what.getText();
+                    Node node = element.getElementsByTagName(what).item(0);
+                    Element resultElement = (Element) node;
+                    Value result = new Value(resultElement.getTextContent());
+                    memory.put(ctx.nomeVar.getText(), result);
+                } catch (Exception e) {
+                    throw new ParseCancellationException("Elemento xml não encontrado");
                 }
             }
         }
 
         @Override
-        public void enterIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) {
-        }
-
-        @Override
-        public void exitIfe(GramaticaAtividadeAutomaticaParser.IfeContext ctx) {
-        }
-
-        @Override
-        public void enterElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) {
-        }
-
-        @Override
-        public void exitElsee(GramaticaAtividadeAutomaticaParser.ElseeContext ctx) {
-        }
-
-        @Override
-        public void enterCondicao(GramaticaAtividadeAutomaticaParser.CondicaoContext ctx) {
-        }
-
-        @Override
-        public void exitCondicao(GramaticaAtividadeAutomaticaParser.CondicaoContext ctx) {
-        }
-
-        @Override
-        public void enterIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) {
-
-            GramaticaAtividadeAutomaticaParser.Condition_blockContext condition = ctx.condition_block();
-
-            boolean evaluatedBlock = false;
-            condition.expr().enterRule(this);
-            condition.expr().exitRule(this);
-            Value evaluated = stack.pop();
-
-            if (evaluated.asBoolean()) {
-                evaluatedBlock = true;
-                condition.stat_block().enterRule(this);
+        public void exitInicializacaoAtribuicao(GramaticaAtividadeAutomaticaParser.InicializacaoAtribuicaoContext ctx){
+            if (doInstruction) {
+                Value identidade = stack.pop();
+                Value value = stack.pop();
+                memory.put(identidade.toString(), value);
             }
-
-            if (!evaluatedBlock && ctx.stat_block() != null) {
-                // evaluate the else-stat_block (if present == not null)
-                ctx.stat_block().enterRule(this);
-            }
-
         }
-        */
+
+        @Override
+        public void enterAtomExpr(GramaticaAtividadeAutomaticaParser.AtomExprContext ctx){
+            if (doInstruction) {
+                stack.push(new Value(ctx.atom.getText()));
+            }
+        }
+
+        @Override
+        public void enterFormAnswer(GramaticaAtividadeAutomaticaParser.FormAnswerContext ctx) {
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
+
+                if (index >= this.formAnswers.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formAnswers.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
+        }
+
+        @Override
+        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx){
+            if (doInstruction) {
+                int index = new Value(ctx.dados.getText()).asInteger();
+                Value identidade = stack.pop();
+
+                if (index >= this.formApproved.size())
+                    throw new ParseCancellationException(String.format("Indice fora dos limites: %d.", index));
+                Value dados = new Value(formApproved.get(index - 1));
+                memory.put(identidade.toString(), dados);
+            }
+        }
+
+        @Override
+        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
+            Value identidade = stack.pop();
+            if(!memory.containsKey(identidade.toString()))
+                throw new ParseCancellationException("Variável não inicializada");
+            Value left=memory.get(identidade.toString());
+            Value right=new Value(ctx.right);
+            switch (ctx.op.getType()) {
+                case GramaticaFormularioParser.EQ:
+                    stack.push(new Value(left.equals(right)));
+                    break;
+                case GramaticaFormularioParser.NEQ:
+                    stack.push(new Value(!left.equals(right)));
+                    break;
+            }
+        }
+
+        @Override
+        public void enterEntao(GramaticaAtividadeAutomaticaParser.EntaoContext ctx) {
+            if (doInstruction) {
+                Value bool = stack.pop();
+                doInstruction = bool.asBoolean();
+            }
+        }
+
+        @Override
+        public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx){
+            doInstruction=!doInstruction;
+        }
+
+        @Override
+        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
+            doInstruction=true;
+        }
+        @Override
+        public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
+            if (doInstruction) {
+                Value identidade = stack.pop();
+            }
+        }
+
+        @Override
+        public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
+            if (doInstruction) {
+                Value left = stack.pop();
+                Value right = new Value(ctx.right);
+                switch (ctx.op.getType()) {
+                    case GramaticaFormularioParser.MAIS:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() + right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() + right.asInteger()));
+                        if (left.isString() || right.isString())
+                            stack.push(new Value(left.asString() + right.asString()));
+                        break;
+                    case GramaticaFormularioParser.MENOS:
+                        if (left.isDouble() && right.isDouble())
+                            stack.push(new Value(left.asDouble() - right.asDouble()));
+                        if (left.isInteger() && right.isInteger())
+                            stack.push(new Value(left.asInteger() - right.asInteger()));
+                        if (left.isString() || right.isString())
+                            throw new ParseCancellationException("Não foi possivel fazer a operação");
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void exitEmailAtributos(GramaticaAtividadeAutomaticaParser.EmailAtributosContext ctx) {
+            if (doInstruction) {
+                Value destinatario = stack.pop();
+                Value assunto = stack.pop();
+                Value corpo = stack.pop();
+                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+            }
+        }
+
+        @Override
+        public void exitEmailString(GramaticaAtividadeAutomaticaParser.EmailStringContext ctx) {
+            if (doInstruction) {
+                Value destinatario = stack.pop();
+                String assunto = ctx.assunto.getText();
+                String corpo = ctx.corpo.getText();
+                EmailSender.sendEmail(destinatario.toString().replaceAll("\"", ""), assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+            }
+        }
+
+        @Override
+        public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
+            if (doInstruction) {
+                Value assunto = stack.pop();
+                Value corpo = stack.pop();
+                EmailSender.sendEmail(userEmail, assunto.toString().replaceAll("\"", ""), corpo.toString().replaceAll("\"", ""));
+            }
+        }
+
+        @Override
+        public void exitEmailStringDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailStringDefaultEmailContext ctx) {
+            if (doInstruction) {
+                String assunto = ctx.assunto.getText();
+                String corpo = ctx.corpo.getText();
+                EmailSender.sendEmail(userEmail, assunto.replaceAll("\"", ""), corpo.replaceAll("\"", ""));
+            }
+        }
+
+        @Override
+        public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
+            if (doInstruction){
+                String what = ctx.what.getText().replaceAll("\"", "");
+                String id = ctx.id.getText().replaceAll("\"", "");
+                String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
+                String whatToUpdate = ctx.updatevalue.getText().replaceAll("\"", "");
+                String updatevalue = stack.pop().toString().replaceAll("\"", "");
+                String url = "jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10221/dados";
+                String user = "admin";
+                String passwd = "eapli";
+
+                String query = String.format("UPDATE %s SET %s = '%s' WHERE %s = '%s'", what, whatToUpdate, updatevalue, id, idvalue);
+                try {
+                    Class.forName("org.h2.Driver");
+
+                    Connection conn = DriverManager.getConnection(url, user, passwd);
+                    Statement stmt = conn.createStatement();
+                    stmt.executeUpdate(query);
+                    stmt.close();
+                    conn.close();
+                } catch (ClassNotFoundException | SQLException e) {
+                    throw new ParseCancellationException("Update não executado");
+                }
+            }
+        }
     }
 
     static class EvalVisitor extends GramaticaAtividadeAutomaticaBaseVisitor<Value> {
