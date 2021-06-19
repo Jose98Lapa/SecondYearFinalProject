@@ -20,7 +20,6 @@ public interface TicketTaskRepository extends DomainRepository< Long, TicketTask
 
     List<TicketTask> getIncompleteUnassignedTickets();
 
-    Optional< TicketApprovalTask > approvalTaskOf ( TicketDTO ticket );
     List< TicketApprovalTask > pendingApproval ( String collaboratorEmail );
 
     List< TicketExecutionTask > pendingExecution ( String collaboratorEmail );
