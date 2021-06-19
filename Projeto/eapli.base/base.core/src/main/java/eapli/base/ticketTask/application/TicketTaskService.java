@@ -17,6 +17,7 @@ import eapli.base.ticketTask.domain.*;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TicketTaskService {
@@ -82,12 +83,15 @@ public class TicketTaskService {
 
         CreateTaskController ticketTaskController = new CreateTaskController();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+
         if (starter instanceof ApprovalTask) {
             TicketApprovalTask approvalTask = new TicketApprovalTask(
                     new Transition(null, null),
                     starter,
                     ((ApprovalTask) starter).form(),
-                    LocalDate.parse(deadline)
+                    LocalDate.parse(deadline,formatter)
             );
 
             return ticketTaskController.registerTicketTask(approvalTask);
@@ -98,7 +102,7 @@ public class TicketTaskService {
                     new Transition(null, null), starter,
                     ((ExecutionTask) starter).form(),
                     null,
-                    LocalDate.parse(deadline)
+                    LocalDate.parse(deadline,formatter)
             );
 
             return ticketTaskController.registerTicketTask(executionTask);

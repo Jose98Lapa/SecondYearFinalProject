@@ -138,6 +138,22 @@ public class GramaticaFormulario {
         }
 
         @Override
+        public void exitPowExpr(GramaticaFormularioParser.PowExprContext ctx) {
+            if (doInstruction){
+                String leftString = ctx.left.getText();
+                if (leftString.matches("^[0-9]+([.][0-9]+)?\\^\\d+(\\.\\d+)?$")){
+                    leftString = valueStack.pop().toString();
+                }
+                String rightString = ctx.right.getText();
+                if (!Value.isValidNumber(leftString)&&!Value.isValidNumber(rightString))
+                    throw new ParseCancellationException("Só se pode fazer potencias com numeros");
+                Value left = new Value(leftString);
+                Value right = new Value(rightString);
+                valueStack.push(new Value(Math.pow(left.asDouble(),right.asDouble())));
+            }
+        }
+
+        @Override
         public void exitVariavelAtr(GramaticaFormularioParser.VariavelAtrContext ctx) {
             if (doInstruction) {
                 String id = ctx.identidade().getText();
