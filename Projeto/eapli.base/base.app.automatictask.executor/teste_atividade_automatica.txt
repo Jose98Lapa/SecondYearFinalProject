@@ -9,9 +9,9 @@ BEGIN
 
     NUMERO $resposta -> FORM(>r,3)
     se $resposta=3 entao
-        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então é igual a 3."
+        TEXTO $corpo-> "A resposta recebida tem o numero " + $resposta + " então é igual a 3."
     senao
-        TEXTO $corpo-> "A resposta recebida tem o numero de " + $resposta + "então não é igual a 3."
+        TEXTO $corpo-> "A resposta recebida tem o numero " + $resposta + " então não é igual a 3."
     es
 
     ENVIAR_EMAIL($destinatario,$assunto,$corpo)
