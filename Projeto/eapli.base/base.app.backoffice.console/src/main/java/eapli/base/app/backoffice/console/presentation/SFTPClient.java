@@ -75,6 +75,7 @@ public class SFTPClient {
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
+        sftpChannel.chmod(777, ".");
         try {
             sftpChannel.cd(localServerFolder);
         } catch (SftpException e) {
