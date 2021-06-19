@@ -75,12 +75,14 @@ public class SFTPClient {
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp) channel;
+        System.out.println(sftpChannel.pwd());
         try {
             sftpChannel.cd(localServerFolder);
         } catch (SftpException e) {
             sftpChannel.mkdir(localServerFolder);
             sftpChannel.cd(localServerFolder);
         }
+        System.out.println(sftpChannel.pwd());
         sftpChannel.get(source, filename);
         sftpChannel.exit();
         session.disconnect();
