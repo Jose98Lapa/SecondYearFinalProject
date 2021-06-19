@@ -213,7 +213,7 @@ public class TcpServer implements Runnable {
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
 
-        /*SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         try {
             sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(Integer.parseInt(Application.settings().getPortWorkflow()));
             sslServerSocket.setNeedClientAuth(true);
@@ -229,9 +229,9 @@ public class TcpServer implements Runnable {
             } catch (IOException e) {
                 System.out.println("failed to accept client socket");
             }
-        }*/
+        }
 
-        while (true){
+        /*while (true){
             EngineV2 engineV2 = new EngineV2();
             for (Ticket ticket : PersistenceContext.repositories().tickets().getPendingTicket()){
                 engineV2.processStatusChange(ticket,ticket.status().toString());
@@ -239,7 +239,7 @@ public class TcpServer implements Runnable {
             }
 
             TimeUnit.MINUTES.sleep(1);
-        }
+        }*/
     }
 }
 

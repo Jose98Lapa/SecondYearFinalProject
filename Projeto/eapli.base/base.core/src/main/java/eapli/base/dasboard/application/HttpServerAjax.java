@@ -27,14 +27,15 @@ public class HttpServerAjax extends Thread {
         SSLSocket cliSock = null;
         System.setProperty("javax.net.ssl.keyStore", "server.keystore");
         System.setProperty("javax.net.ssl.keyStorePassword", "password");
-        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
-        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+
 
         try {
             SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
             sock = (SSLServerSocket) sslF.createServerSocket(55128);
         } catch (IOException ignored) {
-           // System.err.println("Server failed to open local port " + 55128);
+            System.err.println("Server failed to open local port " + 55128 );
+            System.out.println();
+            ignored.printStackTrace();
         }
         while (true) {
 
