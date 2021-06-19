@@ -6,12 +6,9 @@ import eapli.base.collaborator.repositories.CollaboratorRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.service.Repository.ServiceRepository;
 import eapli.base.service.domain.Service;
-import eapli.base.service.domain.ServiceID;
 import eapli.base.task.domain.ApprovalTask;
-import eapli.base.task.domain.AutomaticTask;
 import eapli.base.task.domain.ExecutionTask;
 import eapli.base.task.domain.Task;
-import eapli.base.task.repository.TaskRepository;
 import eapli.base.team.domain.Team;
 import eapli.base.team.repositories.TeamRepository;
 import eapli.base.ticket.application.TicketListService;
@@ -26,6 +23,7 @@ import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
+import org.springframework.data.util.Pair;
 
 import java.io.IOException;
 import java.util.*;
@@ -39,6 +37,7 @@ public class EngineV2 {
     static ConcurrentSkipListMap<Team, TreeMap<Date, Collaborator>> historyExecution = new ConcurrentSkipListMap<>();
     static ConcurrentSkipListMap<Date, Collaborator> historyApproval = new ConcurrentSkipListMap<>();
     static TreeMap<Date, String> historyAutomaticTask = new TreeMap<>();
+    static TreeMap<String,Integer> serverQueueMap = new TreeMap<>();
 
     public EngineV2() {
 
@@ -286,6 +285,60 @@ public class EngineV2 {
                 }
             }
         }
+        return theChosenOne;
+    }
+
+    public Ticket RRAutomaticTask(Ticket ticket) {
+
+        String selected = "";
+        try {
+            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
+                selected = RRassignServer();
+                TcpExecuterClient client = new TcpExecuterClient();
+                if (client.startConnection(selected)) {
+                    client.executeAutomaticTask(ticket);
+                    client.stopConnection();
+                    serverQueueMap.put(selected, serverQueueMap.get(selected) - 1);
+                }
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("An error ocorred");
+        }
+
+        return ticket;
+    }
+
+    public synchronized String RRassignServer() {
+
+        String theChosenOne = "";
+        int theChosenOneN=-1;
+        List<String> serverList = new LinkedList<>();
+        serverList.add("172.17.0.3");
+        serverList.add("172.17.0.4");
+        serverList.add("172.17.0.5");
+        serverList.add("172.17.0.6");
+
+        //Adiciona o server ao mapa caso este não esteja lá
+        for (String server:serverList){
+            if (!serverQueueMap.containsKey(server))
+                serverQueueMap.put(server,0);
+        }
+
+        //Verifica a disponibilidade e carga de cada uma das instancias
+        for (String server : serverQueueMap.keySet()){
+            if (serverQueueMap.get(server)==0) {
+                serverQueueMap.put(server, serverQueueMap.get(server) + 1);
+                return server;
+            }
+            if (serverQueueMap.get(server)<theChosenOneN){
+                theChosenOne=server;
+                theChosenOneN=serverQueueMap.get(server);
+            }
+        }
+
+        serverQueueMap.put(theChosenOne, serverQueueMap.get(theChosenOne) + 1);
         return theChosenOne;
     }
 
