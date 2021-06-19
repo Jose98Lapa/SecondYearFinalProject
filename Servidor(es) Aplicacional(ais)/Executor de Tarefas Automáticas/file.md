@@ -2,7 +2,10 @@
 
 ## Dados do Servidor
  - Os dados do servidor, ip e porta utilizada, encontram-se no ficheiro **application.properties** da aplicação **base.app.automatictask.executor**.
+ - **IP:** 172.17.0.2
  - **IP:** 172.17.0.3
+ - **IP:** 172.17.0.4
+ - **IP:** 172.17.0.5
  - **SERVER PORT:** 10030
  
 ## Protocolo de comunicação de controlo (TCP2021) - v0
@@ -36,7 +39,7 @@ enviada em resposta a pedidos com código 0 e código 1.
 
 [ 20 ] : Pedido de execução -> Pedido de execução de um script de uma atividade automática.
 
-[ 21 ] : Envio dos dados (script) -> Transporte dos dados do script quando este não tem um tamanho superior a 255.
+[ 21 ] : Envio dos dados -> Transporte dos dados relacionados com a atividade automatica quando este não tem um tamanho superior a 255.
 
 [ 22 ] : Execução concluida ->  Feedback ao cliente para que este saiba que o script foi executado com sucesso. Não tansporta dados. 
 
