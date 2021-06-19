@@ -259,11 +259,11 @@ public class EngineV2 {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.3");
-        /*serverList.add("172.17.0.4");
-        serverList.add("172.17.0.5");
-        serverList.add("172.17.0.6");
-*/
+        //serverList.add("172.17.0.3");
+        serverList.add("172.17.0.4");
+        //serverList.add("172.17.0.5");
+        //serverList.add("172.17.0.6");
+
         for (Date date : historyAutomaticTask.keySet()) {
             if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum colaborador for removido retira do historico
                 historyAutomaticTask.remove(date);
