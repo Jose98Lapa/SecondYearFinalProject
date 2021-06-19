@@ -17,7 +17,7 @@ class ExecutorAtividadeAutomaticaTest {
         formAnswers.add("2");
         formAnswers.add("3");
         List<String> formApproved = new ArrayList<>();
-        formApproved.add("6.90");
+        formApproved.add("4.60");
         ExecutorAtividadeAutomatica.parseWithListener(email,"teste_atividade_automatica.txt",formAnswers,formApproved);
     }
 }

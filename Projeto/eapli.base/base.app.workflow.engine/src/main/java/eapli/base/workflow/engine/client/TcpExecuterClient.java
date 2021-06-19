@@ -55,7 +55,7 @@ public class TcpExecuterClient {
 
         try {
 
-            socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getIpAutomatictaskExecutor()));
+            socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
 
         } catch (IOException ex) {
 
@@ -159,7 +159,7 @@ public class TcpExecuterClient {
             }
         }
 
-        String script = ((TicketAutomaticTask) ticket.workflow().starterTask()).scriptPath().toString();
+        String script = ((TicketAutomaticTask) ticket.workflow().getFirstIncompleteTask()).scriptPath().toString();
 
         StringBuilder data = new StringBuilder();
         data.append(ticket.requestedBy()).append('|').append(script).append('|').append(answers).append(approval);
