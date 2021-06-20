@@ -32,16 +32,32 @@ public class TicketTaskService {
     }
 
     public List<TicketDTO> getPendingTasks(String emailCollaborator) {
+        Collaborator collaborator = new ListCollaboratorService().getCollaboratorByEmail(emailCollaborator);
+        Set<Team> teamList = new TeamListService().getACollaboratorTeams(collaborator);
+
         List<Ticket> ticketList = ticketRepository.getPendingTicket();
         List<TicketDTO> ticketDTOList = new ArrayList<>();
-        for (TicketTask ticketTask : ticketTaskRepository.getIncompleteTicketsByCollaborator(new ListCollaboratorService().getCollaboratorByEmail(emailCollaborator)))
-            if (ticketTask.getClass() != TicketAutomaticTask.class)
-                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+        for (TicketTask ticketTask : ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator))
+            if (checkIfCollaboratorIsValid(ticketTask,collaborator,teamList))
+                ticketDTOList.add(getTicketByTicketTask(ticketTask).toDTO());
+
         for (TicketTask ticketTask : ticketTaskRepository.getIncompleteUnassignedTickets())
-            if (ticketTask.getClass() != TicketAutomaticTask.class)
-                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+            if (checkIfCollaboratorIsValid(ticketTask,collaborator,teamList))
+                ticketDTOList.add(getTicketByTicketTask(ticketTask).toDTO());
 
         return ticketDTOList;
+    }
+
+    private boolean checkIfCollaboratorIsValid(TicketTask ticketTask,Collaborator collaborator,Set<Team> collaboratorTeams){
+        if (ticketTask.getClass()==TicketApprovalTask.class){
+            ApprovalTask approvalTask = (ApprovalTask) ticketTask.mainReference();
+            return collaborator.function().sameAs(approvalTask.necessaryRoleForApproval());
+        }
+        if (ticketTask.getClass()==TicketExecutionTask.class){
+            ExecutionTask executionTask = (ExecutionTask) ticketTask.mainReference();
+            return executionTask.executingTeams().stream().anyMatch(collaboratorTeams::contains);
+        }
+        return ticketTask.getClass()==TicketAutomaticTask.class;
     }
 
     public List<TicketApprovalTaskDTO> getPendingApprovalTasksByCollaborator(Collaborator collaborator) {
@@ -78,7 +94,7 @@ public class TicketTaskService {
         return optionalTicketTask.get();
     }
 
-    public Ticket getTicketDTOByTicketTask(TicketTask ticketTask) {
+    public Ticket getTicketByTicketTask(TicketTask ticketTask) {
         for (Ticket ticket : ticketRepository.findAll()) {
             if (ticket.checkIfTicketTaskBelongsToTicket(ticketTask))
                 return ticket;

@@ -13,6 +13,7 @@ import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.domain.TicketManualTask;
+import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.utils.GenerateRandomStringID;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -37,7 +38,7 @@ public class CompleteTaskController {
 
     public void getTickedByTask(String ticketID){
         currentWorkingTask = (TicketManualTask) ticketTaskService.getTicketTaskByID(ticketID);
-        workingTicket = ticketTaskService.getTicketDTOByTicketTask(currentWorkingTask);
+        workingTicket = ticketTaskService.getTicketByTicketTask(currentWorkingTask);
     }
 
     public FormDTO getTicketsFormDTO(){
@@ -85,6 +86,19 @@ public class CompleteTaskController {
         CreateTaskController createTaskController = new CreateTaskController();
         currentWorkingTask.completeTask();
         createTaskController.registerTicketTask(currentWorkingTask);
+    }
+
+    public void concludeAutomaticTicket(TicketTask automaticTask){
+        this.workingTicket =  ticketTaskService.getTicketByTicketTask(automaticTask);
+        if (automaticTask.mainReference().afterTask()==null)
+            workingTicket.endTicket();
+        else
+            workingTicket.pendingExecutingTicket();
+        ticketRepository.save(workingTicket);
+        this.ticketTaskService.updateTask(automaticTask);
+        CreateTaskController createTaskController = new CreateTaskController();
+        automaticTask.completeTask();
+        createTaskController.registerTicketTask(automaticTask);
     }
 
     public List<FormDTO> getPreviousTicketTasksForm(){

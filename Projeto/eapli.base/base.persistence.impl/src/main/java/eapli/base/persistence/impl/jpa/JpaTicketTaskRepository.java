@@ -2,9 +2,7 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
-import eapli.base.ticketTask.domain.TicketAutomaticTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.repository.TicketTaskRepository;

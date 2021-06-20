@@ -16,6 +16,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.domain.Urgency;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.application.CompleteTaskController;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.base.ticketTask.domain.*;
@@ -23,7 +24,6 @@ import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-import org.springframework.data.util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -246,7 +246,8 @@ public class EngineV2 {
                 selected = assignServer();
                 TcpExecuterClient client = new TcpExecuterClient();
                 if (client.startConnection(selected)) {
-                    client.executeAutomaticTask(ticket);
+                    if(client.executeAutomaticTask(ticket))
+                        new CompleteTaskController().concludeAutomaticTicket(ticket.workflow().getFirstIncompleteTask());
                     client.stopConnection();
                 }
             }
@@ -576,7 +577,7 @@ public class EngineV2 {
         List<Ticket> ticketList = new ArrayList<>();
         long timeNecessary = 0;
         for (TicketTask ticketTask : new TicketTaskService().getPendingApprovalTasks(collaborator)) {
-            Ticket ticket = new TicketTaskService().getTicketDTOByTicketTask(ticketTask);
+            Ticket ticket = new TicketTaskService().getTicketByTicketTask(ticketTask);
             if (!ticket.urgency().equals(Urgency.valueOf("urgente")) && timeNecessary < minutesOfExecution) {
                 ticketList.add(ticket);
                 timeNecessary += ticket.workflow().getFirstIncompleteTask().mainReference().maxTimeOfExecution();

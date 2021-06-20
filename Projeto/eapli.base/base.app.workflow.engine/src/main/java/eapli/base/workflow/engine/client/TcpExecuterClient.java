@@ -110,7 +110,7 @@ public class TcpExecuterClient {
         }
     }
 
-    public void executeAutomaticTask(Ticket ticket) throws IOException {
+    public boolean executeAutomaticTask(Ticket ticket) throws IOException {
         //send initial request
         byte[] clientRequest = {(byte) 0, (byte) 20, (byte) 0, (byte) 0};
         sOut.write(clientRequest);
@@ -126,10 +126,15 @@ public class TcpExecuterClient {
 
         //recives server's response
         serverResponse = sIn.readNBytes(4);
-        if ((serverResponse[1] & 0xff) == 22)
-            System.out.println("Script de atividade automática executado com sucesso.");
-        if ((serverResponse[1] & 0xff) == 253)
+        if ((serverResponse[1] & 0xff) == 253) {
             System.out.println("Não foi possivel executar o script de atividade automática com sucesso.");
+            return false;
+        }
+        if ((serverResponse[1] & 0xff) == 22) {
+            System.out.println("Script de atividade automática executado com sucesso.");
+            return true;
+        }
+        return false;
     }
 
     private String organizeData(Ticket ticket) {

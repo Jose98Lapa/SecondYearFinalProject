@@ -5,10 +5,11 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 @Embeddable
-public class Urgency implements ValueObject, Serializable {
+public class Urgency implements ValueObject, Serializable, Comparable<Urgency> {
 
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -50,6 +51,16 @@ public class Urgency implements ValueObject, Serializable {
 
 	public static Urgency valueOf ( String string ) {
 		return new Urgency( string );
+	}
+
+	@Override
+	public int compareTo ( Urgency other ) {
+
+		return Integer.compare( toNumber( urgency ), toNumber( other.urgency ) );
+	}
+
+	private int toNumber ( String urgency ) {
+		return urgency.equals( "reduzida" ) ? 1 : urgency.equals( "moderada" ) ? 2 : 3;
 	}
 
 }

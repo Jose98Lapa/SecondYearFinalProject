@@ -50,6 +50,10 @@ public class Collaborator implements AggregateRoot<MecanographicNumber>, DTOable
     protected Collaborator() {
     }
 
+    public Function function(){
+        return this.function;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;

@@ -21,7 +21,6 @@ public class SignupAcceptedWatchDog implements EventHandler {
         try {
             controller.addUser(event);
         } catch (final IntegrityViolationException e) {
-            // TODO provably should send some warning email...
             LOGGER.error("Unable to register new user on signup event", e);
         }
     }
