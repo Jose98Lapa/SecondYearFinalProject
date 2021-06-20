@@ -211,12 +211,12 @@ public class EngineV2 {
                 selected = RRassignServer();
                 TcpExecuterClient client = new TcpExecuterClient();
                 if (client.startConnection(selected)) {
-                    client.executeAutomaticTask(ticket);
+                    if(client.executeAutomaticTask(ticket))
+                        new CompleteTaskController().concludeAutomaticTicket(ticket.workflow().getFirstIncompleteTask());
                     client.stopConnection();
+                }
                     serverQueueMap.put(selected, serverQueueMap.get(selected) - 1);
                 }
-            }
-
 
         } catch (IOException e) {
             System.out.println("An error ocorred");
@@ -230,10 +230,18 @@ public class EngineV2 {
         String theChosenOne = "";
         int theChosenOneN = -1;
         List<String> serverList = new LinkedList<>();
-        serverList.add("172.17.0.3");
-        serverList.add("172.17.0.4");
-        serverList.add("172.17.0.5");
-        serverList.add("172.17.0.6");
+        try {
+            File myObj = new File("Executer_ip_list.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String ip = myReader.nextLine();
+                serverList.add(ip.trim());
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while trying to read the ip list.");
+            return null;
+        }
 
         //Adiciona o server ao mapa caso este não esteja lá
         for (String server : serverList) {
