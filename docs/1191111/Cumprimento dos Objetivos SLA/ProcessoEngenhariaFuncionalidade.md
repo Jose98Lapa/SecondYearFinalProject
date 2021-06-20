@@ -1,18 +1,27 @@
+US2013 - Listar o (in)cumprimento do SLA
+=======================================
 
-package eapli.base.ticketTask.application;
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.repository.TicketRepository;
+# 1. Requisitos
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+**US2013:**  Como GSH, eu pretendo obter uma listagem sobre o (in)cumprimento do SLA das solicitações recebidas e já concluídas num determinado intervalo de tempo.
 
-public class SLAObjectivesController {
-    public List<List<String>> SLAObjective(){
+
+# 2. Análise
+
+Para análise o modelo de domínio dá resposta ao requisito, não sendo assim necessário estender o mesmo. [Verificar modelo de domínio](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/Modelo%20de%20Dominio.svg)
+
+# 3. Design
+
+## 3.1. Diagrama de Classes
+
+### Listar o (in)cumprimento do SLA
+![UC_2013_SD](UC_2010_ListarCumprimentoDosObjetivosSLA_SD.svg)
+
+# 4. Implementação
+
+### SLAObjectivesController
+	 public List<List<String>> SLAObjective(){
         TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
         List<Ticket> ticketList = ticketRepository.getCompletedTickets();
         List<List<String>> present = new ArrayList<>();
@@ -27,7 +36,7 @@ public class SLAObjectivesController {
             String completionStateA="Objetivos de aprovação SLA:COMPLETED | ";
 
             //Resolution Objective
-            String[] ResolutionObjective= ticket.service().catalogue().criticalityLevel().resolutionObjective().tempoMaximo().split(":");
+            String[] ResolutionObjective= ticket.service().catalogue().criticalityLevel().approvalObjective().tempoMaximo().split(":");
             long ResolutionObjectiveM=Long.parseLong(ResolutionObjective[0])*60+Long.parseLong(ResolutionObjective[1]);
             long ResolutionTime=0;
             String completionStateR="Objetivos de resolução SLA:COMPLETED | ";
@@ -69,4 +78,14 @@ public class SLAObjectivesController {
         }
         return present;
     }
-}
+
+
+# 5. Integração/Demonstração
+
+Esta UC decorreu sem nenhum contratempo, a implementação foi rapida e eficaz.
+
+# 6. Observações
+
+Esta funcionaliade encotra-se de acordo com os requesito.
+
+
