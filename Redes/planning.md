@@ -16,3 +16,4 @@ Para este sprint é necessário aplicar SSL/TLS com autenticação mútua basead
 
 # 2. Technical decisions and coordination #
 
+Decidimos não usar os servidores do isep, pois possuia varias instabilidades. Optamos então por criar os nossos proprios servidores. [Mais informações](technical.md)
