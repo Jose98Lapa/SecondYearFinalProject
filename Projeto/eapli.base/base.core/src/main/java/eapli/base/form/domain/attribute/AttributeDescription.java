@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class AttributeDescription implements ValueObject , Serializable {
     private String descricao;
     @Transient
-    private String regex = "^[a-zA-Z0-9,!? \n\t]{1,100}$";
+    private String regex = "^[a-zA-Z0-9,!? ()[-] \n\t]{1,100}$";
 
     public AttributeDescription(String descricao) {
         if (StringPredicates.isNullOrEmpty(descricao)) {

@@ -380,5 +380,113 @@
             </atributes>
         </Workflow>
     </class1>
+
+    <!--
+       Servico 3
+   -->
+
+    <class1>
+        <catalogue>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
+            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
+            <criticality>2</criticality>
+        </catalogue>
+
+        <Servico>
+            <Formulario>
+                <fId>3</fId>
+                <fnome>Alteracao de residencia</fnome>
+                <fscript>https://192.168.1.92/bootstrapForm3.txt</fscript>
+                <atributes>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Codigo posta (xxxx-xxx)</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>codigopostal</Anome>
+                        <aID>30</aID>
+                        <aNumber>1</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Rua</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>rua</Anome>
+                        <aID>31</aID>
+                        <aNumber>2</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Cidade</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>cidade</Anome>
+                        <aID>32</aID>
+                        <aNumber>3</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Distrito</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>distrito</Anome>
+                        <aID>33</aID>
+                        <aNumber>4</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Numero da Porta</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>porta</Anome>
+                        <aID>34</aID>
+                        <aNumber>5</aNumber>
+                    </SAtributo>
+                </atributes>
+            </Formulario>
+            <descricaoBreve>Comunicacao para alteracao de residencia</descricaoBreve>
+            <descricaoCompleta>Comunicacao para alteracao de residencia</descricaoCompleta>
+            <ServicoID>3</ServicoID>
+            <keyWords>residencia</keyWords>
+            <statusServico>ATIVO</statusServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
+            <tituloServico>Comunicacao para alteracao de residencia</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+
+        <Workflow>
+            <Wtipo>M</Wtipo>
+            <Waprov>N</Waprov>
+            <Wservice>3</Wservice>
+            <Wscript>https://192.168.1.92/bootstrapFormAut2.txt</Wscript>
+            <Wfunc>1</Wfunc>
+
+            <WAfId>206</WAfId>
+            <WAfnome>Formulario Aprovacao</WAfnome>
+            <WAfscript>https://192.168.1.92/bootstrapFormAprov2.txt</WAfscript>
+
+            <WMfId>206</WMfId>
+            <WMfnome>Formulario Resolucao</WMfnome>
+            <WMfscript>https://192.168.1.92/bootstrapAtManual3.txt</WMfscript>
+
+            <atributes>
+                <WAtributo>
+                    <WAtributeForm>Exec</WAtributeForm>
+                    <WAlabel>ignored</WAlabel>
+                    <WAdescricao>Observacoes</WAdescricao>
+                    <WAtipo>String</WAtipo>
+                    <WAregex>ignored</WAregex>
+                    <WAnome>observacoes</WAnome>
+                    <WaID>35</WaID>
+                    <WaNumber>1</WaNumber>
+                </WAtributo>
+            </atributes>
+        </Workflow>
+    </class1>
 </class>
 

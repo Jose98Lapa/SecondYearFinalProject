@@ -43,13 +43,13 @@ public class TcpClient {
         try {
             socket = (SSLSocket) sslSocketFactory.createSocket(serverIP, Integer.parseInt(Application.settings().getPortWorkflow()));
         } catch (IOException ex) {
-            System.out.println("Failed to establish TCP connection");
+            //System.out.println("Failed to establish TCP connection");
             //System.exit(1);
             return false;
         }
 
 
-        System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortWorkflow()));
+        //System.out.println("Connected to: " + ip + ":" + Integer.parseInt(Application.settings().getPortWorkflow()));
 
         try {
             socket.startHandshake();
@@ -63,11 +63,11 @@ public class TcpClient {
             sOut = new DataOutputStream(socket.getOutputStream());
             sIn = new DataInputStream(socket.getInputStream());
         } catch (IOException | NullPointerException e) {
-            System.out.println("Failed to establish DataOutputStream or DataInputStream");
+            //System.out.println("Failed to establish DataOutputStream or DataInputStream");
             //System.exit(1);
             return false;
         }
-        System.out.println("Connection established with Worflow server\n");
+       // System.out.println("Connection established with Worflow server\n");
         return true;
     }
 
