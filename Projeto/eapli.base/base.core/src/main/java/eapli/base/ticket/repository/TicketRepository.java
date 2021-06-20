@@ -1,5 +1,6 @@
 package eapli.base.ticket.repository;
 
+import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketID;
 import eapli.framework.domain.repositories.DomainRepository;
@@ -26,5 +27,6 @@ public interface TicketRepository extends DomainRepository< String, Ticket > {
 	List<Ticket> getFeedbackBetweenDatesFromAClient(String client, LocalDate localDateStart, LocalDate localDateEnd);
 
 
+	List< Ticket > getIncomplete ( );
 
 }

@@ -66,44 +66,80 @@ class TcpServer {
 
 ### Uso do SPD2021
 ```java
-public void executeAutomaticTask(String script) throws IOException {
-		//send initial request
-		byte[] clientRequest = {(byte) 0, (byte) 20, (byte) 0, (byte) 0};
-		sOut.write(clientRequest);
-		sOut.flush();
+public boolean executeAutomaticTask() {
+        try {
+            //Sends response to the client
+            byte[] serverResponse = {(byte) 0, (byte) ENTENDIDO, (byte) 0, (byte) 0};
+            sOut.write(serverResponse);
+            sOut.flush();
 
-		//recives server's response
-		byte[] serverResponse = sIn.readNBytes(4);
-		if ((int) serverResponse[1] == 2)
-			System.out.println("Resposta Recebida");
+            //Recives script
+            byte[] dataByteArray = null;
+            byte[] dataInfo = sIn.readNBytes(3);
+            int code = (dataInfo[1] & 0xff);
+            if (code == ENVIO_DADOS)
+                dataByteArray = sIn.readNBytes(dataInfo[2] & 0xff);
+            else if (code == SEGMENTO) {
+                byte[][] splitData = new byte[10][250];
+                int index = 0;
+                while (code != TERMINO_SEGMENTO) {
+                    code = dataInfo[1] & 0xff;
+                    splitData[index] = sIn.readNBytes(dataInfo[2] & 0xff);
+                    if (code != TERMINO_SEGMENTO)
+                        dataInfo = sIn.readNBytes(3);
+                    index++;
+                }
+                dataByteArray = SplitInfo.serializeObject(SplitInfo.joinSplitInfo(splitData));
+            }
 
-		//send script
-		byte[] scriptByteArray = script.getBytes(StandardCharsets.UTF_8);
-		if (scriptByteArray.length <= 255) {
-			byte[] scriptInfo = {(byte) 0, (byte) 21, (byte) scriptByteArray.length};
-			byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, scriptByteArray);
-			sOut.write(scriptPackage);
-			sOut.flush();
-		} else {
-			byte[][] splitScript = SplitInfo.splitObjectIntoByteArray(script);
-			int code = 255;
-			for (int i = 0; i < splitScript.length; i++) {
-				if (i == splitScript.length - 1)
-					code = 254;
-				byte[] scriptInfo = {(byte) 0, (byte) code, (byte) splitScript[i].length};
-				byte[] scriptPackage = ArrayUtils.addAll(scriptInfo, splitScript[i]);
-				sOut.write(scriptPackage);
-				sOut.flush();
-			}
-		}
+            if (dataByteArray == null)
+                return false;
 
-		//recives server's response
-		serverResponse = sIn.readNBytes(4);
-		if ((serverResponse[1] & 0xff) == 22)
-			System.out.println("Script de atividade automática executado com sucesso.");
-		if ((serverResponse[1] & 0xff) == 253)
-			System.out.println("Não foi possivel executar o script de atividade automática com sucesso.");
-	}
+            String dataString = new String(dataByteArray, StandardCharsets.UTF_8);
+
+            if (code != ENVIO_DADOS)
+                dataString = dataString.substring(7);
+
+            String[] data = dataString.split("\\|");
+            String email = data[0];
+            String scriptName = data[1];
+            List<String> answerData = new ArrayList<>();
+            List<String> approvalData = new ArrayList<>();
+
+            if (data.length > 2) {
+                String answerString = data[2];
+                answerData = Arrays.asList(answerString.split(";;;"));
+            }
+
+            if (data.length > 3) {
+                String approvalString = data[3];
+                approvalData = Arrays.asList(approvalString.split(";;;"));
+            }
+
+            SFTPClient scriptClient = new SFTPClient();
+            File script = scriptClient.getScript(scriptName);
+            Calendar calendar = Calendar.getInstance();
+            System.out.printf("[%s] - Executing %s ...%n", calendar.getTime(), script.getName());
+            Pair<Boolean, String> wasItSuccessfull = null;
+
+            if (Application.settings().getGRAMMARAUTOMATICTYPE().equals("VISITOR"))
+                wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithVisitor(email, script.getName(), answerData, approvalData);
+            else
+                wasItSuccessfull = ExecutorAtividadeAutomatica.parseWithListener(email, script.getName(), answerData, approvalData);
+
+            calendar = Calendar.getInstance();
+            if (wasItSuccessfull.a)
+                System.out.printf("[%s] - %s executed successfully.%n", calendar.getTime(), scriptName);
+            else
+                System.out.printf("[%s] - Something went wrong when executing %s: %s%n", calendar.getTime(), scriptName, wasItSuccessfull.b);
+
+            return wasItSuccessfull.a;
+        } catch (IOException | JSchException | SftpException ex) {
+            System.out.println("An error ocurred");
+            //ex.printStackTrace();
+            return false;
+        }
+    }
 ```
 
 ## Split info
