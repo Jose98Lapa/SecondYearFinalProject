@@ -72,14 +72,12 @@ public class EngineV2 {
 
         switch (action) {
             case "PENDING":
-                System.out.println("PENDING TICKET DELEGATION");
                 ticket.statusPending();
-                processedTicket = Optional.of(delegateTask(ticket));
+                processedTicket = Optional.of( delegateTask( ticket ) );
                 break;
             case "PENDING_EXECUTION":
-                System.out.println("APPROVED TICKET DELEGATION");
                 ticket.statusPendingExecution();
-                processedTicket = Optional.of(delegateTask(ticket));
+                processedTicket = Optional.of( delegateTask( ticket ) );
                 break;
             case "NOT_APPROVED":
                 ticket.statusNotApproved();
@@ -100,90 +98,9 @@ public class EngineV2 {
         Service service = serviceRepository.ofIdentity(ticket.service().identity()).get();
         TicketWorkflow ticketWorkflow = new TicketWorkflow(new TicketTaskService().createTicketTask(ticket.deadline().toString(), service.workflow().starterTask()));
 
-       /* if (service.workflow().starterTask().hasAfterTask()) {
-            taskList.add(service.workflow().starterTask().afterTask());
-        }
-
-        TicketTaskPair ticketTaskPair;
-        TicketWorkflow workflow = null;
-
-        if (taskList.size() == 2) {
-
-            ticketTaskPair = TicketTaskPair.of(createTask(ticket, taskList.get(0)), createTask(ticket, taskList.get(1)));
-            TicketApprovalTask approvalTask = ticketTaskPair.ticketApprovalTask();
-
-            if (ticketTaskPair.hasAutomaticTask()) {
-
-                approvalTask.addAfterTask(ticketTaskPair.ticketAutomaticTask());
-                ticketTaskController.registerApprovalTask(approvalTask);
-                ticketTaskController.registerAutomaticTask(ticketTaskPair.ticketAutomaticTask());
-
-            } else if (ticketTaskPair.hasExecutionTask()) {
-
-                approvalTask.addAfterTask(ticketTaskPair.ticketExecutionTask());
-                ticketTaskController.registerApprovalTask(approvalTask);
-                ticketTaskController.registerExecutionTask(ticketTaskPair.ticketExecutionTask());
-            }
-
-            workflow = new TicketWorkflow(approvalTask);
-
-        } else {
-
-            ticketTaskPair = TicketTaskPair.of(createTask(ticket, taskList.get(0)), null);
-
-            if (ticketTaskPair.hasAutomaticTask()) {
-
-                workflow = new TicketWorkflow(ticketTaskPair.ticketAutomaticTask());
-                ticketTaskController.registerAutomaticTask(ticketTaskPair.ticketAutomaticTask());
-
-            } else if (ticketTaskPair.hasExecutionTask()) {
-                workflow = new TicketWorkflow(ticketTaskPair.ticketExecutionTask());
-                ticketTaskController.registerExecutionTask(ticketTaskPair.ticketExecutionTask());
-
-            }
-        }
-
-        System.out.println("SAVING WORKFLOW");*/
         ticket.setWorkflow(ticketWorkflow);
         ticketRepository.save(ticket);
     }
-
-    /*private TicketTask createTask(Ticket ticket, Task task) {
-
-        TicketTask ticketTask;
-
-        if (task instanceof ApprovalTask) {
-
-            ApprovalTask approvalTask = (ApprovalTask) task;
-            ticketTask = new TicketApprovalTask(
-                    new Transition(null, null),
-                    approvalTask,
-                    approvalTask.form(),
-                    ticket.deadline()
-            );
-        } else if (task instanceof AutomaticTask) {
-
-            AutomaticTask automaticTask = (AutomaticTask) task;
-            ticketTask = new TicketAutomaticTask(
-                    new Transition(null, null),
-                    automaticTask,
-                    automaticTask.scriptPath()
-            );
-        } else {
-
-            ExecutionTask executionTask = (ExecutionTask) task;
-            ticketTask = new TicketExecutionTask(
-                    new Transition(null, null),
-                    executionTask,
-                    executionTask.form(),
-                    null,
-                    ticket.deadline()
-            );
-
-        }
-
-        return ticketTask;
-    }*/
 
     private Ticket delegateTask(Ticket ticket) {
 
@@ -211,24 +128,11 @@ public class EngineV2 {
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
         } else
-            /*if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
-                selected = assignCollaboratorApproval(ticket);
-                ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
-            }*/
-
 
             if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
                 selected = assignCollaboratorExecution(ticket);
                 ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
             } else
-           /* if (ticket.workflow().starterTask().transition().nextTask() instanceof TicketExecutionTask) {
-                selected = assignCollaboratorExecution(ticket);
-                ((TicketExecutionTask) ticket.workflow().starterTask()).setExecutedBy(selected);
-            }*/
-
-            /*if (ticket.workflow().starterTask() instanceof TicketAutomaticTask) {
-                FCFSAutomaticTask(ticket);
-            }*/
 
                 if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
                     FCFSAutomaticTask(ticket);
