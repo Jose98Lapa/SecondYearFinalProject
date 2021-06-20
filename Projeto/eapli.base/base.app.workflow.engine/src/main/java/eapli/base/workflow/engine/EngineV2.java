@@ -28,6 +28,7 @@ import org.springframework.data.util.Pair;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -52,8 +53,8 @@ public class EngineV2 {
     }
 
     public void processIncomingTicket(byte[] payload) {
-
-        Optional<Ticket> ticketOptional = ticketRepository.ofIdentity(new String(payload));
+        String payloadS = new String(payload, StandardCharsets.UTF_8);
+        Optional<Ticket> ticketOptional = ticketRepository.ofIdentity(payloadS);
         Ticket ticket;
 
         if (ticketOptional.isPresent()) {

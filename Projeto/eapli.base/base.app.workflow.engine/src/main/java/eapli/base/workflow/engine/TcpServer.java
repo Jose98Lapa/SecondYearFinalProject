@@ -173,7 +173,6 @@ public class TcpServer implements Runnable {
         }
 
         try {
-            EngineV2 engine = new EngineV2();
             boolean cycle = true;
             while (cycle) {
                 byte[] clientRequest = sIn.readNBytes( 4 );
@@ -186,7 +185,8 @@ public class TcpServer implements Runnable {
                         TaskList();
                         break;
                     case 10:
-                        byte data[] =ArrayUtils.addAll(new byte[]{clientRequest[3]},sIn.readNBytes( clientRequest[2]));
+                        EngineV2 engine = new EngineV2();
+                        byte data[] =ArrayUtils.addAll(new byte[]{clientRequest[3]},sIn.readNBytes( clientRequest[2]-1));
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
