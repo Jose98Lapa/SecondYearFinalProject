@@ -7,9 +7,14 @@ public class Value {
     public static Value VOID = new Value(new Object());
 
     final Object value;
+    String type;
 
     public Value(Object value) {
         this.value = value;
+    }
+
+    public void type(String t) {
+        this.type = t;
     }
 
     public Boolean asBoolean() {
@@ -33,14 +38,24 @@ public class Value {
     }
 
     public boolean isDouble() {
-        return value instanceof Double;
+        if (value instanceof Double)
+            return true;
+        if (type != null)
+            return type.equalsIgnoreCase("Double");
+        return false;
     }
 
     public boolean isInteger() {
-        return value instanceof Integer;
+        if (value instanceof Integer)
+            return true;
+        if (type != null)
+            return type.equalsIgnoreCase("Int");
+        return false;
     }
 
     public boolean isString() {
+        if (type != null)
+            return type.equalsIgnoreCase("String");
         return value.toString().contains("\"");
     }
 
@@ -78,7 +93,7 @@ public class Value {
         return String.valueOf(value);
     }
 
-    enum Tipo{
+    enum Tipo {
         TEXTO,
         NUMERO,
         REAL

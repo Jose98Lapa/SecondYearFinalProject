@@ -34,7 +34,7 @@ public class ExecutorAtividadeAutomatica {
         //parseWithVisitor("teste_atividade_automatica.txt");
     }
 
-    public static Pair<Boolean,String> parseWithVisitor(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
+    public static Pair<Boolean, String> parseWithVisitor(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
         GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
@@ -48,12 +48,12 @@ public class ExecutorAtividadeAutomatica {
             String errorMessage = e.getMessage();
             if (errorMessage == null)
                 errorMessage = "Lexical error";
-            return new Pair<>(false,errorMessage);
+            return new Pair<>(false, errorMessage);
         }
-        return new Pair<>(true,"Succesfull");
+        return new Pair<>(true, "Succesfull");
     }
 
-    public static Pair<Boolean,String> parseWithListener(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
+    public static Pair<Boolean, String> parseWithListener(String userEmail, String script, List<String> formAnswers, List<String> formApproval) throws IOException {
         GramaticaAtividadeAutomaticaLexer lexer = new GramaticaAtividadeAutomaticaLexer(CharStreams.fromFileName(script));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GramaticaAtividadeAutomaticaParser parser = new GramaticaAtividadeAutomaticaParser(tokens);
@@ -68,9 +68,9 @@ public class ExecutorAtividadeAutomatica {
             String errorMessage = e.getMessage();
             if (errorMessage == null)
                 errorMessage = "Lexical error";
-            return new Pair<>(false,errorMessage);
+            return new Pair<>(false, errorMessage);
         }
-        return new Pair<>(true,"Succesfull");
+        return new Pair<>(true, "Succesfull");
     }
 
 
@@ -81,10 +81,12 @@ public class ExecutorAtividadeAutomatica {
         public static final double SMALL_VALUE = 0.00000000001;
         private Map<String, Value> memory = new HashMap<String, Value>();
         private final Stack<Value> stack = new Stack<>();
+
         public Value getResult() {
             return stack.peek();
         }
-        boolean doInstruction=true;
+
+        boolean doInstruction = true;
 
         public EvalListener(String userEmail, List<String> formAnswers, List<String> formApproved) {
             this.userEmail = userEmail;
@@ -94,7 +96,7 @@ public class ExecutorAtividadeAutomatica {
 
         @Override
         public void exitUpdate_informacao(GramaticaAtividadeAutomaticaParser.Update_informacaoContext ctx) {
-            if (doInstruction){
+            if (doInstruction) {
                 String what = ctx.what.getText().replaceAll("\"", "");
                 String id = ctx.id.getText().replaceAll("\"", "");
                 String idvalue = ctx.idvalue.getText().replaceAll("\"", "");
@@ -134,7 +136,7 @@ public class ExecutorAtividadeAutomatica {
                 Value identidade2 = stack.pop();
                 Value identidade = stack.pop();
                 String what = ctx.what.getText();
-                String fileName = memory.get(identidade2.toString()).toString().replaceAll("\"","");
+                String fileName = memory.get(identidade2.toString()).toString().replaceAll("\"", "");
                 String id = ctx.id.getText();
                 String idValue = ctx.idvalue.getText();
 
@@ -160,9 +162,9 @@ public class ExecutorAtividadeAutomatica {
         @Override
         public void exitAtr_variavelExpr(GramaticaAtividadeAutomaticaParser.Atr_variavelExprContext ctx) {
             if (doInstruction) {
-                Value expr= stack.pop();
+                Value expr = stack.pop();
                 Value identidade = stack.pop();
-                memory.put(identidade.toString(),expr);
+                memory.put(identidade.toString(), expr);
             }
         }
 
@@ -170,7 +172,7 @@ public class ExecutorAtividadeAutomatica {
         public void exitAtr_variavelVariavel(GramaticaAtividadeAutomaticaParser.Atr_variavelVariavelContext ctx) {
             if (doInstruction) {
                 try {
-                    Value identidade2 =stack.pop();
+                    Value identidade2 = stack.pop();
                     Element element = memory.get(identidade2.toString()).asElement();
                     Value identidade = stack.pop();
                     String what = ctx.what.getText();
@@ -185,8 +187,8 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx){
-            doInstruction=true;
+        public void exitIf_stat(GramaticaAtividadeAutomaticaParser.If_statContext ctx) {
+            doInstruction = true;
         }
 
         @Override
@@ -198,8 +200,8 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx){
-            doInstruction=!doInstruction;
+        public void enterSenao(GramaticaAtividadeAutomaticaParser.SenaoContext ctx) {
+            doInstruction = !doInstruction;
         }
 
         @Override
@@ -245,7 +247,7 @@ public class ExecutorAtividadeAutomatica {
         public void exitSumDifExpr(GramaticaAtividadeAutomaticaParser.SumDifExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
-                Value left =stack.pop();
+                Value left = stack.pop();
                 switch (ctx.op.getType()) {
                     case GramaticaFormularioParser.MAIS:
                         if (left.isDouble() && right.isDouble())
@@ -253,8 +255,8 @@ public class ExecutorAtividadeAutomatica {
                         if (left.isInteger() && right.isInteger())
                             stack.push(new Value(left.asInteger() + right.asInteger()));
                         if (left.isString() || right.isString()) {
-                            String result = (left.asString()+right.asString()).replaceAll("\"","");
-                            result = "\"" +result + "\"";
+                            String result = (left.asString() + right.asString()).replaceAll("\"", "");
+                            result = "\"" + result + "\"";
                             stack.push(new Value(result));
                         }
                         break;
@@ -271,7 +273,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx){
+        public void exitRelationalExpr(GramaticaAtividadeAutomaticaParser.RelationalExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
                 Value left = stack.pop();
@@ -281,7 +283,7 @@ public class ExecutorAtividadeAutomatica {
 
                 switch (ctx.op.getType()) {
                     case GramaticaAtividadeAutomaticaParser.LT:
-                       stack.push(new Value(left.asDouble() < right.asDouble()));
+                        stack.push(new Value(left.asDouble() < right.asDouble()));
                     case GramaticaAtividadeAutomaticaParser.LTEQ:
                         stack.push(new Value(left.asDouble() <= right.asDouble()));
                     case GramaticaAtividadeAutomaticaParser.GT:
@@ -295,7 +297,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx){
+        public void exitEqualExpr(GramaticaAtividadeAutomaticaParser.EqualExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
                 Value left = stack.pop();
@@ -311,7 +313,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx){
+        public void exitAndExpr(GramaticaAtividadeAutomaticaParser.AndExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
                 Value left = stack.pop();
@@ -320,7 +322,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx){
+        public void exitOrExpr(GramaticaAtividadeAutomaticaParser.OrExprContext ctx) {
             if (doInstruction) {
                 Value right = stack.pop();
                 Value left = stack.pop();
@@ -329,7 +331,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx){
+        public void exitTp_ident(GramaticaAtividadeAutomaticaParser.Tp_identContext ctx) {
             if (doInstruction) {
                 Value identidade = stack.pop();
                 stack.push(memory.get(identidade.toString()));
@@ -337,21 +339,21 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx){
+        public void enterTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) {
             if (doInstruction) {
                 stack.push(new Value(ctx.getText()));
             }
         }
 
         @Override
-        public void enterTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx){
+        public void enterTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx) {
             if (doInstruction) {
                 stack.push(new Value(ctx.getText()));
             }
         }
 
         @Override
-        public void enterTp_float(GramaticaAtividadeAutomaticaParser.Tp_floatContext ctx){
+        public void enterTp_float(GramaticaAtividadeAutomaticaParser.Tp_floatContext ctx) {
             if (doInstruction) {
                 stack.push(new Value(ctx.getText()));
             }
@@ -385,7 +387,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx){
+        public void exitEmailAtributosDefaultEmail(GramaticaAtividadeAutomaticaParser.EmailAtributosDefaultEmailContext ctx) {
             if (doInstruction) {
                 String corpo = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
                 String assunto = memory.get(stack.pop().toString()).toString().replaceAll("\"", "");
@@ -403,7 +405,7 @@ public class ExecutorAtividadeAutomatica {
         }
 
         @Override
-        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx){
+        public void enterFormApprov(GramaticaAtividadeAutomaticaParser.FormApprovContext ctx) {
             if (doInstruction) {
                 int index = new Value(ctx.dados.getText()).asInteger();
                 Value identidade = stack.pop();
@@ -538,7 +540,9 @@ public class ExecutorAtividadeAutomatica {
 
         @Override
         public Value visitTp_integer(GramaticaAtividadeAutomaticaParser.Tp_integerContext ctx) {
-            return new Value(ctx.getText());
+            Value v = new Value(ctx.getText());
+            v.type("Int");
+            return v;
         }
 
         @Override
@@ -552,12 +556,16 @@ public class ExecutorAtividadeAutomatica {
 
         @Override
         public Value visitTp_float(GramaticaAtividadeAutomaticaParser.Tp_floatContext ctx) {
-            return new Value(ctx.getText());
+            Value v = new Value(ctx.getText());
+            v.type("Double");
+            return v;
         }
 
         @Override
         public Value visitTp_string(GramaticaAtividadeAutomaticaParser.Tp_stringContext ctx) {
-            return new Value(ctx.getText());
+            Value v = new Value(ctx.getText());
+            v.type("String");
+            return v;
         }
 
         @Override
@@ -598,8 +606,10 @@ public class ExecutorAtividadeAutomatica {
 
             switch (ctx.op.getType()) {
                 case GramaticaAtividadeAutomaticaParser.MAIS:
-                    if (left.isDouble() && right.isDouble())
-                        return new Value(left.asDouble() + right.asDouble());
+
+                    if (!(left.isString() || right.isString()))
+                        if (left.isDouble() || right.isDouble())
+                            return new Value(left.asDouble() + right.asDouble());
 
                     if (left.isInteger() && right.isInteger())
                         return new Value(left.asInteger() + right.asInteger());
@@ -613,7 +623,7 @@ public class ExecutorAtividadeAutomatica {
                     if (left.isString() || right.isString())
                         throw new ParseCancellationException("Não foi possivel fazer a operação");
 
-                    return left.isDouble() && right.isDouble() ?
+                    return left.isDouble() || right.isDouble() ?
                             new Value(left.asDouble() - right.asDouble()) :
                             new Value(left.asInteger() - right.asInteger());
                 default:

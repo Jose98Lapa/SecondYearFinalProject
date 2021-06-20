@@ -317,7 +317,7 @@
             <Wtipo>A</Wtipo>
             <Waprov>S</Waprov>
             <Wservice>2</Wservice>
-            <Wscript>https://192.168.1.92/bootstrapFormAut2.txt</Wscript>
+            <Wscript>https://192.168.1.92/bootstrapFormAut1.txt</Wscript>
             <Wfunc>1</Wfunc>
 
             <WAfId>202</WAfId>

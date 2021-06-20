@@ -217,8 +217,8 @@ class TcpClient {
                     */
 
                     StringBuilder data = new StringBuilder();
-                    data.append("raf@isep.ipp.pt").append('|').append("teste_atividade_automatica2.txt").append('|').append("1;;;2;;;3;;;4")
-                            .append('|').append("uma1;;;duas2;;;tres3;;;quatro4");
+                    data.append("raf@isep.ipp.pt").append('|').append("bootstrapFormAut2.txt").append('|').append("1;;;2;;;3;;;4;;;9;;;8;;;7;;;6")
+                            .append('|').append("uma1;;;duas2;;;tres3;;;quatro4;;;6;;;8;;;8");
 
                     tcpExecuterClient.executeAutomaticTask(data.toString());
                     break;
