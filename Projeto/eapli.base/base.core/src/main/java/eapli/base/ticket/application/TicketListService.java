@@ -1,6 +1,7 @@
 package eapli.base.ticket.application;
 
 import eapli.base.AppSettings;
+import eapli.base.Application;
 import eapli.base.collaborator.domain.Collaborator;
 import eapli.base.feedback.domain.Feedback;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -27,7 +28,7 @@ public class TicketListService {
     }
 
     public List<TicketDTO> getPendingTicketsToReview(String email) {
-        int days = Integer.parseInt(new AppSettings().getConfigProperty("daysToReceiveFeedback"));
+        int days = Integer.parseInt(new AppSettings().getProperty("daysToReceiveFeedback"));
         List<Ticket> feedbackBetweenDatesFromAClient = ticketRepository.getFeedbackBetweenDatesFromAClient(email, LocalDate.now().minusDays(days), LocalDate.now());
         List<TicketDTO> toReturn = new ArrayList<>(feedbackBetweenDatesFromAClient.size());
         feedbackBetweenDatesFromAClient.forEach(ticket -> toReturn.add(ticket.toDTO()));

@@ -10,19 +10,19 @@ function refreshStatus() {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
         console.log(this.responseText);
-        setTimeout(refreshStatus, 1);
+        setTimeout(refreshStatus, 3000);
     };
 
     request.ontimeout = function () {
         vBoard.innerHTML = "Server timeout, still trying ...";
         vBoard.style.color = "red";
-        setTimeout(refreshStatus, 1);
+        setTimeout(refreshStatus, 100);
     };
 
     request.onerror = function () {
         vBoard.innerHTML = "No server reply, still trying ...";
         vBoard.style.color = "red";
-        setTimeout(refreshStatus, 1);
+        setTimeout(refreshStatus, 5000);
     };
     request.open("GET", "/stateDiv", true);
     request.timeout = 5000;

@@ -1,14 +1,10 @@
 package eapli.base.app.user.console.presentation.taskUI;
 
-import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.application.TicketService;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
-import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.application.TicketTaskController;
 import eapli.base.ticketTask.domain.TicketApprovalTask;
 import eapli.base.ticketTask.domain.TicketExecutionTask;
-import eapli.base.ticketTask.domain.TicketTask;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.fusesource.jansi.Ansi;
@@ -79,11 +75,14 @@ public class PendingTasksUI extends AbstractUI {
 		List< TicketApprovalTask > taskList = ticketTaskController.approvalTasksPending( );
 		List< Pair< Ticket, TicketApprovalTask > > tickets = ticketTaskController.listTicketsByApprovalTask( taskList, order, filter );
 
-		for ( TicketApprovalTask task : taskList ) {
+		for ( Pair< Ticket, TicketApprovalTask > pair : tickets ) {
 
-			int length = task.identity().toString().length();
-			String spaces = new String( new char[ 86 - 28 - length ] ).replace('\0', ' ' );
-			System.out.println( "|    Aprovacao para tarefa: " + task.identity().toString() + spaces + "|");
+			String info = pair.getSecond().identity() +
+					") deadline " + pair.getSecond().deadline() +
+					", pedido a " + pair.getFirst().solictedOn() +
+					"[ " + pair.getFirst().urgency() + " ].";
+			String spaces = new String( new char[ 86 - info.length() - 4 ] ).replace('\0', ' ' );
+			System.out.println( "|\t" + info + spaces + "|");
 		}
 	}
 
@@ -92,11 +91,14 @@ public class PendingTasksUI extends AbstractUI {
 		List< TicketExecutionTask > taskList = ticketTaskController.executionTasksPending( );
 		List< Pair< Ticket, TicketExecutionTask > > tickets = ticketTaskController.listTicketsByExecutionTask( taskList, order, filter );
 
-		for ( TicketExecutionTask task : taskList ) {
+		for ( Pair< Ticket, TicketExecutionTask > pair : tickets ) {
 
-			int length = task.identity().toString().length();
-			String spaces = new String( new char[ 86 - 27 - length ] ).replace('\0', ' ' );
-			System.out.println( "|    Execucao para tarefa: " + task.identity().toString() + spaces + "|");
+			String info = pair.getSecond().identity() +
+					") deadline " + pair.getSecond().deadline() +
+					", pedido a " + pair.getFirst().solictedOn() +
+					"[ " + pair.getFirst().urgency() + " ].";
+			String spaces = new String( new char[ 86 - info.length() - 4 ] ).replace('\0', ' ' );
+			System.out.println( "|\t" + spaces + "|");
 		}
 	}
 

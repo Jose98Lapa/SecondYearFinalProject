@@ -17,9 +17,15 @@ RCOMP 2019-2020 Project - Sprint 5 review
 
 ## 2.2. 1190731 - US3101 ###
 
+Concluido com sucesso
+
+![Documentação](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/)
 
 ## 2.3. 1191097 - US5002 ###
 
+Concluido com sucesso. Realizei algumas mudanças no sprint anterior, de modo a simplificar a leitura e organização. De resto, penso que este sprint foi realizado com sucesso, onde conseguimos atingir todos os seu objetivos.
+
+![Documentação](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1191097/)
 
 ## 2.4. 1200619 - US4052 ###
 

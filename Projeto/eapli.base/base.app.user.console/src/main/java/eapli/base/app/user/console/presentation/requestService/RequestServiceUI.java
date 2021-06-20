@@ -70,19 +70,28 @@ public class RequestServiceUI extends AbstractUI {
 				"Resposta a " + serviceForm.nome,
 				answers
 		);
-		ticketController.answeringForm( answerForm );
+		boolean grammarValidation = ticketController.answeringForm( answerForm );
 
-		TicketDTO ticket = new TicketDTO(
-				LocalDate.now().toString(),
-				Utils.readLineFromConsole( " Introduza a deadline do ticket ( ex: 2021-03-31 )" ),
-				selectedService.script,
-				Utils.readLineFromConsole( " Introduza a urgencia do ticket ( reduzida / moderada / urgente)" ),
-				selectedService,
-				sessionEmail()
-		);
-		ticketController.createTicket( ticket );
+		if ( grammarValidation ) {
+			TicketDTO ticket = new TicketDTO(
+					LocalDate.now().toString(),
+					Utils.readLineFromConsole( " Introduza a deadline do ticket ( ex: 2021-03-31 )" ),
+					selectedService.script,
+					Utils.readLineFromConsole( " Introduza a urgencia do ticket ( reduzida / moderada / urgente)" ),
+					selectedService,
+					sessionEmail()
+			);
 
-		return true;
+			String confirmation = Utils.readLineFromConsole( "Confirma os dados introduzidos? ( sim / nao )" );
+
+			ticketController.createTicket( ticket , confirmation.equals( "sim" ) );
+
+			return true;
+		} else {
+			System.out.println( "| WARNING: Ticket nao foi criado                                                      |");
+			return false;
+		}
+
 	}
 
 	@Override
