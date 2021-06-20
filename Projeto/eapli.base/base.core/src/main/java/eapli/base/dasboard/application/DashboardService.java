@@ -1,5 +1,6 @@
 package eapli.base.dasboard.application;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -42,8 +43,8 @@ public class DashboardService {
     }
 
     private LocalDateTime getDateFromString(String str){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime dateTime = LocalDate.parse(str, formatter).atStartOfDay();
         return dateTime;
     }
 
@@ -52,7 +53,18 @@ public class DashboardService {
         return input;
     }
     public LinkedList<DashboardInfoDTO> sortDashboardInfoByUrgency(LinkedList<DashboardInfoDTO> input){
-        input.sort( Comparator.comparingInt( o -> Integer.parseInt( o.urgency ) ) );
+        input.sort(new Comparator<DashboardInfoDTO>() {
+            @Override
+            public int compare(DashboardInfoDTO o1, DashboardInfoDTO o2) {
+                if(o1.urgency.equals("urgente")){
+                    return 1;
+                }else if(o1.urgency.equals("reduzida")){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        });
         return input;
     }
 }

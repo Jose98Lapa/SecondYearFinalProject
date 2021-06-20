@@ -8,7 +8,7 @@ function refreshColab() {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
         console.log(this.responseText);
-        setTimeout(refreshColab, 2000);
+        setTimeout(refreshColab, 10000);
     };
 
     request.ontimeout = function () {
@@ -33,7 +33,7 @@ function refreshUrgency() {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
         console.log(this.responseText);
-        setTimeout(refreshUrgency, 2000);
+        setTimeout(refreshUrgency, 5000);
     };
 
     request.ontimeout = function () {
@@ -58,7 +58,7 @@ function refreshCriticality() {
         vBoard.innerHTML = this.responseText;
         vBoard.style.color = "white";
         console.log(this.responseText);
-        setTimeout(refreshCriticality, 2000);
+        setTimeout(refreshCriticality, 5000);
     };
 
     request.ontimeout = function () {
