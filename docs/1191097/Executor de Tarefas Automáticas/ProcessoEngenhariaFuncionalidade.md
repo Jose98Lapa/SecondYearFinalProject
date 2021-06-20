@@ -1,4 +1,4 @@
-# UC 5001 - Executor de Tarefas Automáticas
+# UC 5001 e 5003 - Executor de Tarefas Automáticas
 =======================================
 
 
@@ -12,7 +12,13 @@ Critérios de Aceitação / Observações:
 - Deve ser suportado o processamento simultaneo de pedidos para execução de tarefas automáticas.
 - Neste sprint, para efeitos de demonstração, é aceitável que a execução das tarefas automáticas seja apenas simulada (mock).
 
+**UC 5003:**  Como Gestor de Projeto, eu pretendo que a equipa conclua o desenvolvimento do Executor de Tarefas Automáticas tornando-o bastante robusto.
 
+Critérios de Aceitação / Observações:
+
+- Refinar US 5001.
+- As expressões da linguagem/gramática desenvolvida devem ser executadas/interpretadas (e.g. script de tarefa automática).
+- 
 # 2. Análise
 
 Para análise, o modelo de domínio dá resposta ao requisito, não sendo assim necessário estender o mesmo. [Verificar modelo de domínio](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/Modelo%20de%20Dominio.svg)
@@ -43,17 +49,28 @@ Para assegurar que a serialização e a desserialização estão funcionais foi 
 ```java
 class TcpServer {
 
-    static ServerSocket sock;
+    static SSLServerSocket sock;
 
     public static void main(String[] args) throws Exception {
         Socket cliSock;
 
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", "server.keystore");
+        System.setProperty("javax.net.ssl.trustStorePassword", "password");
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore", "server.keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "password");
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         try {
-            sock = new ServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sock = (SSLServerSocket) sslF.createServerSocket(Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
+            sock.setNeedClientAuth(true);
         } catch (IOException ex) {
-            System.err.println("Failed to open server socket");
+            System.out.println("Server failed to open local port " + Integer.parseInt(Application.settings().getPortAutomatictaskExecutor()));
             System.exit(1);
         }
+
 
         while (true) {
             cliSock = sock.accept();
@@ -65,6 +82,7 @@ class TcpServer {
 ```
 
 ### Uso do SPD2021
+
 ```java
 public boolean executeAutomaticTask() {
         try {
@@ -214,6 +232,8 @@ public static <V> byte[][] splitObjectIntoByteArray (V object){
 # 5. Integração/Demonstração
 
 Para a implementação desta funcionalidade foi necessário um bocado mais tempo do que o habitual pois é algo novo. Todavia, o trabalho foi sempre bastante fluido. Para efeitos de demonstração, a execução das tarefas automáticas foi apenas simulada. A execução desta funcionalidade é desencandeada pelo motor de fluxos de atividade, onde este exerce o papel de cliente SDP2021.
+
+No sprint D, a simulação foi retirada e o server, recorrendo a listeners ou visitors, executa e interpreta o script. A escolha do tipo de execução do script (listeners ou visitors) pode ser feita no ficheiro application.properties.
 
 # 6. Observações
 
