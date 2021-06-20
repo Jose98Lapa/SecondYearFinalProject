@@ -37,7 +37,7 @@ public class FormController {
         registerForm(formDTO);
         fmb.setScript(formDTO.script);
         form = fmb.build();
-        //new FormService().testForm(form);
+        new FormService().testForm(form);
         return repo.save(form);
     }
 
