@@ -24,7 +24,7 @@ public class CompleteRequestUI extends AbstractUI {
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
 		System.out.println( "|                                                                                     |" );
-		System.out.println( "|    Qual vai escolher? ( 0 para sair )                                               |" );
+		System.out.println( "|    Qual vai escolher? ( -1 para sair )                                               |" );
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
 		int ticketOption = Console.readOption( 0, tickets.size(), -1 );
@@ -78,7 +78,7 @@ public class CompleteRequestUI extends AbstractUI {
 				createTicketController.createTicket( ticket, true );
 				break;
 				case 1:
-					ticket.deadLine = Console.readLine(  "Introduza uma nova deadline: ");
+					ticket.deadLine = Console.readLine(  "Introduza uma nova deadline ( 2020-03-31 ): ");
 					System.out.println( "*=====================================================================================*" );
 					createTicketController.finishTicket( ticket, true );
 					break;
