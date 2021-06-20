@@ -78,7 +78,7 @@ public class CompleteRequestUI extends AbstractUI {
 				createTicketController.createTicket( ticket, true );
 				break;
 				case 1:
-					ticket.deadLine = Console.readLine(  "Introduza uma nova deadline: ");
+					ticket.deadLine = Console.readLine(  "Introduza uma nova deadline ( 2020-03-31 ): ");
 					System.out.println( "*=====================================================================================*" );
 					createTicketController.finishTicket( ticket, true );
 					break;
