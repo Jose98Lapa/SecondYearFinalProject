@@ -59,7 +59,7 @@ public class CompleteTaskController {
         FormDTO manualTaskFormDTO = manualTask.form().toDTO();
         FormDTO formDTO = new FormDTO(manualTaskFormDTO.script, GenerateRandomStringID.generateRandomStringID(),"Formulario da Atividade "+ currentWorkingTask.identity(), attributeSet);
         FormController formController = new FormController();
-        Form form = formController.registerAnswerForm(formDTO);
+        Form form = formController.registerAnswerForm(formDTO,currentWorkingTask.form());
         currentWorkingTask.updateForm(form);
     }
 
