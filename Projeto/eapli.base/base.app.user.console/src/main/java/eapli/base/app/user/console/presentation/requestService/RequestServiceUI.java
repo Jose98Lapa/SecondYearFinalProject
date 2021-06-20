@@ -81,7 +81,10 @@ public class RequestServiceUI extends AbstractUI {
 					selectedService,
 					sessionEmail()
 			);
-			ticketController.createTicket( ticket );
+
+			String confirmation = Utils.readLineFromConsole( "Confirma os dados introduzidos? ( sim / nao )" );
+
+			ticketController.createTicket( ticket , confirmation.equals( "sim" ) );
 
 			return true;
 		} else {

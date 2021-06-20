@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
+import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketStatus;
 import eapli.base.ticket.repository.TicketRepository;
@@ -83,4 +84,18 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
         q.setParameter("status",TicketStatus.valueOf("CONCLUDED"));
         return q.getResultList();
     }
+
+    @Override
+    public List< Ticket > getIncomplete ( ) {
+
+        final TypedQuery< Ticket > query = createQuery(
+                "SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :id",
+                Ticket.class
+        );
+
+        query.setParameter("id", TicketStatus.valueOf( "INCOMPLETE" ) );
+
+        return query.getResultList();
+    }
+
 }

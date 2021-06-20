@@ -36,6 +36,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class CreateTicketController {
@@ -58,19 +59,23 @@ public class CreateTicketController {
 		ListCatalogueService catalogueService = new ListCatalogueService( );
 		ListCollaboratorService listCollaboratorService = new ListCollaboratorService( );
 		TeamListService teamListService = new TeamListService( );
-		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
 
-		String email = authorizationService
+		String email = getEmail( );
+		Collaborator currentColaborator = listCollaboratorService.getCollaboratorByEmail( email );
+		Set< Team > teams = teamListService.getACollaboratorTeams( currentColaborator );
+
+		return catalogueService.requestableCataloguesByTeams( teams );
+	}
+
+	private String getEmail ( ) {
+
+		AuthorizationService authorizationService = AuthzRegistry.authorizationService( );
+		return authorizationService
 				.session( )
 				.get( )
 				.authenticatedUser( )
 				.email( )
 				.toString( );
-
-		Collaborator currentColaborator = listCollaboratorService.getCollaboratorByEmail( email );
-		Set< Team > teams = teamListService.getACollaboratorTeams( currentColaborator );
-
-		return catalogueService.requestableCataloguesByTeams( teams );
 	}
 
 	public List< ServiceDTO > getServicesByCatalogue ( CatalogueDTO chosenCatalogueDTO ) {
@@ -104,29 +109,74 @@ public class CreateTicketController {
 		return result;
 	}
 
-	public boolean createTicket ( TicketDTO ticketDTO ) {
+	public boolean createTicket ( TicketDTO ticketDTO, boolean confirmation ) {
 
-		Service service = new ServiceListService().getServiceByID(ticketDTO.serviceDTO.id);
+		Service service = new ServiceListService().getServiceByID( ticketDTO.serviceDTO.id );
 		Ticket ticket = builder
 				.solicitedOn( ticketDTO.solicitedOn )
 				.withDeadLine( ticketDTO.deadLine )
 				.completedOn( ticketDTO.completedOn )
-				.withStatus( Constants.PENDING )
+				.withStatus( confirmation ? Constants.PENDING : Constants.INCOMPLETE )
 				.withPossibleFile( ticketDTO.file )
 				.withService(service)
 				.withUrgency( ticketDTO.urgency )
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
+		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
+		if ( confirmation ) {
+
+			this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
+			this.tcpClient.dispatchTicket( persistedTicket.identity() );
+			this.tcpClient.stopConnection();
+		}
+
+		return true;
+	}
+
+	public boolean finishTicket ( TicketDTO ticketDTO, boolean confirmation ) {
+
+		Service service = new ServiceListService().getServiceByID( ticketDTO.serviceDTO.id );
+		Ticket remote = ticketRepository.ofIdentity( ticketDTO.id ).get();
+
+		Ticket ticket = builder
+				.solicitedOn( ticketDTO.solicitedOn )
+				.withDeadLine( ticketDTO.deadLine )
+				.completedOn( ticketDTO.completedOn )
+				.withStatus( confirmation ? Constants.PENDING : Constants.INCOMPLETE )
+				.withPossibleFile( ticketDTO.file )
+				.withForm( remote.ticketForm( ) )
+				.withService( service )
+				.withService(service)
+				.withUrgency( ticketDTO.urgency )
+				.requestedBy( ticketDTO.requestedBy )
+				.build( );
 
 		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
-		this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
-		this.tcpClient.dispatchTicket( persistedTicket.identity() );
-		this.tcpClient.stopConnection();
+		if ( confirmation ) {
+
+			this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
+			this.tcpClient.dispatchTicket( persistedTicket.identity() );
+			this.tcpClient.stopConnection();
+		}
 
 		return true;
+	}
+
+
+	public List< TicketDTO > incompleteTickets ( ) {
+
+		String email = getEmail( );
+		List< Ticket > ticketList = ticketRepository.getIncomplete();
+		List< TicketDTO > dtoList = ticketList
+				.stream()
+				.filter( ticket -> ticket.requestedBy().equals( email ) )
+				.map( Ticket::toDTO )
+				.collect( Collectors.toList() );
+
+		return dtoList;
 	}
 
 	public FormDTO getFormDTOByID ( String ID ) {
