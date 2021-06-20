@@ -87,7 +87,7 @@ public class CreateTicketController {
 		this.builder.withService( service );
 	}
 
-	public void answeringForm ( FormDTO formDTO ) {
+	public boolean answeringForm ( FormDTO formDTO ) {
 
 		Form form = new FormDTOParser( ).valueOf( formDTO );
 		File script =ticketService.getFIleFromServer(service.form());
@@ -100,6 +100,8 @@ public class CreateTicketController {
 		}
 		script.delete();
 		this.builder.withForm( form );
+
+		return result;
 	}
 
 	public boolean createTicket ( TicketDTO ticketDTO ) {
