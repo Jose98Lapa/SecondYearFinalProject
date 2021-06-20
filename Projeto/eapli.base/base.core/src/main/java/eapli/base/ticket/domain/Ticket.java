@@ -76,7 +76,6 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         this.workflow = workflow;
         this.ticketForm = ticketForm;
         this.requestedBy = requestedBy;
-        this.status = new TicketStatus( "PENDING" );
         this.builder = new TicketBuilder();
     }
 
@@ -241,5 +240,13 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
 
     public LocalDate solictedOn (){
         return this.solicitedOn;
+    }
+
+    public void setUrgency ( Urgency urgency ) {
+        this.urgency = urgency;
+    }
+
+    public void setDeadLine ( LocalDate deadLine ) {
+        this.deadLine = deadLine;
     }
 }
