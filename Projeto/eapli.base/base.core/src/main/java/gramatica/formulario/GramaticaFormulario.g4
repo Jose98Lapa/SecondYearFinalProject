@@ -125,7 +125,7 @@ TIPODADOS           : 'NUMERO' | 'REAL' | 'TEXTO' | 'DATA';
 ELEMENTO           : 'ELEMENTO';
 
 NUMERO              : DIGITO+;
-REAL                : DIGITO+ ( [.,] DIGITO+ )?;
+REAL                : DIGITO+ ( [.] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 STRING              : '"' STR  '"';

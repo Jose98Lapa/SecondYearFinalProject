@@ -84,7 +84,7 @@ public class CompleteTaskController {
         completeTask();
         TcpClient tcpClient = new TcpClient();
         tcpClient.startConnection( Application.settings().getIpWorkflow() );
-        tcpClient.dispatchTicket( workingTicket.identity() );
+        tcpClient.statusChange( workingTicket.identity() );
         tcpClient.stopConnection();
     }
 
@@ -107,7 +107,7 @@ public class CompleteTaskController {
         createTaskController.registerTicketTask(automaticTask);
         TcpClient tcpClient = new TcpClient();
         tcpClient.startConnection( Application.settings().getIpWorkflow() );
-        tcpClient.dispatchTicket( workingTicket.identity() );
+        tcpClient.statusChange( workingTicket.identity() );
         tcpClient.stopConnection();
     }
 

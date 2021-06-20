@@ -93,6 +93,8 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     }
 
     public TicketWorkflow workflow() {
+        if (workflow==null)
+            workflow=new TicketWorkflow();
         return workflow;
     }
 
@@ -170,7 +172,7 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     }
 
     public boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask) {
-        return checkIfTicketTaskBelongsToTicket(ticketTask, this.workflow.starterTask());
+        return checkIfTicketTaskBelongsToTicket(ticketTask, this.workflow().starterTask());
     }
 
     private boolean checkIfTicketTaskBelongsToTicket(TicketTask ticketTask, TicketTask starterTask) {

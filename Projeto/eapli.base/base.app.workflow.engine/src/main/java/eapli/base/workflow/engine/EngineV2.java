@@ -66,6 +66,19 @@ public class EngineV2 {
 
     }
 
+    public void processIncomingTicket2(byte[] payload) {
+        String payloadS = new String(payload, StandardCharsets.UTF_8);
+        Optional<Ticket> ticketOptional = ticketRepository.ofIdentity(payloadS);
+        Ticket ticket;
+
+        if (ticketOptional.isPresent()) {
+
+            ticket = ticketOptional.get();
+            processStatusChange(ticket, ticket.status().toString());
+        }
+
+    }
+
     public void processStatusChange(Ticket ticket, String action) {
 
         Optional<Ticket> processedTicket = Optional.empty();
@@ -73,11 +86,11 @@ public class EngineV2 {
         switch (action) {
             case "PENDING":
                 ticket.statusPending();
-                processedTicket = Optional.of( delegateTask( ticket ) );
+                processedTicket = Optional.of(delegateTask(ticket));
                 break;
             case "PENDING_EXECUTION":
                 ticket.statusPendingExecution();
-                processedTicket = Optional.of( delegateTask( ticket ) );
+                processedTicket = Optional.of(delegateTask(ticket));
                 break;
             case "NOT_APPROVED":
                 ticket.statusNotApproved();
@@ -127,16 +140,12 @@ public class EngineV2 {
         if (ticket.workflow().getFirstIncompleteTask() instanceof TicketApprovalTask) {
             selected = assignCollaboratorApproval(ticket);
             ((TicketApprovalTask) ticket.workflow().getFirstIncompleteTask()).setApprovedBy(selected);
-        } else
-
-            if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
-                selected = assignCollaboratorExecution(ticket);
-                ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
-            } else
-
-                if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
-                    FCFSAutomaticTask(ticket);
-                }
+        } else if (ticket.workflow().getFirstIncompleteTask() instanceof TicketExecutionTask) {
+            selected = assignCollaboratorExecution(ticket);
+            ((TicketExecutionTask) ticket.workflow().getFirstIncompleteTask()).setExecutedBy(selected);
+        } else if (ticket.workflow().starterTask().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
+            FCFSAutomaticTask(ticket);
+        }
 
 
         return ticket;
@@ -150,7 +159,7 @@ public class EngineV2 {
                 selected = assignServer();
                 TcpExecuterClient client = new TcpExecuterClient();
                 if (client.startConnection(selected)) {
-                    if(client.executeAutomaticTask(ticket))
+                    if (client.executeAutomaticTask(ticket))
                         new CompleteTaskController().concludeAutomaticTicket(ticket.workflow().getFirstIncompleteTask());
                     client.stopConnection();
                 }
@@ -209,14 +218,17 @@ public class EngineV2 {
         try {
             if (ticket.workflow().getFirstIncompleteTask() instanceof TicketAutomaticTask) {
                 selected = RRassignServer();
+                if (!serverQueueMap.containsKey(selected)) {
+                    serverQueueMap.put(selected, 0);
+                }
                 TcpExecuterClient client = new TcpExecuterClient();
                 if (client.startConnection(selected)) {
-                    if(client.executeAutomaticTask(ticket))
+                    if (client.executeAutomaticTask(ticket))
                         new CompleteTaskController().concludeAutomaticTicket(ticket.workflow().getFirstIncompleteTask());
                     client.stopConnection();
                 }
-                    serverQueueMap.put(selected, serverQueueMap.get(selected) - 1);
-                }
+                serverQueueMap.put(selected, serverQueueMap.get(selected) - 1);
+            }
 
         } catch (IOException e) {
             System.out.println("An error ocorred");
@@ -359,7 +371,7 @@ public class EngineV2 {
         } else if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketExecutionTask.class) {
             chooseExecutionCollaborator(ticket);
             return ticket;
-        } else if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketAutomaticTask.class){
+        } else if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketAutomaticTask.class) {
             return RRAutomaticTask(ticket);
         }
         return ticket;

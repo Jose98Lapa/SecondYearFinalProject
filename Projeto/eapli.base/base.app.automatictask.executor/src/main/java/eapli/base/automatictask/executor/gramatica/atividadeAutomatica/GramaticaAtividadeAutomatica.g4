@@ -144,7 +144,7 @@ FORM                   : 'FORM';
 
 
 NUMERO              : DIGITO+;
-REAL                : DIGITO+ ( [.,] DIGITO+ )?;
+REAL                : DIGITO+ ( [.] DIGITO+ )?;
 NOME_FICHEIRO       : (TEXTO|NUMERO)+  '.' TEXTO ;
 TEXTO               : (( UPPERCASE )?( LOWERCASE ))+;
 APPROV              : '>aprov' | '>aprovação' | '>a';

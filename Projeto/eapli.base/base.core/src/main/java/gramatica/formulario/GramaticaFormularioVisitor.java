@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
