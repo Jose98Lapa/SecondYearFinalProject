@@ -41,6 +41,13 @@ public class FormController {
         return repo.save(form);
     }
 
+    public void saveFormByBootstrap(FormDTO formDTO){
+        registerForm(formDTO);
+        fmb.setScript(formDTO.script);
+        form = fmb.build();
+        repo.save(form);
+    }
+
 
     public Form save(){
         form=fmb.build();

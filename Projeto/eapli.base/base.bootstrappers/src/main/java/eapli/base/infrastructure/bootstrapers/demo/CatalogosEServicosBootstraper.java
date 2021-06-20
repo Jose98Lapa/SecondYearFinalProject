@@ -154,8 +154,7 @@ public class CatalogosEServicosBootstraper implements Action {
                             ServiceDTO dto = new ServiceDTO(tituloServico, ServicoID, iconServico, lstkeyWords, statusServico, "MANUAL", descricaoBreve, descricaoCompleta, catalogos.get(Integer.parseInt(catalogoS) - 1), null, null);
                             servicoController.create(dto);
                             FormDTO fdto = new FormDTO(fscript, fId, fnome, lstAtributos);
-                            formController.registerForm(fdto);
-                            formController.save();
+                            formController.saveFormByBootstrap(fdto);
 
                             if (automatic) {
                                 servicoController.automatic("teste_atividade_automatica2.txt",fId);
@@ -243,8 +242,7 @@ public class CatalogosEServicosBootstraper implements Action {
 
                             if (Waprov.equals("S")) {  //aprovavcao
                                 FormDTO fdto = new FormDTO(WAfscript, WAfId, WAfnome, lstAtributosAprov);
-                                formController.registerForm(fdto);
-                                formController.save();
+                                formController.saveFormByBootstrap(fdto);
                                 List<FunctionDTO> functionDTOList = createTaskController.getFunctionsDTO();
                                 functionDTO = functionDTOList.get(Integer.parseInt(Wfunc) - 1);
                                 ApprovalTaskDTO approvalTaskDTO = new ApprovalTaskDTO(WAfId, functionDTO);
@@ -253,8 +251,8 @@ public class CatalogosEServicosBootstraper implements Action {
                             if (Wtipo.equals("M")) {  //manual/automatica
                                 //form
                                 FormDTO fdto = new FormDTO(WMfscript, WMfId, WMfnome, lstAtributosM);
-                                formController.registerForm(fdto);
-                                formController.save();
+                                formController.saveFormByBootstrap(fdto);
+
 
                                 List<TeamDTO> teamDTOList = new ArrayList<>();
                                 for (TeamDTO teamDTO : createTaskController.getTeamDTO()) {
