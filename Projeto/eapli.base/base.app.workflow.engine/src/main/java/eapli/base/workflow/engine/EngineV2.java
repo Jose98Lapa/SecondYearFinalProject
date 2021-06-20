@@ -16,6 +16,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketWorkflow;
 import eapli.base.ticket.domain.Urgency;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.application.CompleteTaskController;
 import eapli.base.ticketTask.application.CreateTaskController;
 import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.base.ticketTask.domain.*;
@@ -245,7 +246,8 @@ public class EngineV2 {
                 selected = assignServer();
                 TcpExecuterClient client = new TcpExecuterClient();
                 if (client.startConnection(selected)) {
-                    client.executeAutomaticTask(ticket);
+                    if(client.executeAutomaticTask(ticket))
+                        new CompleteTaskController().concludeAutomaticTicket(ticket.workflow().getFirstIncompleteTask());
                     client.stopConnection();
                 }
             }
