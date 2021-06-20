@@ -5,9 +5,11 @@ import eapli.base.form.domain.Form;
 import eapli.base.form.domain.FormID;
 import eapli.base.form.repository.FormRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ticket.application.TicketService;
 import gramatica.formulario.GramaticaFormulario;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import java.io.File;
 import java.util.Optional;
 
 public class FormService {
@@ -27,9 +29,12 @@ public class FormService {
 		return form.get();
 	}
 
-	public void testForm(Form form){
+	public void testForm(Form form,Form form1){
 		try{
-			GramaticaFormulario.parse(form.script().toString(),form);
+			TicketService ticketService = new TicketService();
+			File script =ticketService.getFIleFromServer(form1);
+			GramaticaFormulario.parse(script.getName(),form);
+			script.delete();
 		}catch (ParseCancellationException e){
 			e.printStackTrace();
 		}
