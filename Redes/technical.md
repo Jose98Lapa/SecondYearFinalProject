@@ -18,13 +18,13 @@ Utilizaçao de servidores:
 
 server0 -» 192.168.1.92  -» Maquina linux - responsável por armazenar os ficheiros (sftp) e ser host dos restantes servers.
 
-server workflow -» 172.17.0.2 -» docker container - responsável pelo servidor do Motor de Fluxos
+server workflow -» 172.17.0.6 -» docker container - responsável pelo servidor do Motor de Fluxos
 
-server executor -» 172.17.0.3 -» docker container - responsável pelo servidor do Executor de Tarefas Automáticas
+server executor -» 172.17.0.2 -» docker container - responsável pelo servidor do Executor de Tarefas Automáticas
 
-server executor1 -» 172.17.0.4 -» docker container
+server executor1 -» 172.17.0.3 -» docker container
+server executor2 -» 172.17.0.4 -» docker container
 server executor3 -» 172.17.0.5 -» docker container
-server executor2 -» 172.17.0.6 -» docker container
 
 Base de Dados - » cloud isep 
 
@@ -51,7 +51,7 @@ enviada em resposta a pedidos com código 0 e código 1.
 
 [ 20 ] : Pedido de execução -> Pedido de execução de um script de uma atividade automática.
 
-[ 21 ] : Envio dos dados (script) -> Transporte dos dados do script quando este não tem um tamanho superior a 255.
+[ 21 ] : Envio dos dados -> Transporte dos dados do script quando este não tem um tamanho superior a 255.
 
 [ 22 ] : Execução concluida ->  Feedback ao cliente para que este saiba que o script foi executado com sucesso. Não tansporta dados. 
 
@@ -62,4 +62,8 @@ enviada em resposta a pedidos com código 0 e código 1.
 [ 255 ] : Segmento -> Identifica os dados transportados como sendo parte de um conjunto de dados mais extenso.
 
 
+
+***
+Mais documentação:
+[Servidores Aplicacionais](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/Servidor(es)%20Aplicacional(ais)/)
 

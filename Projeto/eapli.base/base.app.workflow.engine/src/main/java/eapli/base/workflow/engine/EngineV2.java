@@ -195,7 +195,7 @@ public class EngineV2 {
                 delegated = FCFSTicket(ticket);
                 break;
             case "COMPLEX":
-                assigningAlgorithm(ticket);
+                delegated = assigningAlgorithm(ticket);
                 break;
         }
 
@@ -439,12 +439,17 @@ public class EngineV2 {
         return collaborator;
     }
 
-    public synchronized void assigningAlgorithm(Ticket ticket) {
+    public synchronized Ticket assigningAlgorithm(Ticket ticket) {
         if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketApprovalTask.class) {
             chooseApprovalCollaborator(ticket);
+            return ticket;
         } else if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketExecutionTask.class) {
             chooseExecutionCollaborator(ticket);
+            return ticket;
+        } else if (ticket.workflow().getFirstIncompleteTask().getClass() == TicketAutomaticTask.class){
+            return RRAutomaticTask(ticket);
         }
+        return ticket;
     }
 
     private synchronized void chooseApprovalCollaborator(Ticket ticket) {
