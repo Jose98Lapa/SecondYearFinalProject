@@ -14,6 +14,10 @@ RCOMP 2019-2020 Project - Sprint 5 review
 
 ## 2.1. 1190641 - US2102 ###
 
+Concluido com sucesso
+
+![Documentação] (https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190641/US2102%20-%20Proteger%20comunica%C3%A7%C3%B5es%20realizadas%20atrav%C3%A9s%20do%20protocolo%20SDP2021/Dashboard.md)
+
 
 ## 2.2. 1190731 - US3101 ###
 

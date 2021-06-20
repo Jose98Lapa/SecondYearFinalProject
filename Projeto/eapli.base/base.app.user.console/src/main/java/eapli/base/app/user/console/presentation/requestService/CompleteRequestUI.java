@@ -24,12 +24,12 @@ public class CompleteRequestUI extends AbstractUI {
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
 		System.out.println( "|                                                                                     |" );
-		System.out.println( "|    Qual vai escolher? ( 0 para sair                                                 |" );
+		System.out.println( "|    Qual vai escolher? ( 0 para sair )                                               |" );
 		System.out.println( "|                                                                                     |" );
 		System.out.println( "*=====================================================================================*" );
-		int ticketOption = Console.readOption( 1, tickets.size(), 0 );
+		int ticketOption = Console.readOption( 0, tickets.size(), -1 );
 
-		if ( ticketOption == 0 ) {
+		if ( ticketOption == -1 ) {
 			return false;
 		}
 
@@ -54,17 +54,17 @@ public class CompleteRequestUI extends AbstractUI {
 	public List< TicketDTO > displayDrafts ( ) {
 
 		List< TicketDTO > tickets = createTicketController.incompleteTickets();
-		int number = 1;
+		int number = 0;
 
 		for ( TicketDTO ticket : tickets ) {
 
 			String info = ticket.id +
 					" [ " + ticket.urgency +
-					" ] " + ticket.serviceDTO.catalogo +
+					" ] " + ticket.serviceDTO.catalogo.catalogTitle +
 					" :" + ticket.serviceDTO.title + " ].";
-			String spaces = new String( new char[ 86 - info.length() - 4 - Integer.toString( number ).length() ] )
+			String spaces = new String( new char[ 86 - info.length() - 6 - Integer.toString( number ).length() ] )
 					.replace('\0', ' ' );
-			System.out.println( "|\t" + number + info + spaces + "|");
+			System.out.println( "|\t" + number + ": " + info + spaces + "|");
 			number++;
 		}
 
@@ -84,8 +84,7 @@ public class CompleteRequestUI extends AbstractUI {
 					break;
 
 				case 2:
-					String urgency = Console.readLine(  "Introduza uma nova urgencia ( reduzida, moderada, urgente): ");
-					ticket.urgency = urgency;
+					ticket.urgency = Console.readLine(  "Introduza uma nova urgencia ( reduzida, moderada, urgente): ");
 					System.out.println( "*=====================================================================================*" );
 					createTicketController.finishTicket( ticket, true );
 					break;
@@ -95,7 +94,7 @@ public class CompleteRequestUI extends AbstractUI {
 	@Override
 	public String headline ( ) {
 
-		return null;
+		return "Completar Ticket";
 	}
 
 }
