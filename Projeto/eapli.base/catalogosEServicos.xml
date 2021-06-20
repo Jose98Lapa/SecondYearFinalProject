@@ -202,6 +202,7 @@
         Servico 2
     -->
     <class1>
+<!--
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
@@ -211,6 +212,7 @@
             <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
             <criticality>2</criticality>
         </catalogue>
+-->
 
         <Servico>
             <Formulario>
@@ -386,7 +388,7 @@
    -->
 
     <class1>
-        <catalogue>
+        <!--<catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
             <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
@@ -395,7 +397,7 @@
             <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
             <criticality>2</criticality>
         </catalogue>
-
+-->
         <Servico>
             <Formulario>
                 <fId>3</fId>
