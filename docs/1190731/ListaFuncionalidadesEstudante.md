@@ -9,8 +9,8 @@
 |--------|--------------------|
 | **B**  | [US2002](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Servico/ProcessoEngenhariaFuncionalidade.md) |
 | **B**  | [US2013](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Bootstrap/ProcessoEngenhariaFuncionalidade.md) |
-| **C**  | [USDemo3](USDemo3) |
-| **C**  | [USDemo3](USDemo4) |
-| **D**  | [USDemo3](USDemo5) |
-| **D**  | [USDemo3](USDemo6) |
-| **D**  | [USDemo3](USDemo7) |
+| **C**  | [Dashboard](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Dashboard/Dashboard.md) |
+| **D**  | [DashboardSSL](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/DashboardSSL/Dashboard.md) |
+| **D**  | [Algoritmos que assignem automaticamente tarefas a colaboradores](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Algoritmos%20que%20assignem%20automaticamente%20tarefas%20a%20colaboradores/ProcessoEngenhariaFuncionalidade.md) |
+| **D**  | [Consultar pedidos e respetivos detalhes e estado](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Consultar%20pedidos%20e%20respetivos%20detalhes%20e%20estado/ProcessoEngenhariaFuncionalidade.md) |
+| **D**  | [Bootstrap](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1190731/Bootstrap/ProcessoEngenhariaFuncionalidade.md) |
