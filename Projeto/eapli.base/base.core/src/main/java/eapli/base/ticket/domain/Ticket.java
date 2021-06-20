@@ -242,4 +242,12 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     public LocalDate solictedOn (){
         return this.solicitedOn;
     }
+
+    public void setUrgency ( Urgency urgency ) {
+        this.urgency = urgency;
+    }
+
+    public void setDeadLine ( LocalDate deadLine ) {
+        this.deadLine = deadLine;
+    }
 }

@@ -26,6 +26,7 @@ import eapli.base.ticket.builder.TicketBuilder;
 import eapli.base.ticket.domain.Constants;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.domain.TicketWorkflow;
+import eapli.base.ticket.domain.Urgency;
 import eapli.base.ticket.repository.TicketRepository;
 import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -137,28 +138,27 @@ public class CreateTicketController {
 
 	public boolean finishTicket ( TicketDTO ticketDTO, boolean confirmation ) {
 
-		Service service = new ServiceListService().getServiceByID( ticketDTO.serviceDTO.id );
+
 		Ticket remote = ticketRepository.ofIdentity( ticketDTO.id ).get();
-
-		Ticket ticket = builder
-				.solicitedOn( ticketDTO.solicitedOn )
-				.withDeadLine( ticketDTO.deadLine )
-				.completedOn( ticketDTO.completedOn )
-				.withStatus( confirmation ? Constants.PENDING : Constants.INCOMPLETE )
-				.withPossibleFile( ticketDTO.file )
-				.withForm( remote.ticketForm( ) )
-				.withService( service )
-				.withService(service)
-				.withUrgency( ticketDTO.urgency )
-				.requestedBy( ticketDTO.requestedBy )
-				.build( );
-
-		Ticket persistedTicket = this.ticketRepository.save( ticket );
 
 		if ( confirmation ) {
 
+			remote.statusPending();
+
+			if ( !remote.urgency().equals( ticketDTO.urgency ) ) {
+				remote.setUrgency( new Urgency( ticketDTO.urgency ) );
+			}
+
+			if ( !remote.deadline().equals( LocalDate.parse( ticketDTO.deadLine ) ) ) {
+				remote.setDeadLine( LocalDate.parse( ticketDTO.deadLine ) );
+			}
+
+			Ticket persistedTicket = this.ticketRepository.save( remote );
+
+
+
 			this.tcpClient.startConnection( Application.settings().getIpWorkflow() );
-			this.tcpClient.dispatchTicket( persistedTicket.identity() );
+			this.tcpClient.dispatchTicket( remote.identity() );
 			this.tcpClient.stopConnection();
 		}
 
