@@ -2,6 +2,7 @@ package eapli.base.app.user.console.presentation.taskUI;
 
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.application.TicketService;
+import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticketTask.DTO.TicketApprovalTaskDTO;
 import eapli.base.ticketTask.DTO.TicketExecutionTaskDTO;
 import eapli.base.ticketTask.application.TicketTaskController;
@@ -76,7 +77,7 @@ public class PendingTasksUI extends AbstractUI {
 	public void displayApprovalTasks ( int order, int filter ) {
 
 		List< TicketApprovalTask > taskList = ticketTaskController.approvalTasksPending( );
-		List< Pair< TicketDTO, TicketApprovalTask > > tickets = ticketTaskController.listTicketsByApprovalTask( taskList, order, filter );
+		List< Pair< Ticket, TicketApprovalTask > > tickets = ticketTaskController.listTicketsByApprovalTask( taskList, order, filter );
 
 		for ( TicketApprovalTask task : taskList ) {
 
@@ -89,7 +90,7 @@ public class PendingTasksUI extends AbstractUI {
 	public void displayExecutionTasks ( int order, int filter ) {
 
 		List< TicketExecutionTask > taskList = ticketTaskController.executionTasksPending( );
-		List< Pair< TicketDTO, TicketExecutionTask > > tickets = ticketTaskController.listTicketsByExecutionTask( taskList, order, filter );
+		List< Pair< Ticket, TicketExecutionTask > > tickets = ticketTaskController.listTicketsByExecutionTask( taskList, order, filter );
 
 		for ( TicketExecutionTask task : taskList ) {
 

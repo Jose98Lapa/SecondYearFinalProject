@@ -78,127 +78,119 @@ public class TicketTaskController {
 				.collect( Collectors.toList() );
 	}
 
-	public Pair< TicketDTO, TicketApprovalTask > ticketOfTaskApproval ( TicketApprovalTask task, int filter ) {
+	public Pair< Ticket, TicketApprovalTask > ticketOfTaskApproval ( TicketApprovalTask task, int filter ) {
 
-		Pair< TicketDTO, TicketApprovalTask > pair = null;
+		Pair< Ticket, TicketApprovalTask > pair = null;
 
 		switch ( filter ) {
-			case 1:
-				Ticket chosen = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+			case 1 -> {
+				Ticket chosen = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "reduzida" ) )
+								&& ticket.urgency( ).toString( ).equals( "reduzida" ) )
 						.findFirst( )
 						.get( );
-
-				pair = Pair.of( chosen.toDTO(), task );
-				break;
-			case 2:
-				Ticket chosen2 = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen, task );
+			}
+			case 2 -> {
+				Ticket chosen2 = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "moderado" ))
+								&& ticket.urgency( ).toString( ).equals( "moderado" ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosen2.toDTO(), task );
-				break;
-			case 3:
-				Ticket chosen3 = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen2, task );
+			}
+			case 3 -> {
+				Ticket chosen3 = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "urgente" ) )
+								&& ticket.urgency( ).toString( ).equals( "urgente" ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosen3.toDTO(), task );
-				break;
-			default:
-				Ticket chosenDefault = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen3, task );
+			}
+			default -> {
+				Ticket chosenDefault = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosenDefault.toDTO(), task );
+				pair = Pair.of( chosenDefault, task );
+			}
 		}
 
 		return pair;
 	}
 
-	public List< Pair< TicketDTO, TicketApprovalTask > > listTicketsByApprovalTask ( List< TicketApprovalTask > tasks,
+	public List< Pair< Ticket, TicketApprovalTask > > listTicketsByApprovalTask ( List< TicketApprovalTask > tasks,
 																					 int order, int filter ) {
 
-		List< Pair< TicketDTO, TicketApprovalTask > > tickets = new ArrayList<>();
+		List< Pair< Ticket, TicketApprovalTask > > tickets = new ArrayList<>();
 
 		for ( TicketApprovalTask task : tasks ) {
 			tickets.add( ticketOfTaskApproval( task, filter ) );
 		}
 
 		switch ( order ) {
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-
+			case 1 -> tickets.sort( Comparator.comparing( o -> o.getFirst( ).urgency( ) ) );
+			case 2 -> tickets.sort( Comparator.comparing( o -> o.getFirst( ).deadline( ) ) );
+			case 3 -> tickets.sort( ( o1, o2 ) -> o1.getFirst( ).compareBySolicitedOn( o2.getFirst( ) ) );
 		}
 
 		return tickets;
 	}
 
-	public Pair< TicketDTO, TicketExecutionTask > ticketOfExecutionTask ( TicketExecutionTask task, int filter ) {
+	public Pair< Ticket, TicketExecutionTask > ticketOfExecutionTask ( TicketExecutionTask task, int filter ) {
 
-		Pair< TicketDTO, TicketExecutionTask > pair = null;
+		Pair< Ticket, TicketExecutionTask > pair = null;
 
 		switch ( filter ) {
-			case 1:
-				Ticket chosen = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+			case 1 -> {
+				Ticket chosen = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "reduzida" ) )
+								&& ticket.urgency( ).toString( ).equals( "reduzida" ) )
 						.findFirst( )
 						.get( );
-
-				pair = Pair.of( chosen.toDTO(), task );
-				break;
-			case 2:
-				Ticket chosen2 = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen, task );
+			}
+			case 2 -> {
+				Ticket chosen2 = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "moderado" ))
+								&& ticket.urgency( ).toString( ).equals( "moderado" ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosen2.toDTO(), task );
-				break;
-			case 3:
-				Ticket chosen3 = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen2, task );
+			}
+			case 3 -> {
+				Ticket chosen3 = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task )
-								&& ticket.urgency().toString().equals( "urgente" ) )
+								&& ticket.urgency( ).toString( ).equals( "urgente" ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosen3.toDTO(), task );
-				break;
-			default:
-				Ticket chosenDefault = StreamSupport.stream( ticketRepository.findAll().spliterator(), false )
+				pair = Pair.of( chosen3, task );
+			}
+			default -> {
+				Ticket chosenDefault = StreamSupport.stream( ticketRepository.findAll( ).spliterator( ), false )
 						.filter( ticket -> ticket.checkIfTicketTaskBelongsToTicket( task ) )
 						.findFirst( )
 						.get( );
-				pair = Pair.of( chosenDefault.toDTO(), task );
+				pair = Pair.of( chosenDefault, task );
+			}
 		}
 
 		return pair;
 	}
 
-	public List< Pair< TicketDTO, TicketExecutionTask > > listTicketsByExecutionTask ( List< TicketExecutionTask > tasks,
+	public List< Pair< Ticket, TicketExecutionTask > > listTicketsByExecutionTask ( List< TicketExecutionTask > tasks,
 																					   int order, int filter ) {
 
-		List< Pair< TicketDTO, TicketExecutionTask > > tickets = new ArrayList<>();
+		List< Pair< Ticket, TicketExecutionTask > > tickets = new ArrayList<>();
 
 		for ( TicketExecutionTask task : tasks ) {
 			tickets.add( ticketOfExecutionTask( task, filter ) );
 		}
 
 		switch ( order ) {
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-
+			case 1 -> tickets.sort( Comparator.comparing( o -> o.getFirst( ).urgency( ) ) );
+			case 2 -> tickets.sort( Comparator.comparing( o -> o.getFirst( ).deadline( ) ) );
+			case 3 -> tickets.sort( ( o1, o2 ) -> o1.getFirst( ).compareBySolicitedOn( o2.getFirst( ) ) );
 		}
 
 		return tickets;
