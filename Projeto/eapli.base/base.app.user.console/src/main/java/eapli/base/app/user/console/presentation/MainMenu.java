@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.user.console.presentation.checkUserTickets.CheckUserTickersUI;
 import eapli.base.app.user.console.presentation.completeTaskUI.CompleteTaskUI;
 import eapli.base.app.user.console.presentation.feedbackUI.ReviewTicketUI;
+import eapli.base.app.user.console.presentation.requestService.CompleteRequestUI;
 import eapli.base.app.user.console.presentation.requestService.RequestServiceUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.user.console.presentation.checkServicesUI.CheckServicesUI;
@@ -111,7 +112,7 @@ class MainMenu extends ClientUserBaseUI {
     private Menu builderCompleteTaskMenu(){
         final Menu completeTaskMenu = new Menu("Consultar Tarefa");
         completeTaskMenu.addItem(1,"Completar Tarefa",()->new CompleteTaskUI().show());
-        completeTaskMenu.addItem( 2, "Consultar tarefas pendentes", ( ) -> new PendingTasksUI().show() );
+        completeTaskMenu.addItem( 2, "Consultar Tarefas Pendentes", ( ) -> new PendingTasksUI().show() );
         completeTaskMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return completeTaskMenu;
     }
@@ -120,6 +121,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu consultarServicoMenu = new Menu("Consultar Serviços");
         consultarServicoMenu.addItem(1, "Consultar Serviços", () -> new CheckServicesUI().show());
         consultarServicoMenu.addItem(2, "Pedir serviço", () -> new RequestServiceUI().show());
+        consultarServicoMenu.addItem( 3, "Completar Ticket", ( ) -> new CompleteRequestUI().show() );
         consultarServicoMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return consultarServicoMenu;
     }

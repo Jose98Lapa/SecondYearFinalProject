@@ -78,18 +78,17 @@ public class CompleteRequestUI extends AbstractUI {
 				createTicketController.createTicket( ticket, true );
 				break;
 				case 1:
-				String deadline = Console.readLine(  "Introduza uma nova deadline: ");
-				ticket.deadLine = deadline;
-				System.out.println( "*=====================================================================================*" );
-				createTicketController.finishTicket( ticket, true );
-				break;
+					ticket.deadLine = Console.readLine(  "Introduza uma nova deadline: ");
+					System.out.println( "*=====================================================================================*" );
+					createTicketController.finishTicket( ticket, true );
+					break;
 
 				case 2:
 					String urgency = Console.readLine(  "Introduza uma nova urgencia ( reduzida, moderada, urgente): ");
 					ticket.urgency = urgency;
 					System.out.println( "*=====================================================================================*" );
 					createTicketController.finishTicket( ticket, true );
-				break;
+					break;
 		}
 	}
 
