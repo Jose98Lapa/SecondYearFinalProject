@@ -126,7 +126,7 @@ public class TcpClient {
             if ((info[1] & 0xff) == 4)
                 break;
             if ((info[1] & 0xff) == 253) {
-                System.out.println("A error occurred");
+                //System.out.println("A error occurred");
                 break;
             }
 

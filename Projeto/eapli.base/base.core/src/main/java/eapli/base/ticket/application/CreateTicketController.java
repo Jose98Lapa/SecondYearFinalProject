@@ -87,12 +87,10 @@ public class CreateTicketController {
 		this.builder.withService( service );
 	}
 
-	public void answeringForm ( FormDTO formDTO ) {
+	public boolean answeringForm ( FormDTO formDTO ) {
 
 		Form form = new FormDTOParser( ).valueOf( formDTO );
-		//File script =ticketService.getFIleFromServer(service.form());
-		/**File script = new File("bootstrapForm.txt");
-		//File script =ticketService.getFIleFromServer( service.form() );
+		File script =ticketService.getFIleFromServer(service.form());
 		String type = Application.settings().getGRAMMARFORMTYPE();
 		boolean result;
 		if( type.equals("VISITOR")){
@@ -100,8 +98,10 @@ public class CreateTicketController {
 		}else{
 			result=GramaticaFormulario.parseWithListener(script.getName(), form).equals("");
 		}
-		script.delete();**/
+		script.delete();
 		this.builder.withForm( form );
+
+		return result;
 	}
 
 	public boolean createTicket ( TicketDTO ticketDTO ) {

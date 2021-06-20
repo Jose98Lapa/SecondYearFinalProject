@@ -400,7 +400,7 @@
 -->
         <Servico>
             <Formulario>
-                <fId>3</fId>
+                <fId>4</fId>
                 <fnome>Alteracao de residencia</fnome>
                 <fscript>https://192.168.1.92/bootstrapForm3.txt</fscript>
                 <atributes>
@@ -468,11 +468,11 @@
             <Wscript>https://192.168.1.92/bootstrapFormAut2.txt</Wscript>
             <Wfunc>1</Wfunc>
 
-            <WAfId>206</WAfId>
+            <WAfId>207</WAfId>
             <WAfnome>Formulario Aprovacao</WAfnome>
             <WAfscript>https://192.168.1.92/bootstrapFormAprov2.txt</WAfscript>
 
-            <WMfId>206</WMfId>
+            <WMfId>207</WMfId>
             <WMfnome>Formulario Resolucao</WMfnome>
             <WMfscript>https://192.168.1.92/bootstrapAtManual3.txt</WMfscript>
 
@@ -488,6 +488,83 @@
                     <WaNumber>1</WaNumber>
                 </WAtributo>
             </atributes>
+        </Workflow>
+    </class1>
+
+    <!--
+       Servico 4
+   -->
+
+    <class1>
+        <!--<catalogue>
+            <criteriosdeAcesso>1</criteriosdeAcesso>
+            <responsaveis>1</responsaveis>
+            <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
+            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
+            <criticality>2</criticality>
+        </catalogue>
+-->
+        <Servico>
+            <Formulario>
+                <fId>3</fId>
+                <fnome>Cotacao para venda</fnome>
+                <fscript>https://192.168.1.92/bootstrapForm4.txt</fscript>
+                <atributes>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Codigo do produto</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>codProd</Anome>
+                        <aID>36</aID>
+                        <aNumber>1</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Quantidade pretendida</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>quantidade</Anome>
+                        <aID>37</aID>
+                        <aNumber>2</aNumber>
+                    </SAtributo>
+                    <SAtributo>
+                        <Alabel>Opcao</Alabel>
+                        <Adescricao>Tipo de Cliente</Adescricao>
+                        <Atipo>String</Atipo>
+                        <Aregex>ignored</Aregex>
+                        <Anome>codProd</Anome>
+                        <aID>38</aID>
+                        <aNumber>3</aNumber>
+                    </SAtributo>
+                </atributes>
+            </Formulario>
+            <descricaoBreve>Cotacao para venda</descricaoBreve>
+            <descricaoCompleta>Cotacao para venda</descricaoCompleta>
+            <ServicoID>4</ServicoID>
+            <keyWords>cotacao</keyWords>
+            <statusServico>ATIVO</statusServico>
+            <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
+            <tituloServico>Cotacao para venda</tituloServico>
+            <catalogoS>1</catalogoS>
+        </Servico>
+
+        <Workflow>
+            <Wtipo>A</Wtipo>
+            <Waprov>N</Waprov>
+            <Wservice>3</Wservice>
+            <Wscript>https://192.168.1.92/bootstrapFormAut4.txt</Wscript>
+            <Wfunc>1</Wfunc>
+
+            <WAfId>206</WAfId>
+            <WAfnome>Formulario Aprovacao</WAfnome>
+            <WAfscript>https://192.168.1.92/bootstrapFormAprov2.txt</WAfscript>
+
+            <WMfId>206</WMfId>
+            <WMfnome>Formulario Resolucao</WMfnome>
+            <WMfscript>https://192.168.1.92/bootstrapAtManual3.txt</WMfscript>
         </Workflow>
     </class1>
 </class>

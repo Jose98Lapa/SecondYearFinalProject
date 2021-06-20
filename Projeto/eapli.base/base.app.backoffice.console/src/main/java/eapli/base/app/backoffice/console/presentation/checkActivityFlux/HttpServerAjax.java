@@ -10,6 +10,8 @@ import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
 /**
  * +
  *
@@ -20,7 +22,7 @@ public class HttpServerAjax extends Thread {
     static private ServerSocket sock;
     static CheckActivityFluxController theController = new CheckActivityFluxController();
 
-    public void setStatus(String status) {
+    public void setStatusList(ArrayList<String> status) {
         HttpServerAjax.status = status;
     }
 
@@ -54,12 +56,16 @@ public class HttpServerAjax extends Thread {
 
     // DATA ACCESSED BY THREADS - LOCKING REQUIRED
 
-    private static String status;
+    private static ArrayList<String> status;
 
 
     public static synchronized String getStatusInfoStandingInHTML() {
         theController.setStatus();
-        return "<span id=\"state\">Estado:" + status + "</span>";
+        String toReturn ="<ul>";
+        for (String str: status ) {
+            toReturn+="<li><span id=\"state\">Estado:" + str + "</span>\n</li>";
+        }
+        return toReturn+"</ul>";
     }
 
 

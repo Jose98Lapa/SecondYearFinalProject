@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class FeedbackDTO {
     public float id;
-
     public int feedbackValue;
     public String email;
 

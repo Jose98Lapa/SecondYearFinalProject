@@ -24,7 +24,7 @@ Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes
 
 ## 3.3. Padrões Aplicados
 
-* Pardrão Builder - Para evitar diferentes construtores para diferentes situações e para possibilitar a criação do catalogo por etapas foi usado o padrão Builder.
+* Pardrão Builder - Para evitar diferentes construtores para diferentes situações e para possibilitar a criação da equipa por etapas foi usado o padrão Builder.
 * Pardrão Factory - e modo a simplificar a a manipulação de diferentes repositorios foi utilizado o padrão Factory.
 * Pardrão DTO - de modo a passar informação da camada de dominio para a camada de apresentação foi utilizado o padrão DTO, isolando assim o modelo de dominio da apresentação.
 

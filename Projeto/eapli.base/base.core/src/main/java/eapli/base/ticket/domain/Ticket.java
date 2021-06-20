@@ -98,7 +98,7 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     }
 
     public void setWorkflow ( TicketWorkflow ticketWorkflow ) {
-        this.workflow = workflow;
+        this.workflow = ticketWorkflow;
     }
 
     public Service service() {
@@ -233,5 +233,9 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
 
     public Urgency urgency(){
         return this.urgency;
+    }
+
+    public LocalDate solictedOn (){
+        return this.solicitedOn;
     }
 }

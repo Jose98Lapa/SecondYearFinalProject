@@ -10,6 +10,7 @@ import eapli.base.service.DTO.ServiceDTO;
 import eapli.base.ticket.DTO.TicketDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.repository.TicketRepository;
+import eapli.base.ticketTask.application.TicketTaskService;
 import eapli.base.ticketTask.domain.TicketTask;
 import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
@@ -63,26 +64,6 @@ public class TcpServer implements Runnable {
             byte[] emailByteArray = sIn.readNBytes(emailInfo[2] & 0xff);
             String email = new String(emailByteArray, StandardCharsets.UTF_8);
 
-            boolean mock = true;
-            if (mock) {
-                String finalString = "5";
-                finalString = compileString(finalString, "30/06/2021 23:34");
-                finalString = compileString(finalString, "Lavar janelas");
-                finalString = compileString(finalString, "https://192.168.1.92/bootstrap.jpg");
-                finalString = compileString(finalString, "Lavar as janelas do escriotio do 5º andar");
-                finalString = compileString(finalString, "4");
-                sendData(finalString);
-                String finalString2 = "5";
-                finalString2 = compileString(finalString2, "31/06/2021 23:34");
-                finalString2 = compileString(finalString2, "Lavar portas");
-                finalString2 = compileString(finalString2, "https://192.168.1.92/bootstrap.jpg");
-                finalString2 = compileString(finalString2, "Lavar as portas do escriotio do 5º andar");
-                finalString2 = compileString(finalString2, "3");
-                sendData(finalString2);
-                byte[] finalPackage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
-                sOut.write(finalPackage);
-                sOut.flush();
-            } else {
 
                 //Get Collaborator by email
                 CollaboratorRepository collaboratorRepository = PersistenceContext.repositories().collaborators();
@@ -99,24 +80,13 @@ public class TcpServer implements Runnable {
                 //Gets Tasks belonging to the collaborator
                 TicketTaskRepository ticketTaskRepository = PersistenceContext.repositories().ticketTasks();
                 TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
-                List<TicketTask> lstTicketTask = ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
-
-                for (TicketTask tk:lstTicketTask ) {
-                    System.out.println(tk);
-                }
+                List<TicketTask> lstTicketTask = ticketTaskRepository.getTaskByCollaborator(collaborator);
 
                 //Sends the Task data
                 int finalCode = 4;
+                TicketTaskService ticketTaskService= new TicketTaskService();
                 for (TicketTask ticketTask : lstTicketTask) {
-                    Optional<Ticket> ticketOp = ticketRepository.ofIdentity(ticketTask.identity().toString());
-                    Ticket ticket;
-                    if (ticketOp.isPresent())
-                        ticket = ticketOp.get();
-                    else {
-                        System.err.println("No tickets associated with this ticketTast");
-                        finalCode = 253;
-                        break;
-                    }
+                    Ticket ticket = ticketTaskService.getTicketByTicketTask(ticketTask);
 
                     TicketDTO ticketDTO = ticket.toDTO();
                     ServiceDTO serviceDTO = ticket.service().toDTO();
@@ -132,7 +102,7 @@ public class TcpServer implements Runnable {
                 byte[] finalPackage = {(byte) 0, (byte) finalCode, (byte) 0, (byte) 0};
                 sOut.write(finalPackage);
                 sOut.flush();
-            }
+
 
         } catch (IOException ex) {
             System.out.println("An error ocurred");
@@ -229,7 +199,8 @@ public class TcpServer implements Runnable {
         while (true) {
             try {
                 cliSock = sslServerSocket.accept();
-                new Thread(new TcpServer(cliSock)).start();
+                //new Thread(new TcpServer(cliSock)).start();
+                new TcpServer(cliSock).run();
 
             } catch (IOException e) {
                 System.out.println("failed to accept client socket");
