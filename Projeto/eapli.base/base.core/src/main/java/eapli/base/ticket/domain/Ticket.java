@@ -93,6 +93,8 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
     }
 
     public TicketWorkflow workflow() {
+        if (workflow==null)
+            workflow=new TicketWorkflow();
         return workflow;
     }
 
