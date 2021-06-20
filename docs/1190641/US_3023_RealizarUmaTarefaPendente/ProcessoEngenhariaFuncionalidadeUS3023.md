@@ -17,8 +17,6 @@ Para análise o modelo de domínio dá resposta ao requisito, não sendo assim n
 ## 3.1. Realização da Funcionalidade
 
 
-Para esta funcionalidade começamos por pedir ao utilizador que insira seguintes valores como o ID, acrónimo e descrição além disso é dada a opção de escolher um tipo de equipa e um colaborador responsável por gerrir a equipa. O UI transmite esses dados ao Controller que por sua vez os manda para o Builer.
-
 ![UC_3023_SD](US_3023_RealizarUmaTarefaPendente_SD.svg)
 
 
