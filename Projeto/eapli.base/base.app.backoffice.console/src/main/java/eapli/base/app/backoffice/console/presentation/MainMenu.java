@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.SLAObjective.SLAObjectiveUI;
 import eapli.base.app.backoffice.console.presentation.assignCriticalityLevel.AssignCriticalityLevelUI;
 import eapli.base.app.backoffice.console.presentation.associateCollaborator.AssociateCollaboratorUI;
 import eapli.base.app.backoffice.console.presentation.checkActivityFlux.CheckActivityFluxUI;
@@ -89,6 +90,7 @@ public class MainMenu extends AbstractUI {
     private static final int SERVICE_OPTION = 3;
     private static final int ESPECIFICAR_CRITICIDADE_OPTION = 4;
     private static final int VERIFICAR_ESTADO_OPTION = 5;
+    private static final int SLA_OBJECTIVE_OPTION = 6;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -163,6 +165,8 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(ESPECIFICAR_CRITICIDADE_OPTION,especificarCriticidadeMenu);
             final Menu checkActivityFluxMenu = buildCheckActivityFluxMenu();
             mainMenu.addSubMenu(VERIFICAR_ESTADO_OPTION,checkActivityFluxMenu);
+            final Menu slaObjectivesMenu = buildSlaObjectivesMenu();
+            mainMenu.addSubMenu(SLA_OBJECTIVE_OPTION,slaObjectivesMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -267,6 +271,13 @@ public class MainMenu extends AbstractUI {
         checkActivityFluxMenu.addItem(1,"Verificar Estado de motor de execução",()->new CheckActivityFluxUI().show());
         checkActivityFluxMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
         return checkActivityFluxMenu;
+    }
+
+    private Menu buildSlaObjectivesMenu(){
+        final Menu checkSLAObjectivesMenu= new Menu("Objetivos de SLA");
+        checkSLAObjectivesMenu.addItem(1,"Verificar se os tickets cumprem os Objetivos SLA",()->new SLAObjectiveUI().show());
+        checkSLAObjectivesMenu.addItem(EXIT_OPTION,RETURN,Actions.SUCCESS);
+        return checkSLAObjectivesMenu;
     }
 
 }

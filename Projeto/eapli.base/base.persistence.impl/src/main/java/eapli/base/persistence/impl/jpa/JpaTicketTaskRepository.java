@@ -9,6 +9,7 @@ import eapli.base.ticketTask.repository.TicketTaskRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -78,6 +79,27 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 		}
 
 		return ticketTaskList;
+	}
+
+	@Override
+	public List<TicketTask> getTaskCompletionTime() {
+		List<TicketTask> ticketTaskList;
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE  e.status = :status", TicketTask.class);
+		q.setParameter("status","COMPLETE");
+		ticketTaskList = q.getResultList();
+		List<TicketTask> finalTicketTaskList = new ArrayList<>(ticketTaskList);
+
+		final TypedQuery<TicketTask> p = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE  e.status = :status", TicketTask.class);
+		p.setParameter("status","COMPLETE");
+		ticketTaskList = p.getResultList();
+		finalTicketTaskList.addAll(ticketTaskList);
+
+		final TypedQuery<TicketTask> r = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE  e.status = :status", TicketTask.class);
+		r.setParameter("status","COMPLETE");
+		ticketTaskList = r.getResultList();
+		finalTicketTaskList.addAll(ticketTaskList);
+
+		return finalTicketTaskList;
 	}
 
 	@Override

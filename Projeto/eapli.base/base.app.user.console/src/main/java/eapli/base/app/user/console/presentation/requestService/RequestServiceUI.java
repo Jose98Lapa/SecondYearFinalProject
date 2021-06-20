@@ -30,6 +30,7 @@ import eapli.base.ticket.builder.TicketBuilder;
 import eapli.base.ticket.domain.Constants;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.springframework.boot.web.servlet.server.Session;
 
@@ -82,9 +83,9 @@ public class RequestServiceUI extends AbstractUI {
 					sessionEmail()
 			);
 
-			String confirmation = Utils.readLineFromConsole( "Confirma os dados introduzidos? ( sim / nao )" );
 
-			ticketController.createTicket( ticket , confirmation.equals( "sim" ) );
+			boolean confirmation = Console.readBoolean( "Confirma os dados introduzidos? ( y / n )" );
+			ticketController.createTicket( ticket , confirmation );
 
 			return true;
 		} else {

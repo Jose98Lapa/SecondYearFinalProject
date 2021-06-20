@@ -26,6 +26,8 @@ public interface TicketRepository extends DomainRepository< String, Ticket > {
 
 	List<Ticket> getFeedbackBetweenDatesFromAClient(String client, LocalDate localDateStart, LocalDate localDateEnd);
 
+	List<Ticket> getCompletedTickets();
+
 
 	List< Ticket > getIncomplete ( );
 
