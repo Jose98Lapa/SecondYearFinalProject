@@ -101,6 +101,10 @@ public class TcpServer implements Runnable {
                 TicketRepository ticketRepository = PersistenceContext.repositories().tickets();
                 List<TicketTask> lstTicketTask = ticketTaskRepository.getIncompleteTicketsByCollaborator(collaborator);
 
+                for (TicketTask tk:lstTicketTask ) {
+                    System.out.println(tk);
+                }
+
                 //Sends the Task data
                 int finalCode = 4;
                 for (TicketTask ticketTask : lstTicketTask) {
