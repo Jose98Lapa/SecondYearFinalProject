@@ -2,6 +2,7 @@ package eapli.base.function.domain;
 
 import eapli.base.function.DTO.FunctionDTO;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.EmbeddedId;
@@ -24,7 +25,7 @@ public class Function implements AggregateRoot<IdFunction>, DTOable<FunctionDTO>
 
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        return DomainEntities.areEqual(this, other);
     }
 
     @Override
