@@ -23,7 +23,6 @@ import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.base.workflow.engine.client.TcpExecuterClient;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-import org.springframework.data.util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -576,7 +575,7 @@ public class EngineV2 {
         List<Ticket> ticketList = new ArrayList<>();
         long timeNecessary = 0;
         for (TicketTask ticketTask : new TicketTaskService().getPendingApprovalTasks(collaborator)) {
-            Ticket ticket = new TicketTaskService().getTicketDTOByTicketTask(ticketTask);
+            Ticket ticket = new TicketTaskService().getTicketByTicketTask(ticketTask);
             if (!ticket.urgency().equals(Urgency.valueOf("urgente")) && timeNecessary < minutesOfExecution) {
                 ticketList.add(ticket);
                 timeNecessary += ticket.workflow().getFirstIncompleteTask().mainReference().maxTimeOfExecution();

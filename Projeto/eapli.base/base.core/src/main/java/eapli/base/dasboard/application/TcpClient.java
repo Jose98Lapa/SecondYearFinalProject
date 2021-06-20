@@ -164,11 +164,10 @@ public class TcpClient {
         }
     }
 
-    public boolean statusChange ( String ticketID , String newStatus ) {
+    public boolean statusChange ( String ticketID ) {
 
         byte version = 1, code = 11, payloadSize;
-        String data = ticketID + ";" + newStatus;
-        byte[] payload = data.getBytes( StandardCharsets.UTF_8 ) ;
+        byte[] payload = ticketID.getBytes(StandardCharsets.UTF_8);
         payloadSize = (byte) payload.length;
         byte[] headers = {version, code, payloadSize};
         byte[] packet = buildPacket(headers, payload);

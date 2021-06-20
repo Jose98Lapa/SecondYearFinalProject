@@ -10,6 +10,8 @@ public class TicketApprovalTaskDTO {
 	public String nextTask;
 	public Form form;
 	public Collaborator approvedBy;
+	public String mainReference;
+	public String deadline;
 
 	public TicketApprovalTaskDTO ( String ticketTaskID, String previousTask,
 								   String nextTask, Form form, Collaborator approvedBy ) {

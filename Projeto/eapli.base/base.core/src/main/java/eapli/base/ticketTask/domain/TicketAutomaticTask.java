@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
-public class TicketAutomaticTask extends TicketTask implements DTOable< TicketAutomaticTaskDTO > , Serializable {
+public class TicketAutomaticTask extends TicketTask implements DTOable< TicketAutomaticTaskDTO >, Serializable {
 
 	@Embedded
 	private ScriptPath scriptPath;
