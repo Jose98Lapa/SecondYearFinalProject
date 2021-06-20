@@ -24,7 +24,7 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
 
     @Override
     public Optional<Ticket> ofIdentity(String id) {
-        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.id = :id", Ticket.class);
+        final TypedQuery<Ticket> q = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.ID = :id", Ticket.class);
         q.setParameter("id", id);
         return q.getResultStream().findFirst();
     }

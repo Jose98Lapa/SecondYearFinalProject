@@ -108,4 +108,17 @@ public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot<
 	public String taskType () {
 		return taskType;
 	}
+
+	@Override
+	public String toString() {
+		return "TicketTask{" +
+				"ticketTaskID=" + ticketTaskID +
+				", transition=" + transition +
+				", mainReference=" + mainReference +
+				", status='" + status + '\'' +
+				", dateStarted=" + dateStarted +
+				", dateEnded=" + dateEnded +
+				", taskType='" + taskType + '\'' +
+				'}';
+	}
 }
