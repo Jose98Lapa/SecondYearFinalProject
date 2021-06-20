@@ -49,6 +49,8 @@ enviada em resposta a pedidos com código 0 e código 1.
 
 [ 3 ] : Pedido para obter Lista de Tarefas do colaborador a fazer o pedido com devolução de resposta com código 2.
 
+[ 4 ] : Resposta sem dados, representa o final da lista de Tarefas.
+
 [ 10 ] : Envio dos dados -> Transporte dos dados do ticket.
 
 [ 11 ] : Envio dos dados -> Transporte dos dados da mudança de estado.
