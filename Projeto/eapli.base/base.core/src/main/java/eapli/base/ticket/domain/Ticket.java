@@ -222,6 +222,10 @@ public class Ticket implements AggregateRoot<String>, DTOable<TicketDTO>, Serial
         return "Ticket -> " + "Solicited on " + solicitedOn + ", Deadline " + deadLine + ", " + completed + ", ID '" + ID + '\'' + ", status " + status + ", service " + service.toDTO().title;
     }
 
+    public String displayInfo(){
+        return  "Ticket -> "  + "Solicited on " + solicitedOn + ", ID '" + ID  + ", service " + service.toDTO().title;
+    }
+
     public void reviewed(Feedback feedback){
         this.status = TicketStatus.valueOf("REVIEWED");
         this.feedback = feedback;

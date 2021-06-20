@@ -98,4 +98,13 @@ public class JpaTicketRepository extends JpaAutoTxRepository<Ticket, String, Str
         return query.getResultList();
     }
 
+
+    @Override
+    public List<Ticket> getCompletedTickets() {
+        final TypedQuery<Ticket> p = createQuery("SELECT e FROM eapli.base.ticket.domain.Ticket e WHERE e.status = :status OR e.status = :status2 OR e.status = :status3", Ticket.class);
+        p.setParameter("status", TicketStatus.valueOf("CONCLUDED"));
+        p.setParameter("status2", TicketStatus.valueOf("REVIEWED"));
+        p.setParameter("status3", TicketStatus.valueOf("FAILED"));
+        return p.getResultList();
+    }
 }
