@@ -53,7 +53,18 @@ public class DashboardService {
         return input;
     }
     public LinkedList<DashboardInfoDTO> sortDashboardInfoByUrgency(LinkedList<DashboardInfoDTO> input){
-        input.sort( Comparator.comparingInt( o -> Integer.parseInt( o.urgency ) ) );
+        input.sort(new Comparator<DashboardInfoDTO>() {
+            @Override
+            public int compare(DashboardInfoDTO o1, DashboardInfoDTO o2) {
+                if(o1.urgency.equals("urgente")){
+                    return 1;
+                }else if(o1.urgency.equals("reduzida")){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        });
         return input;
     }
 }
