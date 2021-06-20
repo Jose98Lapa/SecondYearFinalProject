@@ -202,17 +202,17 @@
         Servico 2
     -->
     <class1>
-<!--
+
         <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
             <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
-            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
-            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
-            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
-            <criticality>2</criticality>
+            <tituloCatalogoC>Pedidos de Autorização</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os pedidos de autorização</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os pedidos de autorização</descricaoCompletaC>
+            <criticality>1</criticality>
         </catalogue>
--->
+
 
         <Servico>
             <Formulario>
@@ -310,7 +310,7 @@
             <statusServico>ATIVO</statusServico>
             <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Autorizacao para Aplicacao de Desconto</tituloServico>
-            <catalogoS>1</catalogoS>
+            <catalogoS>2</catalogoS>
         </Servico>
 
         <Workflow>
@@ -496,16 +496,16 @@
    -->
 
     <class1>
-        <!--<catalogue>
+        <catalogue>
             <criteriosdeAcesso>1</criteriosdeAcesso>
             <responsaveis>1</responsaveis>
             <iconCatalogo>https://192.168.1.92/bootstrap.jpg</iconCatalogo>
-            <tituloCatalogoC>Pedidos Recursos Humanos</tituloCatalogoC>
-            <descricaoBreveC>Aqui encontra todos os pedidos relativos a RH</descricaoBreveC>
-            <descricaoCompletaC>Aqui encontra todos os pedidos relativos a Recursos Humanos</descricaoCompletaC>
+            <tituloCatalogoC>Requerimentos</tituloCatalogoC>
+            <descricaoBreveC>Aqui encontra todos os requerimentos</descricaoBreveC>
+            <descricaoCompletaC>Aqui encontra todos os requerimentos</descricaoCompletaC>
             <criticality>2</criticality>
         </catalogue>
--->
+
         <Servico>
             <Formulario>
                 <fId>3</fId>
@@ -548,7 +548,7 @@
             <statusServico>ATIVO</statusServico>
             <iconServico>https://192.168.1.92/bootstrap.jpg</iconServico>
             <tituloServico>Cotacao para venda</tituloServico>
-            <catalogoS>1</catalogoS>
+            <catalogoS>3</catalogoS>
         </Servico>
 
         <Workflow>
