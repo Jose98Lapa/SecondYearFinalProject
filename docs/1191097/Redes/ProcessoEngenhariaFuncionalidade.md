@@ -1,10 +1,10 @@
-# UC 4051 - Proteger comunicações realizadas como aplicação servidora através do protocolo SDP2021
+# UC 5002 - Proteger comunicações realizadas como aplicação servidora através do protocolo SDP2021
 =======================================
 
 
 # 1. Requisitos
 
-**UC 4051:**  Proteger comunicações realizadas como aplicação servidora através do protocolo SDP2021
+**UC 5002:**  Proteger comunicações realizadas como aplicação servidora através do protocolo SDP2021
 
 Como Gestor de Projeto, eu pretendo que as comunicações realizadas como aplicação servidora através do protocolo SDP2021 estejam protegidas.
 
