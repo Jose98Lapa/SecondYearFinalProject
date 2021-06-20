@@ -37,7 +37,7 @@ public class CompleteTaskController {
 
     public void getTickedByTask(String ticketID){
         currentWorkingTask = (TicketManualTask) ticketTaskService.getTicketTaskByID(ticketID);
-        workingTicket = ticketTaskService.getTicketDTOByTicketTask(currentWorkingTask);
+        workingTicket = ticketTaskService.getTicketByTicketTask(currentWorkingTask);
     }
 
     public FormDTO getTicketsFormDTO(){

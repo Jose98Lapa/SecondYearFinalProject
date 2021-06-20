@@ -28,15 +28,4 @@ public class JpaTaskRepository extends JpaAutoTxRepository<Task,Long, Long> impl
         return query.getResultStream().findFirst();
     }
 
-    @Override
-    public List< Task > serviceTasks ( Service service ) {
-        //TODO: Complete query
-        final TypedQuery< Task > query = createQuery(
-                "Select task From eapli.base.task.domain.Task task where task.", Task.class
-        );
-
-        query.setParameter( "serviceId", service.identity() );
-        return query.getResultList();
-    }
-
 }

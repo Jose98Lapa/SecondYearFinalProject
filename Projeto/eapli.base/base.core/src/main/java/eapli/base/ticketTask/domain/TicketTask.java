@@ -1,14 +1,13 @@
 package eapli.base.ticketTask.domain;
 
 import eapli.base.task.domain.Task;
-import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.DomainEntity;
+import eapli.framework.representations.dto.DTOable;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 

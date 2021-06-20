@@ -36,10 +36,10 @@ public class TicketTaskService {
         List<TicketDTO> ticketDTOList = new ArrayList<>();
         for (TicketTask ticketTask : ticketTaskRepository.getIncompleteTicketsByCollaborator(new ListCollaboratorService().getCollaboratorByEmail(emailCollaborator)))
             if (ticketTask.getClass() != TicketAutomaticTask.class)
-                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+                ticketDTOList.add( getTicketByTicketTask(ticketTask).toDTO());
         for (TicketTask ticketTask : ticketTaskRepository.getIncompleteUnassignedTickets())
             if (ticketTask.getClass() != TicketAutomaticTask.class)
-                ticketDTOList.add(getTicketDTOByTicketTask(ticketTask).toDTO());
+                ticketDTOList.add( getTicketByTicketTask(ticketTask).toDTO());
 
         return ticketDTOList;
     }
@@ -78,7 +78,7 @@ public class TicketTaskService {
         return optionalTicketTask.get();
     }
 
-    public Ticket getTicketDTOByTicketTask(TicketTask ticketTask) {
+    public Ticket getTicketByTicketTask ( TicketTask ticketTask) {
         for (Ticket ticket : ticketRepository.findAll()) {
             if (ticket.checkIfTicketTaskBelongsToTicket(ticketTask))
                 return ticket;
