@@ -1,11 +1,27 @@
 <?xml version="1.0"?>
 <class>
-    <treta>
+    <algo>
         <prods>
             <prod id="5">
-                <id>3</id>
                 <preco>83.2</preco>
+                <categoria>"ABC"</categoria>
+                <quantidade>4</quantidade>
+            </prod>
+            <prod id="3">
+                <preco>8</preco>
+                <categoria>"NBC"</categoria>
+                <quantidade>4</quantidade>
+            </prod>
+            <prod id="2">
+                <preco>3</preco>
+                <categoria>"TCP"</categoria>
+                <quantidade>4</quantidade>
+            </prod>
+            <prod id="1">
+                <preco>3.4</preco>
+                <categoria>"SSL"</categoria>
+                <quantidade>4</quantidade>
             </prod>
         </prods>
-    </treta>
+    </algo>
 </class>
