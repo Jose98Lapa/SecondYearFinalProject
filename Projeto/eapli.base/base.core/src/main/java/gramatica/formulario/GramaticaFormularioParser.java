@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2�Ano/2�Semestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -33,7 +33,7 @@ public class GramaticaFormularioParser extends Parser {
 		RULE_stat_block = 19;
 	private static String[] makeRuleNames() {
 		return new String[] {
-                "gramatica", "instrucao", "fail", "inicializacao", "atribuicao_atributo",
+			"gramatica", "instrucao", "fail", "inicializacao", "atribuicao_atributo", 
 			"get_atributo", "matchregex", "matchregexatribut", "atribuicao", "expr", 
 			"tipo_dados", "integer", "floate", "data", "identidade", "if_stat", "senao_rule", 
 			"entao_rule", "condition_block", "stat_block"

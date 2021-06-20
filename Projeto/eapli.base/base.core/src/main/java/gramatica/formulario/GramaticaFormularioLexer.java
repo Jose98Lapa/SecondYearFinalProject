@@ -1,4 +1,4 @@
-// Generated from C:/Users/guilh/OneDrive/Documents/ISEP/Licenciatura/2ºAno/2ºSemestre/LAPR4/lei20_21_s4_2dl_1/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
+// Generated from C:/Users/tigas/OneDrive/Ambiente de Trabalho/LAPR/Projeto/eapli.base/base.core/src/main/java/gramatica/formulario\GramaticaFormulario.g4 by ANTLR 4.9.1
 package gramatica.formulario;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -152,8 +152,8 @@ public class GramaticaFormularioLexer extends Lexer {
 		"\3\65\4\u013e\u0167\2\66\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n\23\13\25\2"+
 		"\27\2\31\2\33\f\35\r\37\16!\17#\20%\21\'\22)\23+\24-\25/\26\61\27\63\30"+
 		"\65\31\67\329\33;\34=\35?\36A\37C E!G\"I#K$M%O&Q\'S(U)W*Y\2[+],_-a.c/"+
-		"e\60g\61i\62\3\2\22\3\2\62;\3\2c|\3\2C\\\5\2C\\aac|\3\2aa\4\2..\60\60"+
-		"\3\2$$\3\2\62\62\3\2\63;\3\2\63\64\3\2\65\65\3\2\62\63\3\2\63\63\3\2\62"+
+		"e\60g\61i\62\3\2\22\3\2\62;\3\2c|\3\2C\\\5\2C\\aac|\3\2aa\3\2\60\60\3"+
+		"\2$$\3\2\62\62\3\2\63;\3\2\63\64\3\2\65\65\3\2\62\63\3\2\63\63\3\2\62"+
 		"\64\4\2\f\f\17\17\5\2\13\f\17\17\"\"\2\u0197\2\3\3\2\2\2\2\5\3\2\2\2\2"+
 		"\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2"+
 		"\2\2\2\23\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2\2\2"+
