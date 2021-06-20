@@ -175,18 +175,23 @@ public class EngineV2 {
 
         String theChosenOne = "";
         List<String> serverList = new LinkedList<>();
-        try {
+        /* try {
             File myObj = new File("Executer_ip_list.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String ip = myReader.nextLine();
                 serverList.add(ip.trim());
+
             }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred while trying to read the ip list.");
             return null;
-        }
+        }*/
+        serverList.add("172.17.0.2");
+        serverList.add( "172.17.0.3");
+        serverList.add ("172.17.0.4");
+        serverList.add("172.17.0.5");
 
         for (Date date : historyAutomaticTask.keySet()) {
             if (!serverList.contains(historyAutomaticTask.get(date))) {   //se algum servidor for removido retira do historico
@@ -242,18 +247,23 @@ public class EngineV2 {
         String theChosenOne = "";
         int theChosenOneN = -1;
         List<String> serverList = new LinkedList<>();
-        try {
+       /* try {
             File myObj = new File("Executer_ip_list.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String ip = myReader.nextLine();
                 serverList.add(ip.trim());
+
             }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred while trying to read the ip list.");
             return null;
-        }
+        }*/
+        serverList.add("172.17.0.2");
+        serverList.add( "172.17.0.3");
+        serverList.add ("172.17.0.4");
+        serverList.add("172.17.0.5");
 
         //Adiciona o server ao mapa caso este não esteja lá
         for (String server : serverList) {
