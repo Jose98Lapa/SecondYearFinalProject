@@ -1,6 +1,8 @@
 package eapli.base.ticketTask.application;
 
+import eapli.base.Application;
 import eapli.base.collaborator.application.ListCollaboratorService;
+import eapli.base.dasboard.application.TcpClient;
 import eapli.base.form.DTO.FormDTO;
 import eapli.base.form.DTO.attribute.AttributeDTO;
 
@@ -80,6 +82,10 @@ public class CompleteTaskController {
         ticketRepository.save(workingTicket);
         this.ticketTaskService.updateTask(currentWorkingTask);
         completeTask();
+        TcpClient tcpClient = new TcpClient();
+        tcpClient.startConnection( Application.settings().getIpWorkflow() );
+        tcpClient.dispatchTicket( workingTicket.identity() );
+        tcpClient.stopConnection();
     }
 
     private void completeTask(){
@@ -99,6 +105,10 @@ public class CompleteTaskController {
         CreateTaskController createTaskController = new CreateTaskController();
         automaticTask.completeTask();
         createTaskController.registerTicketTask(automaticTask);
+        TcpClient tcpClient = new TcpClient();
+        tcpClient.startConnection( Application.settings().getIpWorkflow() );
+        tcpClient.dispatchTicket( workingTicket.identity() );
+        tcpClient.stopConnection();
     }
 
     public List<FormDTO> getPreviousTicketTasksForm(){
