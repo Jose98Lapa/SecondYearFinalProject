@@ -115,7 +115,6 @@ public class CreateTicketController {
 				.withPossibleFile( ticketDTO.file )
 				.withService(service)
 				.withUrgency( ticketDTO.urgency )
-				.withWorkFlow( new TicketWorkflow( new TicketTaskService().createTicketTask(ticketDTO.deadLine,service.workflow().starterTask()) ) )
 				.requestedBy( ticketDTO.requestedBy )
 				.build( );
 
