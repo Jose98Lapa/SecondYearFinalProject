@@ -1,5 +1,6 @@
 package eapli.base.dasboard.application;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -42,8 +43,8 @@ public class DashboardService {
     }
 
     private LocalDateTime getDateFromString(String str){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime dateTime = LocalDate.parse(str, formatter).atStartOfDay();
         return dateTime;
     }
 

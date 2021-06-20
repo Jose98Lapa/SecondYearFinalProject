@@ -24,4 +24,6 @@ public interface TicketTaskRepository extends DomainRepository< Long, TicketTask
 
     List< TicketExecutionTask > pendingExecution ( Collaborator collaboratorEmail );
 
+    List<TicketTask> getTaskByCollaborator(Collaborator collab);
+
 }

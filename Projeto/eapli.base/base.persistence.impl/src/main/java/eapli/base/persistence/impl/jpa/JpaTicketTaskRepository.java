@@ -59,6 +59,28 @@ public class JpaTicketTaskRepository extends JpaAutoTxRepository< TicketTask, Lo
 	}
 
 	@Override
+	public List<TicketTask> getTaskByCollaborator(Collaborator collab) {
+		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketApprovalTask e WHERE e.approvedBy=:approvedBy", TicketTask.class);
+		q.setParameter("approvedBy", collab);
+
+		List<TicketTask> ticketTaskList = new ArrayList<>();
+		for (Iterator<TicketTask> it = q.getResultStream().iterator(); it.hasNext(); ) {
+			TicketTask ticketTask = it.next();
+			ticketTaskList.add(ticketTask);
+		}
+
+		final TypedQuery<TicketTask> p = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketExecutionTask e WHERE e.executedBy=:executedBy", TicketTask.class);
+		p.setParameter("executedBy", collab);
+
+		for (Iterator<TicketTask> it = p.getResultStream().iterator(); it.hasNext(); ) {
+			TicketTask ticketTask = it.next();
+			ticketTaskList.add(ticketTask);
+		}
+
+		return ticketTaskList;
+	}
+
+	@Override
 	public List<TicketTask> getCompleteApprovedTicketsByCollaborator(Collaborator collab) {
 		final TypedQuery<TicketTask> q = createQuery("SELECT e FROM eapli.base.ticketTask.domain.TicketTask e WHERE e.approvedBy=:approvedBy and e.status = :status", TicketTask.class);
 		q.setParameter("approvedBy", collab);
