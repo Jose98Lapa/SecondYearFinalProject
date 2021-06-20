@@ -108,6 +108,10 @@ public abstract class TicketTask implements DomainEntity< Long >, AggregateRoot<
 		return taskType;
 	}
 
+	public long completionTime(){
+		return ChronoUnit.MINUTES.between(dateStarted,dateEnded);
+	}
+
 	@Override
 	public String toString() {
 		return "TicketTask{" +

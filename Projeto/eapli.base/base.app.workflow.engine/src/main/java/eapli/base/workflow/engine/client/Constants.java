@@ -10,6 +10,7 @@ public class Constants {
 	public static final String EXECUTING = "EXECUTING";
 	public static final String CONCLUDED = "CONCLUDED";
 	public static final String FAILED = "FAILED";
+	public static final String REVIEWED = "REVIEWED";
 
 	public static final String INCOMPLETE = "INCOMPLETE";
 	public static final String COMPLETE = "COMPLETE";
