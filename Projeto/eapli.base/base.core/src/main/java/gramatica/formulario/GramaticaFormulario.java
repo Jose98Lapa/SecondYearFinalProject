@@ -52,7 +52,7 @@ public class GramaticaFormulario {
     }
     public static String parse(String file,Form form){
         String parser = Application.settings().getProperty("GRAMMARFORMTYPE");
-        if ("Visitor".equals(parser)){
+        if ("VISITOR".equalsIgnoreCase(parser)){
             return parseWithVisitor(file,form);
         }else{
             return parseWithListener(file,form);

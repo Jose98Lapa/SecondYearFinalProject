@@ -65,6 +65,18 @@ public class EngineV2 {
         }
 
     }
+    public void processIncomingTicket2(byte[] payload) {
+        String payloadS = new String(payload, StandardCharsets.UTF_8);
+        Optional<Ticket> ticketOptional = ticketRepository.ofIdentity(payloadS);
+        Ticket ticket;
+
+        if (ticketOptional.isPresent()) {
+
+            ticket = ticketOptional.get();
+            processStatusChange(ticket, ticket.status().toString());
+        }
+
+    }
 
     public void processStatusChange(Ticket ticket, String action) {
 

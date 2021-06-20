@@ -164,9 +164,9 @@ public class TcpServer implements Runnable {
                         engine.processIncomingTicket( data );
                         break;
                     case 11:
-                        //TODO: todo
-                        //String[] parameters = new String( data ).split( ";" );
-                        //engine.processStatusChange( parameters[0], parameters[1] );
+                        byte data2[] =ArrayUtils.addAll(new byte[]{clientRequest[3]},sIn.readNBytes( clientRequest[2]-1));
+                        EngineV2 engineV2 = new EngineV2();
+                        engineV2.processIncomingTicket2(data2);
                         break;
                 }
             }

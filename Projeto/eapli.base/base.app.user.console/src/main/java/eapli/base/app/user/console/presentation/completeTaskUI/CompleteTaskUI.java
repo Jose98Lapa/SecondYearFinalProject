@@ -90,8 +90,8 @@ public class CompleteTaskUI extends AbstractUI {
             System.out.println(attribute.desc);
             AttributeDTO answerAttribute = new AttributeDTO(
                     "Resposta",
-                    attribute.label,
                     Utils.readLineFromConsole("Resposta completa: "),
+                    attribute.desc,
                     attribute.regex,
                     attribute.tipo,
                     UUID.randomUUID().toString(),
