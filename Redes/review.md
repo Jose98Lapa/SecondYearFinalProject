@@ -32,7 +32,7 @@ Concluido com sucesso. Realizei algumas mudanças no sprint anterior, de modo a 
 ![Documentação](https://bitbucket.org/1190731/lei20_21_s4_2dl_1/src/master/docs/1191097/)
 
 ## 2.4. 1200619 - US4052 ###
-
+Concluido com sucesso.
 
 ## 2.5. 1191111 - US4051 ###
  

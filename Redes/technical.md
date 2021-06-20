@@ -49,9 +49,9 @@ enviada em resposta a pedidos com código 0 e código 1.
 
 [ 3 ] : Pedido para obter Lista de Tarefas do colaborador a fazer o pedido com devolução de resposta com código 2.
 
-[ 10 ] : Envio dos dados -> Transporte dos dados da mudança de estado.
+[ 10 ] : Envio dos dados -> Transporte dos dados do ticket.
 
-[ 11 ] : Envio dos dados -> Transporte dos dados do ticket.
+[ 11 ] : Envio dos dados -> Transporte dos dados da mudança de estado.
 
 [ 20 ] : Pedido de execução -> Pedido de execução de um script de uma atividade automática.
 
